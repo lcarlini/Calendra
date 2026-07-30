@@ -1,6 +1,6 @@
 # Calendra
 
-A refined personal calendar dashboard with modular gadgets: world clocks, a compact and full month calendar, day alerts, and a 30-day local weather forecast.
+A refined personal calendar dashboard with modular gadgets: world clocks, multi-view calendar, day alerts, themes, and a 30-day local weather outlook.
 
 ## Live site (GitHub Pages)
 
@@ -13,38 +13,32 @@ A refined personal calendar dashboard with modular gadgets: world clocks, a comp
 
 ## Features
 
-- **Gadget dashboard** — widgets in multiple sizes (compact, medium, large, wide)
-- **Full calendar** — dedicated month view with day selection
-- **World clocks** — local time from your device/location, plus Chicago, New York, London, and Amsterdam
-- **Day alerts** — meetings and reminders with lead times (5 min, 15 min, 1 hr, etc.) and optional browser notifications
-- **Weather** — current conditions and a **30-day forecast** for your current location (Open-Meteo)
+- **Themes** — Mist, Midnight (dark), Ocean, Sand, Ink, Aurora
+- **Arrange gadgets** — drag to reorder, resize S / M / L / XL / Full (saved in the browser)
+- **World clocks** — local time plus Chicago, New York, London, Amsterdam
+- **Weather** — current conditions + ~30-day outlook (16-day detailed forecast + seasonal extension). Auto location (GPS → IP fallback) or city presets
+- **Day alerts** — meetings/reminders with lead times and optional desktop notifications
+- **Full calendar** — **Year / Month / Week / Day** views
+- **Holidays** — United States and Brazil (toggle independently), including movable dates (Carnaval, Easter-related, etc.)
 
 ## Enable GitHub Pages
 
-1. Open the repo on GitHub: [lcarlini/Calendra](https://github.com/lcarlini/Calendra)
-2. Go to **Settings → Pages**
-3. Under **Build and deployment**, set **Source** to **Deploy from a branch**
-4. Choose branch **`main`** and folder **`/ (root)`**, then save
-5. After a minute or two, open [https://lcarlini.github.io/Calendra/](https://lcarlini.github.io/Calendra/)
+1. Open [lcarlini/Calendra](https://github.com/lcarlini/Calendra)
+2. **Settings → Pages**
+3. Source: **Deploy from a branch** → `main` / **`/(root)`**
+4. Open [https://lcarlini.github.io/Calendra/](https://lcarlini.github.io/Calendra/)
 
 ## Local preview
 
-Serve the folder over HTTP (modules require a local server):
-
 ```bash
-# Python
 python -m http.server 8080
-
-# or Node
-npx serve .
+# or: npx serve .
 ```
 
-Then open `http://localhost:8080`.
-
-Allow **location** and **notification** permissions in the browser for local weather and desktop alerts.
+Open `http://localhost:8080`. Allow location/notifications if you want GPS weather and desktop alerts.
 
 ## Stack
 
 - Static HTML / CSS / vanilla JS (ES modules)
-- [Open-Meteo](https://open-meteo.com/) for weather (no API key)
-- Browser Geolocation + `localStorage` for reminders
+- [Open-Meteo](https://open-meteo.com/) forecast + seasonal APIs (no API key)
+- Browser Geolocation, IP geolocation fallback, `localStorage` for layout/theme/reminders

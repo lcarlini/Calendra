@@ -12,12 +12,16 @@ import {
 } from './reminders.js';
 import { monthLabel, renderMiniCalendar } from './calendar.js';
 import {
+  CITY_PRESETS,
   describeWeather,
   fetchWeather,
-  getPosition,
-  reverseGeocode,
+  resolveLocation,
 } from './weather.js';
+import { initTheme, THEMES, applyTheme, getTheme } from './themes.js';
+import { initLayoutEditor } from './layout.js';
 import { $, toast } from './ui.js';
+
+initTheme();
 
 const state = {
   viewYear: new Date().getFullYear(),
@@ -25,7 +29,18 @@ const state = {
   localCity: 'Local',
   clocks: buildClockList('Local'),
   locationLabel: 'Detecting location…',
+  weatherCity: localStorage.getItem('calendra.weatherCity.v1') || 'auto',
 };
+
+let layoutApi = null;
+
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
 
 function syncHeroDate() {
   const now = new Date();
@@ -50,7 +65,17 @@ function syncHeroDate() {
 function renderClockGadgets() {
   renderClocks($('#clock-grid'), state.clocks);
   const zoneEl = $('#local-zone');
-  if (zoneEl) zoneEl.textContent = localTimeZone().replace(/_/g, ' ');
+  if (zoneEl) {
+    const tz = localTimeZone();
+    const abbr = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz,
+      timeZoneName: 'short',
+      hour: '2-digit',
+    })
+      .formatToParts(new Date())
+      .find((p) => p.type === 'timeZoneName')?.value;
+    zoneEl.textContent = `${abbr || ''} · ${tz.replace(/_/g, ' ')}`.replace(/^ · /, '');
+  }
 }
 
 function renderMini() {
@@ -120,18 +145,9 @@ function renderReminderList() {
           <button type="button" class="btn-icon" data-action="toggle" title="Toggle done">✓</button>
           <button type="button" class="btn-icon" data-action="delete" title="Delete">✕</button>
         </div>
-      </article>
-    `
+      </article>`
     )
     .join('');
-}
-
-function escapeHtml(str) {
-  return String(str)
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;');
 }
 
 function bindReminderForm() {
@@ -221,15 +237,21 @@ function bindMiniCal() {
 
 function renderWeather(data, locationLabel) {
   const current = data.current;
+  if (!current) throw new Error('No current weather');
   const meta = describeWeather(current.weather_code);
 
-  $('#weather-icon').textContent = meta.icon;
-  $('#weather-temp').textContent = `${Math.round(current.temperature_2m)}°`;
-  $('#weather-desc').textContent = meta.label;
-  $('#weather-loc').textContent = locationLabel;
-  $('#weather-feels').textContent = `${Math.round(current.apparent_temperature)}°`;
-  $('#weather-humidity').textContent = `${current.relative_humidity_2m}%`;
-  $('#weather-wind').textContent = `${Math.round(current.wind_speed_10m)} km/h`;
+  const set = (id, value) => {
+    const el = $(id);
+    if (el) el.textContent = value;
+  };
+
+  set('#weather-icon', meta.icon);
+  set('#weather-temp', `${Math.round(current.temperature_2m)}°`);
+  set('#weather-desc', meta.label);
+  set('#weather-loc', locationLabel);
+  set('#weather-feels', `${Math.round(current.apparent_temperature)}°`);
+  set('#weather-humidity', `${current.relative_humidity_2m}%`);
+  set('#weather-wind', `${Math.round(current.wind_speed_10m)} km/h`);
 
   const scroll = $('#forecast-scroll');
   if (!scroll) return;
@@ -239,66 +261,115 @@ function renderWeather(data, locationLabel) {
     .map((date, i) => {
       const d = new Date(`${date}T12:00:00`);
       const day = d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric' });
-      const w = describeWeather(daily.weather_code[i]);
+      const code = daily.weather_code[i];
+      const w = code == null ? { label: 'Extended outlook', icon: '◌' } : describeWeather(code);
       const max = Math.round(daily.temperature_2m_max[i]);
       const min = Math.round(daily.temperature_2m_min[i]);
-      const rain = daily.precipitation_probability_max[i] ?? 0;
+      const rain = daily.precipitation_probability_max[i];
+      const rainLabel = rain == null ? 'outlook' : `${rain}% rain`;
+      const ext = daily.source?.[i] === 'seasonal' ? ' extended' : '';
       return `
-        <article class="forecast-day" title="${w.label}">
+        <article class="forecast-day${ext}" title="${w.label}">
           <div class="d">${day}</div>
           <div class="ico">${w.icon}</div>
           <div class="t">${max}° / ${min}°</div>
-          <div class="rain">${rain}% rain</div>
+          <div class="rain">${rainLabel}</div>
         </article>
       `;
     })
     .join('');
 }
 
+async function loadWeatherFor(lat, lon, label, note) {
+  const status = $('#weather-status');
+  if (status) {
+    status.classList.add('loading-dots');
+    status.textContent = 'Loading forecast';
+  }
+  const weather = await fetchWeather(lat, lon);
+  renderWeather(weather, label);
+  if (status) {
+    status.classList.remove('loading-dots');
+    status.textContent = note || `Updated · ${weather.daily.time.length}-day outlook`;
+  }
+  const heroLoc = $('#hero-location');
+  if (heroLoc) heroLoc.textContent = label;
+}
+
 async function initWeather() {
   const status = $('#weather-status');
-  try {
-    if (status) status.textContent = 'Locating…';
-    const pos = await getPosition();
-    const { latitude, longitude } = pos.coords;
+  const citySelect = $('#weather-city');
+  if (citySelect) {
+    citySelect.innerHTML = CITY_PRESETS.map(
+      (c) => `<option value="${c.id}">${c.label}</option>`
+    ).join('');
+    citySelect.value = state.weatherCity;
+  }
 
-    let label = `${latitude.toFixed(2)}°, ${longitude.toFixed(2)}°`;
-    try {
-      label = await reverseGeocode(latitude, longitude);
-    } catch {
-      /* keep coords */
+  try {
+    const preset = CITY_PRESETS.find((c) => c.id === state.weatherCity);
+
+    if (preset && preset.lat != null) {
+      await loadWeatherFor(preset.lat, preset.lon, preset.label, `Updated · ${preset.label}`);
+      return;
     }
 
-    state.locationLabel = label;
-    state.localCity = label.split(',')[0] || 'Local';
+    if (status) status.textContent = 'Locating…';
+    const loc = await resolveLocation();
+    state.locationLabel = loc.label;
+    state.localCity = loc.label.split(',')[0] || 'Local';
     state.clocks = buildClockList(state.localCity);
     renderClockGadgets();
 
-    if (status) status.textContent = 'Loading 30-day forecast…';
-    const weather = await fetchWeather(latitude, longitude);
-    renderWeather(weather, label);
-    if (status) status.textContent = 'Updated just now · Open-Meteo';
-    const heroLoc = $('#hero-location');
-    if (heroLoc) heroLoc.textContent = label;
+    const note =
+      loc.source === 'gps'
+        ? 'Updated · GPS · 30-day outlook'
+        : 'Updated · IP approx · 30-day outlook';
+    await loadWeatherFor(loc.latitude, loc.longitude, loc.label, note);
   } catch (err) {
-    console.warn(err);
-    if (status) {
-      status.textContent =
-        'Location unavailable — allow location access, or we can show a sample city.';
-    }
-    // Fallback: Chicago
+    console.warn('Weather error', err);
     try {
-      const weather = await fetchWeather(41.8781, -87.6298);
-      renderWeather(weather, 'Chicago, IL (fallback)');
-      state.localCity = 'Local';
-      state.clocks = buildClockList('Local');
-      renderClockGadgets();
-      if (status) status.textContent = 'Using Chicago fallback · enable location for local forecast';
-      toast('Location blocked', 'Showing Chicago weather until permission is granted.');
-    } catch {
-      if (status) status.textContent = 'Weather unavailable right now.';
+      await loadWeatherFor(41.8781, -87.6298, 'Chicago, IL (fallback)', 'Fallback · Chicago');
+      toast('Weather fallback', 'Could not resolve your location — showing Chicago.');
+    } catch (err2) {
+      console.warn(err2);
+      if (status) {
+        status.classList.remove('loading-dots');
+        status.textContent = 'Weather unavailable — try another city';
+      }
+      toast('Weather failed', 'Check your network and try a city preset.');
     }
   }
+}
+
+function bindThemeAndLayout() {
+  const select = $('#theme-select');
+  if (select) {
+    select.innerHTML = THEMES.map((t) => `<option value="${t.id}">${t.label}</option>`).join('');
+    select.value = getTheme();
+    select.addEventListener('change', () => applyTheme(select.value));
+  }
+
+  layoutApi = initLayoutEditor('#gadget-grid');
+
+  const editBtn = $('#edit-layout');
+  let editing = false;
+  editBtn?.addEventListener('click', () => {
+    editing = !editing;
+    layoutApi?.setEditMode(editing);
+    if (editBtn) editBtn.textContent = editing ? 'Done arranging' : 'Arrange gadgets';
+    if (editing) toast('Arrange mode', 'Drag ⠿ to reorder · tap S–Full to resize');
+  });
+
+  $('#reset-layout')?.addEventListener('click', () => layoutApi?.reset());
+
+  $('#weather-city')?.addEventListener('change', async (e) => {
+    state.weatherCity = e.target.value;
+    localStorage.setItem('calendra.weatherCity.v1', state.weatherCity);
+    await initWeather();
+  });
+
+  $('#weather-refresh')?.addEventListener('click', () => initWeather());
 }
 
 function tick() {
@@ -317,11 +388,15 @@ function init() {
   renderReminderList();
   bindReminderForm();
   bindMiniCal();
+  bindThemeAndLayout();
   initWeather();
 
   $('#enable-alerts')?.addEventListener('click', async () => {
     const ok = await ensureNotificationPermission();
-    toast(ok ? 'Desktop alerts enabled' : 'Alerts not available', ok ? 'We’ll notify you before meetings.' : 'Check browser notification settings.');
+    toast(
+      ok ? 'Desktop alerts enabled' : 'Alerts not available',
+      ok ? 'We’ll notify you before meetings.' : 'Check browser notification settings.'
+    );
   });
 
   tick();
