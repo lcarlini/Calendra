@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Calendra — a refined personal dashboard with calendar gadgets, world clocks, weather, and day alerts."
+    />
+    <title>Calendra — Command Center</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1620'/%3E%3Cpath d='M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z' fill='%2314b8a6'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="index.html" aria-label="Calendra home">
+          <div class="brand-mark" aria-hidden="true">C</div>
+          <div class="brand-text">
+            <h1>Calendra</h1>
+            <p>Time, weather & focus — composed</p>
+          </div>
+        </a>
+        <nav class="nav-links" aria-label="Primary">
+          <a class="active" href="index.html">Dashboard</a>
+          <a href="calendar.html">Full Calendar</a>
+        </nav>
+      </header>
+
+      <section class="hero-strip">
+        <article class="hero-panel">
+          <div class="hero-content">
+            <div>
+              <div class="hero-kicker"><span></span> Live command center</div>
+              <h2>Your day, precisely arranged</h2>
+              <p class="hero-sub">
+                Modular gadgets for clocks, weather, and reminders — tuned to your location and the cities that matter.
+              </p>
+            </div>
+            <div class="hero-meta">
+              <div class="meta-chip" id="hero-date">—</div>
+              <div class="meta-chip" id="hero-time">—</div>
+              <div class="meta-chip" id="hero-location">Locating…</div>
+            </div>
+          </div>
+        </article>
+
+        <div class="hero-side">
+          <article class="gadget g-full" style="min-height: auto; grid-column: auto">
+            <div class="gadget-inner">
+              <div class="gadget-head">
+                <h3 class="gadget-title">Today’s agenda</h3>
+                <a class="gadget-action" href="calendar.html">Open calendar</a>
+              </div>
+              <div class="agenda-list" id="agenda-list"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="gadgets" aria-label="Dashboard gadgets">
+        <!-- Small clock strip -->
+        <article class="gadget g-full">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">World clocks</h3>
+              <span class="status-line" id="local-zone">—</span>
+            </div>
+            <div class="clock-grid" id="clock-grid"></div>
+          </div>
+        </article>
+
+        <!-- Medium mini calendar -->
+        <article class="gadget g-md g-tall">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">Calendar · compact</h3>
+              <a class="gadget-action" href="calendar.html">Expand</a>
+            </div>
+            <div class="mini-cal-nav">
+              <button type="button" class="btn-icon" id="mini-prev" aria-label="Previous month">‹</button>
+              <div class="mini-cal-label" id="mini-cal-label">—</div>
+              <button type="button" class="btn-icon" id="mini-next" aria-label="Next month">›</button>
+            </div>
+            <div id="mini-cal"></div>
+            <div style="margin-top: auto; padding-top: 1rem">
+              <button type="button" class="btn btn-ghost btn-sm" id="mini-today">Jump to today</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Large weather -->
+        <article class="gadget g-lg g-tall">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">Weather · 30 days</h3>
+              <span class="status-line loading-dots" id="weather-status">Loading</span>
+            </div>
+            <div class="weather-now">
+              <div class="weather-icon" id="weather-icon">🌡</div>
+              <div>
+                <div class="weather-temp" id="weather-temp">--°</div>
+                <div class="weather-desc" id="weather-desc">Fetching conditions</div>
+                <div class="weather-loc" id="weather-loc">—</div>
+              </div>
+            </div>
+            <div class="weather-stats">
+              <div class="stat">
+                <strong id="weather-feels">--°</strong>
+                <span>Feels like</span>
+              </div>
+              <div class="stat">
+                <strong id="weather-humidity">--%</strong>
+                <span>Humidity</span>
+              </div>
+              <div class="stat">
+                <strong id="weather-wind">--</strong>
+                <span>Wind</span>
+              </div>
+            </div>
+            <div class="forecast-scroll" id="forecast-scroll" aria-label="30-day forecast"></div>
+          </div>
+        </article>
+
+        <!-- XL reminders -->
+        <article class="gadget g-xl">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">Day alerts & reminders</h3>
+              <button type="button" class="gadget-action" id="enable-alerts">Enable notifications</button>
+            </div>
+
+            <form class="reminder-form" id="reminder-form">
+              <div class="form-row">
+                <div class="field" style="grid-column: 1 / -1">
+                  <label for="reminder-title">Meeting or reminder</label>
+                  <input id="reminder-title" name="title" type="text" placeholder="Design review with the team" required />
+                </div>
+                <div class="field">
+                  <label for="reminder-date">Date</label>
+                  <input id="reminder-date" name="date" type="date" required />
+                </div>
+                <div class="field">
+                  <label for="reminder-time">Time</label>
+                  <input id="reminder-time" name="time" type="time" required />
+                </div>
+                <div class="field">
+                  <label for="reminder-lead">Alert me</label>
+                  <select id="reminder-lead" name="lead">
+                    <option value="0">At start</option>
+                    <option value="5" selected>5 minutes before</option>
+                    <option value="10">10 minutes before</option>
+                    <option value="15">15 minutes before</option>
+                    <option value="30">30 minutes before</option>
+                    <option value="60">1 hour before</option>
+                    <option value="120">2 hours before</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="reminder-notes">Notes</label>
+                  <input id="reminder-notes" name="notes" type="text" placeholder="Room, link, or context" />
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Add alert</button>
+            </form>
+
+            <div class="reminder-list" id="reminder-list"></div>
+          </div>
+        </article>
+
+        <!-- Small gadget: quick links -->
+        <article class="gadget g-sm">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">Quick launch</h3>
+            </div>
+            <p class="status-line" style="margin: 0 0 1rem">
+              Jump into the full month view or keep this dashboard pinned as your home base.
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 0.55rem; margin-top: auto">
+              <a class="btn btn-primary" href="calendar.html">Full calendar</a>
+              <button type="button" class="btn btn-ghost" id="enable-alerts-secondary" onclick="document.getElementById('enable-alerts').click()">
+                Desktop alerts
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Small gadget: cities legend -->
+        <article class="gadget g-sm">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">Always on</h3>
+            </div>
+            <p class="status-line" style="margin: 0 0 0.75rem">
+              Local time from your device, plus fixed hubs:
+            </p>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-bar"></div>
+                <div>
+                  <div class="agenda-title">Chicago</div>
+                  <div class="agenda-time">America/Chicago</div>
+                </div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-bar warm"></div>
+                <div>
+                  <div class="agenda-title">New York · London · Amsterdam</div>
+                  <div class="agenda-time">Pinned world clocks</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <footer class="site-footer">
+        <span>Calendra · crafted for clarity</span>
+        <span>
+          Live at
+          <a href="https://lcarlini.github.io/Calendra/" target="_blank" rel="noopener">lcarlini.github.io/Calendra</a>
+        </span>
+      </footer>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>
