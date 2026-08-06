@@ -2616,6 +2616,66 @@ body.layout-editing .gadget:hover {
 
 .mkt-chart-panel {
   min-height: 240px;
+  position: relative;
+  overflow: visible;
+}
+
+.mkt-chart-interactive {
+  position: relative;
+  width: 100%;
+}
+
+.mkt-chart-interactive .market-chart-svg {
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.mkt-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  min-width: 148px;
+  max-width: 240px;
+  padding: 0.65rem 0.75rem;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  background: color-mix(in srgb, var(--surface-solid) 92%, transparent);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+  pointer-events: none;
+}
+
+.mkt-tooltip[hidden] {
+  display: none !important;
+}
+
+.mkt-tooltip-date {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  margin-bottom: 0.2rem;
+}
+
+.mkt-tooltip-price {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.mkt-tooltip-extra {
+  margin-top: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.mkt-hover-hint {
+  margin-top: 0.35rem;
+  color: var(--accent-bright) !important;
 }
 
 .mkt-metrics-block h4 {

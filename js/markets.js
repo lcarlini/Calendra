@@ -186,14 +186,23 @@ function mapAwesomeSeries(rows, { timeStyle = 'date' } = {}) {
       const ts = r.timestamp ? Number(r.timestamp) * 1000 : null;
       const d = ts ? new Date(ts) : null;
       let label = r.create_date || '';
+      let labelFull = label;
       if (d && !Number.isNaN(d.getTime())) {
         label =
           timeStyle === 'time'
             ? d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
             : d.toLocaleDateString('pt-BR');
+        labelFull = d.toLocaleString('pt-BR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        });
       }
       return {
         date: label,
+        labelFull,
         value: num(r.bid),
         high: num(r.high),
         low: num(r.low),
@@ -242,6 +251,7 @@ async function fetchSelicHistory(range) {
   let points = (Array.isArray(rows) ? rows : [])
     .map((r) => ({
       date: r.data,
+      labelFull: r.data,
       value: num(r.valor),
       high: null,
       low: null,
@@ -355,13 +365,19 @@ export async function fetchMarketDetails(tickerId, rangeId = '30d') {
 
 /** Lightweight SVG area chart (no deps). */
 export function buildChartSvg(points, { width = 640, height = 260, accent = '#2dd4bf', ticker = null } = {}) {
-  const gid = `mktFill-${Math.random().toString(36).slice(2, 9)}`;
-  if (!points?.length) {
+  const chart = prepareChartGeometry(points, { width, height, accent, ticker });
+  if (!chart) {
     return `<svg viewBox="0 0 ${width} ${height}" class="market-chart-svg" role="img" aria-label="Sem dados">
       <text x="50%" y="50%" text-anchor="middle" fill="currentColor" opacity="0.5" font-size="14">Sem histórico</text>
     </svg>`;
   }
+  return chart.svg;
+}
 
+function prepareChartGeometry(points, { width = 640, height = 260, accent = '#2dd4bf', ticker = null } = {}) {
+  if (!points?.length) return null;
+
+  const gid = `mktFill-${Math.random().toString(36).slice(2, 9)}`;
   const values = points.map((p) => p.value);
   const min = Math.min(...values);
   const max = Math.max(...values);
@@ -374,24 +390,23 @@ export function buildChartSvg(points, { width = 640, height = 260, accent = '#2d
   const coords = points.map((p, i) => {
     const x = padX + i * stepX;
     const y = height - padBot - ((p.value - min) / span) * (height - padTop - padBot);
-    return [x, y];
+    return { x, y, point: p, i };
   });
 
-  const line = coords.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
-  const area = `${line} L${coords[coords.length - 1][0].toFixed(1)},${height - padBot} L${coords[0][0].toFixed(1)},${height - padBot} Z`;
+  const line = coords.map((c, i) => `${i === 0 ? 'M' : 'L'}${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' ');
+  const area = `${line} L${coords[coords.length - 1].x.toFixed(1)},${height - padBot} L${coords[0].x.toFixed(1)},${height - padBot} Z`;
   const last = points[points.length - 1];
   const first = points[0];
   const up = last.value >= first.value;
   const dig = digitsFor(ticker, last.value);
 
-  // horizontal guide lines
   const mid = (min + max) / 2;
   const yMax = padTop;
   const yMid = height - padBot - ((mid - min) / span) * (height - padTop - padBot);
   const yMin = height - padBot;
 
-  return `
-    <svg viewBox="0 0 ${width} ${height}" class="market-chart-svg" role="img" aria-label="Gráfico">
+  const svg = `
+    <svg viewBox="0 0 ${width} ${height}" class="market-chart-svg" role="img" aria-label="Gráfico interativo">
       <defs>
         <linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="${accent}" stop-opacity="0.42"/>
@@ -405,10 +420,123 @@ export function buildChartSvg(points, { width = 640, height = 260, accent = '#2d
       <text x="${width - padX}" y="${yMin - 4}" font-size="10" fill="currentColor" opacity="0.5" text-anchor="end">${formatMoney(min, dig)}</text>
       <path d="${area}" fill="url(#${gid})" />
       <path d="${line}" fill="none" stroke="${accent}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
-      <circle cx="${coords[coords.length - 1][0]}" cy="${coords[coords.length - 1][1]}" r="5.5" fill="${accent}" />
+      <line class="mkt-crosshair" x1="0" y1="${padTop}" x2="0" y2="${height - padBot}" stroke="${accent}" stroke-opacity="0" stroke-width="1.25" stroke-dasharray="3 3" />
+      <circle class="mkt-focus-dot" cx="0" cy="0" r="6" fill="${accent}" stroke="#fff" stroke-width="2" opacity="0" />
+      <circle cx="${coords[coords.length - 1].x}" cy="${coords[coords.length - 1].y}" r="5.5" fill="${accent}" />
       <text x="${padX}" y="${height - 8}" font-size="11" fill="currentColor" opacity="0.55">${first.date}</text>
       <text x="${width - padX}" y="${height - 8}" font-size="11" fill="currentColor" opacity="0.55" text-anchor="end">${last.date}</text>
       <text x="${padX}" y="16" font-size="12" fill="${accent}" opacity="0.95">${up ? '▲' : '▼'} ${formatMoney(last.value, dig)}</text>
+      <rect class="mkt-hit" x="${padX}" y="${padTop}" width="${width - padX * 2}" height="${height - padTop - padBot}" fill="transparent" />
     </svg>
   `;
+
+  return { svg, coords, width, height, padX, padTop, padBot, dig, ticker };
+}
+
+function formatPointPrice(ticker, value, dig) {
+  if (value == null) return '—';
+  if (ticker?.id === 'selic') return `${formatMoney(value, 2)}%`;
+  return `R$ ${formatMoney(value, dig)}`;
+}
+
+/**
+ * Mount interactive chart with crosshair + tooltip (price over time).
+ * @returns {{ destroy: () => void }}
+ */
+export function mountInteractiveChart(container, points, { accent = '#2dd4bf', ticker = null } = {}) {
+  if (!container) return { destroy() {} };
+
+  const geometry = prepareChartGeometry(points, { accent, ticker });
+  container.innerHTML = `
+    <div class="mkt-chart-interactive">
+      ${geometry ? geometry.svg : buildChartSvg([])}
+      <div class="mkt-tooltip" hidden>
+        <div class="mkt-tooltip-date"></div>
+        <div class="mkt-tooltip-price"></div>
+        <div class="mkt-tooltip-extra"></div>
+      </div>
+    </div>
+  `;
+
+  if (!geometry) return { destroy() {} };
+
+  const wrap = container.querySelector('.mkt-chart-interactive');
+  const svg = container.querySelector('.market-chart-svg');
+  const tip = container.querySelector('.mkt-tooltip');
+  const tipDate = tip.querySelector('.mkt-tooltip-date');
+  const tipPrice = tip.querySelector('.mkt-tooltip-price');
+  const tipExtra = tip.querySelector('.mkt-tooltip-extra');
+  const cross = svg.querySelector('.mkt-crosshair');
+  const dot = svg.querySelector('.mkt-focus-dot');
+  const hit = svg.querySelector('.mkt-hit');
+  const { coords, dig } = geometry;
+
+  const hide = () => {
+    tip.hidden = true;
+    cross.setAttribute('stroke-opacity', '0');
+    dot.setAttribute('opacity', '0');
+  };
+
+  const showAt = (idx, clientX, clientY) => {
+    const c = coords[idx];
+    if (!c) return;
+    const p = c.point;
+    cross.setAttribute('x1', c.x);
+    cross.setAttribute('x2', c.x);
+    cross.setAttribute('stroke-opacity', '0.75');
+    dot.setAttribute('cx', c.x);
+    dot.setAttribute('cy', c.y);
+    dot.setAttribute('opacity', '1');
+
+    tipDate.textContent = p.labelFull || p.date || '—';
+    tipPrice.textContent = formatPointPrice(ticker, p.value, dig);
+    const extras = [];
+    if (p.high != null) extras.push(`Máx ${formatPointPrice(ticker, p.high, dig)}`);
+    if (p.low != null) extras.push(`Mín ${formatPointPrice(ticker, p.low, dig)}`);
+    if (p.pctChange != null) extras.push(`${formatChange(p.pctChange)}`);
+    tipExtra.textContent = extras.filter(Boolean).join(' · ');
+    tip.hidden = false;
+
+    const rect = wrap.getBoundingClientRect();
+    const tipW = tip.offsetWidth || 140;
+    const tipH = tip.offsetHeight || 64;
+    let left = clientX - rect.left + 14;
+    let top = clientY - rect.top - tipH - 12;
+    if (left + tipW > rect.width - 8) left = clientX - rect.left - tipW - 14;
+    if (top < 8) top = clientY - rect.top + 18;
+    tip.style.transform = `translate(${Math.max(8, left)}px, ${Math.max(8, top)}px)`;
+  };
+
+  const onMove = (e) => {
+    const pt = svg.createSVGPoint();
+    pt.x = e.clientX;
+    pt.y = e.clientY;
+    const ctm = svg.getScreenCTM();
+    if (!ctm) return;
+    const cursor = pt.matrixTransform(ctm.inverse());
+    let best = 0;
+    let bestDist = Infinity;
+    for (let i = 0; i < coords.length; i += 1) {
+      const d = Math.abs(coords[i].x - cursor.x);
+      if (d < bestDist) {
+        bestDist = d;
+        best = i;
+      }
+    }
+    showAt(best, e.clientX, e.clientY);
+  };
+
+  hit.addEventListener('pointermove', onMove);
+  hit.addEventListener('pointerdown', onMove);
+  hit.addEventListener('pointerleave', hide);
+  hit.addEventListener('pointercancel', hide);
+
+  return {
+    destroy() {
+      hit.removeEventListener('pointermove', onMove);
+      hit.removeEventListener('pointerdown', onMove);
+      hit.removeEventListener('pointerleave', hide);
+      hit.removeEventListener('pointercancel', hide);
+    },
+  };
 }

@@ -36,7 +36,7 @@ import {
   formatSigned,
   formatMoney,
   digitsFor,
-  buildChartSvg,
+  mountInteractiveChart,
 } from './markets.js';
 import { initTheme, THEMES, applyTheme, getTheme } from './themes.js';
 import { initLayoutEditor } from './layout.js';
@@ -457,7 +457,6 @@ function renderMarketModalBody(ticker, rangeId, details, accent) {
   const dayChange = formatChange(stats.dayPct);
   const up = (stats.changePct ?? 0) >= 0;
   const ranges = rangesForTicker(ticker.id);
-  const svg = buildChartSvg(history, { accent, ticker });
 
   const extrasHtml =
     ticker.id === 'btc' && extras
@@ -495,6 +494,7 @@ function renderMarketModalBody(ticker, rangeId, details, accent) {
         <div class="mkt-hero-side">
           <div class="status-line">${stats.samples} pontos · ${history[0]?.date || '—'} → ${history.at(-1)?.date || '—'}</div>
           <div class="status-line">${quote?.name || ticker.label}</div>
+          <div class="status-line mkt-hover-hint">Passe o mouse no gráfico para ver o preço</div>
         </div>
       </div>
 
@@ -509,7 +509,7 @@ function renderMarketModalBody(ticker, rangeId, details, accent) {
           .join('')}
       </div>
 
-      <div class="market-chart-wrap mkt-chart-panel">${svg}</div>
+      <div class="market-chart-wrap mkt-chart-panel" data-mkt-chart></div>
 
       <div class="mkt-metrics-block">
         <h4>Resultado do período</h4>
@@ -583,6 +583,8 @@ async function openMarketChart(tickerId, rangeId) {
         state.markets = { ...(state.markets || {}), [tickerId]: details.quote };
       }
       modal.setBody(renderMarketModalBody(ticker, rid, details, accent));
+      const chartHost = modal.el.querySelector('[data-mkt-chart]');
+      mountInteractiveChart(chartHost, details.history, { accent, ticker });
       modal.el.querySelectorAll('[data-range]').forEach((btn) => {
         btn.addEventListener('click', () => paint(btn.dataset.range));
       });
