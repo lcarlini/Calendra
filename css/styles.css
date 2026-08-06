@@ -1450,6 +1450,10 @@ img {
   width: min(760px, 100%);
 }
 
+.modal-xl {
+  width: min(920px, 100%);
+}
+
 .modal-backdrop.open .modal {
   transform: none;
 }
@@ -2526,6 +2530,140 @@ body.layout-editing .gadget:hover {
   align-items: baseline;
   gap: 0.65rem 1rem;
   margin-bottom: 0.35rem;
+}
+
+/* Rich market analysis modal */
+.mkt-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mkt-hero {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  background:
+    radial-gradient(120% 100% at 100% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 55%),
+    var(--surface-soft);
+}
+
+.mkt-hero-symbol {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  margin-bottom: 0.25rem;
+}
+
+.mkt-hero-symbol.accent-usd { color: #38bdf8; }
+.mkt-hero-symbol.accent-eur { color: #a78bfa; }
+.mkt-hero-symbol.accent-btc { color: #f59e0b; }
+.mkt-hero-symbol.accent-selic { color: #34d399; }
+
+.mkt-hero-price {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.mkt-hero-changes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.55rem;
+}
+
+.mkt-hero-side {
+  text-align: right;
+  align-self: flex-end;
+}
+
+.mkt-ranges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.mkt-range-btn {
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.mkt-range-btn:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--ink);
+}
+
+.mkt-range-btn.active {
+  background: var(--deep);
+  color: #fff;
+  border-color: var(--deep);
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.mkt-chart-panel {
+  min-height: 240px;
+}
+
+.mkt-metrics-block h4 {
+  margin: 0 0 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.mkt-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.55rem;
+}
+
+.mkt-metric {
+  padding: 0.7rem 0.75rem;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+}
+
+.mkt-metric-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+.mkt-metric-value {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.mkt-metric.up .mkt-metric-value { color: #4ade80; }
+.mkt-metric.down .mkt-metric-value { color: #fb7185; }
+
+@media (max-width: 560px) {
+  .mkt-hero-side { text-align: left; }
+  .mkt-metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 .modal-cal-nav {

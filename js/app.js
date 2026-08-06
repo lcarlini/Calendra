@@ -29,9 +29,13 @@ import {
 import {
   MARKET_TICKERS,
   fetchMarketQuotes,
-  fetchMarketHistory,
+  fetchMarketDetails,
+  rangesForTicker,
   formatTickerValue,
   formatChange,
+  formatSigned,
+  formatMoney,
+  digitsFor,
   buildChartSvg,
 } from './markets.js';
 import { initTheme, THEMES, applyTheme, getTheme } from './themes.js';
@@ -431,35 +435,164 @@ async function refreshMarkets() {
   }
 }
 
-async function openMarketChart(tickerId) {
+function metricCell(label, value, tone = '') {
+  return `
+    <div class="mkt-metric ${tone}">
+      <span class="mkt-metric-label">${label}</span>
+      <strong class="mkt-metric-value">${value}</strong>
+    </div>
+  `;
+}
+
+function renderMarketModalBody(ticker, rangeId, details, accent) {
+  const { quote, history, stats, extras } = details;
+  const dig = digitsFor(ticker, stats.close ?? quote?.value);
+  const unit = ticker.id === 'selic' ? '%' : 'R$';
+  const fmt = (v, d = dig) => {
+    if (v == null) return '—';
+    if (ticker.id === 'selic') return `${formatMoney(v, 2)}%`;
+    return `${unit} ${formatMoney(v, d)}`;
+  };
+  const rangeChange = formatChange(stats.changePct);
+  const dayChange = formatChange(stats.dayPct);
+  const up = (stats.changePct ?? 0) >= 0;
+  const ranges = rangesForTicker(ticker.id);
+  const svg = buildChartSvg(history, { accent, ticker });
+
+  const extrasHtml =
+    ticker.id === 'btc' && extras
+      ? `
+      <div class="mkt-metrics-block">
+        <h4>Mercado cripto</h4>
+        <div class="mkt-metrics-grid">
+          ${metricCell('Preço USD', extras.priceUsd != null ? `$ ${formatMoney(extras.priceUsd, 0)}` : '—')}
+          ${metricCell('Market cap BRL', extras.marketCapBrl != null ? `R$ ${formatMoney(extras.marketCapBrl / 1e9, 2)} bi` : '—')}
+          ${metricCell('Volume 24h', extras.volume24hBrl != null ? `R$ ${formatMoney(extras.volume24hBrl / 1e9, 2)} bi` : '—')}
+          ${metricCell('Var. 24h (CG)', formatChange(extras.change24hCg) || '—', (extras.change24hCg ?? 0) >= 0 ? 'up' : 'down')}
+        </div>
+      </div>`
+      : '';
+
+  return `
+    <div class="mkt-modal" data-mkt-ticker="${ticker.id}">
+      <div class="mkt-hero">
+        <div>
+          <div class="mkt-hero-symbol accent-${ticker.accent}">${ticker.symbol}</div>
+          <div class="mkt-hero-price">${formatTickerValue(ticker, { value: stats.close ?? quote?.value })}</div>
+          <div class="mkt-hero-changes">
+            ${
+              rangeChange
+                ? `<span class="market-change ${up ? 'up' : 'down'}">${rangeChange} no período</span>`
+                : ''
+            }
+            ${
+              dayChange
+                ? `<span class="market-change ${(stats.dayPct ?? 0) >= 0 ? 'up' : 'down'}">${dayChange} no dia</span>`
+                : ''
+            }
+          </div>
+        </div>
+        <div class="mkt-hero-side">
+          <div class="status-line">${stats.samples} pontos · ${history[0]?.date || '—'} → ${history.at(-1)?.date || '—'}</div>
+          <div class="status-line">${quote?.name || ticker.label}</div>
+        </div>
+      </div>
+
+      <div class="mkt-ranges" role="tablist" aria-label="Período">
+        ${ranges
+          .map(
+            (r) => `
+          <button type="button" class="mkt-range-btn ${r.id === rangeId ? 'active' : ''}" data-range="${r.id}">
+            ${r.label}
+          </button>`
+          )
+          .join('')}
+      </div>
+
+      <div class="market-chart-wrap mkt-chart-panel">${svg}</div>
+
+      <div class="mkt-metrics-block">
+        <h4>Resultado do período</h4>
+        <div class="mkt-metrics-grid">
+          ${metricCell('Abertura', fmt(stats.open))}
+          ${metricCell('Fechamento', fmt(stats.close))}
+          ${metricCell('Máxima', fmt(stats.high), 'up')}
+          ${metricCell('Mínima', fmt(stats.low), 'down')}
+          ${metricCell('Variação', formatSigned(stats.change, dig), up ? 'up' : 'down')}
+          ${metricCell('Variação %', rangeChange || '—', up ? 'up' : 'down')}
+          ${metricCell('Média', fmt(stats.avg))}
+          ${metricCell('Amplitude', fmt(stats.amplitude))}
+          ${metricCell('Amplitude %', formatChange(stats.amplitudePct) || '—')}
+          ${metricCell('Amostras', String(stats.samples))}
+        </div>
+      </div>
+
+      ${
+        ticker.id !== 'selic'
+          ? `
+      <div class="mkt-metrics-block">
+        <h4>Cotação ao vivo</h4>
+        <div class="mkt-metrics-grid">
+          ${metricCell('Compra (bid)', fmt(stats.bid))}
+          ${metricCell('Venda (ask)', fmt(stats.ask))}
+          ${metricCell('Spread', stats.spread != null ? formatMoney(stats.spread, dig) : '—')}
+          ${metricCell('Var. bid', formatSigned(stats.varBid, dig), (stats.varBid ?? 0) >= 0 ? 'up' : 'down')}
+          ${metricCell('Máx. do dia', fmt(stats.quoteHigh))}
+          ${metricCell('Mín. do dia', fmt(stats.quoteLow))}
+          ${metricCell('Var. do dia', dayChange || '—', (stats.dayPct ?? 0) >= 0 ? 'up' : 'down')}
+          ${metricCell('Atualizado', quote?.timestamp ? String(quote.timestamp).slice(0, 19) : '—')}
+        </div>
+      </div>`
+          : `
+      <div class="mkt-metrics-block">
+        <h4>Taxa Selic</h4>
+        <div class="mkt-metrics-grid">
+          ${metricCell('Taxa atual', fmt(quote?.value ?? stats.close))}
+          ${metricCell('No período', fmt(stats.close))}
+          ${metricCell('Máx. período', fmt(stats.high))}
+          ${metricCell('Mín. período', fmt(stats.low))}
+          ${metricCell('Fonte', 'BCB · série 432')}
+        </div>
+      </div>`
+      }
+
+      ${extrasHtml}
+    </div>
+  `;
+}
+
+async function openMarketChart(tickerId, rangeId) {
   const ticker = MARKET_TICKERS.find((t) => t.id === tickerId);
   if (!ticker) return;
-  const quote = state.markets?.[tickerId];
   const accent = ACCENT_BY_TICKER[tickerId] || '#2dd4bf';
+  const ranges = rangesForTicker(tickerId);
+  const initialRange = rangeId || ranges[3]?.id || ranges[0]?.id || '30d';
 
   const modal = openModal({
-    title: `${ticker.label} (${ticker.symbol})`,
-    subtitle: quote ? formatTickerValue(ticker, quote) : 'Carregando histórico…',
-    wide: true,
-    bodyHtml: `<div class="market-chart-wrap loading-dots">Carregando gráfico</div>`,
+    title: `${ticker.label} · ${ticker.symbol}`,
+    subtitle: 'Análise completa · períodos e métricas',
+    xl: true,
+    bodyHtml: `<div class="market-chart-wrap loading-dots">Carregando análise</div>`,
   });
 
-  try {
-    const history = await fetchMarketHistory(tickerId, 30);
-    const svg = buildChartSvg(history, { accent });
-    const change = formatChange(quote?.changePct);
-    modal.setBody(`
-      <div class="market-chart-meta">
-        <span class="market-value fancy">${formatTickerValue(ticker, quote)}</span>
-        ${change ? `<span class="market-change ${(quote?.changePct ?? 0) >= 0 ? 'up' : 'down'}">${change}</span>` : ''}
-        <span class="status-line">Últimos ~30 dias</span>
-      </div>
-      <div class="market-chart-wrap">${svg}</div>
-    `);
-  } catch (err) {
-    console.warn(err);
-    modal.setBody(`<p class="status-line">Não foi possível carregar o gráfico.</p>`);
-  }
+  const paint = async (rid) => {
+    try {
+      modal.setBody(`<div class="market-chart-wrap loading-dots">Carregando ${rid.toUpperCase()}</div>`);
+      const details = await fetchMarketDetails(tickerId, rid);
+      if (details.quote) {
+        state.markets = { ...(state.markets || {}), [tickerId]: details.quote };
+      }
+      modal.setBody(renderMarketModalBody(ticker, rid, details, accent));
+      modal.el.querySelectorAll('[data-range]').forEach((btn) => {
+        btn.addEventListener('click', () => paint(btn.dataset.range));
+      });
+    } catch (err) {
+      console.warn(err);
+      modal.setBody(`<p class="status-line">Não foi possível carregar a análise de ${ticker.label}.</p>`);
+    }
+  };
+
+  await paint(initialRange);
 }
 
 function bindThemeAndLayout() {

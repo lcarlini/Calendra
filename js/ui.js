@@ -31,15 +31,16 @@ let activeModal = null;
 
 /**
  * Open a modal. Returns { close, setBody, el }.
- * @param {{ title: string, subtitle?: string, bodyHtml?: string, wide?: boolean, onClose?: () => void }} opts
+ * @param {{ title: string, subtitle?: string, bodyHtml?: string, wide?: boolean, xl?: boolean, onClose?: () => void }} opts
  */
-export function openModal({ title, subtitle = '', bodyHtml = '', wide = false, onClose } = {}) {
+export function openModal({ title, subtitle = '', bodyHtml = '', wide = false, xl = false, onClose } = {}) {
   closeModal();
 
   const backdrop = document.createElement('div');
   backdrop.className = 'modal-backdrop';
+  const sizeClass = xl ? 'modal-xl' : wide ? 'modal-wide' : '';
   backdrop.innerHTML = `
-    <div class="modal ${wide ? 'modal-wide' : ''}" role="dialog" aria-modal="true" aria-label="${title}">
+    <div class="modal ${sizeClass}" role="dialog" aria-modal="true" aria-label="${title}">
       <div class="modal-head">
         <div>
           <h3>${title}</h3>

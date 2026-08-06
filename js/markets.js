@@ -1,7 +1,10 @@
-/** Live FX / crypto / SELIC via public APIs (AwesomeAPI + BrasilAPI). */
+/** Live FX / crypto / SELIC via public APIs (AwesomeAPI + BrasilAPI + BCB). */
 
 const AWESOME = 'https://economia.awesomeapi.com.br';
 const BRASIL_API_TAXAS = 'https://brasilapi.com.br/api/taxas/v1';
+const BCB_SELIC = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados';
+const COINGECKO_BTC =
+  'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=brl,usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true';
 
 export const MARKET_TICKERS = [
   {
@@ -38,15 +41,33 @@ export const MARKET_TICKERS = [
   },
 ];
 
+/** Chart / analysis ranges shown in the market modal. */
+export const MARKET_RANGES = [
+  { id: '1h', label: '1H', mode: 'intraday', count: 72, selic: false },
+  { id: '24h', label: '24H', mode: 'intraday', count: 288, selic: false },
+  { id: '7d', label: '7D', mode: 'daily', days: 7, selic: true },
+  { id: '30d', label: '30D', mode: 'daily', days: 30, selic: true },
+  { id: '90d', label: '90D', mode: 'daily', days: 90, selic: true },
+  { id: '1y', label: '1A', mode: 'daily', days: 365, selic: true },
+  { id: 'max', label: 'Máx', mode: 'daily', days: 360, selic: true, selicYears: 10 },
+];
+
 const historyCache = new Map();
 
 function num(v) {
-  const n = Number(v);
+  const n = Number(String(v ?? '').replace(',', '.'));
   return Number.isFinite(n) ? n : null;
 }
 
-function formatMoney(value, digits = 2) {
-  if (value == null) return '—';
+export function digitsFor(ticker, value) {
+  if (ticker?.id === 'selic') return 2;
+  if (ticker?.id === 'btc') return value != null && value < 1000 ? 2 : 0;
+  if (value != null && value >= 1000) return 2;
+  return 4;
+}
+
+export function formatMoney(value, digits = 2) {
+  if (value == null || !Number.isFinite(value)) return '—';
   return value.toLocaleString('pt-BR', {
     minimumFractionDigits: digits,
     maximumFractionDigits: digits,
@@ -55,12 +76,8 @@ function formatMoney(value, digits = 2) {
 
 export function formatTickerValue(ticker, quote) {
   if (!quote || quote.value == null) return '—';
-  if (ticker.id === 'selic') {
-    return `${formatMoney(quote.value, 2)}%`;
-  }
-  if (ticker.id === 'btc') {
-    return `R$ ${formatMoney(quote.value, 0)}`;
-  }
+  if (ticker.id === 'selic') return `${formatMoney(quote.value, 2)}%`;
+  if (ticker.id === 'btc') return `R$ ${formatMoney(quote.value, digitsFor(ticker, quote.value))}`;
   return `R$ ${formatMoney(quote.value, 4)}`;
 }
 
@@ -70,8 +87,16 @@ export function formatChange(pct) {
   return `${sign}${pct.toFixed(2)}%`;
 }
 
+export function formatSigned(value, digits = 4) {
+  if (value == null || !Number.isFinite(value)) return '—';
+  const sign = value > 0 ? '+' : '';
+  return `${sign}${formatMoney(value, digits)}`;
+}
+
 async function fetchAwesomeQuotes() {
-  const pairs = MARKET_TICKERS.filter((t) => t.pair).map((t) => t.pair).join(',');
+  const pairs = MARKET_TICKERS.filter((t) => t.pair)
+    .map((t) => t.pair)
+    .join(',');
   const res = await fetch(`${AWESOME}/json/last/${pairs}`);
   if (!res.ok) throw new Error(`FX failed (${res.status})`);
   return res.json();
@@ -91,19 +116,48 @@ async function fetchSelic() {
     value: num(row.valor ?? row.value),
     date: null,
     changePct: null,
+    high: null,
+    low: null,
+    ask: null,
+    varBid: null,
+    name: 'Taxa Selic',
   };
+}
+
+async function fetchBtcExtras() {
+  try {
+    const res = await fetch(COINGECKO_BTC);
+    if (!res.ok) return null;
+    const data = await res.json();
+    const b = data.bitcoin;
+    if (!b) return null;
+    return {
+      marketCapBrl: num(b.brl_market_cap),
+      marketCapUsd: num(b.usd_market_cap),
+      volume24hBrl: num(b.brl_24h_vol),
+      change24hCg: num(b.brl_24h_change),
+      priceUsd: num(b.usd),
+    };
+  } catch {
+    return null;
+  }
 }
 
 function parseAwesomeRow(row) {
   const bid = num(row.bid);
-  const pct = num(row.pctChange);
+  const ask = num(row.ask);
   return {
     value: bid,
-    changePct: pct,
+    ask,
+    changePct: num(row.pctChange),
+    varBid: num(row.varBid),
     high: num(row.high),
     low: num(row.low),
     name: row.name || row.code,
     timestamp: row.create_date || row.timestamp,
+    code: row.code,
+    codein: row.codein,
+    spread: bid != null && ask != null ? ask - bid : null,
   };
 }
 
@@ -126,47 +180,182 @@ export async function fetchMarketQuotes() {
   return out;
 }
 
-export async function fetchMarketHistory(tickerId, days = 30) {
-  const ticker = MARKET_TICKERS.find((t) => t.id === tickerId);
-  if (!ticker) throw new Error('Unknown ticker');
-
-  const cacheKey = `${tickerId}:${days}`;
-  const cached = historyCache.get(cacheKey);
-  if (cached && Date.now() - cached.at < 60_000) return cached.data;
-
-  if (ticker.id === 'selic') {
-    const current = await fetchSelic();
-    const data = Array.from({ length: Math.min(days, 30) }, (_, i) => {
-      const d = new Date();
-      d.setDate(d.getDate() - (Math.min(days, 30) - 1 - i));
+function mapAwesomeSeries(rows, { timeStyle = 'date' } = {}) {
+  return (Array.isArray(rows) ? rows : [])
+    .map((r) => {
+      const ts = r.timestamp ? Number(r.timestamp) * 1000 : null;
+      const d = ts ? new Date(ts) : null;
+      let label = r.create_date || '';
+      if (d && !Number.isNaN(d.getTime())) {
+        label =
+          timeStyle === 'time'
+            ? d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+            : d.toLocaleDateString('pt-BR');
+      }
       return {
-        date: d.toLocaleDateString('pt-BR'),
-        value: current.value,
+        date: label,
+        value: num(r.bid),
+        high: num(r.high),
+        low: num(r.low),
+        ask: num(r.ask),
+        pctChange: num(r.pctChange),
+        varBid: num(r.varBid),
+        ts,
       };
-    });
-    historyCache.set(cacheKey, { at: Date.now(), data });
-    return data;
-  }
-
-  const res = await fetch(`${AWESOME}/json/daily/${ticker.pair}/${days}`);
-  if (!res.ok) throw new Error('History failed');
-  const rows = await res.json();
-  const data = (Array.isArray(rows) ? rows : [])
-    .map((r) => ({
-      date: r.timestamp
-        ? new Date(Number(r.timestamp) * 1000).toLocaleDateString('pt-BR')
-        : r.create_date?.slice(0, 10) || '',
-      value: num(r.bid),
-    }))
+    })
     .filter((p) => p.value != null)
     .reverse();
+}
+
+async function fetchAwesomeIntraday(pair, count) {
+  const res = await fetch(`${AWESOME}/json/${pair}/${count}`);
+  if (!res.ok) throw new Error('Intraday failed');
+  return mapAwesomeSeries(await res.json(), { timeStyle: 'time' });
+}
+
+async function fetchAwesomeDaily(pair, days) {
+  const res = await fetch(`${AWESOME}/json/daily/${pair}/${days}`);
+  if (!res.ok) throw new Error('Daily failed');
+  return mapAwesomeSeries(await res.json(), { timeStyle: 'date' });
+}
+
+function formatBrDate(d) {
+  const dd = String(d.getDate()).padStart(2, '0');
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const yyyy = d.getFullYear();
+  return `${dd}/${mm}/${yyyy}`;
+}
+
+async function fetchSelicHistory(range) {
+  const end = new Date();
+  const start = new Date();
+  if (range.id === 'max' || range.selicYears) {
+    start.setFullYear(start.getFullYear() - (range.selicYears || 10));
+  } else {
+    start.setDate(start.getDate() - (range.days || 30));
+  }
+  const url = `${BCB_SELIC}?formato=json&dataInicial=${formatBrDate(start)}&dataFinal=${formatBrDate(end)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('SELIC history failed');
+  const rows = await res.json();
+  // Keep weekly-ish samples for long ranges to keep chart readable
+  let points = (Array.isArray(rows) ? rows : [])
+    .map((r) => ({
+      date: r.data,
+      value: num(r.valor),
+      high: null,
+      low: null,
+    }))
+    .filter((p) => p.value != null);
+
+  if (points.length > 180) {
+    const step = Math.ceil(points.length / 180);
+    points = points.filter((_, i) => i % step === 0 || i === points.length - 1);
+  }
+  return points;
+}
+
+export function rangesForTicker(tickerId) {
+  if (tickerId === 'selic') return MARKET_RANGES.filter((r) => r.selic);
+  return MARKET_RANGES;
+}
+
+export async function fetchMarketHistory(tickerId, rangeId = '30d') {
+  const ticker = MARKET_TICKERS.find((t) => t.id === tickerId);
+  if (!ticker) throw new Error('Unknown ticker');
+  const range = MARKET_RANGES.find((r) => r.id === rangeId) || MARKET_RANGES.find((r) => r.id === '30d');
+  const cacheKey = `${tickerId}:${range.id}`;
+  const cached = historyCache.get(cacheKey);
+  if (cached && Date.now() - cached.at < 45_000) return cached.data;
+
+  let data;
+  if (ticker.id === 'selic') {
+    data = await fetchSelicHistory(range);
+  } else if (range.mode === 'intraday') {
+    data = await fetchAwesomeIntraday(ticker.pair, range.count);
+  } else {
+    data = await fetchAwesomeDaily(ticker.pair, range.days);
+  }
 
   historyCache.set(cacheKey, { at: Date.now(), data });
   return data;
 }
 
-/** Lightweight SVG sparkline / area chart (no deps). */
-export function buildChartSvg(points, { width = 520, height = 220, accent = '#2dd4bf' } = {}) {
+export function computeSeriesStats(points, quote = null) {
+  if (!points?.length) {
+    return {
+      open: null,
+      close: null,
+      high: null,
+      low: null,
+      avg: null,
+      change: null,
+      changePct: null,
+      amplitude: null,
+      amplitudePct: null,
+      samples: 0,
+      quoteHigh: quote?.high ?? null,
+      quoteLow: quote?.low ?? null,
+      ask: quote?.ask ?? null,
+      bid: quote?.value ?? null,
+      spread: quote?.spread ?? null,
+      varBid: quote?.varBid ?? null,
+      dayPct: quote?.changePct ?? null,
+    };
+  }
+
+  const values = points.map((p) => p.value);
+  const open = values[0];
+  const close = values[values.length - 1];
+  const seriesHigh = Math.max(...values);
+  const seriesLow = Math.min(...values);
+  const highs = points.map((p) => p.high).filter((v) => v != null);
+  const lows = points.map((p) => p.low).filter((v) => v != null);
+  const high = highs.length ? Math.max(seriesHigh, ...highs) : seriesHigh;
+  const low = lows.length ? Math.min(seriesLow, ...lows) : seriesLow;
+  const avg = values.reduce((a, b) => a + b, 0) / values.length;
+  const change = close - open;
+  const changePct = open ? (change / open) * 100 : null;
+  const amplitude = high - low;
+  const amplitudePct = low ? (amplitude / low) * 100 : null;
+
+  return {
+    open,
+    close,
+    high,
+    low,
+    avg,
+    change,
+    changePct,
+    amplitude,
+    amplitudePct,
+    samples: values.length,
+    quoteHigh: quote?.high ?? null,
+    quoteLow: quote?.low ?? null,
+    ask: quote?.ask ?? null,
+    bid: quote?.value ?? null,
+    spread: quote?.spread ?? null,
+    varBid: quote?.varBid ?? null,
+    dayPct: quote?.changePct ?? null,
+  };
+}
+
+export async function fetchMarketDetails(tickerId, rangeId = '30d') {
+  const ticker = MARKET_TICKERS.find((t) => t.id === tickerId);
+  const [quotes, history] = await Promise.all([
+    fetchMarketQuotes(),
+    fetchMarketHistory(tickerId, rangeId),
+  ]);
+  const quote = quotes?.[tickerId] || null;
+  let extras = null;
+  if (tickerId === 'btc') extras = await fetchBtcExtras();
+  const stats = computeSeriesStats(history, quote);
+  return { ticker, quote, history, stats, extras, rangeId };
+}
+
+/** Lightweight SVG area chart (no deps). */
+export function buildChartSvg(points, { width = 640, height = 260, accent = '#2dd4bf', ticker = null } = {}) {
+  const gid = `mktFill-${Math.random().toString(36).slice(2, 9)}`;
   if (!points?.length) {
     return `<svg viewBox="0 0 ${width} ${height}" class="market-chart-svg" role="img" aria-label="Sem dados">
       <text x="50%" y="50%" text-anchor="middle" fill="currentColor" opacity="0.5" font-size="14">Sem histórico</text>
@@ -176,37 +365,50 @@ export function buildChartSvg(points, { width = 520, height = 220, accent = '#2d
   const values = points.map((p) => p.value);
   const min = Math.min(...values);
   const max = Math.max(...values);
-  const pad = 16;
+  const padX = 18;
+  const padTop = 28;
+  const padBot = 28;
   const span = max - min || 1;
-  const stepX = (width - pad * 2) / Math.max(points.length - 1, 1);
+  const stepX = (width - padX * 2) / Math.max(points.length - 1, 1);
 
   const coords = points.map((p, i) => {
-    const x = pad + i * stepX;
-    const y = height - pad - ((p.value - min) / span) * (height - pad * 2);
+    const x = padX + i * stepX;
+    const y = height - padBot - ((p.value - min) / span) * (height - padTop - padBot);
     return [x, y];
   });
 
   const line = coords.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
-  const area = `${line} L${coords[coords.length - 1][0].toFixed(1)},${height - pad} L${coords[0][0].toFixed(1)},${height - pad} Z`;
+  const area = `${line} L${coords[coords.length - 1][0].toFixed(1)},${height - padBot} L${coords[0][0].toFixed(1)},${height - padBot} Z`;
   const last = points[points.length - 1];
   const first = points[0];
   const up = last.value >= first.value;
-  const digits = last.value >= 1000 ? 0 : last.value >= 10 ? 2 : 4;
+  const dig = digitsFor(ticker, last.value);
+
+  // horizontal guide lines
+  const mid = (min + max) / 2;
+  const yMax = padTop;
+  const yMid = height - padBot - ((mid - min) / span) * (height - padTop - padBot);
+  const yMin = height - padBot;
 
   return `
     <svg viewBox="0 0 ${width} ${height}" class="market-chart-svg" role="img" aria-label="Gráfico">
       <defs>
-        <linearGradient id="mktFill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="${accent}" stop-opacity="0.45"/>
+        <linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="${accent}" stop-opacity="0.42"/>
           <stop offset="100%" stop-color="${accent}" stop-opacity="0"/>
         </linearGradient>
       </defs>
-      <path d="${area}" fill="url(#mktFill)" />
-      <path d="${line}" fill="none" stroke="${accent}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-      <circle cx="${coords[coords.length - 1][0]}" cy="${coords[coords.length - 1][1]}" r="5" fill="${accent}" />
-      <text x="${pad}" y="${height - 4}" font-size="11" fill="currentColor" opacity="0.55">${first.date}</text>
-      <text x="${width - pad}" y="${height - 4}" font-size="11" fill="currentColor" opacity="0.55" text-anchor="end">${last.date}</text>
-      <text x="${pad}" y="14" font-size="12" fill="currentColor" opacity="0.7">${up ? '▲' : '▼'} ${formatMoney(last.value, digits)}</text>
+      <line x1="${padX}" y1="${yMax}" x2="${width - padX}" y2="${yMax}" stroke="currentColor" stroke-opacity="0.12" />
+      <line x1="${padX}" y1="${yMid}" x2="${width - padX}" y2="${yMid}" stroke="currentColor" stroke-opacity="0.1" stroke-dasharray="4 4" />
+      <line x1="${padX}" y1="${yMin}" x2="${width - padX}" y2="${yMin}" stroke="currentColor" stroke-opacity="0.12" />
+      <text x="${width - padX}" y="${yMax + 12}" font-size="10" fill="currentColor" opacity="0.5" text-anchor="end">${formatMoney(max, dig)}</text>
+      <text x="${width - padX}" y="${yMin - 4}" font-size="10" fill="currentColor" opacity="0.5" text-anchor="end">${formatMoney(min, dig)}</text>
+      <path d="${area}" fill="url(#${gid})" />
+      <path d="${line}" fill="none" stroke="${accent}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="${coords[coords.length - 1][0]}" cy="${coords[coords.length - 1][1]}" r="5.5" fill="${accent}" />
+      <text x="${padX}" y="${height - 8}" font-size="11" fill="currentColor" opacity="0.55">${first.date}</text>
+      <text x="${width - padX}" y="${height - 8}" font-size="11" fill="currentColor" opacity="0.55" text-anchor="end">${last.date}</text>
+      <text x="${padX}" y="16" font-size="12" fill="${accent}" opacity="0.95">${up ? '▲' : '▼'} ${formatMoney(last.value, dig)}</text>
     </svg>
   `;
 }
