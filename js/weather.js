@@ -56,8 +56,12 @@ async function fetchForecast16(lat, lon) {
   const params = new URLSearchParams({
     latitude: String(lat),
     longitude: String(lon),
-    current: 'temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,apparent_temperature',
-    daily: 'weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max',
+    current:
+      'temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,wind_direction_10m,apparent_temperature,precipitation,cloud_cover,surface_pressure,is_day',
+    hourly:
+      'temperature_2m,relative_humidity_2m,precipitation_probability,weather_code,wind_speed_10m,apparent_temperature',
+    daily:
+      'weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,sunrise,sunset,uv_index_max,wind_speed_10m_max',
     forecast_days: '16',
     timezone: 'auto',
   });
@@ -91,6 +95,11 @@ export async function fetchWeather(lat, lon) {
     temperature_2m_max: [...base.daily.temperature_2m_max],
     temperature_2m_min: [...base.daily.temperature_2m_min],
     precipitation_probability_max: [...base.daily.precipitation_probability_max],
+    precipitation_sum: [...(base.daily.precipitation_sum || [])],
+    sunrise: [...(base.daily.sunrise || [])],
+    sunset: [...(base.daily.sunset || [])],
+    uv_index_max: [...(base.daily.uv_index_max || [])],
+    wind_speed_10m_max: [...(base.daily.wind_speed_10m_max || [])],
     source: base.daily.time.map(() => 'forecast'),
   };
 
@@ -105,6 +114,11 @@ export async function fetchWeather(lat, lon) {
       daily.temperature_2m_max.push(seasonal.daily.temperature_2m_max[i]);
       daily.temperature_2m_min.push(seasonal.daily.temperature_2m_min[i]);
       daily.precipitation_probability_max.push(null);
+      daily.precipitation_sum.push(null);
+      daily.sunrise.push(null);
+      daily.sunset.push(null);
+      daily.uv_index_max.push(null);
+      daily.wind_speed_10m_max.push(null);
       daily.source.push('seasonal');
       have.add(day);
     }
@@ -113,6 +127,33 @@ export async function fetchWeather(lat, lon) {
   }
 
   return { ...base, daily };
+}
+
+export function windDirLabel(deg) {
+  if (deg == null || !Number.isFinite(deg)) return '—';
+  const dirs = ['N', 'NE', 'L', 'SE', 'S', 'SO', 'O', 'NO'];
+  return dirs[Math.round(deg / 45) % 8];
+}
+
+/** Next N hours from hourly payload (from "now"). */
+export function sliceHourly(hourly, hours = 24) {
+  if (!hourly?.time?.length) return [];
+  const now = Date.now();
+  const start = hourly.time.findIndex((t) => new Date(t).getTime() >= now - 60 * 60 * 1000);
+  const from = start < 0 ? 0 : start;
+  const out = [];
+  for (let i = from; i < hourly.time.length && out.length < hours; i += 1) {
+    out.push({
+      time: hourly.time[i],
+      temp: hourly.temperature_2m?.[i],
+      feels: hourly.apparent_temperature?.[i],
+      humidity: hourly.relative_humidity_2m?.[i],
+      rain: hourly.precipitation_probability?.[i],
+      code: hourly.weather_code?.[i],
+      wind: hourly.wind_speed_10m?.[i],
+    });
+  }
+  return out;
 }
 
 export function getPosition() {

@@ -9,7 +9,7 @@
     />
     <title>Calendra — Command Center</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1620'/%3E%3Cpath d='M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z' fill='%23a3e635'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="css/styles.css?v=20260806e" />
+    <link rel="stylesheet" href="css/styles.css?v=20260806f" />
     <script>
       try {
         var t = localStorage.getItem('calendra.theme.v1') || 'ink';
@@ -114,7 +114,8 @@
               <button type="button" class="btn-icon" id="weather-refresh" title="Atualizar" aria-label="Atualizar clima">↻</button>
             </div>
             <div class="weather-stack" id="weather-bars">
-              <article class="weather-city-panel tone-emerald" data-weather-bar="pocos">
+              <article class="weather-city-panel tone-emerald" data-weather-bar="pocos" role="button" tabindex="0" aria-label="Abrir clima de Poços de Caldas">
+                <div class="weather-panel-hint">Detalhes →</div>
                 <div class="weather-now weather-now-compact">
                   <div class="weather-icon" data-role="icon">◎</div>
                   <div>
@@ -130,7 +131,8 @@
                 </div>
                 <div class="forecast-scroll" data-role="forecast" aria-label="Previsão Poços"></div>
               </article>
-              <article class="weather-city-panel tone-amber" data-weather-bar="sorocaba">
+              <article class="weather-city-panel tone-amber" data-weather-bar="sorocaba" role="button" tabindex="0" aria-label="Abrir clima de Sorocaba">
+                <div class="weather-panel-hint">Detalhes →</div>
                 <div class="weather-now weather-now-compact">
                   <div class="weather-icon" data-role="icon">◎</div>
                   <div>
@@ -259,6 +261,6 @@
       </footer>
     </div>
 
-    <script type="module" src="js/app.js?v=20260806e"></script>
+    <script type="module" src="js/app.js?v=20260806f"></script>
   </body>
 </html>

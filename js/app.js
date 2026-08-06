@@ -25,6 +25,8 @@ import {
   describeWeather,
   fetchWeather,
   resolveLocation,
+  windDirLabel,
+  sliceHourly,
 } from './weather.js';
 import {
   MARKET_TICKERS,
@@ -59,6 +61,7 @@ const state = {
   extraClocks: buildExtraClocks('Brasil'),
   locationLabel: 'Detectando…',
   markets: null,
+  weatherByCity: {},
 };
 
 let layoutApi = null;
@@ -313,7 +316,7 @@ function bindReminderForm() {
   });
 }
 
-function forecastHtml(daily) {
+function forecastHtml(daily, { compact = true } = {}) {
   if (!daily?.time?.length) return '';
   return daily.time
     .map((date, i) => {
@@ -326,16 +329,136 @@ function forecastHtml(daily) {
       const rain = daily.precipitation_probability_max[i];
       const rainLabel = rain == null ? '—' : `${rain}%`;
       const ext = daily.source?.[i] === 'seasonal' ? ' extended' : '';
+      const uv = daily.uv_index_max?.[i];
+      const precip = daily.precipitation_sum?.[i];
+      const wind = daily.wind_speed_10m_max?.[i];
+      const extra = compact
+        ? ''
+        : `
+          <div class="wx-day-extra">
+            ${uv != null ? `<span>UV ${Math.round(uv)}</span>` : ''}
+            ${precip != null ? `<span>${precip.toFixed(1)} mm</span>` : ''}
+            ${wind != null ? `<span>${Math.round(wind)} km/h</span>` : ''}
+          </div>`;
       return `
         <article class="forecast-day${ext}" title="${w.label}">
           <div class="d">${day}</div>
           <div class="ico">${w.icon}</div>
           <div class="t">${max}° / ${min}°</div>
           <div class="rain">${rainLabel}</div>
+          ${extra}
         </article>
       `;
     })
     .join('');
+}
+
+function hourlyHtml(hours) {
+  if (!hours?.length) return '<p class="status-line">Sem dados horários</p>';
+  return hours
+    .map((h) => {
+      const d = new Date(h.time);
+      const label = d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      const w = h.code == null ? { icon: '◌', label: '—' } : describeWeather(h.code);
+      return `
+        <article class="wx-hour" title="${w.label}">
+          <div class="wx-hour-time">${label}</div>
+          <div class="wx-hour-ico">${w.icon}</div>
+          <div class="wx-hour-temp">${h.temp != null ? `${Math.round(h.temp)}°` : '—'}</div>
+          <div class="wx-hour-rain">${h.rain != null ? `${h.rain}%` : '—'}</div>
+        </article>
+      `;
+    })
+    .join('');
+}
+
+function weatherMetric(label, value) {
+  return `
+    <div class="mkt-metric">
+      <span class="mkt-metric-label">${label}</span>
+      <strong class="mkt-metric-value">${value}</strong>
+    </div>
+  `;
+}
+
+function renderWeatherModalBody(city, data) {
+  const current = data.current || {};
+  const meta = describeWeather(current.weather_code);
+  const hours = sliceHourly(data.hourly, 24);
+  const sunrise = data.daily?.sunrise?.[0]
+    ? new Date(data.daily.sunrise[0]).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+    : '—';
+  const sunset = data.daily?.sunset?.[0]
+    ? new Date(data.daily.sunset[0]).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+    : '—';
+  const uvToday = data.daily?.uv_index_max?.[0];
+  const tone = city.tone === 'amber' ? 'tone-amber' : 'tone-emerald';
+
+  return `
+    <div class="wx-modal ${tone}">
+      <div class="wx-hero">
+        <div class="wx-hero-icon">${meta.icon}</div>
+        <div>
+          <div class="wx-hero-city">${city.label}</div>
+          <div class="wx-hero-temp">${current.temperature_2m != null ? `${Math.round(current.temperature_2m)}°` : '—'}</div>
+          <div class="wx-hero-desc">${meta.label}</div>
+        </div>
+        <div class="wx-hero-side status-line">
+          Sensação ${current.apparent_temperature != null ? `${Math.round(current.apparent_temperature)}°` : '—'}<br/>
+          Atualizado agora · Open-Meteo
+        </div>
+      </div>
+
+      <div class="mkt-metrics-block">
+        <h4>Condições atuais</h4>
+        <div class="mkt-metrics-grid">
+          ${weatherMetric('Umidade', current.relative_humidity_2m != null ? `${current.relative_humidity_2m}%` : '—')}
+          ${weatherMetric('Vento', current.wind_speed_10m != null ? `${Math.round(current.wind_speed_10m)} km/h` : '—')}
+          ${weatherMetric('Direção', windDirLabel(current.wind_direction_10m))}
+          ${weatherMetric('Nuvens', current.cloud_cover != null ? `${current.cloud_cover}%` : '—')}
+          ${weatherMetric('Pressão', current.surface_pressure != null ? `${Math.round(current.surface_pressure)} hPa` : '—')}
+          ${weatherMetric('Precipitação', current.precipitation != null ? `${current.precipitation} mm` : '—')}
+          ${weatherMetric('UV máx. hoje', uvToday != null ? String(Math.round(uvToday)) : '—')}
+          ${weatherMetric('Nascer', sunrise)}
+          ${weatherMetric('Pôr do sol', sunset)}
+        </div>
+      </div>
+
+      <div class="mkt-metrics-block">
+        <h4>Próximas 24 horas</h4>
+        <div class="wx-hourly-scroll">${hourlyHtml(hours)}</div>
+      </div>
+
+      <div class="mkt-metrics-block">
+        <h4>Previsão · ~30 dias</h4>
+        <div class="forecast-scroll wx-modal-forecast">${forecastHtml(data.daily, { compact: false })}</div>
+      </div>
+    </div>
+  `;
+}
+
+async function openWeatherModal(cityId) {
+  const city = WEATHER_BARS.find((c) => c.id === cityId);
+  if (!city) return;
+
+  const modal = openModal({
+    title: `Tempo · ${city.label}`,
+    subtitle: 'Condições, horário e previsão completa',
+    xl: true,
+    bodyHtml: `<div class="market-chart-wrap loading-dots">Carregando clima</div>`,
+  });
+
+  try {
+    let data = state.weatherByCity[cityId];
+    if (!data) {
+      data = await fetchWeather(city.lat, city.lon);
+      state.weatherByCity[cityId] = data;
+    }
+    modal.setBody(renderWeatherModalBody(city, data));
+  } catch (err) {
+    console.warn(err);
+    modal.setBody(`<p class="status-line">Não foi possível carregar o clima de ${city.label}.</p>`);
+  }
 }
 
 function fillWeatherBar(root, data, cityLabel) {
@@ -365,6 +488,7 @@ async function loadWeatherBars() {
       if (!root) return;
       try {
         const weather = await fetchWeather(city.lat, city.lon);
+        state.weatherByCity[city.id] = weather;
         fillWeatherBar(root, weather, city.label);
       } catch (err) {
         console.warn('Weather bar failed', city.id, err);
@@ -627,6 +751,19 @@ function bindModals() {
   $('#market-grid')?.addEventListener('click', (e) => {
     const card = e.target.closest('[data-ticker]');
     if (card) openMarketChart(card.dataset.ticker);
+  });
+
+  $('#weather-bars')?.addEventListener('click', (e) => {
+    const panel = e.target.closest('[data-weather-bar]');
+    if (panel) openWeatherModal(panel.dataset.weatherBar);
+  });
+
+  $('#weather-bars')?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const panel = e.target.closest('[data-weather-bar]');
+    if (!panel) return;
+    e.preventDefault();
+    openWeatherModal(panel.dataset.weatherBar);
   });
 }
 
