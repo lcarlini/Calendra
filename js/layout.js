@@ -1,4 +1,5 @@
-const KEY = 'calendra.layout.v1';
+const KEY = 'calendra.layout.v4';
+const LEGACY_KEYS = ['calendra.layout.v1', 'calendra.layout.v2', 'calendra.layout.v3'];
 
 export const SIZES = [
   { id: 'sm', label: 'S', className: 'g-sm' },
@@ -10,23 +11,47 @@ export const SIZES = [
 
 const SIZE_CLASS = new Set(SIZES.map((s) => s.className));
 
+/** Default: 4 equal columns — clocks | calendar | weather | markets */
 export function defaultLayout() {
   return [
-    { id: 'clocks', size: 'full' },
-    { id: 'calendar', size: 'md' },
-    { id: 'weather', size: 'lg' },
+    { id: 'clocks', size: 'sm' },
+    { id: 'calendar', size: 'sm' },
+    { id: 'weather', size: 'sm' },
+    { id: 'markets', size: 'sm' },
     { id: 'reminders', size: 'xl' },
     { id: 'quick', size: 'sm' },
     { id: 'hubs', size: 'sm' },
   ];
 }
 
+function clearLegacyLayouts() {
+  try {
+    LEGACY_KEYS.forEach((k) => localStorage.removeItem(k));
+  } catch {
+    /* ignore */
+  }
+}
+
+function isValidLayout(parsed) {
+  if (!Array.isArray(parsed) || !parsed.length) return false;
+  const ids = new Set(parsed.map((i) => i.id));
+  // Old dashboards never had markets / used full-width clocks
+  if (!ids.has('markets')) return false;
+  const clocks = parsed.find((i) => i.id === 'clocks');
+  if (clocks && clocks.size === 'full') return false;
+  return true;
+}
+
 export function loadLayout() {
+  clearLegacyLayouts();
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return defaultLayout();
     const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed) || !parsed.length) return defaultLayout();
+    if (!isValidLayout(parsed)) {
+      localStorage.removeItem(KEY);
+      return defaultLayout();
+    }
     return parsed;
   } catch {
     return defaultLayout();
@@ -38,7 +63,7 @@ export function saveLayout(layout) {
 }
 
 function applySizeClass(el, sizeId) {
-  const size = SIZES.find((s) => s.id === sizeId) || SIZES[1];
+  const size = SIZES.find((s) => s.id === sizeId) || SIZES[0];
   [...el.classList].forEach((c) => {
     if (SIZE_CLASS.has(c)) el.classList.remove(c);
   });
@@ -50,11 +75,21 @@ export function initLayoutEditor(gridSelector = '#gadget-grid') {
   const grid = document.querySelector(gridSelector);
   if (!grid) return { setEditMode() {} };
 
+  clearLegacyLayouts();
+
   const gadgets = [...grid.querySelectorAll('[data-gadget]')];
   let layout = loadLayout();
   const byId = Object.fromEntries(gadgets.map((g) => [g.dataset.gadget, g]));
 
-  // Reorder DOM to match saved layout
+  // Always place in default order first, then apply saved sizes when valid
+  const orderIds = layout.map((i) => i.id);
+  defaultLayout().forEach((item) => {
+    if (!orderIds.includes(item.id)) {
+      layout.push(item);
+      orderIds.push(item.id);
+    }
+  });
+
   layout.forEach((item) => {
     const el = byId[item.id];
     if (!el) return;
@@ -62,14 +97,23 @@ export function initLayoutEditor(gridSelector = '#gadget-grid') {
     grid.appendChild(el);
   });
 
-  // Append any new gadgets not in saved layout
   gadgets.forEach((el) => {
     if (!layout.find((l) => l.id === el.dataset.gadget)) {
-      applySizeClass(el, el.dataset.size || 'md');
+      applySizeClass(el, el.dataset.size || 'sm');
       grid.appendChild(el);
-      layout.push({ id: el.dataset.gadget, size: el.dataset.size || 'md' });
+      layout.push({ id: el.dataset.gadget, size: el.dataset.size || 'sm' });
     }
   });
+
+  // Persist canonical default if we had to repair
+  if (!localStorage.getItem(KEY) || !isValidLayout(JSON.parse(localStorage.getItem(KEY) || '[]'))) {
+    saveLayout(
+      [...grid.querySelectorAll('[data-gadget]')].map((el) => ({
+        id: el.dataset.gadget,
+        size: el.dataset.size || 'sm',
+      }))
+    );
+  }
 
   function persist() {
     const order = [...grid.querySelectorAll('[data-gadget]')].map((el) => ({
@@ -140,10 +184,15 @@ export function initLayoutEditor(gridSelector = '#gadget-grid') {
     document.body.classList.toggle('layout-editing', on);
   }
 
-  return { setEditMode, reset() {
-    saveLayout(defaultLayout());
-    location.reload();
-  }, persist };
+  return {
+    setEditMode,
+    reset() {
+      LEGACY_KEYS.forEach((k) => localStorage.removeItem(k));
+      saveLayout(defaultLayout());
+      location.reload();
+    },
+    persist,
+  };
 }
 
 function getDragAfterElement(container, y, x) {
@@ -155,7 +204,6 @@ function getDragAfterElement(container, y, x) {
     const cx = box.left + box.width / 2;
     const cy = box.top + box.height / 2;
     const dist = (x - cx) ** 2 + (y - cy) ** 2;
-    // Prefer element whose center is below/right of cursor in reading order
     if (y < box.bottom && x < box.right) {
       if (dist < bestDist) {
         bestDist = dist;
@@ -164,7 +212,6 @@ function getDragAfterElement(container, y, x) {
     }
   }
   if (best) return best;
-  // fallback: last by vertical position
   return els.reduce(
     (closest, child) => {
       const box = child.getBoundingClientRect();

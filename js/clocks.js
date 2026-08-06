@@ -1,9 +1,19 @@
-export const FIXED_CLOCKS = [
-  { id: 'chicago', city: 'Chicago', timeZone: 'America/Chicago', imageQuery: 'chicago' },
-  { id: 'newyork', city: 'New York', timeZone: 'America/New_York', imageQuery: 'newyork' },
+/** Pinned column: Brasil, Chicago, New York. */
+export const PRIMARY_CLOCKS = [
+  { id: 'brasil', city: 'Brasil', timeZone: 'America/Sao_Paulo', imageQuery: 'saopaulo', primary: true },
+  { id: 'chicago', city: 'Chicago', timeZone: 'America/Chicago', imageQuery: 'chicago', primary: true },
+  { id: 'newyork', city: 'New York', timeZone: 'America/New_York', imageQuery: 'newyork', primary: true },
+];
+
+/** Extra hubs shown in the “more cities” modal. */
+export const EXTRA_CLOCKS = [
   { id: 'london', city: 'London', timeZone: 'Europe/London', imageQuery: 'london' },
   { id: 'amsterdam', city: 'Amsterdam', timeZone: 'Europe/Amsterdam', imageQuery: 'amsterdam' },
+  { id: 'riodejaneiro', city: 'Rio de Janeiro', timeZone: 'America/Sao_Paulo', imageQuery: 'riodejaneiro' },
 ];
+
+/** @deprecated use PRIMARY_CLOCKS + EXTRA_CLOCKS */
+export const FIXED_CLOCKS = [...PRIMARY_CLOCKS, ...EXTRA_CLOCKS.filter((c) => c.id !== 'riodejaneiro')];
 
 /**
  * Curated Unsplash photo IDs per place.
@@ -250,18 +260,73 @@ function guessImageQuery(timeZone, city) {
   return 'world';
 }
 
-export function buildClockList(localCity = 'Local') {
-  const zone = localTimeZone();
-  const local = {
-    id: 'local',
-    city: localCity,
-    timeZone: zone,
-    isLocal: true,
-    imageQuery: guessImageQuery(zone, localCity),
-  };
+function isBrazilZone(zone) {
+  const z = (zone || '').toLowerCase();
+  return (
+    z.includes('sao_paulo') ||
+    z.includes('fortaleza') ||
+    z.includes('recife') ||
+    z.includes('bahia') ||
+    z.includes('belem') ||
+    z.includes('manaus') ||
+    z.includes('cuiaba') ||
+    z.includes('campo_grande') ||
+    z.includes('porto_velho') ||
+    z.includes('rio_branco') ||
+    z.includes('noronha')
+  );
+}
 
-  const fixed = FIXED_CLOCKS.filter((c) => c.timeZone !== zone);
-  return [local, ...fixed];
+/**
+ * Dashboard clocks: Brasil + Chicago.
+ * If the device is already in Brazil, the Brasil card becomes the local “You” clock.
+ */
+export function buildPrimaryClocks(localCity = 'Local') {
+  const zone = localTimeZone();
+  const brasilZone = isBrazilZone(zone);
+
+  return PRIMARY_CLOCKS.map((c) => {
+    if (c.id === 'brasil' && brasilZone) {
+      return {
+        ...c,
+        city: localCity || 'Brasil',
+        timeZone: zone,
+        isLocal: true,
+        imageQuery: guessImageQuery(zone, localCity) || 'saopaulo',
+      };
+    }
+    if ((c.id === 'chicago' || c.id === 'newyork') && zone === c.timeZone) {
+      return { ...c, city: localCity || c.city, isLocal: true };
+    }
+    return { ...c, isLocal: false };
+  });
+}
+
+/** Extra world clocks for the modal (skips duplicates of primary zones / local). */
+export function buildExtraClocks(localCity = 'Local') {
+  const zone = localTimeZone();
+  const primaryIds = new Set(PRIMARY_CLOCKS.map((c) => c.id));
+  const extras = EXTRA_CLOCKS.filter((c) => !primaryIds.has(c.id));
+
+  if (
+    !isBrazilZone(zone) &&
+    zone !== 'America/Chicago' &&
+    !extras.some((c) => c.timeZone === zone)
+  ) {
+    extras.unshift({
+      id: 'local',
+      city: localCity,
+      timeZone: zone,
+      isLocal: true,
+      imageQuery: guessImageQuery(zone, localCity),
+    });
+  }
+
+  return extras;
+}
+
+export function buildClockList(localCity = 'Local') {
+  return buildPrimaryClocks(localCity);
 }
 
 function clockCardHtml(clock, now, baseZone) {

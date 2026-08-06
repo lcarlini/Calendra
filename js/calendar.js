@@ -12,6 +12,38 @@ export function monthLabel(year, month) {
   return `${MONTHS[month]} ${year}`;
 }
 
+const MESES_PT = [
+  'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+  'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro',
+];
+
+const WEEKDAYS_PT = [
+  'domingo',
+  'segunda-feira',
+  'terça-feira',
+  'quarta-feira',
+  'quinta-feira',
+  'sexta-feira',
+  'sábado',
+];
+
+/** e.g. "06 de agosto 2026" */
+export function todayLongPt(date = new Date()) {
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${day} de ${MESES_PT[date.getMonth()]} ${date.getFullYear()}`;
+}
+
+/** e.g. "06 de agosto — quarta-feira" */
+export function todayWithWeekdayPt(date = new Date()) {
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${day} de ${MESES_PT[date.getMonth()]} — ${WEEKDAYS_PT[date.getDay()]}`;
+}
+
+export function monthLabelPt(year, month) {
+  const name = MESES_PT[month];
+  return `${name.charAt(0).toUpperCase()}${name.slice(1)} ${year}`;
+}
+
 export function sameDay(a, b) {
   return (
     a.getFullYear() === b.getFullYear() &&

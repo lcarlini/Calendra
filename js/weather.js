@@ -148,6 +148,8 @@ export async function resolveLocation() {
 
 export const CITY_PRESETS = [
   { id: 'auto', label: 'Auto (my location)', lat: null, lon: null },
+  { id: 'pocos', label: 'Poços de Caldas', lat: -21.7876, lon: -46.5614 },
+  { id: 'sorocaba', label: 'Sorocaba', lat: -23.5015, lon: -47.4526 },
   { id: 'chicago', label: 'Chicago', lat: 41.8781, lon: -87.6298 },
   { id: 'newyork', label: 'New York', lat: 40.7128, lon: -74.006 },
   { id: 'london', label: 'London', lat: 51.5074, lon: -0.1278 },
@@ -155,4 +157,10 @@ export const CITY_PRESETS = [
   { id: 'saopaulo', label: 'São Paulo', lat: -23.5505, lon: -46.6333 },
   { id: 'riodejaneiro', label: 'Rio de Janeiro', lat: -22.9068, lon: -43.1729 },
   { id: 'brasilia', label: 'Brasília', lat: -15.8267, lon: -47.9218 },
+];
+
+/** Fixed dual weather bars on the dashboard. */
+export const WEATHER_BARS = [
+  { id: 'pocos', label: 'Poços de Caldas', short: 'Poços de Caldas', lat: -21.7876, lon: -46.5614, tone: 'emerald' },
+  { id: 'sorocaba', label: 'Sorocaba', short: 'Sorocaba', lat: -23.5015, lon: -47.4526, tone: 'amber' },
 ];

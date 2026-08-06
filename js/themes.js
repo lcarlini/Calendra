@@ -10,7 +10,7 @@ export const THEMES = [
 const KEY = 'calendra.theme.v1';
 
 export function getTheme() {
-  return localStorage.getItem(KEY) || 'mist';
+  return localStorage.getItem(KEY) || 'ink';
 }
 
 export function applyTheme(id) {
