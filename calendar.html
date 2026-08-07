@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="mist" data-mode="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Calendra full calendar — year, month, week, and day views with USA and Brazil holidays." />
+    <title>Calendra — Full Calendar</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1620'/%3E%3Cpath d='M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z' fill='%2314b8a6'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script>
+      try {
+        var t = localStorage.getItem('calendra.theme.v1') || 'mist';
+        document.documentElement.dataset.theme = t;
+        var dark = ['midnight', 'ocean', 'ink', 'aurora'].indexOf(t) !== -1;
+        document.documentElement.dataset.mode = dark ? 'dark' : 'light';
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="index.html" aria-label="Calendra home">
+          <div class="brand-mark" aria-hidden="true">C</div>
+          <div class="brand-text">
+            <h1>Calendra</h1>
+            <p>Year · month · week · day</p>
+          </div>
+        </a>
+        <div class="topbar-tools">
+          <label class="tool-field">
+            <span>Theme</span>
+            <select id="theme-select" aria-label="Color theme"></select>
+          </label>
+          <nav class="nav-links" aria-label="Primary">
+            <a href="index.html">Dashboard</a>
+            <a class="active" href="calendar.html">Full Calendar</a>
+          </nav>
+        </div>
+      </header>
+
+      <div class="cal-toolbar">
+        <div>
+          <h2 id="cal-title">—</h2>
+          <p class="status-line" style="margin: 0.35rem 0 0">
+            Switch views, browse holidays, and click any day for details.
+          </p>
+        </div>
+        <div class="cal-controls-wrap">
+          <div class="view-switch" role="tablist" aria-label="Calendar view">
+            <button type="button" class="view-btn" data-view="year">Year</button>
+            <button type="button" class="view-btn active" data-view="month">Month</button>
+            <button type="button" class="view-btn" data-view="week">Week</button>
+            <button type="button" class="view-btn" data-view="day">Day</button>
+          </div>
+          <div class="cal-controls">
+            <button type="button" class="btn btn-ghost" id="cal-prev">Previous</button>
+            <button type="button" class="btn btn-primary" id="cal-today">Today</button>
+            <button type="button" class="btn btn-ghost" id="cal-next">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="gadgets cal-layout">
+        <article class="gadget g-xl cal-main" style="min-height: auto">
+          <div class="gadget-inner" style="padding: 0.75rem">
+            <div id="full-calendar"></div>
+          </div>
+        </article>
+
+        <article class="gadget g-md g-tall">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">Selected day</h3>
+            </div>
+            <h3 id="selected-day-label" class="selected-day-title">—</h3>
+            <div class="agenda-list" id="day-panel"></div>
+          </div>
+        </article>
+
+        <article class="gadget g-md">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">Holiday calendars</h3>
+            </div>
+            <div class="holiday-toggles">
+              <label class="check-pill">
+                <input type="checkbox" id="holiday-us" checked />
+                <span>United States</span>
+              </label>
+              <label class="check-pill">
+                <input type="checkbox" id="holiday-br" checked />
+                <span>Brazil</span>
+              </label>
+            </div>
+            <div class="gadget-head" style="margin-top: 1rem">
+              <h3 class="gadget-title">Upcoming</h3>
+            </div>
+            <div class="holiday-list" id="holiday-upcoming"></div>
+          </div>
+        </article>
+
+        <article class="gadget g-lg">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">Quick add alert</h3>
+            </div>
+            <form class="reminder-form" id="quick-form">
+              <div class="field">
+                <label for="quick-title">Title</label>
+                <input id="quick-title" type="text" placeholder="Team standup" required />
+              </div>
+              <div class="form-row">
+                <div class="field">
+                  <label for="quick-date">Date</label>
+                  <input id="quick-date" type="date" required />
+                </div>
+                <div class="field">
+                  <label for="quick-time">Time</label>
+                  <input id="quick-time" type="time" required />
+                </div>
+              </div>
+              <div class="field">
+                <label for="quick-lead">Remind me</label>
+                <select id="quick-lead">
+                  <option value="0">At start</option>
+                  <option value="5" selected>5 minutes before</option>
+                  <option value="10">10 minutes before</option>
+                  <option value="15">15 minutes before</option>
+                  <option value="30">30 minutes before</option>
+                  <option value="60">1 hour before</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-warm">Save to calendar</button>
+            </form>
+          </div>
+        </article>
+      </div>
+
+      <footer class="site-footer">
+        <span><a href="index.html">← Back to dashboard</a></span>
+        <span>
+          <a href="https://lcarlini.github.io/Calendra/" target="_blank" rel="noopener">GitHub Pages</a>
+        </span>
+      </footer>
+    </div>
+
+    <div class="modal-backdrop" id="day-modal" role="dialog" aria-modal="true" aria-labelledby="modal-day-label">
+      <div class="modal">
+        <h3 id="modal-day-label">Day</h3>
+        <p id="modal-day-summary">—</p>
+        <p class="status-line">Use Quick add to create an alert for this day, or close to keep browsing.</p>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" data-close>Close</button>
+          <button type="button" class="btn btn-primary" data-close onclick="document.getElementById('quick-title').focus()">
+            Add alert
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="js/calendar-page.js"></script>
+  </body>
+</html>

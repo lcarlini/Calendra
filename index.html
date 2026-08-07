@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="ink" data-mode="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Calendra — dashboard pessoal com relógios, clima, mercados e alertas."
+    />
+    <title>Calendra — Command Center</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1620'/%3E%3Cpath d='M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z' fill='%23a3e635'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="css/styles.css?v=20260807b" />
+    <script>
+      try {
+        var t = localStorage.getItem('calendra.theme.v1') || 'ink';
+        document.documentElement.dataset.theme = t;
+        var dark = ['midnight', 'ocean', 'ink', 'aurora'].indexOf(t) !== -1;
+        document.documentElement.dataset.mode = dark ? 'dark' : 'light';
+        // Drop legacy layouts so the column order default always wins once
+        ['calendra.layout.v1', 'calendra.layout.v2', 'calendra.layout.v3', 'calendra.layout.v4'].forEach(function (k) {
+          localStorage.removeItem(k);
+        });
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="index.html" aria-label="Calendra home">
+          <div class="brand-mark" aria-hidden="true">C</div>
+          <div class="brand-text">
+            <h1>Calendra</h1>
+            <p>Tempo, clima & mercados — ao vivo</p>
+          </div>
+        </a>
+        <div class="topbar-tools">
+          <label class="tool-field">
+            <span>Tema</span>
+            <select id="theme-select" aria-label="Tema de cores"></select>
+          </label>
+          <button type="button" class="btn btn-ghost btn-sm" id="edit-layout">Organizar</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="reset-layout" title="Reset layout">Reset</button>
+          <nav class="nav-links" aria-label="Primary">
+            <a class="active" href="index.html">Dashboard</a>
+            <a href="calendar.html">Calendário</a>
+          </nav>
+        </div>
+      </header>
+
+      <section class="hero-strip hero-strip-compact" hidden>
+        <article class="hero-panel">
+          <div class="hero-content">
+            <div>
+              <div class="hero-kicker"><span></span> Ao vivo · atualiza a cada 1 min</div>
+              <h2>Seu dia, no centro</h2>
+              <p class="hero-sub">
+                Relógios, clima, mercados e alertas — compactos, coloridos e no mesmo lugar.
+              </p>
+            </div>
+            <div class="hero-meta">
+              <div class="meta-chip" id="hero-date">—</div>
+              <div class="meta-chip" id="hero-time">—</div>
+              <div class="meta-chip" id="hero-location">Localizando…</div>
+            </div>
+          </div>
+        </article>
+
+        <div class="hero-side">
+          <article class="gadget" style="min-height: auto">
+            <div class="gadget-inner">
+              <div class="gadget-head">
+                <h3 class="gadget-title">Agenda de hoje</h3>
+                <a class="gadget-action" href="calendar.html">Abrir</a>
+              </div>
+              <div class="agenda-list" id="agenda-list"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="gadgets gadgets-columns" id="gadget-grid" aria-label="Dashboard gadgets">
+        <article class="gadget g-sm g-tall g-clocks" data-gadget="clocks" data-size="sm">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">Relógios</h3>
+              <button type="button" class="gadget-action" id="open-extra-clocks">+ Cidades</button>
+            </div>
+            <div class="clock-grid clock-grid-stack" id="clock-grid"></div>
+          </div>
+        </article>
+
+        <article class="gadget g-sm g-tall g-markets" data-gadget="markets" data-size="sm">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">Mercados</h3>
+              <span class="status-line" id="markets-status">5s</span>
+            </div>
+            <div class="market-grid market-grid-stack" id="market-grid" aria-label="Cotações"></div>
+          </div>
+        </article>
+
+        <article class="gadget g-sm g-tall g-calendar-col" data-gadget="calendar" data-size="sm">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">Calendário · compact</h3>
+              <a class="gadget-action" href="calendar.html">Expandir</a>
+            </div>
+            <button type="button" class="cal-today-strip" id="day-hero" aria-label="Abrir calendário">
+              <span id="day-hero-date">—</span>
+            </button>
+            <div class="mini-cal-nav">
+              <button type="button" class="btn-icon" id="mini-prev" aria-label="Mês anterior">‹</button>
+              <div class="mini-cal-label" id="mini-cal-label">—</div>
+              <button type="button" class="btn-icon" id="mini-next" aria-label="Próximo mês">›</button>
+            </div>
+            <div id="mini-cal"></div>
+          </div>
+        </article>
+
+        <article class="gadget g-sm g-tall g-weather-col" data-gadget="weather" data-size="sm">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">Tempo</h3>
+              <button type="button" class="btn-icon" id="weather-refresh" title="Atualizar" aria-label="Atualizar clima">↻</button>
+            </div>
+            <div class="weather-stack" id="weather-bars">
+              <article class="weather-city-panel tone-emerald" data-weather-bar="pocos" role="button" tabindex="0" aria-label="Abrir clima de Poços de Caldas">
+                <div class="weather-panel-hint">Detalhes →</div>
+                <div class="weather-now weather-now-compact">
+                  <div class="weather-icon" data-role="icon">◎</div>
+                  <div>
+                    <div class="weather-temp" data-role="temp">--°</div>
+                    <div class="weather-desc" data-role="desc">Carregando…</div>
+                    <div class="weather-loc weather-bar-city">Poços de Caldas</div>
+                  </div>
+                </div>
+                <div class="weather-stats weather-stats-compact">
+                  <div class="stat"><strong data-role="feels">--°</strong><span>Sensação</span></div>
+                  <div class="stat"><strong data-role="humidity">--%</strong><span>Umidade</span></div>
+                  <div class="stat"><strong data-role="wind">--</strong><span>Vento</span></div>
+                </div>
+                <div class="forecast-scroll" data-role="forecast" aria-label="Previsão Poços"></div>
+              </article>
+              <article class="weather-city-panel tone-amber" data-weather-bar="sorocaba" role="button" tabindex="0" aria-label="Abrir clima de Sorocaba">
+                <div class="weather-panel-hint">Detalhes →</div>
+                <div class="weather-now weather-now-compact">
+                  <div class="weather-icon" data-role="icon">◎</div>
+                  <div>
+                    <div class="weather-temp" data-role="temp">--°</div>
+                    <div class="weather-desc" data-role="desc">Carregando…</div>
+                    <div class="weather-loc weather-bar-city">Sorocaba</div>
+                  </div>
+                </div>
+                <div class="weather-stats weather-stats-compact">
+                  <div class="stat"><strong data-role="feels">--°</strong><span>Sensação</span></div>
+                  <div class="stat"><strong data-role="humidity">--%</strong><span>Umidade</span></div>
+                  <div class="stat"><strong data-role="wind">--</strong><span>Vento</span></div>
+                </div>
+                <div class="forecast-scroll" data-role="forecast" aria-label="Previsão Sorocaba"></div>
+              </article>
+            </div>
+          </div>
+        </article>
+
+        <article class="gadget g-xl" data-gadget="reminders" data-size="xl">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">Alertas & lembretes</h3>
+              <button type="button" class="gadget-action" id="enable-alerts">Ativar notificações</button>
+            </div>
+
+            <form class="reminder-form" id="reminder-form">
+              <div class="form-row">
+                <div class="field" style="grid-column: 1 / -1">
+                  <label for="reminder-title">Reunião ou lembrete</label>
+                  <input id="reminder-title" name="title" type="text" placeholder="Revisão de design com o time" required />
+                </div>
+                <div class="field">
+                  <label for="reminder-date">Data</label>
+                  <input id="reminder-date" name="date" type="date" required />
+                </div>
+                <div class="field">
+                  <label for="reminder-time">Hora</label>
+                  <input id="reminder-time" name="time" type="time" required />
+                </div>
+                <div class="field">
+                  <label for="reminder-lead">Avisar</label>
+                  <select id="reminder-lead" name="lead">
+                    <option value="0">No horário</option>
+                    <option value="5" selected>5 minutos antes</option>
+                    <option value="10">10 minutos antes</option>
+                    <option value="15">15 minutos antes</option>
+                    <option value="30">30 minutos antes</option>
+                    <option value="60">1 hora antes</option>
+                    <option value="120">2 horas antes</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="reminder-notes">Notas</label>
+                  <input id="reminder-notes" name="notes" type="text" placeholder="Sala, link ou contexto" />
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Adicionar alerta</button>
+            </form>
+
+            <div class="reminder-list" id="reminder-list"></div>
+          </div>
+        </article>
+
+        <article class="gadget g-sm" data-gadget="quick" data-size="sm">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">Atalhos</h3>
+            </div>
+            <p class="status-line" style="margin: 0 0 1rem">
+              Ano, mês, semana e dia — feriados BR & EUA.
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 0.55rem; margin-top: auto">
+              <a class="btn btn-primary" href="calendar.html">Calendário completo</a>
+              <button type="button" class="btn btn-ghost" onclick="document.getElementById('enable-alerts').click()">
+                Alertas desktop
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="gadget g-sm" data-gadget="hubs" data-size="sm">
+          <div class="gadget-inner">
+            <div class="gadget-head">
+              <h3 class="gadget-title">Fixos</h3>
+            </div>
+            <p class="status-line" style="margin: 0 0 0.75rem">
+              Brasil · Chicago · NY · Poços · Sorocaba · mercados.
+            </p>
+            <div class="agenda-list">
+              <div class="agenda-item">
+                <div class="agenda-bar"></div>
+                <div>
+                  <div class="agenda-title">Poços · Sorocaba</div>
+                  <div class="agenda-time">Clima com scroll lateral</div>
+                </div>
+              </div>
+              <div class="agenda-item">
+                <div class="agenda-bar warm"></div>
+                <div>
+                  <div class="agenda-title">USD · EUR · SELIC · BTC</div>
+                  <div class="agenda-time">A cada 5 segundos</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <footer class="site-footer">
+        <span>Calendra · crafted for clarity</span>
+        <span>
+          Live at
+          <a href="https://lcarlini.github.io/Calendra/" target="_blank" rel="noopener">lcarlini.github.io/Calendra</a>
+        </span>
+      </footer>
+    </div>
+
+    <script type="module" src="js/app.js?v=20260807a"></script>
+  </body>
+</html>
