@@ -1,5 +1,5 @@
-const KEY = 'calendra.layout.v4';
-const LEGACY_KEYS = ['calendra.layout.v1', 'calendra.layout.v2', 'calendra.layout.v3'];
+const KEY = 'calendra.layout.v5';
+const LEGACY_KEYS = ['calendra.layout.v1', 'calendra.layout.v2', 'calendra.layout.v3', 'calendra.layout.v4'];
 
 export const SIZES = [
   { id: 'sm', label: 'S', className: 'g-sm' },
@@ -11,13 +11,13 @@ export const SIZES = [
 
 const SIZE_CLASS = new Set(SIZES.map((s) => s.className));
 
-/** Default: 4 equal columns — clocks | calendar | weather | markets */
+/** Default: clocks | markets | calendar | weather */
 export function defaultLayout() {
   return [
     { id: 'clocks', size: 'sm' },
+    { id: 'markets', size: 'sm' },
     { id: 'calendar', size: 'sm' },
     { id: 'weather', size: 'sm' },
-    { id: 'markets', size: 'sm' },
     { id: 'reminders', size: 'xl' },
     { id: 'quick', size: 'sm' },
     { id: 'hubs', size: 'sm' },
