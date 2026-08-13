@@ -1,4 +1,4 @@
-/** Live FX / crypto / SELIC via public APIs (AwesomeAPI + BCB PTAX + CoinGecko). */
+/** Live quotes: UOL first, then HG / BCB / CoinGecko. AwesomeAPI only for charts. */
 
 const AWESOME = 'https://economia.awesomeapi.com.br';
 const BRASIL_API_TAXAS = 'https://brasilapi.com.br/api/taxas/v1';
@@ -7,6 +7,8 @@ const BCB_SELIC = `${BCB_SGS}.432/dados`;
 const BCB_PTAX =
   'https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata';
 const HG_FINANCE = 'https://api.hgbrasil.com/finance';
+const UOL_SUMMARY =
+  'https://api.cotacoes.uol.com/mixed/summary?currencies=1,11,5&itens=1,435833,1168&fields=name,openbidvalue,askvalue,variationpercentbid,price,exchangeasset,open,pctChange,date,abbreviation';
 const COINGECKO_BTC =
   'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=brl,usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true';
 
@@ -100,6 +102,58 @@ async function fetchJson(url, { timeout = 8000 } = {}) {
   } finally {
     clearTimeout(timer);
   }
+}
+
+function parseMaybeJsonp(text) {
+  const trimmed = String(text || '').trim();
+  if (!trimmed) throw new Error('Empty payload');
+  if (trimmed.startsWith('{') || trimmed.startsWith('[')) return JSON.parse(trimmed);
+  const match = trimmed.match(/^[\/\*]*\s*\w+\s*\(([\s\S]*)\)\s*;?\s*$/);
+  if (!match) throw new Error('Unrecognized payload');
+  return JSON.parse(match[1]);
+}
+
+function fetchJsonp(url, { timeout = 8000, callbackParam = 'jsonp', callbackName = '' } = {}) {
+  return new Promise((resolve, reject) => {
+    if (typeof document === 'undefined') {
+      reject(new Error('JSONP unavailable'));
+      return;
+    }
+    const cb = callbackName || `__uolCb_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+    const script = document.createElement('script');
+    const timer = setTimeout(() => {
+      cleanup();
+      reject(new Error('JSONP timeout'));
+    }, timeout);
+    const cleanup = () => {
+      clearTimeout(timer);
+      try {
+        delete window[cb];
+      } catch {
+        window[cb] = undefined;
+      }
+      script.remove();
+    };
+    window[cb] = (data) => {
+      cleanup();
+      resolve(data);
+    };
+    script.onerror = () => {
+      cleanup();
+      reject(new Error('JSONP failed'));
+    };
+    const sep = url.includes('?') ? '&' : '?';
+    script.src = `${url}${sep}${callbackParam}=${cb}`;
+    document.head.appendChild(script);
+  });
+}
+
+function parseUolDate(raw) {
+  const s = String(raw || '');
+  if (!/^\d{14}$/.test(s)) return parseQuoteTime(raw);
+  const iso = `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}T${s.slice(8, 10)}:${s.slice(10, 12)}:${s.slice(12, 14)}-03:00`;
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? null : d;
 }
 
 function parseQuoteTime(raw) {
@@ -202,6 +256,95 @@ async function fetchBtcExtras() {
     };
   } catch {
     return null;
+  }
+}
+
+function parseUolFx(row) {
+  const value = num(row.askvalue);
+  const open = num(row.openbidvalue);
+  const when = parseUolDate(row.date);
+  return {
+    value,
+    ask: value,
+    bid: open,
+    open,
+    close: value,
+    high: value != null && open != null ? Math.max(value, open) : value,
+    low: value != null && open != null ? Math.min(value, open) : value,
+    changePct: num(row.variationpercentbid),
+    varBid: value != null && open != null ? value - open : null,
+    name: row.name,
+    timestamp: when ? when.toISOString() : row.date,
+    spread: null,
+    source: 'uol',
+    fresh: true,
+  };
+}
+
+function parseUolAsset(row) {
+  const value = num(row.price);
+  const open = num(row.open) || null;
+  const when = parseUolDate(row.date);
+  return {
+    value,
+    ask: value,
+    bid: value,
+    open: open || null,
+    close: value,
+    high: value != null && open != null ? Math.max(value, open) : value,
+    low: value != null && open != null ? Math.min(value, open) : value,
+    changePct: num(row.pctChange) || null,
+    varBid: value != null && open != null ? value - open : null,
+    name: row.exchangeasset || row.name,
+    timestamp: when ? when.toISOString() : row.date,
+    spread: null,
+    source: 'uol',
+    fresh: true,
+  };
+}
+
+function parseUolDocs(payload) {
+  const docs = Array.isArray(payload?.docs) ? payload.docs : [];
+  const out = { usd: null, eur: null, btc: null, selic: null };
+  for (const row of docs) {
+    const name = String(row.name || row.exchangeasset || '').toLowerCase();
+    const abbr = String(row.abbreviation || '').toUpperCase();
+    if (name.includes('dólar') || name.includes('dolar')) out.usd = parseUolFx(row);
+    else if (name.includes('euro')) out.eur = parseUolFx(row);
+    else if (abbr === 'BTC' || name.includes('bitcoin')) out.btc = parseUolAsset(row);
+    else if (abbr.includes('SELIC') || name.includes('selic') || abbr.includes('BRTARGET')) {
+      const selic = parseUolAsset(row);
+      selic.changePct = null;
+      selic.open = null;
+      selic.high = null;
+      selic.low = null;
+      out.selic = selic;
+    }
+  }
+  return out;
+}
+
+async function fetchUolQuotes() {
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 8000);
+    const res = await fetch(UOL_SUMMARY, { signal: ctrl.signal, cache: 'no-store' });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const parsed = parseMaybeJsonp(await res.text());
+    const quotes = parseUolDocs(parsed);
+    if (!quotes.usd && !quotes.eur && !quotes.btc) throw new Error('UOL empty');
+    return quotes;
+  } catch {
+    let parsed;
+    try {
+      parsed = await fetchJsonp(UOL_SUMMARY);
+    } catch {
+      parsed = await fetchJsonp(UOL_SUMMARY, { callbackName: 'jsonp' });
+    }
+    const quotes = parseUolDocs(parsed);
+    if (!quotes.usd && !quotes.eur && !quotes.btc) throw new Error('UOL empty');
+    return quotes;
   }
 }
 
@@ -379,38 +522,19 @@ function pickBetterNumber(a, b, mode = 'max') {
   return mode === 'min' ? Math.min(a, b) : Math.max(a, b);
 }
 
-function liveLooksStuckAtOpen(live, official) {
-  if (live?.value == null || official?.open == null || official?.close == null) return false;
-  const nearOpen = Math.abs(live.value - official.open) < 0.003;
-  const officialMoved = Math.abs(official.close - official.open) > 0.003;
-  return nearOpen && officialMoved;
-}
-
-function mergeFxQuote(live, official, hg) {
-  const candidates = [live, official, hg].filter(Boolean);
-  if (!candidates.length) return null;
-
-  const healthyLive = live && live.fresh && !liveLooksStuckAtOpen(live, official) ? live : null;
-  const primary = healthyLive || official || live || hg;
-
-  const open = official?.open ?? live?.open ?? hg?.open ?? null;
-  const high = candidates.reduce((acc, q) => pickBetterNumber(acc, q.high, 'max'), null);
-  const low = candidates.reduce((acc, q) => pickBetterNumber(acc, q.low, 'min'), null);
-  const close = primary?.close ?? primary?.value ?? official?.close ?? null;
-
+function mergePreferredQuote(preferred, ...fallbacks) {
+  const others = fallbacks.filter(Boolean);
+  const primary = preferred || others[0] || null;
+  if (!primary) return null;
+  const all = [preferred, ...others].filter(Boolean);
   return {
     ...primary,
-    open,
-    high,
-    low,
-    close,
-    bid: primary.bid ?? official?.bid ?? hg?.bid ?? null,
-    ask: primary.ask ?? official?.ask ?? hg?.ask ?? primary.value,
-    spread:
-      (primary.ask ?? official?.ask ?? primary.value) != null &&
-      (primary.bid ?? official?.bid) != null
-        ? (primary.ask ?? official?.ask ?? primary.value) - (primary.bid ?? official?.bid)
-        : primary.spread ?? null,
+    open: primary.open ?? others.find((q) => q.open != null)?.open ?? null,
+    high: all.reduce((acc, q) => pickBetterNumber(acc, q.high, 'max'), null),
+    low: all.reduce((acc, q) => pickBetterNumber(acc, q.low, 'min'), null),
+    close: primary.close ?? primary.value,
+    bid: primary.bid ?? others.find((q) => q.bid != null)?.bid ?? null,
+    ask: primary.ask ?? primary.value ?? others.find((q) => q.ask != null)?.ask ?? null,
   };
 }
 
@@ -439,39 +563,29 @@ export async function fetchMarketQuotes({ force = false } = {}) {
     return quotesCache.data;
   }
 
-  const [awesome, selic, ptax] = await Promise.all([
-    fetchAwesomeQuotes().catch(() => null),
-    fetchSelic().catch(() => null),
-    fetchPtaxBundle({ force }).catch(() => null),
-  ]);
+  const uol = await fetchUolQuotes().catch(() => null);
+  const needFx = !uol?.usd || !uol?.eur;
+  const needBtc = !uol?.btc;
+  const needSelic = !uol?.selic;
 
-  const needHg = !awesome?.USDBRL || !awesome?.EURBRL;
-  const needBtc = !awesome?.BTCBRL;
-  const [hg, btcExtras] = await Promise.all([
-    needHg ? fetchHgQuotes().catch(() => null) : Promise.resolve(null),
+  const [ptax, selicApi, hg, awesome, btcExtras] = await Promise.all([
+    fetchPtaxBundle({ force }).catch(() => null),
+    needSelic ? fetchSelic().catch(() => null) : Promise.resolve(null),
+    needFx || needBtc ? fetchHgQuotes().catch(() => null) : Promise.resolve(null),
+    needFx || needBtc ? fetchAwesomeQuotes().catch(() => null) : Promise.resolve(null),
     needBtc ? fetchBtcExtras().catch(() => null) : Promise.resolve(null),
   ]);
 
-  const out = {};
-  for (const ticker of MARKET_TICKERS) {
-    if (ticker.id === 'selic') {
-      out.selic = selic;
-      continue;
-    }
+  const awesomeUsd = awesome?.USDBRL ? parseAwesomeRow(awesome.USDBRL) : null;
+  const awesomeEur = awesome?.EURBRL ? parseAwesomeRow(awesome.EURBRL) : null;
+  const awesomeBtc = awesome?.BTCBRL ? parseAwesomeRow(awesome.BTCBRL) : null;
 
-    const key = ticker.pair.replace('-', '');
-    const live = awesome?.[key] ? parseAwesomeRow(awesome[key]) : null;
-
-    if (ticker.id === 'btc') {
-      out.btc = live || hg?.btc || quoteFromBtcExtras(btcExtras);
-      if (out.btc && btcExtras?.change24hCg != null && out.btc.changePct == null) {
-        out.btc.changePct = btcExtras.change24hCg;
-      }
-      continue;
-    }
-
-    out[ticker.id] = mergeFxQuote(live, ptax?.[ticker.id] || null, hg?.[ticker.id] || null);
-  }
+  const out = {
+    usd: mergePreferredQuote(uol?.usd, ptax?.usd, hg?.usd, awesomeUsd),
+    eur: mergePreferredQuote(uol?.eur, ptax?.eur, hg?.eur, awesomeEur),
+    btc: mergePreferredQuote(uol?.btc, awesomeBtc, hg?.btc, quoteFromBtcExtras(btcExtras)),
+    selic: uol?.selic || selicApi,
+  };
 
   const hasAny = MARKET_TICKERS.some((t) => out[t.id]?.value != null);
   if (hasAny || !quotesCache.data) {
