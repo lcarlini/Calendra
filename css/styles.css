@@ -2600,9 +2600,9 @@ body.layout-editing .gadget:hover {
 
 .market-ohlc-row {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.08rem;
   font-size: 0.86rem;
   line-height: 1.2;
   color: var(--muted);
@@ -2613,6 +2613,7 @@ body.layout-editing .gadget:hover {
   font-weight: 700;
   color: var(--ink-soft);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .market-hint {
