@@ -1,4 +1,25 @@
-/** Pinned column: Brasil, Chicago, New York. */
+const CLOCK_ASSIGN_KEY = 'calendra.clocks.v1';
+
+/** Cities that can be assigned to any of the 3 dashboard slots. */
+export const CLOCK_CITIES = [
+  { id: 'brasil', city: 'Brasil', timeZone: 'America/Sao_Paulo', imageQuery: 'saopaulo' },
+  { id: 'saopaulo', city: 'São Paulo', timeZone: 'America/Sao_Paulo', imageQuery: 'saopaulo' },
+  { id: 'pocos', city: 'Poços de Caldas', timeZone: 'America/Sao_Paulo', imageQuery: 'saopaulo' },
+  { id: 'sorocaba', city: 'Sorocaba', timeZone: 'America/Sao_Paulo', imageQuery: 'saopaulo' },
+  { id: 'riodejaneiro', city: 'Rio de Janeiro', timeZone: 'America/Sao_Paulo', imageQuery: 'riodejaneiro' },
+  { id: 'brasilia', city: 'Brasília', timeZone: 'America/Sao_Paulo', imageQuery: 'saopaulo' },
+  { id: 'chicago', city: 'Chicago', timeZone: 'America/Chicago', imageQuery: 'chicago' },
+  { id: 'newyork', city: 'New York', timeZone: 'America/New_York', imageQuery: 'newyork' },
+  { id: 'losangeles', city: 'Los Angeles', timeZone: 'America/Los_Angeles', imageQuery: 'world' },
+  { id: 'miami', city: 'Miami', timeZone: 'America/New_York', imageQuery: 'newyork' },
+  { id: 'london', city: 'London', timeZone: 'Europe/London', imageQuery: 'london' },
+  { id: 'lisbon', city: 'Lisboa', timeZone: 'Europe/Lisbon', imageQuery: 'london' },
+  { id: 'paris', city: 'Paris', timeZone: 'Europe/Paris', imageQuery: 'amsterdam' },
+  { id: 'amsterdam', city: 'Amsterdam', timeZone: 'Europe/Amsterdam', imageQuery: 'amsterdam' },
+  { id: 'tokyo', city: 'Tóquio', timeZone: 'Asia/Tokyo', imageQuery: 'world' },
+];
+
+/** Pinned column slots: 3 clocks, each swappable. */
 export const PRIMARY_CLOCKS = [
   { id: 'brasil', city: 'Brasil', timeZone: 'America/Sao_Paulo', imageQuery: 'saopaulo', primary: true },
   { id: 'chicago', city: 'Chicago', timeZone: 'America/Chicago', imageQuery: 'chicago', primary: true },
@@ -11,6 +32,52 @@ export const EXTRA_CLOCKS = [
   { id: 'amsterdam', city: 'Amsterdam', timeZone: 'Europe/Amsterdam', imageQuery: 'amsterdam' },
   { id: 'riodejaneiro', city: 'Rio de Janeiro', timeZone: 'America/Sao_Paulo', imageQuery: 'riodejaneiro' },
 ];
+
+export function defaultClockAssignments() {
+  return Object.fromEntries(PRIMARY_CLOCKS.map((slot) => [slot.id, slot.id]));
+}
+
+export function loadClockAssignments() {
+  try {
+    const raw = localStorage.getItem(CLOCK_ASSIGN_KEY);
+    if (!raw) return defaultClockAssignments();
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') return defaultClockAssignments();
+    const defaults = defaultClockAssignments();
+    for (const slot of PRIMARY_CLOCKS) {
+      const cityId = parsed[slot.id];
+      if (!cityId || !CLOCK_CITIES.some((c) => c.id === cityId)) {
+        parsed[slot.id] = defaults[slot.id];
+      }
+    }
+    return { ...defaults, ...parsed };
+  } catch {
+    return defaultClockAssignments();
+  }
+}
+
+export function saveClockAssignments(assignments) {
+  localStorage.setItem(CLOCK_ASSIGN_KEY, JSON.stringify(assignments));
+}
+
+export function setClockAssignment(slotId, cityId) {
+  const next = loadClockAssignments();
+  const takenSlot = PRIMARY_CLOCKS.find((slot) => slot.id !== slotId && next[slot.id] === cityId);
+  if (takenSlot) {
+    next[takenSlot.id] = next[slotId];
+  }
+  next[slotId] = cityId;
+  saveClockAssignments(next);
+  return next;
+}
+
+export function cityById(cityId) {
+  return CLOCK_CITIES.find((c) => c.id === cityId) || null;
+}
+
+export function assignedCityIds(assignments = loadClockAssignments()) {
+  return new Set(Object.values(assignments));
+}
 
 /** @deprecated use PRIMARY_CLOCKS + EXTRA_CLOCKS */
 export const FIXED_CLOCKS = [...PRIMARY_CLOCKS, ...EXTRA_CLOCKS.filter((c) => c.id !== 'riodejaneiro')];
@@ -277,40 +344,57 @@ function isBrazilZone(zone) {
   );
 }
 
+function hydrateSlot(slot, cityDef, { isLocal = false, cityOverride = null } = {}) {
+  return {
+    ...slot,
+    city: cityOverride || cityDef.city,
+    timeZone: cityDef.timeZone,
+    imageQuery: cityDef.imageQuery || guessImageQuery(cityDef.timeZone, cityDef.city),
+    cityId: cityDef.id,
+    isLocal,
+  };
+}
+
 /**
- * Dashboard clocks: Brasil + Chicago.
- * If the device is already in Brazil, the Brasil card becomes the local “You” clock.
+ * Dashboard clocks: 3 slots (defaults Brasil, Chicago, New York).
+ * Saved assignments replace a slot. Uncustomized Brasil slot follows the device city.
  */
 export function buildPrimaryClocks(localCity = 'Local') {
   const zone = localTimeZone();
   const brasilZone = isBrazilZone(zone);
+  const assignments = loadClockAssignments();
+  const defaults = defaultClockAssignments();
 
-  return PRIMARY_CLOCKS.map((c) => {
-    if (c.id === 'brasil' && brasilZone) {
-      return {
-        ...c,
-        city: localCity || 'Brasil',
-        timeZone: zone,
+  return PRIMARY_CLOCKS.map((slot) => {
+    const cityId = assignments[slot.id] || slot.id;
+    const customized = cityId !== defaults[slot.id];
+    const chosen = cityById(cityId) || slot;
+
+    if (!customized && slot.id === 'brasil' && brasilZone) {
+      return hydrateSlot(slot, { ...chosen, timeZone: zone }, {
         isLocal: true,
-        imageQuery: guessImageQuery(zone, localCity) || 'saopaulo',
-      };
+        cityOverride: localCity || chosen.city,
+      });
     }
-    if ((c.id === 'chicago' || c.id === 'newyork') && zone === c.timeZone) {
-      return { ...c, city: localCity || c.city, isLocal: true };
-    }
-    return { ...c, isLocal: false };
+
+    const isLocal = chosen.timeZone === zone;
+    return hydrateSlot(slot, chosen, {
+      isLocal,
+      cityOverride: isLocal ? localCity || chosen.city : null,
+    });
   });
 }
 
-/** Extra world clocks for the modal (skips duplicates of primary zones / local). */
+/** Extra world clocks for the modal (skips cities already on the dashboard). */
 export function buildExtraClocks(localCity = 'Local') {
   const zone = localTimeZone();
-  const primaryIds = new Set(PRIMARY_CLOCKS.map((c) => c.id));
-  const extras = EXTRA_CLOCKS.filter((c) => !primaryIds.has(c.id));
+  const used = assignedCityIds();
+  const extras = EXTRA_CLOCKS.filter((c) => !used.has(c.id));
 
   if (
     !isBrazilZone(zone) &&
     zone !== 'America/Chicago' &&
+    zone !== 'America/New_York' &&
     !extras.some((c) => c.timeZone === zone)
   ) {
     extras.unshift({
@@ -329,7 +413,7 @@ export function buildClockList(localCity = 'Local') {
   return buildPrimaryClocks(localCity);
 }
 
-function clockCardHtml(clock, now, baseZone) {
+function clockCardHtml(clock, now, baseZone, { editable = false } = {}) {
   const { time, date } = partsFor(now, clock.timeZone);
   const abbr = zoneAbbr(now, clock.timeZone);
   const offset = clock.isLocal
@@ -337,6 +421,9 @@ function clockCardHtml(clock, now, baseZone) {
     : offsetCompare(now, clock.timeZone, baseZone);
   const img = dailyImageFor(clock, now);
   const imgKey = imageKeyFor(clock, now);
+  const cityBtn = editable
+    ? `<button type="button" class="clock-city-btn" data-clock-slot="${clock.id}" title="Trocar cidade" aria-label="Trocar cidade de ${clock.city}">Trocar</button>`
+    : '';
 
   return `
     <article class="clock-card ${clock.isLocal ? 'local' : ''}" data-clock="${clock.id}" data-img-key="${imgKey}">
@@ -346,7 +433,10 @@ function clockCardHtml(clock, now, baseZone) {
         <span class="clock-tz-badge" title="Timezone">${abbr || '—'}</span>
       </div>
       <div class="clock-body">
-        <div class="clock-city">${clock.city}${clock.isLocal ? ' · You' : ''}</div>
+        <div class="clock-city-row">
+          <div class="clock-city">${clock.city}${clock.isLocal ? ' · You' : ''}</div>
+          ${cityBtn}
+        </div>
         <div class="clock-time">${time}</div>
         <div class="clock-date">${date}</div>
         <div class="clock-meta">
@@ -387,11 +477,11 @@ function updateClockCard(card, clock, now, baseZone) {
   }
 }
 
-export function renderClocks(container, clocks, now = new Date()) {
+export function renderClocks(container, clocks, now = new Date(), { editable = false } = {}) {
   if (!container) return;
   const baseZone = localTimeZone();
   const existing = container.querySelectorAll('[data-clock]');
-  const ids = clocks.map((c) => `${c.id}:${c.imageQuery || ''}:${c.city}`).join('|');
+  const ids = clocks.map((c) => `${c.id}:${c.cityId || ''}:${c.imageQuery || ''}:${c.city}:${editable ? 'e' : ''}`).join('|');
   const builtFor = container.dataset.clockIds || '';
 
   if (existing.length === clocks.length && builtFor === ids) {
@@ -403,5 +493,5 @@ export function renderClocks(container, clocks, now = new Date()) {
   }
 
   container.dataset.clockIds = ids;
-  container.innerHTML = clocks.map((clock) => clockCardHtml(clock, now, baseZone)).join('');
+  container.innerHTML = clocks.map((clock) => clockCardHtml(clock, now, baseZone, { editable })).join('');
 }

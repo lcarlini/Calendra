@@ -2,6 +2,10 @@ import {
   buildPrimaryClocks,
   buildExtraClocks,
   renderClocks,
+  CLOCK_CITIES,
+  loadClockAssignments,
+  setClockAssignment,
+  cityById,
 } from './clocks.js';
 import {
   addReminder,
@@ -31,6 +35,7 @@ import {
 import {
   MARKET_TICKERS,
   fetchMarketQuotes,
+  getQuotesFetchedAt,
   fetchMarketDetails,
   rangesForTicker,
   formatTickerValue,
@@ -90,7 +95,53 @@ function syncHeroDate() {
 }
 
 function renderClockGadgets() {
-  renderClocks($('#clock-grid'), state.clocks);
+  renderClocks($('#clock-grid'), state.clocks, new Date(), { editable: true });
+}
+
+function rebuildClocks() {
+  state.clocks = buildPrimaryClocks(state.localCity);
+  state.extraClocks = buildExtraClocks(state.localCity);
+  renderClockGadgets();
+}
+
+function openClockCityPicker(slotId) {
+  const assignments = loadClockAssignments();
+  const currentId = assignments[slotId];
+  const current = cityById(currentId);
+  const usedElsewhere = new Set(
+    Object.entries(assignments)
+      .filter(([slot]) => slot !== slotId)
+      .map(([, cityId]) => cityId)
+  );
+
+  const modal = openModal({
+    title: 'Trocar cidade',
+    subtitle: current ? `Slot atual · ${current.city}` : 'Escolha o relógio deste card',
+    bodyHtml: `
+      <div class="clock-city-picker" role="listbox" aria-label="Cidades">
+        ${CLOCK_CITIES.map((city) => {
+          const active = city.id === currentId;
+          const taken = usedElsewhere.has(city.id);
+          return `
+            <button type="button" class="clock-city-option ${active ? 'active' : ''}" data-city-id="${city.id}" ${active ? 'aria-current="true"' : ''}>
+              <strong>${city.city}</strong>
+              <span>${city.timeZone.replace(/_/g, ' ')}${taken ? ' · no outro relógio' : ''}</span>
+            </button>`;
+        }).join('')}
+      </div>
+    `,
+  });
+
+  modal.el.querySelectorAll('[data-city-id]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cityId = btn.dataset.cityId;
+      setClockAssignment(slotId, cityId);
+      rebuildClocks();
+      const picked = cityById(cityId);
+      toast('Cidade atualizada', picked?.city || cityId);
+      modal.close();
+    });
+  });
 }
 
 function renderMini() {
@@ -481,22 +532,45 @@ function fillWeatherBar(root, data, cityLabel) {
   if (forecast) forecast.innerHTML = forecastHtml(data.daily);
 }
 
-async function loadWeatherBars() {
-  await Promise.all(
-    WEATHER_BARS.map(async (city) => {
-      const root = document.querySelector(`[data-weather-bar="${city.id}"]`);
-      if (!root) return;
-      try {
-        const weather = await fetchWeather(city.lat, city.lon);
-        state.weatherByCity[city.id] = weather;
-        fillWeatherBar(root, weather, city.label);
-      } catch (err) {
-        console.warn('Weather bar failed', city.id, err);
-        const desc = root.querySelector('[data-role="desc"]');
-        if (desc) desc.textContent = 'Indisponível';
+let weatherInflight = null;
+
+async function loadWeatherBars({ force = false } = {}) {
+  if (weatherInflight && !force) return weatherInflight;
+  const btn = $('#weather-refresh');
+  if (force) {
+    btn?.classList.add('is-busy');
+    if (btn) btn.disabled = true;
+  }
+  const run = (async () => {
+    try {
+      await Promise.all(
+        WEATHER_BARS.map(async (city) => {
+          const root = document.querySelector(`[data-weather-bar="${city.id}"]`);
+          if (!root) return;
+          try {
+            const weather = await fetchWeather(city.lat, city.lon, { force });
+            state.weatherByCity[city.id] = weather;
+            fillWeatherBar(root, weather, city.label);
+          } catch (err) {
+            console.warn('Weather bar failed', city.id, err);
+            const desc = root.querySelector('[data-role="desc"]');
+            if (desc) desc.textContent = 'Indisponível';
+          }
+        })
+      );
+    } finally {
+      if (force) {
+        btn?.classList.remove('is-busy');
+        if (btn) btn.disabled = false;
       }
-    })
-  );
+    }
+  })();
+  weatherInflight = run;
+  try {
+    await run;
+  } finally {
+    if (weatherInflight === run) weatherInflight = null;
+  }
 }
 
 async function resolveLocalLabel() {
@@ -504,9 +578,7 @@ async function resolveLocalLabel() {
     const loc = await resolveLocation();
     state.locationLabel = loc.label;
     state.localCity = loc.label.split(',')[0] || 'Brasil';
-    state.clocks = buildPrimaryClocks(state.localCity);
-    state.extraClocks = buildExtraClocks(state.localCity);
-    renderClockGadgets();
+    rebuildClocks();
     const heroLoc = $('#hero-location');
     if (heroLoc) heroLoc.textContent = loc.label;
   } catch (err) {
@@ -514,6 +586,22 @@ async function resolveLocalLabel() {
     const heroLoc = $('#hero-location');
     if (heroLoc) heroLoc.textContent = 'Local aproximado';
   }
+}
+
+function marketOhlcHtml(ticker, quote) {
+  if (ticker.id === 'selic') return '';
+  const dig = digitsFor(ticker, quote?.value);
+  const cell = (label, value) => `
+    <div class="market-ohlc-row">
+      <span>${label}</span>
+      <strong>${value != null ? `R$ ${formatMoney(value, dig)}` : '—'}</strong>
+    </div>`;
+  return `
+    <div class="market-ohlc">
+      ${cell('Abertura', quote?.open)}
+      ${cell('Máxima', quote?.high)}
+      ${cell('Fechamento', quote?.close ?? quote?.value)}
+    </div>`;
 }
 
 function renderMarkets(quotes) {
@@ -535,27 +623,58 @@ function renderMarkets(quotes) {
         </div>
         <div class="market-value">${formatTickerValue(ticker, q)}</div>
         <div class="market-label">${ticker.label}</div>
+        ${marketOhlcHtml(ticker, q)}
         <div class="market-hint">Gráfico →</div>
       </button>
     `;
   }).join('');
 }
 
-async function refreshMarkets() {
+let marketsInflight = null;
+
+async function refreshMarkets({ force = false } = {}) {
+  if (marketsInflight && !force) return marketsInflight;
   const status = $('#markets-status');
+  const btn = $('#markets-refresh');
+  if (force) {
+    btn?.classList.add('is-busy');
+    if (btn) btn.disabled = true;
+  }
+  const run = (async () => {
+    try {
+      const fetchedBefore = getQuotesFetchedAt();
+      const quotes = await fetchMarketQuotes({ force });
+      const fetchedAfter = getQuotesFetchedAt();
+      if (force || fetchedBefore !== fetchedAfter || !$('#market-grid')?.children.length) {
+        renderMarkets(quotes);
+      }
+      if (status) {
+        const fetchedAt = getQuotesFetchedAt() || Date.now();
+        const t = new Date(fetchedAt).toLocaleTimeString('pt-BR', {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        });
+        status.textContent = `Atualizado ${t}`;
+      }
+    } catch (err) {
+      console.warn('Markets error', err);
+      if (status) status.textContent = 'Falha ao atualizar';
+      if (!$('#market-grid')?.children.length) {
+        renderMarkets({});
+      }
+    } finally {
+      if (force) {
+        btn?.classList.remove('is-busy');
+        if (btn) btn.disabled = false;
+      }
+    }
+  })();
+  marketsInflight = run;
   try {
-    const quotes = await fetchMarketQuotes();
-    renderMarkets(quotes);
-    if (status) {
-      const t = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      status.textContent = `Atualizado ${t}`;
-    }
-  } catch (err) {
-    console.warn('Markets error', err);
-    if (status) status.textContent = 'Falha ao atualizar';
-    if (!$('#market-grid')?.children.length) {
-      renderMarkets({});
-    }
+    await run;
+  } finally {
+    if (marketsInflight === run) marketsInflight = null;
   }
 }
 
@@ -661,6 +780,7 @@ function renderMarketModalBody(ticker, rangeId, details, accent) {
           ${metricCell('Venda (ask)', fmt(stats.ask))}
           ${metricCell('Spread', stats.spread != null ? formatMoney(stats.spread, dig) : '—')}
           ${metricCell('Var. bid', formatSigned(stats.varBid, dig), (stats.varBid ?? 0) >= 0 ? 'up' : 'down')}
+          ${metricCell('Abertura', fmt(quote?.open ?? stats.open))}
           ${metricCell('Máx. do dia', fmt(stats.quoteHigh))}
           ${metricCell('Mín. do dia', fmt(stats.quoteLow))}
           ${metricCell('Var. do dia', dayChange || '—', (stats.dayPct ?? 0) >= 0 ? 'up' : 'down')}
@@ -741,11 +861,20 @@ function bindThemeAndLayout() {
   });
 
   $('#reset-layout')?.addEventListener('click', () => layoutApi?.reset());
-  $('#weather-refresh')?.addEventListener('click', () => loadWeatherBars());
+  $('#weather-refresh')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    loadWeatherBars({ force: true });
+  });
+  $('#markets-refresh')?.addEventListener('click', () => refreshMarkets({ force: true }));
 }
 
 function bindModals() {
   $('#open-extra-clocks')?.addEventListener('click', openExtraClocksModal);
+  $('#clock-grid')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-clock-slot]');
+    if (btn) openClockCityPicker(btn.dataset.clockSlot);
+  });
   $('#open-cal-modal')?.addEventListener('click', openCalendarModal);
 
   $('#market-grid')?.addEventListener('click', (e) => {

@@ -52,7 +52,20 @@ export async function locateByIp() {
   };
 }
 
-async function fetchForecast16(lat, lon) {
+const weatherCache = new Map();
+const WEATHER_TTL_MS = 45_000;
+
+async function fetchOpenMeteo(url, { force = false } = {}) {
+  const href = force ? `${url}${url.includes('?') ? '&' : '?'}_=${Date.now()}` : url;
+  const res = await fetch(href, { cache: 'no-store' });
+  if (!res.ok) {
+    const text = await res.text().catch(() => '');
+    throw new Error(`Forecast failed (${res.status}) ${text}`);
+  }
+  return res.json();
+}
+
+async function fetchForecast16(lat, lon, { force = false } = {}) {
   const params = new URLSearchParams({
     latitude: String(lat),
     longitude: String(lon),
@@ -65,15 +78,10 @@ async function fetchForecast16(lat, lon) {
     forecast_days: '16',
     timezone: 'auto',
   });
-  const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
-  if (!res.ok) {
-    const text = await res.text().catch(() => '');
-    throw new Error(`Forecast failed (${res.status}) ${text}`);
-  }
-  return res.json();
+  return fetchOpenMeteo(`https://api.open-meteo.com/v1/forecast?${params}`, { force });
 }
 
-async function fetchSeasonalExtend(lat, lon) {
+async function fetchSeasonalExtend(lat, lon, { force = false } = {}) {
   const params = new URLSearchParams({
     latitude: String(lat),
     longitude: String(lon),
@@ -81,14 +89,16 @@ async function fetchSeasonalExtend(lat, lon) {
     forecast_days: '35',
     timezone: 'auto',
   });
-  const res = await fetch(`https://seasonal-api.open-meteo.com/v1/seasonal?${params}`);
-  if (!res.ok) throw new Error('Seasonal failed');
-  return res.json();
+  return fetchOpenMeteo(`https://seasonal-api.open-meteo.com/v1/seasonal?${params}`, { force });
 }
 
 /** Detailed 16-day forecast + seasonal extension through day 30. */
-export async function fetchWeather(lat, lon) {
-  const base = await fetchForecast16(lat, lon);
+export async function fetchWeather(lat, lon, { force = false } = {}) {
+  const cacheKey = `${lat},${lon}`;
+  const cached = weatherCache.get(cacheKey);
+  if (!force && cached && Date.now() - cached.at < WEATHER_TTL_MS) return cached.data;
+
+  const base = await fetchForecast16(lat, lon, { force });
   const daily = {
     time: [...base.daily.time],
     weather_code: [...base.daily.weather_code],
@@ -104,7 +114,7 @@ export async function fetchWeather(lat, lon) {
   };
 
   try {
-    const seasonal = await fetchSeasonalExtend(lat, lon);
+    const seasonal = await fetchSeasonalExtend(lat, lon, { force });
     const have = new Set(daily.time);
     for (let i = 0; i < seasonal.daily.time.length && daily.time.length < 30; i += 1) {
       const day = seasonal.daily.time[i];
@@ -126,7 +136,9 @@ export async function fetchWeather(lat, lon) {
     /* 16-day still useful */
   }
 
-  return { ...base, daily };
+  const data = { ...base, daily };
+  weatherCache.set(cacheKey, { at: Date.now(), data });
+  return data;
 }
 
 export function windDirLabel(deg) {

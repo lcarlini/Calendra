@@ -570,6 +570,8 @@ img {
 }
 
 .gadget-head {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -703,6 +705,16 @@ img {
   color: var(--accent);
 }
 
+.btn-icon.is-busy {
+  pointer-events: none;
+  opacity: 0.7;
+  animation: icon-spin 0.7s linear infinite;
+}
+
+@keyframes icon-spin {
+  to { transform: rotate(360deg); }
+}
+
 /* Clocks */
 .clock-grid {
   display: grid;
@@ -780,18 +792,85 @@ img {
   padding: 0.85rem 0.9rem 1rem;
 }
 
+.clock-city-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem;
+  margin-bottom: 0.35rem;
+}
+
 .clock-city {
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 0.35rem;
+  min-width: 0;
+}
+
+.clock-city-btn {
+  flex-shrink: 0;
+  padding: 0.18rem 0.45rem;
+  border-radius: 7px;
+  border: 1px solid var(--line);
+  background: rgba(14, 26, 36, 0.05);
+  color: var(--accent);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.clock-city-btn:hover {
+  background: rgba(15, 118, 110, 0.12);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.clock-city-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.55rem;
+}
+
+.clock-city-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+  text-align: left;
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.clock-city-option:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.clock-city-option.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.clock-city-option strong {
+  font-size: 0.92rem;
+}
+
+.clock-city-option span {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
 }
 
 .clock-time {
   font-family: var(--font-display);
-  font-size: 1.65rem;
+  font-size: 1.85rem;
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.1;
@@ -800,7 +879,7 @@ img {
 
 .clock-date {
   margin-top: 0.25rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--ink-soft);
   font-weight: 500;
 }
@@ -820,13 +899,13 @@ img {
   border-radius: 7px;
   background: color-mix(in srgb, var(--accent) 16%, transparent);
   color: var(--accent);
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 0.06em;
 }
 
 .clock-offset {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: var(--muted);
 }
@@ -2019,7 +2098,7 @@ body.layout-editing .gadget:hover {
 }
 
 .clock-grid-stack .clock-time {
-  font-size: 1.85rem;
+  font-size: 2.15rem;
   line-height: 1.05;
 }
 
@@ -2177,13 +2256,13 @@ body.layout-editing .gadget:hover {
 
 .market-grid.market-grid-stack .market-card {
   height: 100%;
-  min-height: 120px;
+  min-height: 168px;
   padding: 0.95rem 1rem;
   justify-content: space-between;
 }
 
 .market-grid.market-grid-stack .market-value {
-  font-size: 1.35rem;
+  font-size: 1.6rem;
   margin: 0.25rem 0;
 }
 
@@ -2487,7 +2566,7 @@ body.layout-editing .gadget:hover {
 }
 
 .market-symbol {
-  font-size: 0.72rem;
+  font-size: 0.84rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   color: var(--card-accent, var(--accent));
@@ -2495,7 +2574,7 @@ body.layout-editing .gadget:hover {
 
 .market-value {
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 1.45rem;
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.15;
@@ -2506,9 +2585,34 @@ body.layout-editing .gadget:hover {
 }
 
 .market-label {
-  font-size: 0.8rem;
+  font-size: 0.92rem;
   font-weight: 700;
   color: var(--ink-soft);
+}
+
+.market-ohlc {
+  width: 100%;
+  margin-top: 0.45rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+}
+
+.market-ohlc-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  color: var(--muted);
+}
+
+.market-ohlc-row strong {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
 }
 
 .market-hint {
@@ -2521,7 +2625,7 @@ body.layout-editing .gadget:hover {
 }
 
 .market-change {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 800;
   padding: 0.15rem 0.4rem;
   border-radius: 999px;

@@ -1,15 +1,27 @@
-/** Live FX / crypto / SELIC via public APIs (AwesomeAPI + BrasilAPI + BCB). */
+/** Live FX / crypto / SELIC via public APIs (AwesomeAPI + BCB PTAX + CoinGecko). */
 
 const AWESOME = 'https://economia.awesomeapi.com.br';
 const BRASIL_API_TAXAS = 'https://brasilapi.com.br/api/taxas/v1';
-const BCB_SELIC = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados';
+const BCB_SGS = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs';
+const BCB_SELIC = `${BCB_SGS}.432/dados`;
+const BCB_PTAX =
+  'https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata';
+const HG_FINANCE = 'https://api.hgbrasil.com/finance';
 const COINGECKO_BTC =
   'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=brl,usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true';
+
+const QUOTE_TTL_MS = 25_000;
+const PTAX_TTL_MS = 5 * 60_000;
+const SGS_USD_VENDA = 1;
+const SGS_EUR_VENDA = 21619;
+
+const quotesCache = { at: 0, data: null };
+const ptaxCache = { at: 0, data: null };
 
 export const MARKET_TICKERS = [
   {
     id: 'usd',
-    label: 'Dólar',
+    label: 'Dólar com.',
     symbol: 'USD',
     pair: 'USD-BRL',
     unit: 'R$',
@@ -59,6 +71,61 @@ function num(v) {
   return Number.isFinite(n) ? n : null;
 }
 
+function getBrasilDateParts(date = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'America/Sao_Paulo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(date);
+  const get = (type) => parts.find((p) => p.type === type)?.value;
+  return {
+    year: get('year'),
+    month: get('month'),
+    day: get('day'),
+  };
+}
+
+function olindaDate(parts = getBrasilDateParts()) {
+  return `${parts.month}-${parts.day}-${parts.year}`;
+}
+
+async function fetchJson(url, { timeout = 8000 } = {}) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeout);
+  try {
+    const res = await fetch(url, { signal: ctrl.signal, cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function parseQuoteTime(raw) {
+  if (raw == null || raw === '') return null;
+  if (typeof raw === 'number' || /^\d+$/.test(String(raw))) {
+    const n = Number(raw);
+    const ms = n < 1e12 ? n * 1000 : n;
+    const d = new Date(ms);
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+  const normalized = String(raw).replace(' ', 'T');
+  const d = new Date(normalized);
+  if (!Number.isNaN(d.getTime())) return d;
+  const br = String(raw).match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})/);
+  if (!br) return null;
+  const iso = `${br[1]}-${br[2]}-${br[3]}T${br[4]}:${br[5]}:00-03:00`;
+  const parsed = new Date(iso);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
+function isQuoteFresh(raw, maxAgeMs = 3 * 60 * 60 * 1000) {
+  const d = parseQuoteTime(raw);
+  if (!d) return false;
+  return Date.now() - d.getTime() < maxAgeMs;
+}
+
 export function digitsFor(ticker, value) {
   if (ticker?.id === 'selic') return 2;
   if (ticker?.id === 'btc') return value != null && value < 1000 ? 2 : 0;
@@ -97,15 +164,11 @@ async function fetchAwesomeQuotes() {
   const pairs = MARKET_TICKERS.filter((t) => t.pair)
     .map((t) => t.pair)
     .join(',');
-  const res = await fetch(`${AWESOME}/json/last/${pairs}`);
-  if (!res.ok) throw new Error(`FX failed (${res.status})`);
-  return res.json();
+  return fetchJson(`${AWESOME}/json/last/${pairs}`);
 }
 
 async function fetchSelic() {
-  const res = await fetch(BRASIL_API_TAXAS);
-  if (!res.ok) throw new Error(`SELIC failed (${res.status})`);
-  const data = await res.json();
+  const data = await fetchJson(BRASIL_API_TAXAS);
   const row = (Array.isArray(data) ? data : []).find((t) =>
     String(t.nome || t.name || '')
       .toLowerCase()
@@ -126,9 +189,7 @@ async function fetchSelic() {
 
 async function fetchBtcExtras() {
   try {
-    const res = await fetch(COINGECKO_BTC);
-    if (!res.ok) return null;
-    const data = await res.json();
+    const data = await fetchJson(COINGECKO_BTC);
     const b = data.bitcoin;
     if (!b) return null;
     return {
@@ -137,6 +198,7 @@ async function fetchBtcExtras() {
       volume24hBrl: num(b.brl_24h_vol),
       change24hCg: num(b.brl_24h_change),
       priceUsd: num(b.usd),
+      priceBrl: num(b.brl),
     };
   } catch {
     return null;
@@ -146,25 +208,248 @@ async function fetchBtcExtras() {
 function parseAwesomeRow(row) {
   const bid = num(row.bid);
   const ask = num(row.ask);
+  const value = ask ?? bid;
+  const varBid = num(row.varBid);
+  const timestamp = row.create_date || row.timestamp;
   return {
-    value: bid,
+    value,
+    bid,
     ask,
     changePct: num(row.pctChange),
-    varBid: num(row.varBid),
+    varBid,
     high: num(row.high),
     low: num(row.low),
+    open: bid != null && varBid != null ? bid - varBid : value != null && varBid != null ? value - varBid : null,
+    close: value,
     name: row.name || row.code,
-    timestamp: row.create_date || row.timestamp,
+    timestamp,
     code: row.code,
     codein: row.codein,
     spread: bid != null && ask != null ? ask - bid : null,
+    source: 'mercado',
+    fresh: isQuoteFresh(timestamp),
   };
 }
 
-export async function fetchMarketQuotes() {
-  const [awesome, selic] = await Promise.all([
-    fetchAwesomeQuotes(),
+function parseSgsSeries(rows) {
+  return (Array.isArray(rows) ? rows : [])
+    .map((r) => ({ date: r.data, value: num(r.valor) }))
+    .filter((r) => r.value != null);
+}
+
+function previousSgsClose(series, parts = getBrasilDateParts()) {
+  if (!series?.length) return null;
+  const today = `${parts.day}/${parts.month}/${parts.year}`;
+  const last = series[series.length - 1];
+  if (last.date === today) return series[series.length - 2]?.value ?? null;
+  return last.value;
+}
+
+function parsePtaxBulletins(payload, prevClose) {
+  const rows = Array.isArray(payload?.value) ? payload.value : [];
+  if (!rows.length) return null;
+
+  const vendas = rows.map((r) => num(r.cotacaoVenda)).filter((v) => v != null);
+  const compras = rows.map((r) => num(r.cotacaoCompra)).filter((v) => v != null);
+  const abertura = rows.find((r) => /abertura/i.test(r.tipoBoletim || ''));
+  const fechamento =
+    [...rows].reverse().find((r) => /fechamento/i.test(r.tipoBoletim || '')) || rows[rows.length - 1];
+  const value = num(fechamento?.cotacaoVenda);
+  const bid = num(fechamento?.cotacaoCompra) ?? compras.at(-1) ?? null;
+  const open = num(abertura?.cotacaoVenda);
+  const high = vendas.length ? Math.max(...vendas) : null;
+  const low = vendas.length ? Math.min(...vendas) : null;
+  const changePct = prevClose && value != null ? ((value - prevClose) / prevClose) * 100 : null;
+  const timestamp = fechamento?.dataHoraCotacao || abertura?.dataHoraCotacao || null;
+
+  return {
+    value,
+    bid,
+    ask: value,
+    open,
+    high,
+    low,
+    close: value,
+    changePct,
+    varBid: value != null && prevClose != null ? value - prevClose : null,
+    name: 'PTAX',
+    timestamp,
+    spread: bid != null && value != null ? value - bid : null,
+    source: 'ptax',
+    fresh: true,
+  };
+}
+
+function quoteFromSgs(hist) {
+  if (!hist?.length) return null;
+  const last = hist[hist.length - 1];
+  const prev = hist.length > 1 ? hist[hist.length - 2] : null;
+  const value = last.value;
+  const prevClose = prev?.value ?? null;
+  return {
+    value,
+    bid: value,
+    ask: value,
+    open: prevClose,
+    high: value,
+    low: value,
+    close: value,
+    changePct: prevClose ? ((value - prevClose) / prevClose) * 100 : null,
+    varBid: prevClose != null ? value - prevClose : null,
+    name: 'BCB',
+    timestamp: last.date,
+    spread: null,
+    source: 'bcb',
+    fresh: true,
+  };
+}
+
+function parseHgCurrency(row) {
+  if (!row) return null;
+  const bid = num(row.buy);
+  const ask = num(row.sell);
+  const value = ask ?? bid;
+  const changePct = num(row.variation);
+  return {
+    value,
+    bid,
+    ask,
+    open: value != null && changePct != null ? value / (1 + changePct / 100) : null,
+    high: value,
+    low: value,
+    close: value,
+    changePct,
+    varBid: null,
+    name: row.name,
+    timestamp: null,
+    spread: bid != null && ask != null ? ask - bid : null,
+    source: 'hg',
+    fresh: true,
+  };
+}
+
+async function fetchPtaxBundle({ force = false } = {}) {
+  if (!force && ptaxCache.data && Date.now() - ptaxCache.at < PTAX_TTL_MS) {
+    return ptaxCache.data;
+  }
+
+  const today = getBrasilDateParts();
+  const date = olindaDate(today);
+  const usdUrl = `${BCB_PTAX}/CotacaoMoedaDia(moeda=@moeda,dataCotacao=@dataCotacao)?@moeda='USD'&@dataCotacao='${date}'&$format=json`;
+  const eurUrl = `${BCB_PTAX}/CotacaoMoedaDia(moeda=@moeda,dataCotacao=@dataCotacao)?@moeda='EUR'&@dataCotacao='${date}'&$format=json`;
+
+  const [usdDay, eurDay, usdHist, eurHist] = await Promise.all([
+    fetchJson(usdUrl).catch(() => null),
+    fetchJson(eurUrl).catch(() => null),
+    fetchJson(`${BCB_SGS}.${SGS_USD_VENDA}/dados/ultimos/5?formato=json`).catch(() => null),
+    fetchJson(`${BCB_SGS}.${SGS_EUR_VENDA}/dados/ultimos/5?formato=json`).catch(() => null),
+  ]);
+
+  const usdSeries = parseSgsSeries(usdHist);
+  const eurSeries = parseSgsSeries(eurHist);
+  const usdPrev = previousSgsClose(usdSeries, today);
+  const eurPrev = previousSgsClose(eurSeries, today);
+
+  const data = {
+    usd: parsePtaxBulletins(usdDay, usdPrev) || quoteFromSgs(usdSeries),
+    eur: parsePtaxBulletins(eurDay, eurPrev) || quoteFromSgs(eurSeries),
+  };
+
+  if (data.usd || data.eur) {
+    ptaxCache.at = Date.now();
+    ptaxCache.data = data;
+  }
+  return data;
+}
+
+async function fetchHgQuotes() {
+  const data = await fetchJson(`${HG_FINANCE}?format=json-cors`);
+  const cur = data?.results?.currencies;
+  if (!cur) return null;
+  return {
+    usd: parseHgCurrency(cur.USD),
+    eur: parseHgCurrency(cur.EUR),
+    btc: parseHgCurrency(cur.BTC),
+  };
+}
+
+function pickBetterNumber(a, b, mode = 'max') {
+  if (a == null) return b ?? null;
+  if (b == null) return a;
+  return mode === 'min' ? Math.min(a, b) : Math.max(a, b);
+}
+
+function liveLooksStuckAtOpen(live, official) {
+  if (live?.value == null || official?.open == null || official?.close == null) return false;
+  const nearOpen = Math.abs(live.value - official.open) < 0.003;
+  const officialMoved = Math.abs(official.close - official.open) > 0.003;
+  return nearOpen && officialMoved;
+}
+
+function mergeFxQuote(live, official, hg) {
+  const candidates = [live, official, hg].filter(Boolean);
+  if (!candidates.length) return null;
+
+  const healthyLive = live && live.fresh && !liveLooksStuckAtOpen(live, official) ? live : null;
+  const primary = healthyLive || official || live || hg;
+
+  const open = official?.open ?? live?.open ?? hg?.open ?? null;
+  const high = candidates.reduce((acc, q) => pickBetterNumber(acc, q.high, 'max'), null);
+  const low = candidates.reduce((acc, q) => pickBetterNumber(acc, q.low, 'min'), null);
+  const close = primary?.close ?? primary?.value ?? official?.close ?? null;
+
+  return {
+    ...primary,
+    open,
+    high,
+    low,
+    close,
+    bid: primary.bid ?? official?.bid ?? hg?.bid ?? null,
+    ask: primary.ask ?? official?.ask ?? hg?.ask ?? primary.value,
+    spread:
+      (primary.ask ?? official?.ask ?? primary.value) != null &&
+      (primary.bid ?? official?.bid) != null
+        ? (primary.ask ?? official?.ask ?? primary.value) - (primary.bid ?? official?.bid)
+        : primary.spread ?? null,
+  };
+}
+
+function quoteFromBtcExtras(extras) {
+  if (extras?.priceBrl == null) return null;
+  return {
+    value: extras.priceBrl,
+    bid: extras.priceBrl,
+    ask: extras.priceBrl,
+    open: null,
+    high: null,
+    low: null,
+    close: extras.priceBrl,
+    changePct: extras.change24hCg,
+    varBid: null,
+    name: 'Bitcoin',
+    timestamp: null,
+    spread: null,
+    source: 'coingecko',
+    fresh: true,
+  };
+}
+
+export async function fetchMarketQuotes({ force = false } = {}) {
+  if (!force && quotesCache.data && Date.now() - quotesCache.at < QUOTE_TTL_MS) {
+    return quotesCache.data;
+  }
+
+  const [awesome, selic, ptax] = await Promise.all([
+    fetchAwesomeQuotes().catch(() => null),
     fetchSelic().catch(() => null),
+    fetchPtaxBundle({ force }).catch(() => null),
+  ]);
+
+  const needHg = !awesome?.USDBRL || !awesome?.EURBRL;
+  const needBtc = !awesome?.BTCBRL;
+  const [hg, btcExtras] = await Promise.all([
+    needHg ? fetchHgQuotes().catch(() => null) : Promise.resolve(null),
+    needBtc ? fetchBtcExtras().catch(() => null) : Promise.resolve(null),
   ]);
 
   const out = {};
@@ -173,11 +458,31 @@ export async function fetchMarketQuotes() {
       out.selic = selic;
       continue;
     }
+
     const key = ticker.pair.replace('-', '');
-    const row = awesome[key];
-    out[ticker.id] = row ? parseAwesomeRow(row) : null;
+    const live = awesome?.[key] ? parseAwesomeRow(awesome[key]) : null;
+
+    if (ticker.id === 'btc') {
+      out.btc = live || hg?.btc || quoteFromBtcExtras(btcExtras);
+      if (out.btc && btcExtras?.change24hCg != null && out.btc.changePct == null) {
+        out.btc.changePct = btcExtras.change24hCg;
+      }
+      continue;
+    }
+
+    out[ticker.id] = mergeFxQuote(live, ptax?.[ticker.id] || null, hg?.[ticker.id] || null);
   }
-  return out;
+
+  const hasAny = MARKET_TICKERS.some((t) => out[t.id]?.value != null);
+  if (hasAny || !quotesCache.data) {
+    quotesCache.at = Date.now();
+    quotesCache.data = out;
+  }
+  return quotesCache.data || out;
+}
+
+export function getQuotesFetchedAt() {
+  return quotesCache.at || 0;
 }
 
 function mapAwesomeSeries(rows, { timeStyle = 'date' } = {}) {
@@ -217,15 +522,11 @@ function mapAwesomeSeries(rows, { timeStyle = 'date' } = {}) {
 }
 
 async function fetchAwesomeIntraday(pair, count) {
-  const res = await fetch(`${AWESOME}/json/${pair}/${count}`);
-  if (!res.ok) throw new Error('Intraday failed');
-  return mapAwesomeSeries(await res.json(), { timeStyle: 'time' });
+  return mapAwesomeSeries(await fetchJson(`${AWESOME}/json/${pair}/${count}`), { timeStyle: 'time' });
 }
 
 async function fetchAwesomeDaily(pair, days) {
-  const res = await fetch(`${AWESOME}/json/daily/${pair}/${days}`);
-  if (!res.ok) throw new Error('Daily failed');
-  return mapAwesomeSeries(await res.json(), { timeStyle: 'date' });
+  return mapAwesomeSeries(await fetchJson(`${AWESOME}/json/daily/${pair}/${days}`), { timeStyle: 'date' });
 }
 
 function formatBrDate(d) {
@@ -244,9 +545,7 @@ async function fetchSelicHistory(range) {
     start.setDate(start.getDate() - (range.days || 30));
   }
   const url = `${BCB_SELIC}?formato=json&dataInicial=${formatBrDate(start)}&dataFinal=${formatBrDate(end)}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('SELIC history failed');
-  const rows = await res.json();
+  const rows = await fetchJson(url);
   // Keep weekly-ish samples for long ranges to keep chart readable
   let points = (Array.isArray(rows) ? rows : [])
     .map((r) => ({
