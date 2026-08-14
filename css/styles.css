@@ -2578,6 +2578,15 @@ body.layout-editing .gadget:hover {
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.15;
+  color: var(--ink);
+}
+
+.market-value.up {
+  color: #4ade80;
+}
+
+.market-value.down {
+  color: #fb7185;
 }
 
 .market-value.fancy {
@@ -2616,6 +2625,18 @@ body.layout-editing .gadget:hover {
   white-space: nowrap;
 }
 
+.market-ohlc-row strong.up {
+  color: #4ade80;
+}
+
+.market-ohlc-row strong.down {
+  color: #fb7185;
+}
+
+.market-ohlc-row strong.flat {
+  color: var(--ink);
+}
+
 .market-hint {
   margin-top: 0.35rem;
   font-size: 0.7rem;
@@ -2631,7 +2652,7 @@ body.layout-editing .gadget:hover {
   padding: 0.15rem 0.4rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.06);
-  color: var(--muted);
+  color: var(--ink);
 }
 
 .market-change.up {
@@ -2642,6 +2663,10 @@ body.layout-editing .gadget:hover {
 .market-change.down {
   color: #fb7185;
   background: rgba(251, 113, 133, 0.12);
+}
+
+.market-change.flat {
+  color: var(--ink);
 }
 
 .market-chart-wrap {

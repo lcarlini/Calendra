@@ -588,19 +588,19 @@ async function resolveLocalLabel() {
   }
 }
 
-function marketOhlcHtml(ticker, quote) {
+function marketOhlcHtml(ticker, quote, toneClass = '') {
   if (ticker.id === 'selic') return '';
   const dig = digitsFor(ticker, quote?.value);
-  const cell = (label, value) => `
+  const cell = (label, value, extraClass = '') => `
     <div class="market-ohlc-row">
       <span>${label}</span>
-      <strong>${value != null ? `R$ ${formatMoney(value, dig)}` : '—'}</strong>
+      <strong class="${extraClass}">${value != null ? `R$ ${formatMoney(value, dig)}` : '—'}</strong>
     </div>`;
   return `
     <div class="market-ohlc">
       ${cell('Abertura', quote?.open)}
       ${cell('Máxima', quote?.high)}
-      ${cell('Fechamento', quote?.close ?? quote?.value)}
+      ${cell('Fechamento', quote?.close ?? quote?.value, toneClass)}
     </div>`;
 }
 
@@ -611,19 +611,20 @@ function renderMarkets(quotes) {
 
   grid.innerHTML = MARKET_TICKERS.map((ticker) => {
     const q = quotes?.[ticker.id];
-    const change = formatChange(q?.changePct);
-    const up = (q?.changePct ?? 0) > 0;
-    const down = (q?.changePct ?? 0) < 0;
-    const changeClass = up ? 'up' : down ? 'down' : '';
+    const pct = q?.changePct;
+    const change = formatChange(pct ?? 0);
+    const up = pct != null && pct > 0;
+    const down = pct != null && pct < 0;
+    const toneClass = up ? 'up' : down ? 'down' : 'flat';
     return `
-      <button type="button" class="market-card accent-${ticker.accent}" data-ticker="${ticker.id}">
+      <button type="button" class="market-card accent-${ticker.accent} ${toneClass}" data-ticker="${ticker.id}">
         <div class="market-card-top">
           <span class="market-symbol">${ticker.symbol}</span>
-          ${change ? `<span class="market-change ${changeClass}">${change}</span>` : '<span class="market-change">—</span>'}
+          <span class="market-change ${toneClass}">${change}</span>
         </div>
-        <div class="market-value">${formatTickerValue(ticker, q)}</div>
+        <div class="market-value ${toneClass}">${formatTickerValue(ticker, q)}</div>
         <div class="market-label">${ticker.label}</div>
-        ${marketOhlcHtml(ticker, q)}
+        ${marketOhlcHtml(ticker, q, toneClass)}
         <div class="market-hint">Gráfico →</div>
       </button>
     `;
