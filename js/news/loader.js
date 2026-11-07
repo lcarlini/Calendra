@@ -5,7 +5,7 @@
 import { fetchText, fetchJson, createCircuitBreaker } from '../core/http.js';
 import { cacheGet, cacheSet } from '../core/cache.js';
 import { readJSON, writeJSON } from '../core/store.js';
-import { parseFeed, parseFeedDate, stripHtml } from './rss.js';
+import { firstImage, parseFeed, parseFeedDate, safeImageUrl, stripHtml } from './rss.js';
 import { toArticle } from './normalize.js';
 import { GDELT_QUERIES, SOURCES, sourceForGdelt } from './sources.js';
 
@@ -78,7 +78,7 @@ export async function fetchGdelt({ fetchOpts = {}, now = Date.now(), timespan = 
         seen.add(a.url);
         out.push({
           sourceId,
-          item: { position, title: stripHtml(a.title), link: a.url, guid: a.url, publishedAt: parseFeedDate(parseGdeltDate(a.seendate), now), categories: [], excerptHtml: '' },
+          item: { position, title: stripHtml(a.title), link: a.url, guid: a.url, publishedAt: parseFeedDate(parseGdeltDate(a.seendate), now), categories: [], excerptHtml: '', image: safeImageUrl(a.socialimage) },
         });
       });
     } catch (error) {
@@ -118,6 +118,11 @@ export async function fetchViaRss2Json(feedAddress, { apiKey = '', count = 0, fe
     publishedAt: parseFeedDate(i.pubDate ? `${String(i.pubDate).replace(' ', 'T')}Z` : '', now),
     categories: Array.isArray(i.categories) ? i.categories.map(String) : [],
     excerptHtml: i.description || '',
+    image:
+      safeImageUrl(i.thumbnail) ||
+      (/^image\//i.test(i.enclosure?.type || '') || /\.(jpe?g|png|webp)(\?|$)/i.test(i.enclosure?.link || '') ? safeImageUrl(i.enclosure?.link) : '') ||
+      firstImage(i.description) ||
+      firstImage(i.content),
   }));
 }
 

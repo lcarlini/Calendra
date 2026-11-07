@@ -53,10 +53,14 @@ test('all requested sources are listed; only the official feed is marked integra
   assert.deepEqual(integratedProviders().map((p) => p.id), ['adrenaline-ofertas']);
   assert.equal(DEAL_FEEDS[0].id, 'adrenaline-ofertas');
   for (const p of unavailableProviders()) {
-    assert.ok(p.reason && p.reason.length > 20, `${p.id} explains why automated access is unavailable`);
+    const text = p.reason || p.detail;
+    assert.ok(text && text.length > 20, `${p.id} explains how it is (or is not) read`);
     assert.ok(p.homepage.startsWith('https://'), `${p.id} keeps a direct link`);
-    assert.ok(!/scrap|bypass this|user.?agent/i.test(p.reason) || /not (scraped|bypass)|does not bypass|not accessed/i.test(p.reason), `${p.id} reason does not suggest a workaround`);
+    assert.ok(!/bypass this|spoof|fake user.?agent/i.test(text), `${p.id} does not suggest a workaround`);
   }
+  // Snapshot sources map to the ids the snapshot script writes; stores without access come through the comparison sites.
+  assert.deepEqual(PROVIDERS.filter((p) => p.integration === 'snapshot').map((p) => p.snapshotId).sort(), ['buscape', 'gatry', 'hardmob', 'pelando', 'promobit', 'zoom']);
+  for (const p of PROVIDERS.filter((x) => x.integration === 'via')) assert.ok(new RegExp(p.storeMatch, 'i').test(p.name.replace('!', '')), `${p.id} storeMatch matches its own name`);
 });
 
 test('search fallbacks are ready-made Google queries, clearly just links', () => {

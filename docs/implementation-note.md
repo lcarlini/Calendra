@@ -102,5 +102,27 @@ broken city photos; TV-mode digits clipped at 4K.
 * **Primary route since 2026-11-07: a site snapshot.** `.github/workflows/snapshot-feeds.yml` fetches the RSS every 30 minutes
   (plain `curl`, which the forum answers) and commits it to `data/deals-adrenaline-ofertas.xml` plus a `.updated` time stamp. The page
   reads it from the same origin (no CORS, no rate limit). A snapshot older than 3 hours is refreshed through rss2json when possible,
-  and is still shown if rss2json is throttled.
+  and is still shown if rss2json is throttled. (The forum answers 403 to GitHub's runners, so the job falls back to rss2json there.)
 * Manual test guide: [manual-test-guide.md](manual-test-guide.md).
+
+## Price watch (2026-11-07)
+* `.github/workflows/snapshot-prices.yml` runs `scripts/snapshot-prices.mjs` every 3 hours for the products in
+  `data/prices/watchlist.json` and commits `data/prices/latest.json` (offers, community deals, per-source status) and
+  `data/prices/history.json` (one lowest price per product per day). The page only reads those files.
+* Pages read (robots.txt checked 2026-11-07; search pages that it disallows are never read, and a Buscapé path that resolves
+  to a search is refused by the parser): Buscapé and Zoom product/category pages (offers + their own 40-day price history),
+  Pelando `/busca/<term>`, Promobit `/promocoes/recentes/`, Gatry `/promocoes/?q=`, Hardmob's Promoções list, and the Adrenaline feed.
+  One request per host every 1.5 s, user agent `CalendraPriceCheck/1.0` with the site's address.
+* Observed results: from GitHub's runners Buscapé, Zoom, Promobit, Gatry and Adrenaline answer; **Pelando answers 403 to cloud
+  servers** (it works from a home connection; the last good results are kept and dated) and **Hardmob answers 403 to an honestly
+  identified client** from anywhere. Neither is bypassed. Amazon, Mercado Livre, Magalu, Kabum, Shopee and AliExpress refuse direct
+  automated requests, so their prices appear through the merchant offers Buscapé and Zoom list.
+* Running `node scripts/snapshot-prices.mjs` from a home connection and committing the result refreshes Pelando too.
+* Simulation (`js/deals/price-sim.js`): 2026 is the base (real daily lows where recorded); every other day is
+  reference × category trend × the Brazilian retail calendar of that year (Black Friday = last Friday of November, Prime Day,
+  Dia do Consumidor, Dia das Mães/Pais, Semana do Brasil, 11.11, Natal). 2027 and 2028 are projections with a widening band.
+
+## News images (2026-11-07)
+* Cards show the image each publisher puts in its own feed (media:content / media:thumbnail / enclosure / first `<img>`), loaded
+  from the publisher with `referrerpolicy="no-referrer"`, credited with the outlet's name and linked to the article. Nothing is
+  copied or stored. Known thumbnail addresses are swapped for the publisher's larger size (UOL, BBC, CNN Brasil, DutchNews).

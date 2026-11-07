@@ -68,6 +68,52 @@ export function parseFeedDate(text, now = Date.now()) {
   return new Date(t).toISOString();
 }
 
+/** An https image address, or ''. Only addresses the publisher put in its own feed are used (hotlinked, never stored). */
+export function safeImageUrl(url) {
+  const u = decodeEntities(String(url ?? '').trim());
+  if (!/^https:\/\/[^\s"'<>]+$/i.test(u)) return '';
+  if (/\.(gif)(\?|$)/i.test(u) || /(pixel|tracking|feedburner|spacer|1x1)/i.test(u)) return '';
+  return u;
+}
+
+/**
+ * Feeds often announce a thumbnail. These publishers serve the same picture in larger sizes at a predictable
+ * address (each rule checked on 2026-11-07), so cards and the viewer are sharp. Unknown addresses are left as they are.
+ */
+export function largerImage(url) {
+  const u = String(url || '');
+  if (!u) return '';
+  return u
+    .replace(/^(https:\/\/conteudo\.imguol\.com\.br\/.+_v\d+)_\d+x\d+(\.\w+)$/i, '$1_900x506$2')
+    .replace(/^(https:\/\/ichef\.bbci\.co\.uk\/ace\/(?:ws|standard))\/\d+\//i, '$1/800/')
+    .replace(/^(https:\/\/admin\.cnnbrasil\.com\.br\/.+\.(?:jpe?g|png|webp))\?w=\d+$/i, '$1?w=1200')
+    .replace(/^(https:\/\/www\.dutchnews\.nl\/wpcms\/wp-content\/uploads\/.+)-\d+x\d+(\.(?:jpe?g|png|webp))$/i, '$1$2');
+}
+
+/** First <img src> in an HTML fragment. */
+export function firstImage(html) {
+  const m = String(html ?? '').match(/<img[^>]+src=["']([^"']+)["']/i);
+  return m ? safeImageUrl(m[1]) : '';
+}
+
+/** The image a feed item announces: media:content / media:thumbnail / image enclosure / first <img> in the description. */
+export function itemImage(block) {
+  const attr = (re) => {
+    const m = String(block).match(re);
+    return m ? safeImageUrl(m[1]) : '';
+  };
+  return (
+    attr(/<media:content[^>]*url=["']([^"']+)["'][^>]*(?:medium=["']image["']|type=["']image)/i) ||
+    attr(/<media:content[^>]*(?:medium=["']image["']|type=["']image)[^>]*url=["']([^"']+)["']/i) ||
+    attr(/<media:thumbnail[^>]*url=["']([^"']+)["']/i) ||
+    attr(/<enclosure[^>]*url=["']([^"']+)["'][^>]*type=["']image/i) ||
+    attr(/<enclosure[^>]*type=["']image[^"']*["'][^>]*url=["']([^"']+)["']/i) ||
+    attr(/<media:content[^>]*url=["']([^"']+\.(?:jpe?g|png|webp)(?:\?[^"']*)?)["']/i) ||
+    firstImage(getTag(block, 'description')) ||
+    firstImage(getTag(block, 'content:encoded'))
+  );
+}
+
 /**
  * Parse an RSS 2.0 document into raw items (feed order is kept in `position`).
  * `excerptHtml` prefers <atom:subtitle> (used by g1), then <description>.
@@ -83,5 +129,6 @@ export function parseFeed(xml, { now = Date.now() } = {}) {
     publishedAt: parseFeedDate(getTag(block, 'pubDate') || getTag(block, 'dc:date'), now),
     categories: getAllTags(block, 'category').map(stripHtml).filter(Boolean),
     excerptHtml: getTag(block, 'atom:subtitle') || getTag(block, 'description'),
+    image: itemImage(block),
   }));
 }

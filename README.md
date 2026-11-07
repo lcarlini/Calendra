@@ -14,7 +14,7 @@ travel planning, a news reader, markets, and a price-and-deals tracker. No build
 | Calendário | [calendario.html](https://lcarlini.github.io/Calendra/calendario.html) | Opens on the year view modelled on `UI/Calendar.html` (12 full months, D/B/G badges, combo colours, tooltips), plus month/week/day, US + Brazil + GCM/Brasil/Davi calendars, **Travel & Holiday Intelligence** (2026–2030, `.ics` export) |
 | News | [news.html](https://lcarlini.github.io/Calendra/news.html) | Stories grouped across outlets, explainable ranking, optional AI summaries. Loads with no server |
 | Markets | [markets.html](https://lcarlini.github.io/Calendra/markets.html) | Policy rates, currencies, B3 watchlist. US assets are shown as unavailable |
-| Deals | [deals.html](https://lcarlini.github.io/Calendra/deals.html) | Find deals: community feed, store searches, coupon finder (nothing to register) |
+| Deals | [deals.html](https://lcarlini.github.io/Calendra/deals.html) | Price watch (Buscapé, Zoom, Pelando, Promobit, Gatry, Hardmob, Adrenaline), real price history, 2026–2028 price calendar with simulation, community feed, coupon finder |
 | Settings | [settings.html](https://lcarlini.github.io/Calendra/settings.html) | Theme, TV mode, AI provider, export/import/reset |
 
 Legacy: `calendar.html` redirects to `calendario.html` and keeps the query string (for example `?date=2026-09-07`).

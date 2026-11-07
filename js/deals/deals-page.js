@@ -12,7 +12,8 @@ import { loadNewsPrefs, NEWS_KEY, saveNewsPrefs } from '../news/loader.js';
 import { prepareInputs, sendsToCloud, summarize } from '../ai/providers.js';
 import { getApiKey, loadAiSettings } from '../ai/settings.js';
 import { describeError, summaryHtml } from '../ai/summary-ui.js';
-import { COUPON_STORES, PROVIDERS, couponSearches, fallbackQuery, googleSearchUrl, helperQueries, integratedProviders, unavailableProviders } from './providers.js';
+import { COUPON_STORES, PROVIDERS, couponSearches, fallbackQuery, googleSearchUrl, helperQueries, unavailableProviders } from './providers.js';
+import { initPriceWatch, priceMatchesHtml, snapshotInfo } from './price-watch.js';
 import { ageLabel, couponThreads, filterThreads, loadForumThreadsDetailed } from './forum.js';
 import { DEALS_KEY, addToList, loadDeals, parseMoneyInput, saveDeals } from './model.js';
 
@@ -44,10 +45,11 @@ function renderChips() {
 
 function providerCard(provider, query) {
   const q = fallbackQuery(provider, query);
+  const label = { snapshot: 'In the price watch · search link', via: 'Prices via Buscapé/Zoom · search link', unavailable: 'Search link only' }[provider.integration];
   return `<article class="provider-card">
-    <header><h5>${esc(provider.name)}</h5><span class="badge badge-muted">Automated integration unavailable</span></header>
+    <header><h5>${esc(provider.name)}</h5><span class="badge badge-muted">${esc(label)}</span></header>
     <p class="muted">${esc(provider.role)}</p>
-    <p class="reason">${esc(provider.reason)}</p>
+    <p class="reason">${esc(provider.reason || provider.detail)}</p>
     <div class="story-actions">
       <a class="btn btn-ghost btn-sm" href="${esc(googleSearchUrl(q))}" target="_blank" rel="noopener noreferrer">Open search on Google</a>
       <button type="button" class="btn btn-ghost btn-sm" data-copy="${esc(q)}">Copy search query</button>
@@ -76,9 +78,10 @@ function renderResults() {
     .map((h) => `<a class="chip" href="${esc(googleSearchUrl(h.query))}" target="_blank" rel="noopener noreferrer">${esc(h.label)}: Google</a>`)
     .join('');
   box.innerHTML = `
+    <h4>From the price watch</h4>${priceMatchesHtml(lastQuery)}
     <h4>Community feed matches</h4>${feedPart}
-    <h4>Where automated search is unavailable</h4>
-    <p class="status-line">These are links to a Google search for "${esc(lastQuery)}" on each site, not live results. Each card says why a direct integration is not offered.</p>
+    <h4>Search any store yourself</h4>
+    <p class="status-line">Store search pages forbid automated reading (robots.txt), so a free-text search is a link you open: a Google search for "${esc(lastQuery)}" on each site, not live results.</p>
     <div class="chip-row">${helpers}</div>
     <div class="provider-grid">${others}</div>`;
 }
@@ -216,12 +219,34 @@ function renderCoupons() {
     <p class="status-line">Codes are only what people posted. Calendra cannot tell whether a code still works.</p>`;
 }
 
+function providerStatus(p, snap) {
+  if (p.integration === 'feed') {
+    const live = feed.state === 'ok' ? `Live · ${threads.length} threads · updated ${timeAgo(feed.fetchedAt)}` : feed.state === 'error' ? `Throttled: ${feed.message}` : 'Loading';
+    return { cls: feed.state === 'ok' ? 'badge-ok' : 'badge-warn', label: 'Feed', text: `${live}. ${p.detail}` };
+  }
+  if (p.integration === 'snapshot') {
+    const s = snap?.sources?.[p.snapshotId];
+    if (!s) return { cls: 'badge-muted', label: 'Price watch', text: `Loading the snapshot. ${p.detail}` };
+    return s.ok
+      ? { cls: 'badge-ok', label: 'Working', text: `Answered ${s.ok} request(s) in the snapshot of ${timeAgo(snap.updatedAt)}. ${p.detail}` }
+      : { cls: 'badge-warn', label: 'Refused', text: `${(s.errors || []).join(', ') || 'failed'} in the snapshot of ${timeAgo(snap.updatedAt)}${s.lastOk ? `; last success ${timeAgo(s.lastOk)}` : ''}. ${p.detail}` };
+  }
+  if (p.integration === 'via') {
+    const re = new RegExp(p.storeMatch, 'i');
+    const offers = (snap?.products || []).flatMap((x) => x.offers).filter((o) => re.test(o.store.replace('!', '')));
+    return offers.length
+      ? { cls: 'badge-ok', label: 'Via Buscapé/Zoom', text: `${offers.length} offer(s) from this store in the price watch. Direct access: ${p.reason}` }
+      : { cls: 'badge-muted', label: 'Via Buscapé/Zoom', text: `No offer from this store among the watched products right now. Direct access: ${p.reason}` };
+  }
+  return { cls: 'badge-muted', label: 'Link only', text: p.reason };
+}
+
 function renderProviders() {
-  const live = feed.state === 'ok' ? `Live · ${threads.length} threads · updated ${timeAgo(feed.fetchedAt)}` : feed.state === 'error' ? `Throttled: ${feed.message}` : 'Loading';
-  $('provider-status').innerHTML = [
-    ...integratedProviders().map((p) => `<li><span class="badge ${feed.state === 'ok' ? 'badge-ok' : 'badge-warn'}">Feed</span> <strong>${esc(p.name)}</strong> <span class="muted">${esc(p.role)} · ${esc(live)}. ${esc(p.detail)}</span> <a href="${esc(p.homepage)}" target="_blank" rel="noopener noreferrer">Open</a></li>`),
-    ...unavailableProviders().map((p) => `<li><span class="badge badge-muted">Unavailable</span> <strong>${esc(p.name)}</strong> <span class="muted">${esc(p.role)}. ${esc(p.reason)}</span> <a href="${esc(p.homepage)}" target="_blank" rel="noopener noreferrer">Open site</a></li>`),
-  ].join('');
+  const snap = snapshotInfo();
+  $('provider-status').innerHTML = PROVIDERS.map((p) => {
+    const s = providerStatus(p, snap);
+    return `<li><span class="badge ${s.cls}">${esc(s.label)}</span> <strong>${esc(p.name)}</strong> <span class="muted">${esc(p.role)} · ${esc(s.text)}</span> <a href="${esc(p.homepage)}" target="_blank" rel="noopener noreferrer">Open site</a></li>`;
+  }).join('');
 }
 
 function renderAll() {
@@ -355,3 +380,7 @@ onStoreChange([NEWS_KEY], loadFeed);
 $('feed-key').value = loadNewsPrefs().rss2jsonKey;
 renderAll();
 loadFeed();
+initPriceWatch().then(() => {
+  renderResults();
+  renderProviders();
+});

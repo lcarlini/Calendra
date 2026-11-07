@@ -66,6 +66,8 @@ async function main() {
   const today = now.toISOString().slice(0, 10);
   const { items } = readJson(path.join(DIR, 'watchlist.json'), { items: [] });
   const history = readJson(path.join(DIR, 'history.json'), {});
+  const previous = readJson(path.join(DIR, 'latest.json'), { products: [], sources: {} });
+  const prevProduct = (id) => previous.products?.find((p) => p.id === id);
   const status = Object.fromEntries(Object.entries(SOURCES).map(([id, s]) => [id, { ...s, ok: 0, failed: 0, errors: [] }]));
   const note = (id, ok, error) => {
     if (ok) status[id].ok += 1;
@@ -150,8 +152,29 @@ async function main() {
       sources[id] = status[id].failed && !shared[id]?.length ? { ok: false, error: status[id].errors[0] } : { ok: true, count: found.length };
     }
 
+    // A source that refused this run keeps its last good results, marked with when they were seen.
+    const before = prevProduct(item.id);
+    for (const [id, s] of Object.entries(sources)) {
+      if (s.ok || !before) continue;
+      const seenAt = before.sources?.[id]?.seenAt || previous.updatedAt;
+      const keep = (list) => (list || []).filter((x) => x.source === id).map((x) => ({ ...x, seenAt: x.seenAt || seenAt }));
+      const old = [...keep(before.offers), ...keep(before.community)];
+      if (!old.length) continue;
+      if (SOURCES[id].kind === 'comparison') offers.push(...keep(before.offers));
+      else community.push(...keep(before.community));
+      s.carried = old.length;
+      s.seenAt = seenAt;
+    }
+    for (const s of Object.values(sources)) if (s.ok) s.seenAt = now.toISOString();
+
     offers.sort((a, b) => a.price - b.price);
-    const lowest = offers[0] || null;
+    let lowest = offers[0] || null;
+    // Buscapé/Zoom's own history includes today's lowest price over all stores, even ones beyond the first page
+    // of offers the page embeds. When it is lower than every offer we read, it is the real current lowest.
+    const todayLow = siteHistory.filter((h) => h.date === today).sort((a, b) => a.price - b.price)[0];
+    if (todayLow && (!lowest || todayLow.price < lowest.price)) {
+      lowest = { source: todayLow.source, store: `Lowest listed on ${SOURCES[todayLow.source].name}`, title: name || item.name, price: todayLow.price, url: (todayLow.source === 'zoom' ? 'https://www.zoom.com.br' : 'https://www.buscape.com.br') + pages[0], fromHistory: true };
+    }
     const prev = history[item.id] || [];
     const runEntry = lowest ? [{ date: today, price: lowest.price, source: lowest.source }] : [];
     history[item.id] = mergeHistory(prev, [...siteHistory, ...runEntry]);
@@ -174,6 +197,9 @@ async function main() {
     console.log(`${item.id}: ${offers.length} offers, ${community.length} community deals, lowest ${lowest ? lowest.price : '-'}; ` + Object.entries(sources).map(([k, v]) => `${k}=${v.ok ? v.count : 'ERR ' + v.error}`).join(' '));
   }
 
+  for (const [id, s] of Object.entries(status)) {
+    s.lastOk = s.ok ? now.toISOString() : previous.sources?.[id]?.lastOk || '';
+  }
   fs.mkdirSync(DIR, { recursive: true });
   fs.writeFileSync(path.join(DIR, 'latest.json'), JSON.stringify({ updatedAt: now.toISOString(), sources: status, products }, null, 1) + '\n');
   fs.writeFileSync(path.join(DIR, 'history.json'), JSON.stringify(history) + '\n');

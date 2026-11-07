@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Calendra — Price &amp; Deals: find community deals, store searches and coupons." />
+    <meta name="description" content="Calendra — Price &amp; Deals: price watch, price history, a 2026–2028 price calendar, community deals and coupons." />
     <title>Calendra — Deals</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1620'/%3E%3Cpath d='M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z' fill='%23a3e635'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="css/styles.css?v=20261107p" />
+    <link rel="stylesheet" href="css/styles.css?v=20261107r" />
     <script>
       try {
         var t = localStorage.getItem("calendra.theme.v1") || "ink";
@@ -43,10 +43,18 @@
         <p class="back-home"><a href="index.html">&larr; Back to Home</a></p>
         <h2 class="module-title">Price &amp; Deals</h2>
         <p class="module-lead">
-          Find deals, prices and coupons. One community deal feed is read live. Stores and price-comparison sites have no permitted
-          automated access, so for those this page gives you ready searches. Nothing here is a verified price: numbers are labelled
-          with their source.
+          Prices for the products you follow, read every 3 hours from Buscapé and Zoom (with the offers of Amazon, Kabum, Magalu,
+          Mercado Livre and other stores they list) and from the deal communities Pelando, Promobit, Gatry, Hardmob and Adrenaline.
+          Real price history, a price calendar with a 2026-based simulation for 2027 and 2028, community deals and coupons.
         </p>
+
+        <section class="market-section pw-section" aria-labelledby="pw-h">
+          <div class="rates-head">
+            <h3 id="pw-h">Price watch</h3>
+          </div>
+          <p class="status-line" id="price-watch-status" role="status">Loading the price snapshot…</p>
+          <div id="price-watch" aria-live="polite"></div>
+        </section>
 
         <section class="market-section" aria-labelledby="search-h">
           <h3 id="search-h">Search</h3>
@@ -58,6 +66,12 @@
           </form>
           <div class="chip-row" id="recent-searches" aria-label="Recent and saved searches"></div>
           <div id="deal-results" aria-live="polite"></div>
+        </section>
+
+        <section class="market-section pc-section" id="price-calendar-section" aria-labelledby="pc-h">
+          <h3 id="pc-h">Price calendar &amp; simulation</h3>
+          <p class="status-line">Pick a product and a year. 2026 is the base year (real prices where recorded); 2027 and 2028 are simulated from it with each year's sales calendar.</p>
+          <div id="price-calendar"></div>
         </section>
 
         <section class="market-section" aria-labelledby="feed-h">
@@ -115,7 +129,7 @@
 
         <section class="market-section" aria-labelledby="status-h">
           <h3 id="status-h">Sources and what they allow</h3>
-          <p class="status-line">Checked on 2026-11-07 with plain requests. Nothing was bypassed, and no source is scraped.</p>
+          <p class="status-line">Checked on 2026-11-07. Pages are read only where robots.txt allows, with an honest user agent; a site that refuses is reported, never bypassed.</p>
           <ul class="source-status" id="provider-status"></ul>
         </section>
       </main>

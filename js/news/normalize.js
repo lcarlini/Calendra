@@ -1,9 +1,10 @@
 /**
  * Turns raw feed items into the normalized NewsArticle model.
- * Only headline, a short excerpt and links are kept: `contentAvailability` is therefore
- * never 'full-permitted', and no image is ever stored.
+ * Only headline, a short excerpt, links and the address of the image the publisher put in its own feed are kept:
+ * `contentAvailability` is therefore never 'full-permitted'. Images are shown from the publisher's address
+ * (credited, linked to the original), never copied or stored.
  */
-import { stripHtml } from './rss.js';
+import { largerImage, stripHtml } from './rss.js';
 
 const TRACKING = /^(utm_|at_|fbclid$|gclid$|ref$|cmpid$|src$|source$|ocid$|mc_|igshid$)/i;
 const EXCERPT_MAX = 220;
@@ -90,6 +91,11 @@ export function toArticle(item, source, fetchedAt) {
     contentAvailability: excerpt ? 'excerpt-only' : 'headline-only',
     position: item.position ?? 0,
   };
+  if (item.image) article.image = largerImage(item.image); // the publisher's own feed image, hotlinked with credit
+  return withTags(article, source);
+}
+
+function withTags(article, source) {
   article.tags = articleTags(article, source);
   return article;
 }

@@ -11,6 +11,7 @@ import { buildStories, explainCluster } from './cluster.js';
 import { dateCutoff, loadNews, loadNewsPrefs, normalizeProxyUrl, saveNewsPrefs, searchArticles, NEWS_KEY } from './loader.js';
 import { prepareInputs, sendsToCloud, summarize } from '../ai/providers.js';
 import { openNewsAi } from '../ai/news-modal.js';
+import { openImageViewer } from './image-viewer.js';
 import { getApiKey, loadAiSettings, AI_KEY } from '../ai/settings.js';
 import { describeError, summaryHtml } from '../ai/summary-ui.js';
 
@@ -95,34 +96,69 @@ function articleLine(a) {
     </li>`;
 }
 
-function storyCard(c) {
+/** Images shown on screen, in order, for the viewer's previous/next. */
+let gallery = [];
+
+const initials = (name) => String(name || '?').split(/\s+/).map((w) => w[0]).join('').slice(0, 3).toUpperCase();
+const hue = (text) => [...String(text)].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) % 360, 7);
+
+/** Image header of a card: the publisher's own feed image (credited, opens the viewer) or a styled placeholder. */
+function storyMedia(article, title, extra = '') {
+  const img = article.image;
+  const when = article.publishedAt ? timeAgo(article.publishedAt) : '';
+  if (img) {
+    const i = gallery.push({ src: img, title, source: article.sourceName, url: article.originalUrl, when }) - 1;
+    return `<button type="button" class="story-media" data-gallery="${i}" aria-label="View image: ${esc(title)}">
+      <img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+      <span class="story-media-zoom" aria-hidden="true">⤢</span>
+      <span class="story-media-source">${esc(article.sourceName)}</span>${extra}
+    </button>`;
+  }
+  return `<div class="story-media placeholder" style="--h:${hue(article.sourceName)}" aria-hidden="true">
+      <span class="story-media-mark">${esc(initials(article.sourceName))}</span>
+      <span class="story-media-source">${esc(article.sourceName)}</span>${extra}
+    </div>`;
+}
+
+function storyCard(c, index = 0) {
   const ex = explainCluster(c, { topics: prefs.topics, region: prefs.region });
   const lead = c.articles[0];
+  const withImage = c.articles.find((a) => a.image) || lead;
   const stale = c.articles.every((a) => a.stale);
-  return `<article class="story-card" data-id="${esc(c.id)}">
-    <div class="story-top">
-      <span class="badge ${c.coverage > 1 ? 'badge-ok' : 'badge-muted'}">${esc(ex.headline)}</span>
-      <span class="muted">Updated ${esc(timeAgo(c.updatedAt))}</span>
-      ${stale ? '<span class="badge badge-warn">Saved copy</span>' : ''}
+  const featured = index === 0;
+  const coverage = c.coverage > 1 ? `<span class="story-coverage">${c.coverage} outlets</span>` : '';
+  return `<article class="story-card news-card${featured ? ' featured' : ''}" data-id="${esc(c.id)}">
+    ${storyMedia(withImage.image ? withImage : lead, c.title, coverage)}
+    <div class="news-card-body">
+      <div class="story-top">
+        <span class="badge ${c.coverage > 1 ? 'badge-ok' : 'badge-muted'}">${esc(ex.headline)}</span>
+        <span class="muted">${esc(timeAgo(c.updatedAt))}</span>
+        ${stale ? '<span class="badge badge-warn">Saved copy</span>' : ''}
+      </div>
+      <h4><a href="${esc(lead.originalUrl)}" target="_blank" rel="noopener noreferrer">${esc(c.title)}</a></h4>
+      ${lead.excerpt ? `<p class="excerpt">${esc(lead.excerpt)}</p>` : ''}
+      <p class="news-outlets muted">${esc(c.outlets.join(' · '))}</p>
+      <div class="news-card-more">
+        <details class="why">
+          <summary>Why highlighted</summary>
+          <ul>${ex.reasons.map((r) => `<li>${esc(r)}</li>`).join('')}</ul>
+        </details>
+        ${c.articles.length > 1 ? `<details class="related"><summary>Coverage (${c.articles.length})</summary><ul>${c.articles.map(articleLine).join('')}</ul></details>` : ''}
+      </div>
+      ${summaryButtons(c.id, c.coverage, lead.id)}
     </div>
-    <h4><a href="${esc(lead.originalUrl)}" target="_blank" rel="noopener noreferrer">${esc(c.title)}</a></h4>
-    <p class="muted">${esc(c.outlets.join(' · '))}</p>
-    ${lead.excerpt ? `<p class="excerpt">${esc(lead.excerpt)}</p>` : ''}
-    <details class="why">
-      <summary>Why this story is highlighted</summary>
-      <ul>${ex.reasons.map((r) => `<li>${esc(r)}</li>`).join('')}</ul>
-    </details>
-    ${c.articles.length > 1 ? `<details class="related"><summary>Related coverage (${c.articles.length})</summary><ul>${c.articles.map(articleLine).join('')}</ul></details>` : ''}
-    ${summaryButtons(c.id, c.coverage, lead.id)}
   </article>`;
 }
 
 function latestRow(a) {
-  return `<article class="story-card compact">
-    <div class="story-top"><span class="badge badge-muted">${esc(a.sourceName)}</span><span class="muted">${esc(a.publishedAt ? timeAgo(a.publishedAt) : 'time not provided')}</span>${a.stale ? '<span class="badge badge-warn">Saved copy</span>' : ''}</div>
-    <h4><a href="${esc(a.originalUrl)}" target="_blank" rel="noopener noreferrer">${esc(a.title)}</a></h4>
-    ${a.excerpt ? `<p class="excerpt">${esc(a.excerpt)}</p>` : ''}
-    <div class="story-actions"><button type="button" class="btn btn-ai btn-sm" data-ai-article="${esc(a.id)}" aria-label="Resumir esta noticia com IA">✨ AI</button></div>
+  return `<article class="story-card news-card">
+    ${storyMedia(a, a.title)}
+    <div class="news-card-body">
+      <div class="story-top"><span class="muted">${esc(a.publishedAt ? timeAgo(a.publishedAt) : 'time not provided')}</span>${a.stale ? '<span class="badge badge-warn">Saved copy</span>' : ''}</div>
+      <h4><a href="${esc(a.originalUrl)}" target="_blank" rel="noopener noreferrer">${esc(a.title)}</a></h4>
+      ${a.excerpt ? `<p class="excerpt">${esc(a.excerpt)}</p>` : ''}
+      <div class="story-actions"><button type="button" class="btn btn-ai btn-sm" data-ai-article="${esc(a.id)}" aria-label="Resumir esta noticia com IA">✨ AI</button></div>
+    </div>
   </article>`;
 }
 
@@ -168,14 +204,20 @@ function render() {
     return;
   }
 
+  gallery = [];
+  container.classList.add('news-grid');
   if (prefs.tab === 'latest') {
     const sorted = [...list].sort((a, b) => (b.publishedAt || '').localeCompare(a.publishedAt || ''));
-    container.innerHTML = sorted.slice(0, 80).map(latestRow).join('');
+    container.innerHTML = sorted.slice(0, 81).map(latestRow).join('');
     $('news-summary-line').textContent = `${sorted.length} articles · ${live} live source${live === 1 ? '' : 's'}${partial}${q ? ` · matching "${q}"` : ''} · ${scope}`;
     stories = [];
   } else {
     stories = buildStories(list, { topics: prefs.topics, region: prefs.region });
-    container.innerHTML = stories.slice(0, 60).map(storyCard).join('');
+    // The featured slot goes to the best-ranked of the top 4 stories that has a picture (ranking is otherwise kept).
+    const shown = stories.slice(0, 61);
+    const lead = shown.slice(0, 4).findIndex((c) => c.articles.some((a) => a.image));
+    if (lead > 0) shown.unshift(...shown.splice(lead, 1));
+    container.innerHTML = shown.map((c, i) => storyCard(c, i)).join('');
     $('news-summary-line').textContent = `${stories.length} stories from ${list.length} articles · ${live} live source${live === 1 ? '' : 's'}${partial}${q ? ` · matching "${q}"` : ''} · ${scope}`;
   }
 }
@@ -258,6 +300,11 @@ document.addEventListener('click', (event) => {
     render();
     return;
   }
+  const media = event.target.closest('[data-gallery]');
+  if (media) {
+    openImageViewer(gallery, Number(media.dataset.gallery));
+    return;
+  }
   const ai = event.target.closest('[data-ai-article]');
   if (ai) {
     const article = data.articles.find((a) => a.id === ai.dataset.aiArticle);
@@ -314,6 +361,27 @@ document.addEventListener('change', (event) => {
     render();
   }
 });
+
+// A publisher image that fails to load turns into the styled placeholder (and leaves the viewer's list).
+$('news-list').addEventListener(
+  'error',
+  (event) => {
+    const img = event.target;
+    if (!(img instanceof HTMLImageElement)) return;
+    const media = img.closest('.story-media');
+    if (!media) return;
+    const i = Number(media.dataset.gallery);
+    if (gallery[i]) gallery[i] = { ...gallery[i], src: '' };
+    const source = media.querySelector('.story-media-source')?.textContent || '';
+    const ph = document.createElement('div');
+    ph.className = 'story-media placeholder';
+    ph.style.setProperty('--h', hue(source));
+    ph.setAttribute('aria-hidden', 'true');
+    ph.innerHTML = `<span class="story-media-mark">${esc(initials(source))}</span><span class="story-media-source">${esc(source)}</span>${media.querySelector('.story-coverage')?.outerHTML || ''}`;
+    media.replaceWith(ph);
+  },
+  true
+);
 
 $('news-q').addEventListener('input', () => render());
 $('news-refresh').addEventListener('click', refresh);

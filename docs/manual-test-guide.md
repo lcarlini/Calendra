@@ -43,6 +43,9 @@ now and then: a step marked **(live)** depends on them. If one fails, wait a min
 - [ ] No sample or fake headlines are ever shown. If nothing loads you get an explanation and a Refresh button.
 - [ ] Tabs (Top, Latest, topics), the date filter, the search box and source toggles narrow the list. The summary line states counts and the search scope.
 - [ ] Stories covered by several outlets show "Covered by N outlets", related coverage and a "Why this story is highlighted" explanation. Every headline opens the original in a new tab.
+- [ ] **Layout:** the top story is a wide featured card (picture left, text right). Below it, **3 stories per row** at desktop width, 2 on a tablet, 1 on a phone. Rows line up.
+- [ ] **Pictures:** each card shows the picture the publisher put in its feed, with the outlet's name on it. A story without a picture gets a coloured card with the outlet's initials (never a broken image).
+- [ ] **Image viewer:** clicking a picture opens it large on a dark backdrop with the headline, "Image: <outlet> · time" and "Open the article ↗". ‹ › buttons, the arrow keys and a swipe go to the previous/next picture ("2 / 18"). ×, Escape and a click outside close it.
 - [ ] **Optional: get more headlines:** saving an rss2json key or proxy address reloads the list. A bad proxy address (for example `javascript:...`) is rejected.
 - [ ] **✨ AI button** (on every story): opens a modal with the headline and a link to the original.
   - [ ] With the default Ollama running: it reads the article text, then shows bullet topics. Footer says "Processado localmente".
@@ -58,8 +61,12 @@ now and then: a step marked **(live)** depends on them. If one fails, wait a min
 - [ ] Watchlist add and remove work and persist after a reload.
 
 ## 6. Deals (finding only: nothing to register)
-- [ ] The page has **no** forms to add products, prices, coupons or alerts. Sections: Search, Community feed, Find coupons, Sources.
-- [ ] **Search:** type "ssd 1tb" and press Search. The community feed matches appear **(live)**, then 13 store cards, each with "Open search on Google" (a prefilled `site:` query), "Copy search query" and "Open site". The text says these are links, not live results.
+- [ ] The page has **no** forms to add products, prices, coupons or alerts. Sections: Price watch, Search, Price calendar & simulation, Community feed, Find coupons, Sources.
+- [ ] **Price watch:** 8 product cards (PlayStation 5, SSD 1TB, RTX 5070, Smart TV 55", Galaxy S26, Switch 2, iPhone 17, Xbox Series X) with picture, lowest price, store and source, a "below/above the 40-day average" badge, a sparkline and one dot per source (green answered, amber last good copy, red refused). The status line says how old the snapshot is and lists each source with ✓ or ✕.
+- [ ] **Product detail:** clicking a card opens a dialog: price history chart (real Buscapé/Zoom history), every offer with store, price and "Open ↗", community deals with pictures, and each source's result. On a phone it is a bottom sheet with no sideways scroll.
+- [ ] **Price calendar & simulation:** pick a product, then **2026 · base**, **2027** or **2028**. Every day of the year is coloured (green = a good day to buy compared with that day's normal price, orange = better wait). 2026 marks real-price days with a dot; 2027 and 2028 are simulated. Tapping a day shows its price, "Real price" or "Simulated · range …" and the sales event. "Best times to buy" lists Black Friday, Cyber Monday, Prime Day… with the saving. Black Friday moves with the year (27/11/2026, 26/11/2027, 24/11/2028).
+- [ ] **Each product searched:** search "playstation 5", "ssd 1tb", "rtx 5070", "tv 55", "galaxy s26", "switch 2", "iphone 17", "xbox series x". Each shows its price-watch card first, then deals and offers from the snapshot, then community feed matches and the store links.
+- [ ] **Search:** the store cards each offer "Open search on Google" (a prefilled `site:` query), "Copy search query" and "Open site". The text says store search pages forbid automated reading (robots.txt), so these are links, not live results.
 - [ ] Helper chips: Price history, Coupon, US price open Google searches in a new tab.
 - [ ] "Save this search" puts a starred chip in the recent searches. It survives a reload and can be removed with ×.
 - [ ] **Community feed (live):**
@@ -73,7 +80,8 @@ now and then: a step marked **(live)** depends on them. If one fails, wait a min
   - [ ] Codes people posted in the community threads appear as copyable pills marked "Community-reported · unverified" with a link to the thread.
   - [ ] With no match: "No coupon thread among the N newest ones…" and the searches below still work.
   - [ ] "Search coupon sites" offers a Google search plus Cuponomia, Méliuz, Promobit, Pelando and Cupom Válido, described as searches and not results.
-- [ ] **Sources and what they allow** lists 1 feed and 13 unavailable sources, each with its real reason and a link.
+- [ ] **Sources and what they allow** lists 17 sources with a link each: Adrenaline (Feed); Buscapé, Zoom, Pelando, Promobit, Gatry, Hardmob ("Working" or "Refused" with the error and the last success); Amazon, Mercado Livre, Magazine Luiza, KaBuM!, Shopee, AliExpress ("Via Buscapé/Zoom" with how many offers came through); Hardmob Classificados, Méliuz, PCPartPicker, Google Shopping ("Link only").
+- [ ] **Snapshot job:** on GitHub, Actions > "Snapshot prices" runs every 3 hours and commits `data/prices/latest.json` and `history.json`. Known refusals: Pelando answers HTTP 403 to cloud servers (its last good results are kept with their date) and Hardmob answers 403 to any honestly identified client.
 
 ## 7. Settings
 - [ ] **Appearance:** Theme buttons (7 themes), Accent swatches, Density (Comfortable/Compact), Contrast (Standard/More), Motion (On/Off) all apply at once and stay after a reload.

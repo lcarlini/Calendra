@@ -2,12 +2,14 @@
  * Deals source registry. Every requested source has an honest status.
  *
  * Integration levels:
- *   'feed'        official RSS feed, read through the companion proxy
- *   'unavailable' no permitted, reliable automated access: only a search link on Google is offered
+ *   'feed'        official RSS feed (Adrenaline), read live by the page through a same-origin snapshot
+ *   'snapshot'    read every 3 hours by the "Snapshot prices" GitHub Action, only on robots.txt-allowed pages
+ *                 (product/category pages on Buscapé and Zoom, Pelando search, Promobit recent offers, Gatry, Hardmob)
+ *   'via'         a store that refuses automated requests; its prices appear through the offers Buscapé and Zoom list
+ *   'unavailable' no permitted, reliable automated access: only a search link is offered
  *
- * Findings were observed on 2026-11-07 with plain, honestly-labelled requests. Nothing was bypassed:
- * bot challenges, missing credentials and missing feeds are reported as they are, and no source is
- * scraped. Publisher terms of use were not reviewed in full by this app.
+ * Checked on 2026-11-07. Nothing is bypassed: a site that refuses (HTTP 403, bot challenge) is reported as refusing,
+ * search pages that robots.txt disallows are never read, and requests carry an honest user agent.
  */
 
 export const CHECKED_ON = '2026-11-07';
@@ -18,19 +20,131 @@ export const PROVIDERS = [
     name: 'Adrenaline Ofertas',
     role: 'Community deal discovery',
     integration: 'feed',
+    snapshotId: 'adrenaline',
     sourceType: 'community',
     homepage: 'https://forum.adrenaline.com.br/forums/ofertas.221/',
     detail: 'Official public RSS feed (robots.txt allows it). Shows the newest threads only; the feed has no older pages.',
     siteQuery: 'site:forum.adrenaline.com.br',
   },
   {
+    id: 'buscape',
+    name: 'Buscapé',
+    role: 'Price comparison: offers from many stores and a 40-day price history',
+    integration: 'snapshot',
+    snapshotId: 'buscape',
+    homepage: 'https://www.buscape.com.br/',
+    detail: 'Product and category pages of the watched products. Its search pages are disallowed by robots.txt, so free-text search stays a link.',
+    siteQuery: 'site:buscape.com.br',
+  },
+  {
+    id: 'zoom',
+    name: 'Zoom',
+    role: 'Price comparison: offers from many stores and a 40-day price history',
+    integration: 'snapshot',
+    snapshotId: 'zoom',
+    homepage: 'https://www.zoom.com.br/',
+    detail: 'Same pages as Buscapé (same platform). Search pages are disallowed by robots.txt.',
+    siteQuery: 'site:zoom.com.br',
+  },
+  {
+    id: 'pelando',
+    name: 'Pelando',
+    role: 'Community deal discovery',
+    integration: 'snapshot',
+    snapshotId: 'pelando',
+    homepage: 'https://www.pelando.com.br/',
+    detail: 'Its search page for each watched product (allowed by robots.txt). It refuses cloud servers (HTTP 403), so the results of the last run that got through are kept with their date.',
+    siteQuery: 'site:pelando.com.br',
+  },
+  {
+    id: 'promobit',
+    name: 'Promobit',
+    role: 'Community deal discovery',
+    integration: 'snapshot',
+    snapshotId: 'promobit',
+    homepage: 'https://www.promobit.com.br/',
+    detail: 'Its recent-offers page (search is disallowed by robots.txt), filtered for the watched products.',
+    siteQuery: 'site:promobit.com.br',
+  },
+  {
+    id: 'gatry',
+    name: 'Gatry',
+    role: 'Community deal discovery',
+    integration: 'snapshot',
+    snapshotId: 'gatry',
+    homepage: 'https://www.gatry.com/',
+    detail: 'Its promotion search for each watched product (no robots.txt restriction).',
+    siteQuery: 'site:gatry.com',
+  },
+  {
     id: 'hardmob-promocoes',
     name: 'Hardmob Promoções',
     role: 'Community deal discovery',
-    integration: 'unavailable',
+    integration: 'snapshot',
+    snapshotId: 'hardmob',
     homepage: 'https://www.hardmob.com.br/forums/407-Promocoes',
-    reason: 'No usable official feed: its RSS address is behind a bot challenge, which this app does not bypass, and its pages are not scraped.',
+    detail: 'The Promoções forum list (allowed by robots.txt). It answers HTTP 403 to an honestly identified client, from the cloud and from a home connection; that is not bypassed.',
     siteQuery: 'site:hardmob.com.br',
+  },
+  {
+    id: 'amazon',
+    name: 'Amazon Brasil',
+    role: 'Store',
+    integration: 'via',
+    storeMatch: 'amazon',
+    homepage: 'https://www.amazon.com.br/',
+    reason: 'Direct pages refuse automated requests (HTTP 503) and the product API needs an Associates account with a secret key.',
+    siteQuery: 'site:amazon.com.br',
+  },
+  {
+    id: 'mercadolivre',
+    name: 'Mercado Livre',
+    role: 'Store',
+    integration: 'via',
+    storeMatch: 'mercado ?livre',
+    homepage: 'https://www.mercadolivre.com.br/',
+    reason: 'Its pages send automated requests to an account verification, and its API answers HTTP 403 without an app token.',
+    siteQuery: 'site:mercadolivre.com.br',
+  },
+  {
+    id: 'magalu',
+    name: 'Magazine Luiza',
+    role: 'Store',
+    integration: 'via',
+    storeMatch: 'magazine ?luiza|magalu',
+    homepage: 'https://www.magazineluiza.com.br/',
+    reason: 'Direct pages answer HTTP 403 to automated requests.',
+    siteQuery: 'site:magazineluiza.com.br',
+  },
+  {
+    id: 'kabum',
+    name: 'KaBuM!',
+    role: 'Store',
+    integration: 'via',
+    storeMatch: 'kabum',
+    homepage: 'https://www.kabum.com.br/',
+    reason: 'Its search pages are disallowed by robots.txt and its catalog API answers HTTP 403.',
+    siteQuery: 'site:kabum.com.br',
+  },
+  {
+    id: 'shopee',
+    name: 'Shopee',
+    role: 'Store',
+    integration: 'via',
+    storeMatch: 'shopee',
+    homepage: 'https://shopee.com.br/',
+    reason: 'Its pages and APIs answer HTTP 403 without an approved partner application.',
+    siteQuery: 'site:shopee.com.br',
+  },
+  {
+    id: 'aliexpress',
+    name: 'AliExpress',
+    role: 'Store',
+    integration: 'via',
+    storeMatch: 'aliexpress',
+    homepage: 'https://www.aliexpress.com/',
+    reason: 'Its pages answer HTTP 403 and its APIs need an approved affiliate application.',
+    siteQuery: 'site:aliexpress.com',
   },
   {
     id: 'hardmob-classificados',
@@ -38,98 +152,26 @@ export const PROVIDERS = [
     role: 'Used-item listings',
     integration: 'unavailable',
     homepage: 'https://www.hardmob.com.br/forums/224-Classificados-Vendas-Usados',
-    reason: 'Same as Hardmob Promoções: no official feed that can be read without bypassing a bot challenge.',
+    reason: 'Same site as Hardmob Promoções: it refuses an honestly identified client (HTTP 403).',
     siteQuery: 'site:hardmob.com.br classificados',
-  },
-  {
-    id: 'pelando',
-    name: 'Pelando',
-    role: 'Community deal discovery',
-    integration: 'unavailable',
-    homepage: 'https://www.pelando.com.br/',
-    reason: 'No public feed or API found (the usual feed addresses return 404).',
-    siteQuery: 'site:pelando.com.br',
-  },
-  {
-    id: 'gatry',
-    name: 'Gatry',
-    role: 'Community deal discovery',
-    integration: 'unavailable',
-    homepage: 'https://www.gatry.com/',
-    reason: 'No public feed or API found (the usual feed address returns 404).',
-    siteQuery: 'site:gatry.com',
   },
   {
     id: 'meliuz',
     name: 'Méliuz',
-    role: 'Coupons and promotional offers',
+    role: 'Coupons and cashback',
     integration: 'unavailable',
     homepage: 'https://www.meliuz.com.br/',
     reason: 'No public coupon feed or API found. Use the coupon finder below for ready searches.',
     siteQuery: 'site:meliuz.com.br cupom',
   },
   {
-    id: 'buscape',
-    name: 'Buscapé',
-    role: 'Price comparison',
-    integration: 'unavailable',
-    homepage: 'https://www.buscape.com.br/',
-    reason: 'No public API or feed found. Partner programs need an approved account and a server-side key.',
-    siteQuery: 'site:buscape.com.br',
-  },
-  {
-    id: 'zoom',
-    name: 'Zoom',
-    role: 'Price comparison',
-    integration: 'unavailable',
-    homepage: 'https://www.zoom.com.br/',
-    reason: 'No public API or feed found. Partner programs need an approved account and a server-side key.',
-    siteQuery: 'site:zoom.com.br',
-  },
-  {
     id: 'pcpartpicker',
     name: 'PCPartPicker',
-    role: 'PC hardware compatibility and prices',
+    role: 'PC hardware (US prices)',
     integration: 'unavailable',
     homepage: 'https://pcpartpicker.com/',
-    reason: 'It answered with a bot challenge (HTTP 403) and offers no public API, so it is not accessed automatically.',
+    reason: 'It answered with a bot challenge (HTTP 403) and offers no public API.',
     siteQuery: 'site:pcpartpicker.com',
-  },
-  {
-    id: 'amazon',
-    name: 'Amazon Brasil',
-    role: 'Product and price search',
-    integration: 'unavailable',
-    homepage: 'https://www.amazon.com.br/',
-    reason: 'Its official product API needs an approved Associates account and signed requests with a secret key, which a static page cannot keep safe.',
-    siteQuery: 'site:amazon.com.br',
-  },
-  {
-    id: 'shopee',
-    name: 'Shopee',
-    role: 'Product and price search',
-    integration: 'unavailable',
-    homepage: 'https://shopee.com.br/',
-    reason: 'Its official APIs need an approved partner application and server-side keys.',
-    siteQuery: 'site:shopee.com.br',
-  },
-  {
-    id: 'aliexpress',
-    name: 'AliExpress',
-    role: 'Product and price search',
-    integration: 'unavailable',
-    homepage: 'https://www.aliexpress.com/',
-    reason: 'Its official APIs need an approved affiliate/open-platform application and server-side keys.',
-    siteQuery: 'site:aliexpress.com',
-  },
-  {
-    id: 'mercadolivre',
-    name: 'Mercado Livre',
-    role: 'Product and price search',
-    integration: 'unavailable',
-    homepage: 'https://www.mercadolivre.com.br/',
-    reason: 'Its search API answered HTTP 403 without credentials; it now needs an approved app and an access token kept server-side.',
-    siteQuery: 'site:mercadolivre.com.br',
   },
   {
     id: 'google-shopping',
@@ -137,13 +179,15 @@ export const PROVIDERS = [
     role: 'Product and offer discovery',
     integration: 'unavailable',
     homepage: 'https://www.google.com/shopping',
-    reason: 'The Content API for Shopping was sunset (replaced by the Merchant API, which manages a merchant’s own listings, not shopper search). Only a link to Google is offered.',
+    reason: 'No shopper search API (the Content API for Shopping was sunset). Only a link to Google is offered.',
     siteQuery: '',
   },
 ];
 
 export const integratedProviders = () => PROVIDERS.filter((p) => p.integration === 'feed');
+/** Every source a user can also search by hand (all but the live feed). */
 export const unavailableProviders = () => PROVIDERS.filter((p) => p.integration !== 'feed');
+export const linkOnlyProviders = () => PROVIDERS.filter((p) => p.integration === 'unavailable');
 
 export function googleSearchUrl(query) {
   return `https://www.google.com/search?q=${encodeURIComponent(query)}`;
