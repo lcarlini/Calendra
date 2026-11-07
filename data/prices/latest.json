@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-07T20:49:18.873Z",
+ "updatedAt": "2026-11-07T21:02:16.798Z",
  "sources": {
   "buscape": {
    "name": "Buscapé",
@@ -7,7 +7,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-07T20:49:18.873Z"
+   "lastOk": "2026-11-07T21:02:16.798Z"
   },
   "zoom": {
    "name": "Zoom",
@@ -15,14 +15,16 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-07T20:49:18.873Z"
+   "lastOk": "2026-11-07T21:02:16.798Z"
   },
   "pelando": {
    "name": "Pelando",
    "kind": "community",
-   "ok": 8,
-   "failed": 0,
-   "errors": [],
+   "ok": 0,
+   "failed": 8,
+   "errors": [
+    "HTTP 403"
+   ],
    "lastOk": "2026-11-07T20:49:18.873Z"
   },
   "promobit": {
@@ -31,7 +33,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-07T20:49:18.873Z"
+   "lastOk": "2026-11-07T21:02:16.798Z"
   },
   "gatry": {
    "name": "Gatry",
@@ -39,7 +41,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-07T20:49:18.873Z"
+   "lastOk": "2026-11-07T21:02:16.798Z"
   },
   "hardmob": {
    "name": "Hardmob",
@@ -57,7 +59,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-07T20:49:18.873Z"
+   "lastOk": "2026-11-07T21:02:16.798Z"
   }
  },
  "products": [
@@ -184,7 +186,8 @@
      "image": "https://media.pelando.com.br/RCRS2NWIl--o7N_hyO98mq5UTf0=/400x400/filters:format(webp)/d/scp-g5pxb-1793724808013.jpg",
      "date": "2026-11-03T16:53:34.355Z",
      "score": 126,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Far Cry 6 - Playstation 5",
@@ -194,7 +197,8 @@
      "image": "https://media.pelando.com.br/tEIr49kcNhsZixV2E_T_HHwU1CA=/400x400/filters:format(webp)/d/scp-yinpz-1793985645031.jpg",
      "date": "2026-11-06T17:20:53.414Z",
      "score": 220,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Dragon’s Dogma 2: Dark Arisen - PlayStation 5",
@@ -204,7 +208,8 @@
      "image": "https://media.pelando.com.br/N1kxuQ_nFv19K0LlKv22d-6uoQw=/400x400/filters:format(webp)/d/scp-gbo3r-1793709311668.jpg",
      "date": "2026-11-03T12:35:25.145Z",
      "score": 606,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Death Stranding 2: On The Beach - PlayStation 5",
@@ -224,7 +229,8 @@
      "image": "https://media.pelando.com.br/Dn2f3JBLh-8gM8jw3iFDBcVwGPQ=/400x400/filters:format(webp)/d/crawler-image-a5bf4627-1389-4bfc-a5bf-8b7ed77c2a5e-1793789148413-1793789149499.jpg",
      "date": "2026-11-04T10:45:59.400Z",
      "score": 48,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Persona 4 Revival - PlayStation 5 ( Preço Exclusivo Prime )",
@@ -234,7 +240,8 @@
      "image": "https://media.pelando.com.br/tnX-hIE8C4bJzz-FqgAnbBYjBw4=/400x400/filters:format(webp)/d/crawler-image-ed6ddfe3-ffda-449b-b27a-0c60f057637e-1793710088502-1793710090543.jpg",
      "date": "2026-11-03T12:49:48.852Z",
      "score": 105,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Resident Evil Requiem - PlayStation 5",
@@ -244,7 +251,8 @@
      "image": "https://media.pelando.com.br/tQhMJWw1Rsu5gY8bM11HsfbsSw0=/400x400/filters:format(webp)/d/scp-lwhjyj-1793708918650.jpg",
      "date": "2026-11-03T12:31:52.565Z",
      "score": 118,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Ghost of Yōtei™ Complete Edition - PlayStation 5",
@@ -254,7 +262,8 @@
      "image": "https://media.pelando.com.br/leGoFzi8EHUclNedgy3guRlh6rw=/400x400/filters:format(webp)/d/crawler-image-1030ac1f-51f2-409c-9264-5c930336662d-1793709033495-1793709034457.jpg",
      "date": "2026-11-03T12:30:53.135Z",
      "score": 168,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Bundle Marvel's Spider-Man 2 + Miles Morales - PlayStation 5",
@@ -294,7 +303,8 @@
      "image": "https://media.pelando.com.br/u_kShoxs230s4e4jCUvP0LyzFZQ=/400x400/filters:format(webp)/d/scp-fhb72-1793274855026.jpg",
      "date": "2026-10-29T11:54:19.913Z",
      "score": 721,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     }
    ],
    "sources": {
@@ -302,30 +312,31 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "pelando": {
-     "ok": true,
-     "count": 12,
+     "ok": false,
+     "error": "HTTP 403",
      "url": "https://www.pelando.com.br/busca/playstation-5",
+     "carried": 8,
      "seenAt": "2026-11-07T20:49:18.873Z"
     },
     "gatry": {
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/promocoes/?q=playstation%205",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "hardmob": {
      "ok": false,
@@ -334,7 +345,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     }
    }
   },
@@ -527,30 +538,29 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "pelando": {
-     "ok": true,
-     "count": 0,
-     "url": "https://www.pelando.com.br/busca/ssd-1tb",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "ok": false,
+     "error": "HTTP 403",
+     "url": "https://www.pelando.com.br/busca/ssd-1tb"
     },
     "gatry": {
      "ok": true,
      "count": 10,
      "url": "https://gatry.com/promocoes/?q=ssd%201tb",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "hardmob": {
      "ok": false,
@@ -559,7 +569,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     }
    }
   },
@@ -622,7 +632,8 @@
      "image": "https://media.pelando.com.br/X4PoBz6pjY5vhfeuE6f_5y2wn1E=/400x400/filters:format(webp)/d/crawler-image-9e62b4a0-8532-4d79-9027-6cef215d77cc-1793904891434-1793904893418.jpg",
      "date": "2026-11-05T18:55:02.938Z",
      "score": 348,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     }
    ],
    "sources": {
@@ -630,30 +641,31 @@
      "ok": true,
      "count": 2,
      "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "zoom": {
      "ok": true,
      "count": 2,
      "url": "https://www.zoom.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "pelando": {
-     "ok": true,
-     "count": 1,
+     "ok": false,
+     "error": "HTTP 403",
      "url": "https://www.pelando.com.br/busca/rtx-5070",
+     "carried": 1,
      "seenAt": "2026-11-07T20:49:18.873Z"
     },
     "gatry": {
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/promocoes/?q=rtx%205070",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "hardmob": {
      "ok": false,
@@ -662,7 +674,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     }
    }
   },
@@ -861,7 +873,8 @@
      "image": "https://media.pelando.com.br/jKIO9xjtb7C8mpDllk3e1dXLjac=/400x400/filters:format(webp)/d/scp-fhmey-1793826957367.jpg",
      "date": "2026-11-04T21:16:08.296Z",
      "score": 154,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Smart Tv 55 TCL 55t6c",
@@ -871,7 +884,8 @@
      "image": "https://media.pelando.com.br/G8xZvzDYj5D7pWP4zgyWKm4I7MA=/400x400/filters:format(webp)/d/crawler-image-48f5e2bd-245a-4fc6-814f-eed13775fc60-1793589081787-1793589082717.jpg",
      "date": "2026-11-02T03:12:00.971Z",
      "score": -41,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Smart TV 55\" TCL 4K UHD QLED 55P7L Google TV 2026",
@@ -881,7 +895,8 @@
      "image": "https://media.pelando.com.br/TY0xXJ5P4O7mHE116FZDjDPT-i8=/400x400/filters:format(webp)/d/crawler-image-fde728b0-e63b-4903-bc50-a642161fb71e-1793912843708-1793912844692.jpg",
      "date": "2026-11-05T21:10:49.400Z",
      "score": 507,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Smart TV PRO LG 55'' 4K Ultra HD AI 55UN85C",
@@ -891,7 +906,8 @@
      "image": "https://media.pelando.com.br/SV1SL39IVvYfr3oE1lKUZv6MdeQ=/400x400/filters:format(webp)/d/scp-npwl3j-1793900340293.jpg",
      "date": "2026-11-05T17:39:32.040Z",
      "score": 118,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Smart TV TCL 55 Polegadas QLED 4K P8K WiFi Bluetooth Google TV 144Hz HDR10+ Dolby Atmos",
@@ -911,7 +927,8 @@
      "image": "https://media.pelando.com.br/_CHRxdLhgkFn180nhwgEwi7gfA0=/400x400/filters:format(webp)/d/scp-7d3di-1793813728277.jpg",
      "date": "2026-11-04T17:35:41.149Z",
      "score": 63,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Samsung Smart TV 55\" Crystal UHD 4K U8600F + Soundbar HW-B400F",
@@ -939,30 +956,31 @@
      "ok": true,
      "count": 20,
      "url": "https://www.buscape.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "zoom": {
      "ok": true,
      "count": 20,
      "url": "https://www.zoom.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "pelando": {
-     "ok": true,
-     "count": 9,
+     "ok": false,
+     "error": "HTTP 403",
      "url": "https://www.pelando.com.br/busca/tv-55",
+     "carried": 5,
      "seenAt": "2026-11-07T20:49:18.873Z"
     },
     "gatry": {
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/promocoes/?q=tv%2055",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "hardmob": {
      "ok": false,
@@ -971,7 +989,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     }
    }
   },
@@ -1095,30 +1113,29 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "pelando": {
-     "ok": true,
-     "count": 0,
-     "url": "https://www.pelando.com.br/busca/galaxy-s26",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "ok": false,
+     "error": "HTTP 403",
+     "url": "https://www.pelando.com.br/busca/galaxy-s26"
     },
     "gatry": {
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/promocoes/?q=galaxy%20s26",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "hardmob": {
      "ok": false,
@@ -1127,7 +1144,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     }
    }
   },
@@ -1222,7 +1239,8 @@
      "image": "https://media.pelando.com.br/dJ2BsiLP17i0ZykUJGHIq-9uTcM=/400x400/filters:format(webp)/d/imagecropper3ecf0d46-1136-45f2-981a-2b17c3456049-24107-000003a69ea6db09-1793062038427.jpg",
      "date": "2026-10-27T00:47:24.173Z",
      "score": 284,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Assassin’s Creed Shadows - Nintendo Switch 2",
@@ -1252,7 +1270,8 @@
      "image": "https://media.pelando.com.br/WDi5WXvC0POaBYKm63zf2nLZ9WQ=/400x400/filters:format(webp)/d/scp-ecp2oh-1793738071521.jpg",
      "date": "2026-11-03T20:36:33.825Z",
      "score": 347,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Switch 24 Portas Gigabit 10/100/1000 Mbps Tp-link Tl-sg1024d",
@@ -1272,7 +1291,8 @@
      "image": "https://media.pelando.com.br/MLWaN5EcTvOEoY0zBBiQAuICk8U=/400x400/filters:format(webp)/d/scp-cto4s-1793792511528.jpg",
      "date": "2026-11-04T11:41:57.971Z",
      "score": 407,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Nintendo Switch 2 256GB Novo Lacrado Lançamento",
@@ -1302,7 +1322,8 @@
      "image": "",
      "date": "2026-11-07T02:18:43.851Z",
      "score": -4,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "[11/11 & Black Friday] Nintendo Switch 2: dá pra esperar R$ 3.100 novamente?",
@@ -1312,7 +1333,8 @@
      "image": "",
      "date": "2026-11-06T00:57:07.533Z",
      "score": 40,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "PS5 ou Switch 2 para quem só joga EA FC (FIFA)?",
@@ -1322,7 +1344,8 @@
      "image": "",
      "date": "2026-11-03T14:47:00.606Z",
      "score": 16,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Compensa esperar pra comprar Switch 2 parcelado?",
@@ -1332,7 +1355,8 @@
      "image": "",
      "date": "2026-11-02T18:26:56.125Z",
      "score": 25,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     }
    ],
    "sources": {
@@ -1340,30 +1364,31 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "pelando": {
-     "ok": true,
-     "count": 8,
+     "ok": false,
+     "error": "HTTP 403",
      "url": "https://www.pelando.com.br/busca/switch-2",
+     "carried": 7,
      "seenAt": "2026-11-07T20:49:18.873Z"
     },
     "gatry": {
      "ok": true,
      "count": 5,
      "url": "https://gatry.com/promocoes/?q=switch%202",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "hardmob": {
      "ok": false,
@@ -1372,7 +1397,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     }
    }
   },
@@ -1499,7 +1524,8 @@
      "image": "https://media.pelando.com.br/Z1jg9GQrAUDZH5QAP2x-UOTL5Yk=/400x400/filters:format(webp)/d/crawler-image-dd5d693c-b9ab-4a37-891c-3e59af93a98d-1793538640718-1793538643170.jpg",
      "date": "2026-11-01T13:11:26.312Z",
      "score": 278,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Apple IPhone 17e De 256 GB — Rosa-pálido",
@@ -1559,7 +1585,8 @@
      "image": "",
      "date": "2026-11-01T15:15:12.099Z",
      "score": 76,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Faixa de preço do Iphone 17 na black friday?",
@@ -1569,7 +1596,8 @@
      "image": "",
      "date": "2026-10-30T14:22:43.398Z",
      "score": -10,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Qual seria o preço ideal para um iPhone 17e de 256 gb na Black Friday ou no inicio de 2027?",
@@ -1579,7 +1607,8 @@
      "image": "",
      "date": "2026-11-06T15:30:48.962Z",
      "score": 8,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     }
    ],
    "sources": {
@@ -1587,30 +1616,31 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "pelando": {
-     "ok": true,
-     "count": 4,
+     "ok": false,
+     "error": "HTTP 403",
      "url": "https://www.pelando.com.br/busca/iphone-17",
+     "carried": 4,
      "seenAt": "2026-11-07T20:49:18.873Z"
     },
     "gatry": {
      "ok": true,
      "count": 5,
      "url": "https://gatry.com/promocoes/?q=iphone%2017",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "hardmob": {
      "ok": false,
@@ -1619,7 +1649,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     }
    }
   },
@@ -1722,7 +1752,8 @@
      "image": "https://media.pelando.com.br/SL6pQOvVDxCVLj74szfCIK57yC4=/400x400/filters:format(webp)/d/crawler-image-b8a3c468-58da-40aa-be48-ed189c13e390-1793591063769-1793591065387.jpg",
      "date": "2026-11-02T03:44:31.119Z",
      "score": 56,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Controlador sem fio Xbox Series X|S Lunar Shift",
@@ -1732,7 +1763,8 @@
      "image": "https://media.pelando.com.br/Rvrvd_2iP4PpOAo3glyS9u7AKMg=/400x400/filters:format(webp)/d/scp-vsdo6h-1793393648150.jpg",
      "date": "2026-10-30T20:59:31.939Z",
      "score": 391,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
      "title": "Volante Logitech G920 Driving Force E Pedais Com Force Feedback Para Xbox Series X|S",
@@ -1772,7 +1804,8 @@
      "image": "",
      "date": "2026-11-04T17:07:58.247Z",
      "score": 18,
-     "source": "pelando"
+     "source": "pelando",
+     "seenAt": "2026-11-07T20:49:18.873Z"
     }
    ],
    "sources": {
@@ -1780,30 +1813,31 @@
      "ok": true,
      "count": 2,
      "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "zoom": {
      "ok": true,
      "count": 2,
      "url": "https://www.zoom.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "pelando": {
-     "ok": true,
-     "count": 3,
+     "ok": false,
+     "error": "HTTP 403",
      "url": "https://www.pelando.com.br/busca/xbox-series-x",
+     "carried": 3,
      "seenAt": "2026-11-07T20:49:18.873Z"
     },
     "gatry": {
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/promocoes/?q=xbox%20series%20x",
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     },
     "hardmob": {
      "ok": false,
@@ -1812,7 +1846,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T20:49:18.873Z"
+     "seenAt": "2026-11-07T21:02:16.798Z"
     }
    }
   }
