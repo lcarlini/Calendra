@@ -8,7 +8,7 @@ A refined personal calendar dashboard with modular gadgets: world clocks, multi-
 
 | Page | File | Status |
 |------|------|--------|
-| Home (portal) | [index.html](https://lcarlini.github.io/Calendra/) | Working |
+| Home (portal, GitHub Pages) | [index.html](https://lcarlini.github.io/Calendra/index.html) | Working; the root URL https://lcarlini.github.io/Calendra/ opens the same page |
 | Calendar (clock-first dashboard) | [dashboard.html](https://lcarlini.github.io/Calendra/dashboard.html) | Working |
 | Calendário (full calendar) | [calendario.html](https://lcarlini.github.io/Calendra/calendario.html) | Working |
 | News | [news.html](https://lcarlini.github.io/Calendra/news.html) | Placeholder, not integrated |

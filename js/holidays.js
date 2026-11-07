@@ -66,8 +66,11 @@ export function usaHolidays(year) {
     { date: toISO(nthWeekday(year, 11, 4, 4)), name: 'Thanksgiving', country: 'US' },
     { date: iso(year, 12, 25), name: 'Christmas Day', country: 'US' },
   ];
-  return list;
+  // Federal holidays. Time-off planning treats them as statutory; banks/markets may differ.
+  return list.map((h) => ({ ...h, kind: 'statutory' }));
 }
+
+const BR_OPTIONAL = new Set(["Carnaval", "Corpus Christi"]);
 
 export function brazilHolidays(year) {
   const easter = easterSunday(year);
@@ -76,7 +79,7 @@ export function brazilHolidays(year) {
   const goodFriday = shift(easter, -2);
   const corpusChristi = shift(easter, 60);
 
-  return [
+  const list = [
     { date: iso(year, 1, 1), name: 'Confraternização Universal', country: 'BR' },
     { date: toISO(carnivalMon), name: 'Carnaval', country: 'BR' },
     { date: toISO(carnivalTue), name: 'Carnaval', country: 'BR' },
@@ -91,6 +94,8 @@ export function brazilHolidays(year) {
     { date: iso(year, 11, 20), name: 'Dia da Consciência Negra', country: 'BR' },
     { date: iso(year, 12, 25), name: 'Natal', country: 'BR' },
   ];
+  // Carnaval and Corpus Christi are ponto facultativo / optional, not statutory days off.
+  return list.map((h) => ({ ...h, kind: BR_OPTIONAL.has(h.name) ? 'optional' : 'statutory' }));
 }
 
 const KEY = 'calendra.holidays.v1';
