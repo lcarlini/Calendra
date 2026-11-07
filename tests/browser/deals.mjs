@@ -1,5 +1,5 @@
 // Deals end-to-end (finding only: no product, coupon or alert registration).
-// Usage: node tests/browser/deals.mjs <baseUrl> [screenshotDir]
+// Needs: nothing but the internet. (tests/browser/deals.mjs starts a local http fixture feed, so run it against a local copy, not the https site.)
 // It starts its own tiny feed server, so it needs no network and no companion proxy.
 import http from 'node:http';
 import path from 'node:path';

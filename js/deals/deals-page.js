@@ -56,7 +56,7 @@ function providerCard(provider, query) {
   </article>`;
 }
 
-const feedProblem = () => `Live refresh is throttled or unreachable right now (${esc(feed.message)}).`;
+const feedProblem = () => `Live refresh is throttled or unreachable right now (${esc(String(feed.message).replace(/HTTP 429/g, 'the free feed converter is rate-limiting this connection'))}).`;
 
 function renderResults() {
   const box = $('deal-results');

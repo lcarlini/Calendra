@@ -11,7 +11,7 @@ const b = await launch();
 await b.visit(`${base}/deals.html`, { width: 1366, height: 900, wait: 500 });
 await b.ev(`localStorage.clear(); sessionStorage.clear()`);
 await b.visit(`${base}/deals.html`, { width: 1366, height: 900, wait: 500 });
-for (let i = 0; i < 20; i += 1) {
+for (let i = 0; i < 55; i += 1) {
   await sleep(1500);
   if ((await b.ev(`document.querySelectorAll('#thread-list .thread').length`)) > 0) break;
 }
