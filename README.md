@@ -6,20 +6,23 @@ A refined personal calendar dashboard with modular gadgets: world clocks, multi-
 
 **[https://lcarlini.github.io/Calendra/](https://lcarlini.github.io/Calendra/)**
 
-| Page | URL |
-|------|-----|
-| Dashboard | [index.html](https://lcarlini.github.io/Calendra/) |
-| Full calendar | [calendar.html](https://lcarlini.github.io/Calendra/calendar.html) |
+| Page | File | Status |
+|------|------|--------|
+| Home (portal) | [index.html](https://lcarlini.github.io/Calendra/) | Working |
+| Calendar (clock-first dashboard) | [dashboard.html](https://lcarlini.github.io/Calendra/dashboard.html) | Working |
+| Calendário (full calendar) | [calendario.html](https://lcarlini.github.io/Calendra/calendario.html) | Working |
+| News | [news.html](https://lcarlini.github.io/Calendra/news.html) | Placeholder, not integrated |
+| Markets | [markets.html](https://lcarlini.github.io/Calendra/markets.html) | Placeholder, not integrated |
+| Deals | [deals.html](https://lcarlini.github.io/Calendra/deals.html) | Placeholder; search opens Google in a new tab |
+| Settings | [settings.html](https://lcarlini.github.io/Calendra/settings.html) | Working (theme, holiday reset) |
 
-## Features
+Legacy: `calendar.html` redirects to `calendario.html` and keeps the query string (for example `?date=2026-09-07`).
 
-- **Themes** — Mist, Midnight (dark), Ocean, Sand, Ink, Aurora
-- **Arrange gadgets** — drag to reorder, resize S / M / L / XL / Full (saved in the browser)
-- **World clocks** — local time plus Chicago, New York, London, Amsterdam
-- **Weather** — current conditions + ~30-day outlook (16-day detailed forecast + seasonal extension). Auto location (GPS → IP fallback) or city presets
-- **Day alerts** — meetings/reminders with lead times and optional desktop notifications
-- **Full calendar** — **Year / Month / Week / Day** views
-- **Holidays** — United States and Brazil (toggle independently), including movable dates (Carnaval, Easter-related, etc.)
+## Calendar data
+
+- Reference calendars are in `js/calendar/specialized.js`. They are transcribed from `UI/Holidays.png` (GCM, 2025–2027) and `UI/Calendar.html` (Brasil and Davi, 2026 only).
+- Nothing is extrapolated beyond the years the sources cover.
+- Run the tests with `node --test tests/*.test.mjs` (Node 18+; no dependencies).
 
 ## Enable GitHub Pages
 

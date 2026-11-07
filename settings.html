@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="ink" data-mode="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Calendra — Settings." />
+    <title>Calendra — Settings</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2716%27 fill=%27%230b1620%27/%3E%3Cpath d=%27M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z%27 fill=%27%23a3e635%27/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="css/styles.css?v=20261107a" />
+    <script>
+      try {
+        var t = localStorage.getItem("calendra.theme.v1") || "ink";
+        document.documentElement.dataset.theme = t;
+        var dark = ["midnight", "ocean", "ink", "aurora"].indexOf(t) !== -1;
+        document.documentElement.dataset.mode = dark ? "dark" : "light";
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="index.html" aria-label="Back to Home">
+          <div class="brand-mark" aria-hidden="true">C</div>
+          <div class="brand-text">
+            <h1>Calendra</h1>
+            <p>Settings</p>
+          </div>
+        </a>
+        <div class="topbar-tools">
+          <nav class="nav-links" aria-label="Principal">
+            <a href="index.html">Início</a>
+            <a href="dashboard.html">Calendar</a>
+            <a href="calendario.html">Calendário</a>
+            <a href="news.html">News</a>
+            <a href="markets.html">Markets</a>
+            <a href="deals.html">Deals</a>
+            <a href="settings.html" class="active" aria-current="page">Settings</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="module-page" id="main">
+        <p class="back-home"><a href="index.html">&larr; Back to Home</a></p>
+        <h2 class="module-title">Settings</h2>
+        <p class="module-lead">Preferences shared by every module. Stored only in this browser.</p>
+        <section class="status-card" aria-labelledby="st-h">
+  <h3 id="st-h">Theme</h3>
+  <label class="tool-field">
+    <span>Color theme</span>
+    <select id="theme-select" aria-label="Color theme"></select>
+  </label>
+  <h3 id="st-h2" style="margin-top:1.5rem">Calendar data</h3>
+  <p class="status-line">Holiday visibility and reminders are kept in this browser. Clearing the holiday preferences restores the defaults; reminders are not affected.</p>
+  <button type="button" class="btn btn-ghost" id="reset-holiday-prefs">Reset holiday visibility</button>
+</section>
+      </main>
+
+      <footer class="site-footer">
+        <span>Calendra · crafted for clarity</span>
+        <span>Live at <a href="https://lcarlini.github.io/Calendra/" target="_blank" rel="noopener">lcarlini.github.io/Calendra</a></span>
+      </footer>
+    </div>
+    <script type="module" src="js/settings-page.js"></script>
+  </body>
+</html>

@@ -208,7 +208,7 @@ function openCalendarModal() {
       <div id="modal-cal"></div>
       <div class="modal-actions" style="justify-content: space-between; margin-top: 1rem">
         <button type="button" class="btn btn-ghost btn-sm" id="modal-cal-today">Hoje</button>
-        <a class="btn btn-primary btn-sm" href="calendar.html">Calendário completo</a>
+        <a class="btn btn-primary btn-sm" href="calendario.html">Calendário completo</a>
       </div>
     `,
   });
@@ -938,3 +938,14 @@ function init() {
 }
 
 init();
+
+// Carry the day picked on the compact calendar into every "Open Calendário" link.
+document.addEventListener("click", (event) => {
+  const cell = event.target.closest?.(".day-cell[data-date]");
+  if (!cell) return;
+  const date = cell.dataset.date;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+  document.querySelectorAll("a[href^=\"calendario.html\"]").forEach((link) => {
+    link.setAttribute("href", "calendario.html?date=" + date);
+  });
+});

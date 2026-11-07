@@ -3074,3 +3074,246 @@ body.layout-editing .gadget:hover {
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== Portal (index.html) and module pages ===== */
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.portal,
+.module-page {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2.5rem;
+}
+
+.portal-title,
+.module-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  margin: 0.5rem 0 1.25rem;
+  color: var(--ink);
+}
+
+.module-lead {
+  color: var(--ink-soft);
+  max-width: 60ch;
+}
+
+.portal-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.portal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  min-height: 170px;
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  background: var(--surface-solid);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.portal-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+  border-color: var(--accent);
+}
+
+.portal-card:focus-visible {
+  outline: 3px solid var(--accent-bright);
+  outline-offset: 3px;
+}
+
+.portal-card:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.portal-card[aria-current='page'] {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-bright) inset;
+}
+
+.portal-icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-sm);
+  background: color-mix(in oklab, var(--accent) 14%, transparent);
+  color: var(--accent);
+}
+
+.portal-icon svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.portal-label {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 650;
+}
+
+.portal-sub {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.portal-note {
+  margin-top: 1.5rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.back-home {
+  margin: 0 0 0.5rem;
+}
+
+.back-home a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.back-home a:focus-visible,
+.nav-links a:focus-visible,
+.status-card a:focus-visible,
+.source-list a:focus-visible {
+  outline: 3px solid var(--accent-bright);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.status-card {
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  background: var(--surface-solid);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+  max-width: 760px;
+}
+
+.status-card h3 {
+  margin-top: 0;
+  font-family: var(--font-display);
+}
+
+.source-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.source-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface-soft);
+}
+
+.source-list a {
+  color: var(--accent);
+  word-break: break-all;
+}
+
+.search-fallback {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.search-fallback input {
+  flex: 1 1 220px;
+  min-height: 44px;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  font: inherit;
+}
+
+.search-fallback label {
+  width: 100%;
+  font-weight: 600;
+}
+
+.search-fallback button,
+.status-card .btn,
+.status-card select {
+  min-height: 44px;
+}
+
+/* Touch targets and motion */
+@media (pointer: coarse) {
+  .nav-links a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .nav-links {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    max-width: 100%;
+    padding-bottom: 0.25rem;
+  }
+  .nav-links a {
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portal-card,
+  .portal-card:hover,
+  .portal-card:active {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* Phone-width guard: nothing may force the page wider than the viewport. */
+.app-shell,
+.topbar,
+.topbar-tools,
+.portal,
+.module-page {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.portal-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+}
+
+@media (max-width: 520px) {
+  .topbar-tools {
+    width: 100%;
+  }
+  .nav-links {
+    width: 100%;
+  }
+}
