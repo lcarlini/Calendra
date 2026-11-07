@@ -157,7 +157,12 @@ export async function handleRequest(request, env = {}, { fetchImpl = globalThis.
   }
   const cors = origin ? corsHeaders(origin) : {};
 
-  if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
+  if (request.method === 'OPTIONS') {
+    // Private Network Access: browsers ask a local-network server for explicit consent before a public
+    // page may call it. Consent is only given here, i.e. to an origin already on the allowlist.
+    const pna = origin && request.headers.get('Access-Control-Request-Private-Network') === 'true';
+    return new Response(null, { status: 204, headers: pna ? { ...cors, 'Access-Control-Allow-Private-Network': 'true' } : cors });
+  }
   if (request.method !== 'GET') return json(405, { error: 'Method not allowed' }, cors);
 
   if (url.pathname === '/health') {

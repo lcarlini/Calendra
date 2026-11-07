@@ -42,7 +42,7 @@ function setupHtml() {
     <details class="how-details"${hasProxy ? '' : ' open'}>
       <summary>How to run the proxy</summary>
       <ol>
-        <li>On your own computer: <code>ALLOWED_ORIGINS=https://lcarlini.github.io node backend/news-proxy/server.mjs</code> then use <code>http://127.0.0.1:8791</code>. A page served over HTTPS may be blocked from calling a plain-HTTP local address by some browsers; for local use open Calendra on <code>http://localhost</code> too, or deploy the proxy over HTTPS.</li>
+        <li>On your own computer: <code>ALLOWED_ORIGINS=https://lcarlini.github.io node backend/news-proxy/server.mjs</code> then use <code>http://127.0.0.1:8791</code>. Chrome asks you to allow “local network access” before an https page (like this site) may call a server on your own computer. If you decline, or your browser does not offer it, use option 2 and deploy the proxy over https.</li>
         <li>Or deploy <code>backend/news-proxy</code> as a Cloudflare Worker (<code>npx wrangler deploy</code>) and paste its https address here.</li>
         <li>Set <code>ALLOWED_ORIGINS</code> to the exact site address that will read it. The proxy refuses every other origin.</li>
       </ol>

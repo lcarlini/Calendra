@@ -34,6 +34,9 @@ ALLOWED_ORIGINS=http://localhost:8080,https://lcarlini.github.io node backend/ne
 # then paste http://127.0.0.1:8791 on the News page
 ```
 
+Browser note: Chrome asks you to allow "local network access" before an **https** page (this site) may call a server on your own computer; the proxy answers the
+required preflight, but the permission is yours to grant. If it is declined or unavailable, deploy the proxy over https (the Cloudflare Worker below).
+
 Or deploy `backend/news-proxy` as a Cloudflare Worker (`npx wrangler deploy`, edit `ALLOWED_ORIGINS` in `wrangler.toml`).
 See `.env.example` (placeholders only). Without a proxy, Calendar, Calendário, Markets and Settings work fully; News and the Deals feed show a clear setup state and no invented headlines.
 
@@ -51,7 +54,7 @@ Everything is stored in this browser (`localStorage`, keys start with `calendra.
 ## Tests
 
 ```bash
-node --test tests/*.test.mjs                      # 185 unit tests, no dependencies (Node 18+)
+node --test tests/*.test.mjs                      # 186 unit tests, no dependencies (Node 18+)
 
 # Real-browser tests need Chrome (set CHROME_PATH if it is not in the default Windows location)
 python -m http.server 8770 &

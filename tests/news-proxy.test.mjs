@@ -89,6 +89,22 @@ test('preflight and method handling', async () => {
   assert.equal((await handleRequest(req('/elsewhere'), ENV)).status, 404);
 });
 
+test('Private Network Access: consent is given only to allowed origins that ask for it', async () => {
+  const preflight = (origin, pna = true) => {
+    const headers = { Origin: origin, 'Access-Control-Request-Method': 'GET' };
+    if (pna) headers['Access-Control-Request-Private-Network'] = 'true';
+    return new Request('https://proxy.test/feed?source=uol', { method: 'OPTIONS', headers });
+  };
+  const ok = await handleRequest(preflight(ORIGIN), ENV);
+  assert.equal(ok.status, 204);
+  assert.equal(ok.headers.get('Access-Control-Allow-Private-Network'), 'true');
+  const plain = await handleRequest(preflight(ORIGIN, false), ENV);
+  assert.equal(plain.headers.get('Access-Control-Allow-Private-Network'), null, 'not added unless requested');
+  const evil = await handleRequest(preflight('https://evil.example'), ENV);
+  assert.equal(evil.status, 403);
+  assert.equal(evil.headers.get('Access-Control-Allow-Private-Network'), null, 'never for a refused origin');
+});
+
 test('health endpoint lists integrated source ids only', async () => {
   const body = await (await handleRequest(req('/health'), ENV)).json();
   assert.equal(body.ok, true);

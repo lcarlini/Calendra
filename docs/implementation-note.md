@@ -60,12 +60,12 @@ GitHub Pages serves the **`main` branch**, static files only. Anything needing s
 
 | Suite | Result |
 |---|---|
-| Unit (`node --test tests/*.test.mjs`) | **185 / 185** |
+| Unit (`node --test tests/*.test.mjs`) | **186 / 186** |
 | Layout, 9 viewports × 7 pages + Full HD clocks + phone + TV + Calendário columns | **79 / 79** |
 | Travel section (real browser) | 19 / 19 |
 | Markets (real public APIs) | 25 / 25 |
-| News (real feeds through the proxy, mock Ollama) | 37 / 37 |
-| Deals (real feed, real BCB rate) | 43 / 43 |
+| News (real feeds through the proxy, mock Ollama) | 37 / 37 (also 37 / 37 on the live site with the "local network access" permission simulated) |
+| Deals (real feed, real BCB rate) | 43 / 43 (also 43 / 43 on the live site, same condition) |
 | Keyboard and landmarks | 18 / 18 |
 | Interaction (date link, columns, phone overflow) | 5 / 5 |
 
@@ -91,6 +91,6 @@ broken city photos; TV-mode digits clipped at 4K.
 * Cross-device sync does not exist; "synchronization" is same-browser, same-origin only (storage events).
 
 ## 6. Remaining manual setup
-1. To see News and the Deals feed: run `ALLOWED_ORIGINS=https://lcarlini.github.io node backend/news-proxy/server.mjs` (or deploy the Worker) and paste its address on the News page. A page on HTTPS may be blocked from calling a plain-HTTP local address by some browsers; deploy the proxy over HTTPS for everyday use.
+1. To see News and the Deals feed: run `ALLOWED_ORIGINS=https://lcarlini.github.io node backend/news-proxy/server.mjs` (or deploy the Worker) and paste its address on the News page. Chrome asks the user to allow "local network access" before an https page may call a local server (the proxy answers the Private Network Access preflight, but only the user can grant the permission, and a headless browser cannot be asked). Deploy the proxy over https for everyday use.
 2. For AI summaries: choose a provider in Settings; for Ollama start it with `OLLAMA_ORIGINS` including the site's origin.
 3. Merge to `main` to publish (GitHub Pages serves `main`).

@@ -14,7 +14,17 @@ export async function launch({ port = 9340 + Math.floor(Math.random() * 400) } =
   const profile = path.join(os.tmpdir(), `calendra-cdp-${Date.now()}-${port}`);
   const chrome = spawn(
     chromePath,
-    ['--headless=new', '--disable-gpu', `--remote-debugging-port=${port}`, `--user-data-dir=${profile}`, '--no-first-run', 'about:blank'],
+    [
+      '--headless=new',
+      '--disable-gpu',
+      `--remote-debugging-port=${port}`,
+      `--user-data-dir=${profile}`,
+      '--no-first-run',
+      // CHROME_FLAGS lets a run simulate a browser permission a headless run cannot be asked for, e.g.
+      // CHROME_FLAGS=--disable-features=LocalNetworkAccessChecks (a user allowing "local network access").
+      ...(process.env.CHROME_FLAGS ? process.env.CHROME_FLAGS.split(' ').filter(Boolean) : []),
+      'about:blank',
+    ],
     { stdio: 'ignore' }
   );
   let target;
