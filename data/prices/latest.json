@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-07T21:02:16.798Z",
+ "updatedAt": "2026-11-07T21:04:22.979Z",
  "sources": {
   "buscape": {
    "name": "Buscapé",
@@ -7,7 +7,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-07T21:02:16.798Z"
+   "lastOk": "2026-11-07T21:04:22.979Z"
   },
   "zoom": {
    "name": "Zoom",
@@ -15,7 +15,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-07T21:02:16.798Z"
+   "lastOk": "2026-11-07T21:04:22.979Z"
   },
   "pelando": {
    "name": "Pelando",
@@ -33,7 +33,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-07T21:02:16.798Z"
+   "lastOk": "2026-11-07T21:04:22.979Z"
   },
   "gatry": {
    "name": "Gatry",
@@ -41,7 +41,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-07T21:02:16.798Z"
+   "lastOk": "2026-11-07T21:04:22.979Z"
   },
   "hardmob": {
    "name": "Hardmob",
@@ -59,7 +59,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-07T21:02:16.798Z"
+   "lastOk": "2026-11-07T21:04:22.979Z"
   }
  },
  "products": [
@@ -312,13 +312,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "pelando": {
      "ok": false,
@@ -331,12 +331,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/promocoes/?q=playstation%205",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "hardmob": {
      "ok": false,
@@ -345,7 +345,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     }
    }
   },
@@ -538,13 +538,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "pelando": {
      "ok": false,
@@ -555,12 +555,12 @@
      "ok": true,
      "count": 10,
      "url": "https://gatry.com/promocoes/?q=ssd%201tb",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "hardmob": {
      "ok": false,
@@ -569,7 +569,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     }
    }
   },
@@ -641,13 +641,13 @@
      "ok": true,
      "count": 2,
      "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "zoom": {
      "ok": true,
      "count": 2,
      "url": "https://www.zoom.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "pelando": {
      "ok": false,
@@ -660,12 +660,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/promocoes/?q=rtx%205070",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "hardmob": {
      "ok": false,
@@ -674,7 +674,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     }
    }
   },
@@ -956,13 +956,13 @@
      "ok": true,
      "count": 20,
      "url": "https://www.buscape.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "zoom": {
      "ok": true,
      "count": 20,
      "url": "https://www.zoom.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "pelando": {
      "ok": false,
@@ -975,12 +975,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/promocoes/?q=tv%2055",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "hardmob": {
      "ok": false,
@@ -989,7 +989,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     }
    }
   },
@@ -1113,13 +1113,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "pelando": {
      "ok": false,
@@ -1130,12 +1130,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/promocoes/?q=galaxy%20s26",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "hardmob": {
      "ok": false,
@@ -1144,7 +1144,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     }
    }
   },
@@ -1364,13 +1364,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "pelando": {
      "ok": false,
@@ -1383,12 +1383,12 @@
      "ok": true,
      "count": 5,
      "url": "https://gatry.com/promocoes/?q=switch%202",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "hardmob": {
      "ok": false,
@@ -1397,7 +1397,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     }
    }
   },
@@ -1616,13 +1616,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "pelando": {
      "ok": false,
@@ -1635,12 +1635,12 @@
      "ok": true,
      "count": 5,
      "url": "https://gatry.com/promocoes/?q=iphone%2017",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "hardmob": {
      "ok": false,
@@ -1649,7 +1649,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     }
    }
   },
@@ -1813,13 +1813,13 @@
      "ok": true,
      "count": 2,
      "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "zoom": {
      "ok": true,
      "count": 2,
      "url": "https://www.zoom.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "pelando": {
      "ok": false,
@@ -1832,12 +1832,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/promocoes/?q=xbox%20series%20x",
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     },
     "hardmob": {
      "ok": false,
@@ -1846,7 +1846,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-07T21:02:16.798Z"
+     "seenAt": "2026-11-07T21:04:22.979Z"
     }
    }
   }
