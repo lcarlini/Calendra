@@ -34,10 +34,10 @@ const initialAnchor = initialDate ? new Date(initialDate + "T12:00:00") : new Da
 
 const state = {
   view: localStorage.getItem('calendra.calView.v1') || 'month',
-  year: new Date().getFullYear(),
-  month: new Date().getMonth(),
-  anchor: new Date(),
-  selectedDate: todayISO(),
+  year: initialAnchor.getFullYear(),
+  month: initialAnchor.getMonth(),
+  anchor: initialAnchor,
+  selectedDate: initialDate || todayISO(),
 };
 
 function escapeHtml(str) {

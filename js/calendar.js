@@ -163,12 +163,16 @@ export function renderMonthView(container, year, month, today = new Date(), onDa
         })
         .join('');
 
+      const hiddenHolidays = holidays.slice(2);
+      const holidayExtra = hiddenHolidays.length
+        ? `<div class="event-pill holiday-pill" title="${escapeHtml(hiddenHolidays.map((h) => `${h.country} ${h.name}`).join(' · '))}">+${hiddenHolidays.length} holidays</div>`
+        : '';
       const extra = more > 0 ? `<div class="event-pill">+${more} more</div>` : '';
 
       return `
         <div class="${classes}" data-date="${cell.iso}" role="button" tabindex="0">
           <div class="full-day-num">${cell.day}</div>
-          <div class="full-day-events">${holidayPills}${pills}${extra}</div>
+          <div class="full-day-events">${holidayPills}${holidayExtra}${pills}${extra}</div>
         </div>
       `;
     })

@@ -1097,7 +1097,7 @@ img {
 
 .full-cal-weekdays {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   background: var(--deep);
   color: rgba(255, 255, 255, 0.7);
 }
@@ -1113,7 +1113,7 @@ img {
 
 .full-cal-days {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
 .full-day {

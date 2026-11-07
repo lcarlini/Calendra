@@ -23,6 +23,10 @@ Legacy: `calendar.html` redirects to `calendario.html` and keeps the query strin
 - Reference calendars are in `js/calendar/specialized.js`. They are transcribed from `UI/Holidays.png` (GCM, 2025–2027) and `UI/Calendar.html` (Brasil and Davi, 2026 only).
 - Nothing is extrapolated beyond the years the sources cover.
 - Run the tests with `node --test tests/*.test.mjs` (Node 18+; no dependencies).
+- Real-browser checks (needs Chrome; set `CHROME_PATH` if it is not in the default Windows location):
+  `node tests/browser/smoke.mjs <baseUrl>` loads every page and reports JS errors, failed requests and sideways overflow;
+  `node tests/browser/interact.mjs <baseUrl>` checks the `?date=` link, the weekday columns and phone-width overflow, and exits non-zero on failure.
+  Example: `python -m http.server 8080` then `node tests/browser/interact.mjs http://localhost:8080`.
 
 ## Enable GitHub Pages
 
