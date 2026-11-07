@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calendário 2026 — GCM / Brasil / Davi</title>
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#111a33;
+      --text:#e8ecff;
+      --muted:#b9c2ff;
+
+      --gcm:#4aa3ff;
+      --brasil:#ff9a3d;
+      --davi:#58c46a;
+
+      /* Combinações */
+      --dg:#7b7cff;    /* Davi + GCM */
+      --db:#ffd166;    /* Davi + Brasil */
+      --gb:#ff5ea8;    /* GCM + Brasil */
+      --dgb:#b06cff;   /* Davi + GCM + Brasil */
+
+      --gridLine: rgba(255,255,255,.06);
+      --gridLineStrong: rgba(255,255,255,.18);
+
+      --weekendHeaderBg: rgba(255,255,255,.10);
+      --weekendCellBg: rgba(255,255,255,.06);
+      --weekStripe: rgba(255,255,255,.015);
+
+      /* controla a largura REAL de cada dia */
+      --dayW: 72px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, var(--bg), #070a14);
+      color: var(--text);
+    }
+
+    header{
+      padding:18px 16px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background: rgba(17,26,51,.6);
+      position: sticky;
+      top:0;
+      backdrop-filter: blur(8px);
+      z-index: 10;
+      width:100%;
+    }
+
+    /* palco full width */
+    .wrap{
+      width: 100%;
+      padding:14px 16px 28px;
+    }
+    header .wrap{
+      padding: 0 16px;
+    }
+
+    /* conteúdo gigante, centralizado */
+    .inner{
+      width: max-content;
+      margin: 0 auto;
+    }
+
+    h1{ margin:0; font-size:18px; font-weight:650; }
+    .sub{ margin-top:6px; color:var(--muted); font-size:13px; }
+
+    .controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 16px;
+      align-items:center;
+      padding:12px;
+      background: rgba(17,26,51,.55);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:12px;
+
+      /* alinha com 3 meses por linha (cada mês = 7 colunas) */
+      width: calc(3 * (7 * var(--dayW)) + 2 * 12px);
+      max-width: 100%;
+    }
+    .controls .group{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+
+    label.chk{
+      display:flex; align-items:center; gap:8px;
+      cursor:pointer; user-select:none;
+      font-size:14px; color:var(--text);
+    }
+    input[type="checkbox"]{ width:16px; height:16px; accent-color:#8aa0ff; }
+
+    select{
+      background:#0f1630;
+      color:var(--text);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:10px;
+      padding:8px 10px;
+      font-size:14px;
+      outline:none;
+    }
+    button{
+      background:#1a2a66;
+      border:1px solid rgba(255,255,255,.14);
+      color:var(--text);
+      padding:8px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:14px;
+    }
+    button:hover{ filter:brightness(1.08); }
+
+    .legend{
+      display:flex;
+      gap:10px 14px;
+      flex-wrap:wrap;
+      padding:10px 2px 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .tag{ display:inline-flex; align-items:center; gap:8px; }
+    .dot{
+      width:10px; height:10px;
+      border-radius:50%;
+      display:inline-block;
+      box-shadow: 0 0 0 3px rgba(255,255,255,.06);
+    }
+
+    .calendar{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: repeat(3, max-content);
+      gap:12px;
+      width: max-content; /* não comprime sábado */
+    }
+
+    .month{
+      background: rgba(17,26,51,.55);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;
+      overflow:hidden; /* sem scroll interno */
+      width: max-content;
+    }
+
+    .month-header{
+      padding:10px 12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .month-header .name{ font-weight:700; letter-spacing:.2px; }
+    .month-header .year{ color:var(--muted); font-size:12px; }
+
+    .dow, .grid{
+      display:grid;
+      grid-template-columns: repeat(7, var(--dayW));
+    }
+
+    .dow div{
+      padding:7px 6px;
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+      border-bottom:1px solid var(--gridLine);
+      background: rgba(0,0,0,.08);
+    }
+    .dow div.weekend{
+      background: linear-gradient(180deg, var(--weekendHeaderBg), rgba(0,0,0,.08));
+      border-bottom:1px solid var(--gridLineStrong);
+      color: rgba(232,236,255,.96);
+      text-shadow: 0 0 14px rgba(255,255,255,.18);
+    }
+
+    .cell{
+      min-height: 94px;
+      padding: 8px;
+      border-right:1px solid var(--gridLine);
+      border-bottom:1px solid var(--gridLine);
+      position:relative;
+      overflow: visible;
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,0));
+    }
+    .cell:nth-child(7n){ border-right:none; }
+    .cell.outside .daynum{ opacity:.25; }
+
+    .cell.weekStart{ border-top:1px solid var(--gridLineStrong); }
+    .cell.weekStripe{ background: linear-gradient(180deg, var(--weekStripe), rgba(0,0,0,0)); }
+
+    .cell.weekend{
+      background: linear-gradient(180deg, var(--weekendCellBg), rgba(0,0,0,0));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), inset 0 0 24px rgba(255,255,255,.04);
+    }
+    .cell.weekend.hasHoliday{
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.06),
+        inset 0 0 26px rgba(255,255,255,.05),
+        0 0 0 1px rgba(255,255,255,.05);
+    }
+
+    .daynum{
+      font-size:12px;
+      color: rgba(232,236,255,.92);
+      position:absolute;
+      top:8px; left:8px;
+    }
+
+    .cell.hasHoliday{
+      outline:2px solid rgba(255,255,255,.06);
+      outline-offset:-2px;
+    }
+
+    /* Bolinhas (sempre dentro, sem tocar a borda/risco) */
+    .markers{
+      position:absolute;
+      left:8px;
+      right:14px; /* respiro extra do lado direito */
+      top:28px;
+
+      display:grid;
+      grid-template-columns: 22px 22px;
+      grid-auto-rows: 22px;
+      justify-content: space-between;
+      gap:6px 10px;
+      align-items:start;
+    }
+
+    .badge{
+      width:22px;
+      height:22px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+      font-weight:800;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.18);
+      user-select:none;
+      cursor: default;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.15);
+    }
+
+    .badge.gcm{
+      background: color-mix(in oklab, var(--gcm), transparent 75%);
+      border-color: color-mix(in oklab, var(--gcm), white 12%);
+    }
+    .badge.brasil{
+      background: color-mix(in oklab, var(--brasil), transparent 75%);
+      border-color: color-mix(in oklab, var(--brasil), white 12%);
+    }
+    .badge.davi{
+      background: color-mix(in oklab, var(--davi), transparent 75%);
+      border-color: color-mix(in oklab, var(--davi), white 12%);
+    }
+
+    .badge.dg{
+      background: color-mix(in oklab, var(--dg), transparent 70%);
+      border-color: color-mix(in oklab, var(--dg), white 14%);
+    }
+    .badge.db{
+      background: color-mix(in oklab, var(--db), transparent 72%);
+      border-color: color-mix(in oklab, var(--db), white 14%);
+      color: rgba(10,12,20,.95);
+    }
+    .badge.gb{
+      background: color-mix(in oklab, var(--gb), transparent 72%);
+      border-color: color-mix(in oklab, var(--gb), white 14%);
+    }
+    .badge.dgb{
+      background: color-mix(in oklab, var(--dgb), transparent 70%);
+      border-color: color-mix(in oklab, var(--dgb), white 14%);
+    }
+
+    /* Tooltip (portal) */
+    #tipLayer{
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    .tip{
+      position:absolute;
+      background:#0a0f24;
+      border:1px solid rgba(255,255,255,.14);
+      padding:8px 9px;
+      border-radius:10px;
+      font-size:12px;
+      color:var(--text);
+      width:max-content;
+      max-width:340px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.45);
+      opacity:0;
+      transform: translateY(6px);
+      transition: opacity .12s ease, transform .12s ease;
+    }
+    .tip.show{ opacity:1; transform: translateY(0); }
+    .tip .line{ margin:2px 0; }
+    .pill{
+      display:inline-block;
+      padding:2px 8px;
+      border-radius:999px;
+      font-size:11px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      margin:6px 0 4px;
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap">
+    <div class="inner">
+      <h1>Calendário 2026 — GCM / Brasil / Davi</h1>
+      <div class="sub">Dias com largura fixa (sem cortar sábado), bolinhas sem cair no risco, combos com cor própria + tooltip.</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="inner">
+    <div class="controls">
+      <div class="group">
+        <label class="chk"><input id="showGCM" type="checkbox" checked />GCM</label>
+        <label class="chk"><input id="showBrasil" type="checkbox" checked />Brasil</label>
+        <label class="chk"><input id="showDavi" type="checkbox" checked />Davi</label>
+      </div>
+
+      <div class="group" style="margin-left:auto">
+        <label style="color:var(--muted); font-size:13px;">Ir para</label>
+        <select id="jumpMonth"></select>
+        <button id="todayBtn" type="button">Mês atual</button>
+      </div>
+
+      <div class="legend" style="flex-basis:100%;">
+        <span class="tag"><span class="dot" style="background:var(--davi)"></span>Davi</span>
+        <span class="tag"><span class="dot" style="background:var(--gcm)"></span>GCM</span>
+        <span class="tag"><span class="dot" style="background:var(--brasil)"></span>Brasil</span>
+
+        <span class="tag"><span class="dot" style="background:var(--dg)"></span>Davi + GCM</span>
+        <span class="tag"><span class="dot" style="background:var(--db)"></span>Davi + Brasil</span>
+        <span class="tag"><span class="dot" style="background:var(--gb)"></span>GCM + Brasil</span>
+        <span class="tag"><span class="dot" style="background:var(--dgb)"></span>Davi + GCM + Brasil</span>
+      </div>
+    </div>
+
+    <div id="calendar" class="calendar"></div>
+  </div>
+</div>
+
+<div id="tipLayer"><div id="tip" class="tip"></div></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const HOLIDAYS = [
+    // ---- GCM ----
+    { cal:"GCM", name:"New Year's Day", date:"1/1/2026", dow:"Thursday" },
+    { cal:"GCM", name:"Martin Luther King Day", date:"1/19/2026", dow:"Monday" },
+    { cal:"GCM", name:"Presidents Day", date:"2/16/2026", dow:"Monday" },
+    { cal:"GCM", name:"Good Friday", date:"4/3/2026", dow:"Friday" },
+    { cal:"GCM", name:"Memorial Day", date:"5/25/2026", dow:"Monday" },
+    { cal:"GCM", name:"Juneteenth", date:"6/19/2026", dow:"Friday" },
+    { cal:"GCM", name:"Independence Day (observed)", date:"7/3/2026", dow:"Friday" },
+    { cal:"GCM", name:"Labor Day", date:"9/7/2026", dow:"Monday" },
+    { cal:"GCM", name:"Thanksgiving Day", date:"11/26/2026", dow:"Thursday" },
+    { cal:"GCM", name:"Day after Thanksgiving", date:"11/27/2026", dow:"Friday" },
+    { cal:"GCM", name:"Christmas Day", date:"12/25/2026", dow:"Friday" },
+
+    // ---- Brasil ----
+    { cal:"Brasil", name:"Confraternização Universal", date:"1/1/2026", dow:"Thursday" },
+    { cal:"Brasil", name:"Carnaval", date:"2/16/2026", dow:"Monday" },
+    { cal:"Brasil", name:"Carnaval", date:"2/17/2026", dow:"Tuesday" },
+    { cal:"Brasil", name:"Paixão de Cristo", date:"4/3/2026", dow:"Friday" },
+    { cal:"Brasil", name:"Tiradentes", date:"4/21/2026", dow:"Tuesday" },
+    { cal:"Brasil", name:"Dia do Trabalho", date:"5/1/2026", dow:"Friday" },
+    { cal:"Brasil", name:"Corpus Christi", date:"6/4/2026", dow:"Thursday" },
+    { cal:"Brasil", name:"Independência do Brasil", date:"9/7/2026", dow:"Monday" },
+    { cal:"Brasil", name:"Nossa Senhora Aparecida", date:"10/12/2026", dow:"Monday" },
+    { cal:"Brasil", name:"Finados", date:"11/2/2026", dow:"Monday" },
+    { cal:"Brasil", name:"Proclamação da República", date:"11/15/2026", dow:"Sunday" },
+    { cal:"Brasil", name:"Consciência Negra", date:"11/20/2026", dow:"Friday" },
+    { cal:"Brasil", name:"Natal", date:"12/25/2026", dow:"Friday" },
+
+    // ---- Davi (sem eventos em sábado/domingo) ----
+    { cal:"Davi", name:"Confraternização Universal", date:"1/1/2026", dow:"Thursday" },
+    { cal:"Davi", name:"Início das aulas", date:"1/22/2026", dow:"Thursday" },
+    { cal:"Davi", name:"Recesso", date:"2/16/2026", dow:"Monday" },
+    { cal:"Davi", name:"Carnaval", date:"2/17/2026", dow:"Tuesday" },
+    { cal:"Davi", name:"Recesso", date:"2/18/2026", dow:"Wednesday" },
+    { cal:"Davi", name:"Sexta-feira Santa", date:"4/3/2026", dow:"Friday" },
+    { cal:"Davi", name:"Tiradentes", date:"4/21/2026", dow:"Tuesday" },
+    { cal:"Davi", name:"Dia do Trabalho", date:"5/1/2026", dow:"Friday" },
+    { cal:"Davi", name:"São Benedito", date:"5/13/2026", dow:"Wednesday" },
+    { cal:"Davi", name:"Corpus Christi", date:"6/4/2026", dow:"Thursday" },
+    { cal:"Davi", name:"Término do 1º semestre", date:"6/30/2026", dow:"Tuesday" },
+    { cal:"Davi", name:"Início do 2º semestre", date:"8/3/2026", dow:"Monday" },
+    { cal:"Davi", name:"Independência do Brasil", date:"9/7/2026", dow:"Monday" },
+    { cal:"Davi", name:"Nossa Senhora Aparecida", date:"10/12/2026", dow:"Monday" },
+    { cal:"Davi", name:"Dia do professor", date:"10/13/2026", dow:"Tuesday" },
+    { cal:"Davi", name:"Finados", date:"11/2/2026", dow:"Monday" },
+    { cal:"Davi", name:"Aniversário de Poços de Caldas", date:"11/6/2026", dow:"Friday" },
+    { cal:"Davi", name:"Consciência Negra", date:"11/20/2026", dow:"Friday" },
+    { cal:"Davi", name:"Formatura / Apresentação de fim de ano", date:"12/11/2026", dow:"Friday" },
+    { cal:"Davi", name:"Término das aulas", date:"12/15/2026", dow:"Tuesday" },
+    { cal:"Davi", name:"Natal", date:"12/25/2026", dow:"Friday" },
+{ cal:"Davi", name:"Recesso", date:"4/2/2026", dow:"Thursday" },
+{ cal:"Davi", name:"Recesso", date:"4/20/2026", dow:"Monday" },
+{ cal:"Davi", name:"Recesso", date:"6/5/2026", dow:"Friday" },
+{ cal:"Davi", name:"Recesso", date:"10/13/2026", dow:"Tuesday" },
+
+  ];
+
+  const YEAR = 2026;
+
+  const pad2 = n => String(n).padStart(2, "0");
+  const monthNames = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+  const dowNames = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+
+  function toKey(mdY){
+    const [m,d,y] = mdY.split("/").map(x => parseInt(x,10));
+    return `${y}-${pad2(m)}-${pad2(d)}`;
+  }
+  function addDays(date, days){
+    const d = new Date(date);
+    d.setDate(d.getDate() + days);
+    return d;
+  }
+  function startOfMonth(y,m){ return new Date(y, m, 1); }
+
+  function escapeHtml(str){
+    return String(str)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function classForCal(cal){
+    if(cal==="GCM") return "gcm";
+    if(cal==="Brasil") return "brasil";
+    if(cal==="Davi") return "davi";
+    return "";
+  }
+
+  function comboKey(calsSet){
+    const order = ["Davi","GCM","Brasil"];
+    return order.filter(x => calsSet.has(x)).join("+");
+  }
+  function comboClass(key){
+    if(key==="Davi+GCM") return "dg";
+    if(key==="Davi+Brasil") return "db";
+    if(key==="GCM+Brasil") return "gb";
+    if(key==="Davi+GCM+Brasil") return "dgb";
+    return "";
+  }
+  function comboLabel(key){
+    if(key==="Davi+GCM") return "Davi + GCM";
+    if(key==="Davi+Brasil") return "Davi + Brasil";
+    if(key==="GCM+Brasil") return "GCM + Brasil";
+    if(key==="Davi+GCM+Brasil") return "Davi + GCM + Brasil";
+    return "";
+  }
+
+  const byDay = new Map();
+  for(const h of HOLIDAYS){
+    const k = toKey(h.date);
+    if(!byDay.has(k)) byDay.set(k, []);
+    byDay.get(k).push(h);
+  }
+
+  const elCalendar = document.getElementById("calendar");
+  const showGCM = document.getElementById("showGCM");
+  const showBrasil = document.getElementById("showBrasil");
+  const showDavi = document.getElementById("showDavi");
+  const jumpMonth = document.getElementById("jumpMonth");
+  const todayBtn = document.getElementById("todayBtn");
+  const tip = document.getElementById("tip");
+
+  function hideTip(){ tip.classList.remove("show"); }
+  function showTip(html, clientX, clientY){
+    tip.innerHTML = html;
+    tip.style.left = "0px";
+    tip.style.top = "0px";
+    tip.classList.add("show");
+
+    const margin = 12;
+    const rect = tip.getBoundingClientRect();
+    let x = clientX + 12;
+    let y = clientY + 12;
+
+    if(x + rect.width + margin > window.innerWidth) x = window.innerWidth - rect.width - margin;
+    if(y + rect.height + margin > window.innerHeight) y = window.innerHeight - rect.height - margin;
+    if(x < margin) x = margin;
+    if(y < margin) y = margin;
+
+    tip.style.left = x + "px";
+    tip.style.top = y + "px";
+  }
+
+  function selectedCals(){
+    const s = new Set();
+    if(showGCM.checked) s.add("GCM");
+    if(showBrasil.checked) s.add("Brasil");
+    if(showDavi.checked) s.add("Davi");
+    return s;
+  }
+
+  function buildTipHtml(pretty, list){
+    const involved = new Set(list.map(x => x.cal));
+    const ck = comboKey(involved);
+    const pill = (ck && involved.size > 1) ? `<div class="pill">${escapeHtml(comboLabel(ck))}</div>` : "";
+    const lines = list.map(h => `<div class="line"><b>${escapeHtml(h.cal)}:</b> ${escapeHtml(h.name)}</div>`).join("");
+    return `<div><strong>${pretty}</strong></div>${pill}${lines}`;
+  }
+
+  function render(){
+    const cals = selectedCals();
+    elCalendar.innerHTML = "";
+
+    for(let m=0; m<12; m++){
+      const monthEl = document.createElement("section");
+      monthEl.className = "month";
+      monthEl.id = `m${m+1}`;
+
+      const head = document.createElement("div");
+      head.className = "month-header";
+      head.innerHTML = `<div class="name">${monthNames[m]}</div><div class="year">${YEAR}</div>`;
+      monthEl.appendChild(head);
+
+      const dow = document.createElement("div");
+      dow.className = "dow";
+      dowNames.forEach((d,i)=>{
+        const x = document.createElement("div");
+        x.textContent = d;
+        if(i===0 || i===6) x.classList.add("weekend");
+        dow.appendChild(x);
+      });
+      monthEl.appendChild(dow);
+
+      const grid = document.createElement("div");
+      grid.className = "grid";
+
+      const first = startOfMonth(YEAR, m);
+      const startWeekday = first.getDay();
+      const gridStart = addDays(first, -startWeekday);
+
+      for(let i=0;i<42;i++){
+        const date = addDays(gridStart, i);
+        const y = date.getFullYear();
+        const mm = date.getMonth();
+        const dd = date.getDate();
+        const weekday = date.getDay();
+        const key = `${y}-${pad2(mm+1)}-${pad2(dd)}`;
+
+        const cell = document.createElement("div");
+        cell.className = "cell";
+        if(mm !== m) cell.classList.add("outside");
+        if(i % 7 === 0) cell.classList.add("weekStart");
+
+        const weekIndex = Math.floor(i/7);
+        if(weekIndex % 2 === 1) cell.classList.add("weekStripe");
+        if(weekday === 0 || weekday === 6) cell.classList.add("weekend");
+
+        const daynum = document.createElement("div");
+        daynum.className = "daynum";
+        daynum.textContent = dd;
+        cell.appendChild(daynum);
+
+        const raw = byDay.get(key) || [];
+        const list = raw.filter(h => {
+          if(!cals.has(h.cal)) return false;
+          if(h.cal === "Davi" && (weekday === 0 || weekday === 6)) return false;
+          return true;
+        });
+
+        const markers = document.createElement("div");
+        markers.className = "markers";
+
+        if(list.length){
+          cell.classList.add("hasHoliday");
+
+          const involved = new Set(list.map(x => x.cal));
+          const ck = comboKey(involved);
+          const combo = (involved.size > 1) ? comboClass(ck) : "";
+
+          const order = { "Davi": 0, "Brasil": 1, "GCM": 2 };
+          const sorted = [...list].sort((a,b)=> (order[a.cal] ?? 99) - (order[b.cal] ?? 99));
+
+          const visible = sorted.slice(0, 4);
+          for(const h of visible){
+            const b = document.createElement("span");
+            b.className = "badge " + (combo ? combo : classForCal(h.cal));
+            b.textContent = (h.cal === "Davi") ? "D" : (h.cal === "Brasil") ? "B" : "G";
+            markers.appendChild(b);
+          }
+
+          const pretty = `${pad2(mm+1)}/${pad2(dd)}/${y}`;
+          const html = buildTipHtml(pretty, sorted);
+
+          cell.addEventListener("mouseenter", (ev)=> showTip(html, ev.clientX, ev.clientY));
+          cell.addEventListener("mousemove", (ev)=> { if(tip.classList.contains("show")) showTip(html, ev.clientX, ev.clientY); });
+          cell.addEventListener("mouseleave", hideTip);
+        }
+
+        cell.appendChild(markers);
+        grid.appendChild(cell);
+      }
+
+      monthEl.appendChild(grid);
+      elCalendar.appendChild(monthEl);
+    }
+  }
+
+  function initJump(){
+    jumpMonth.innerHTML = "";
+    for(let m=1; m<=12; m++){
+      const opt = document.createElement("option");
+      opt.value = String(m);
+      opt.textContent = `${m} - ${monthNames[m-1]}`;
+      jumpMonth.appendChild(opt);
+    }
+
+    jumpMonth.addEventListener("change", ()=>{
+      document.getElementById(`m${jumpMonth.value}`)?.scrollIntoView({behavior:"smooth", block:"start"});
+    });
+
+    todayBtn.addEventListener("click", ()=>{
+      const now = new Date();
+      const month = (now.getFullYear() === YEAR) ? (now.getMonth()+1) : 1;
+      jumpMonth.value = String(month);
+      document.getElementById(`m${month}`)?.scrollIntoView({behavior:"smooth", block:"start"});
+    });
+
+    [showGCM, showBrasil, showDavi].forEach(chk => chk.addEventListener("change", render));
+    window.addEventListener("scroll", hideTip, {passive:true});
+    window.addEventListener("resize", hideTip);
+    document.addEventListener("keydown", (e)=>{ if(e.key==="Escape") hideTip(); });
+  }
+
+  initJump();
+  render();
+});
+</script>
+</body>
+</html>
