@@ -1,3 +1,5 @@
+import { specializedEntriesForYear } from './calendar/specialized.js';
+
 /** Fixed + movable public holidays for USA and Brazil. */
 
 function pad(n) {
@@ -93,24 +95,53 @@ export function brazilHolidays(year) {
 
 const KEY = 'calendra.holidays.v1';
 
+/** Every toggleable calendar category. Stored prefs are merged over these defaults, so older saves keep working. */
+export const HOLIDAY_CATEGORY_DEFAULTS = { US: true, BR: true, GCM: true, BRREF: true, DAVI: true };
+
 export function loadHolidayPrefs() {
   try {
     const raw = localStorage.getItem(KEY);
-    if (!raw) return { US: true, BR: true };
-    return { US: true, BR: true, ...JSON.parse(raw) };
+    if (!raw) return { ...HOLIDAY_CATEGORY_DEFAULTS };
+    return { ...HOLIDAY_CATEGORY_DEFAULTS, ...JSON.parse(raw) };
   } catch {
-    return { US: true, BR: true };
+    return { ...HOLIDAY_CATEGORY_DEFAULTS };
   }
 }
 
 export function saveHolidayPrefs(prefs) {
-  localStorage.setItem(KEY, JSON.stringify(prefs));
+  const merged = { ...HOLIDAY_CATEGORY_DEFAULTS };
+  for (const key of Object.keys(HOLIDAY_CATEGORY_DEFAULTS)) {
+    if (key in prefs) merged[key] = !!prefs[key];
+  }
+  localStorage.setItem(KEY, JSON.stringify(merged));
 }
 
+/** Reference (specialized) categories mapped to their preference key. */
+const REFERENCE_PREF = { gcm: 'GCM', 'brasil-ref': 'BRREF', davi: 'DAVI' };
+
+/**
+ * All holidays and reference-calendar items for one year, filtered by prefs.
+ * Reference items carry `country` as their short label and `category` as
+ * their category id; they are never generated for years the sources do not cover.
+ */
 export function holidaysForYear(year, prefs = loadHolidayPrefs()) {
   const out = [];
   if (prefs.US) out.push(...usaHolidays(year));
   if (prefs.BR) out.push(...brazilHolidays(year));
+  for (const [categoryId, prefKey] of Object.entries(REFERENCE_PREF)) {
+    if (!prefs[prefKey]) continue;
+    for (const e of specializedEntriesForYear(categoryId, year)) {
+      out.push({
+        date: e.date,
+        name: e.name,
+        country: e.category.pillLabel,
+        category: categoryId,
+        categoryLabel: e.category.label,
+        source: e.source,
+        verificationStatus: e.verificationStatus || 'verified',
+      });
+    }
+  }
   return out.sort((a, b) => a.date.localeCompare(b.date));
 }
 

@@ -285,7 +285,7 @@ export function renderDayView(container, isoDate, onRefresh) {
         <h4>Holidays</h4>
         ${
           holidays.length
-            ? holidays.map((h) => `<div class="agenda-item"><div class="agenda-bar rose"></div><div><div class="agenda-title">${h.name}</div><div class="agenda-time">${h.country === 'US' ? 'United States' : 'Brazil'}</div></div></div>`).join('')
+            ? holidays.map((h) => `<div class="agenda-item"><div class="agenda-bar rose"></div><div><div class="agenda-title">${h.name}</div><div class="agenda-time">${escapeHtml(h.categoryLabel || (h.country === 'US' ? 'United States' : 'Brazil'))}</div></div></div>`).join('')
             : '<p class="status-line">No public holidays on this day for selected countries.</p>'
         }
       </section>

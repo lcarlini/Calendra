@@ -160,7 +160,7 @@ function renderSelectedDay() {
       <article class="agenda-item">
         <div class="agenda-bar rose"></div>
         <div>
-          <div class="agenda-time">${h.country === 'US' ? 'USA' : 'Brazil'} holiday</div>
+          <div class="agenda-time">${escapeHtml(h.categoryLabel || (h.country === 'US' ? 'USA' : 'Brazil'))} holiday</div>
           <div class="agenda-title">${h.name}</div>
         </div>
       </article>`
@@ -270,21 +270,41 @@ function bindTheme() {
   select.addEventListener('change', () => applyTheme(select.value));
 }
 
+/** Checkbox id → holiday preference key. */
+const HOLIDAY_TOGGLES = {
+  'holiday-us': 'US',
+  'holiday-br': 'BR',
+  'holiday-gcm': 'GCM',
+  'holiday-brref': 'BRREF',
+  'holiday-davi': 'DAVI',
+};
+
 function bindHolidays() {
   const prefs = loadHolidayPrefs();
-  const us = $('#holiday-us');
-  const br = $('#holiday-br');
-  if (us) us.checked = !!prefs.US;
-  if (br) br.checked = !!prefs.BR;
+  const inputs = Object.entries(HOLIDAY_TOGGLES)
+    .map(([id, key]) => [$(`#${id}`), key])
+    .filter(([el]) => el);
+
+  for (const [el, key] of inputs) el.checked = !!prefs[key];
 
   const save = () => {
-    saveHolidayPrefs({ US: !!us?.checked, BR: !!br?.checked });
+    const next = {};
+    for (const [el, key] of inputs) next[key] = !!el.checked;
+    saveHolidayPrefs(next);
     refresh();
     toast('Holiday calendars updated');
   };
-  us?.addEventListener('change', save);
-  br?.addEventListener('change', save);
+  for (const [el] of inputs) el.addEventListener('change', save);
 }
+
+/**
+ * Keep open Calendário tabs in step with changes made in other tabs of the
+ * same origin (reminders and holiday preferences live in localStorage).
+ */
+const SYNCED_KEYS = new Set(['calendra.reminders.v1', 'calendra.holidays.v1']);
+window.addEventListener('storage', (event) => {
+  if (event.key === null || SYNCED_KEYS.has(event.key)) refresh();
+});
 
 function bind() {
   const dateInput = $('#quick-date');
