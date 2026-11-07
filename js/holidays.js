@@ -1,4 +1,5 @@
 import { specializedEntriesForYear } from './calendar/specialized.js';
+import { writeJSON } from './core/store.js';
 
 /** Fixed + movable public holidays for USA and Brazil. */
 
@@ -118,7 +119,7 @@ export function saveHolidayPrefs(prefs) {
   for (const key of Object.keys(HOLIDAY_CATEGORY_DEFAULTS)) {
     if (key in prefs) merged[key] = !!prefs[key];
   }
-  localStorage.setItem(KEY, JSON.stringify(merged));
+  writeJSON(KEY, merged);
 }
 
 /** Reference (specialized) categories mapped to their preference key. */

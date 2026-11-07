@@ -20,6 +20,7 @@ import {
   saveHolidayPrefs,
 } from './holidays.js';
 import { initTheme, THEMES, applyTheme, getTheme } from './themes.js';
+import { initTravel } from './calendar/travel-ui.js';
 import { $, toast } from './ui.js';
 
 initTheme();
@@ -365,3 +366,4 @@ function bind() {
 
 bind();
 refresh();
+initTravel();

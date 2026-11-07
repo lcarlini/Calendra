@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Calendra — News." />
+    <meta name="description" content="Calendra — News: headlines from several outlets, grouped by story, with optional AI summaries." />
     <title>Calendra — News</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2716%27 fill=%27%230b1620%27/%3E%3Cpath d=%27M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z%27 fill=%27%23a3e635%27/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="css/styles.css?v=20261107b" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1620'/%3E%3Cpath d='M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z' fill='%23a3e635'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="css/styles.css?v=20261107o" />
     <script>
       try {
         var t = localStorage.getItem("calendra.theme.v1") || "ink";
@@ -39,24 +39,62 @@
         </div>
       </header>
 
-      <main class="module-page" id="main">
+      <main class="module-page wide" id="main">
         <p class="back-home"><a href="index.html">&larr; Back to Home</a></p>
         <h2 class="module-title">News</h2>
-        <p class="module-lead">Consolidated news reader. Not connected yet: no headlines are shown, because no permitted feed or API has been integrated.</p>
-        <section class="status-card" aria-labelledby="src-h">
-  <h3 id="src-h">Requested sources</h3>
-  <p class="status-line">Status is "Not integrated" for every source. Each link opens the publisher directly.</p>
-  <ul class="source-list">
-    <li><span>O Antagonista</span><a href="https://oantagonista.com.br/" rel="noopener">oantagonista.com.br</a></li>
-    <li><span>Globo</span><a href="https://www.globo.com/" rel="noopener">globo.com</a></li>
-    <li><span>UOL</span><a href="https://www.uol.com.br/" rel="noopener">uol.com.br</a></li>
-    <li><span>UOL Economia</span><a href="https://economia.uol.com.br/" rel="noopener">economia.uol.com.br</a></li>
-    <li><span>DutchNews</span><a href="https://www.dutchnews.nl/" rel="noopener">dutchnews.nl</a></li>
-    <li><span>g1</span><a href="https://g1.globo.com/" rel="noopener">g1.globo.com</a></li>
-    <li><span>BBC Portuguese</span><a href="https://www.bbc.com/portuguese" rel="noopener">bbc.com/portuguese</a></li>
-    <li><span>CNN Brasil</span><a href="https://www.cnnbrasil.com.br/" rel="noopener">cnnbrasil.com.br</a></li>
-  </ul>
-</section>
+        <p class="module-lead">
+          Headlines from the outlets' own public RSS feeds, grouped by story. Only the headline, a short excerpt supplied by the feed
+          and a link to the publisher are shown. Stories covered by more outlets rank higher, which says nothing about whether they
+          are true.
+        </p>
+
+        <section class="news-status" id="news-setup" aria-labelledby="setup-h" hidden></section>
+
+        <div class="news-toolbar">
+          <div class="chip-row" role="tablist" aria-label="News sections" id="news-tabs"></div>
+          <button type="button" class="btn btn-ghost btn-sm" id="news-refresh">Refresh</button>
+        </div>
+
+        <div class="news-filters">
+          <form id="news-search-form" class="inline-form" role="search">
+            <label for="news-q">Search</label>
+            <input id="news-q" type="search" placeholder="Words in a headline or excerpt" />
+            <label for="news-scope" class="sr-only">Search scope</label>
+            <select id="news-scope" aria-label="Search scope">
+              <option value="loaded">Loaded articles</option>
+              <option value="provider" disabled>Publisher search (unavailable)</option>
+            </select>
+          </form>
+          <label class="tool-field">
+            <span>Date</span>
+            <select id="news-date" aria-label="Date filter">
+              <option value="24h">Last 24 hours</option>
+              <option value="3d">Last 3 days</option>
+              <option value="7d">Last 7 days</option>
+              <option value="any">Any date</option>
+            </select>
+          </label>
+          <div class="chip-row" id="news-sources" role="group" aria-label="Sources"></div>
+        </div>
+        <p class="status-line" id="news-summary-line" role="status" aria-live="polite"></p>
+
+        <div id="news-list" class="story-list" aria-live="polite"></div>
+
+        <section class="market-section" aria-labelledby="src-h">
+          <h3 id="src-h">Sources</h3>
+          <p class="status-line">Each source is integrated through its own public RSS feed or marked unavailable. Links open the publisher.</p>
+          <ul class="source-status" id="news-source-status"></ul>
+        </section>
+
+        <section class="market-section" aria-labelledby="how-h">
+          <h3 id="how-h">How stories are grouped and ranked</h3>
+          <ul class="how-list">
+            <li><strong>Duplicates:</strong> the same article through different links, or the same headline inside one publisher group, is merged.</li>
+            <li><strong>Clusters:</strong> different articles about the same event are grouped when they share enough distinctive words, in the same language and within 48 hours. Different languages are never merged.</li>
+            <li><strong>Coverage:</strong> UOL and UOL Economia count as one outlet, as do g1 and Globo.com. Identical headlines at different outlets (syndicated copies) and repeated updates count once.</li>
+            <li><strong>Ranking:</strong> breadth of coverage first, then freshness (in 6-hour steps), then position in the outlets' feeds. There is no numeric score.</li>
+          </ul>
+        </section>
       </main>
 
       <footer class="site-footer">
@@ -64,6 +102,6 @@
         <span>Live at <a href="https://lcarlini.github.io/Calendra/" target="_blank" rel="noopener">lcarlini.github.io/Calendra</a></span>
       </footer>
     </div>
-    
+    <script type="module" src="js/news/news-page.js"></script>
   </body>
 </html>

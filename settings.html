@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Calendra — Settings." />
+    <meta name="description" content="Calendra — Settings: theme, display, AI summaries and your data." />
     <title>Calendra — Settings</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2716%27 fill=%27%230b1620%27/%3E%3Cpath d=%27M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z%27 fill=%27%23a3e635%27/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="css/styles.css?v=20261107b" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1620'/%3E%3Cpath d='M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z' fill='%23a3e635'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="css/styles.css?v=20261107o" />
     <script>
       try {
         var t = localStorage.getItem("calendra.theme.v1") || "ink";
@@ -42,17 +42,100 @@
       <main class="module-page" id="main">
         <p class="back-home"><a href="index.html">&larr; Back to Home</a></p>
         <h2 class="module-title">Settings</h2>
-        <p class="module-lead">Preferences shared by every module. Stored only in this browser.</p>
-        <section class="status-card" aria-labelledby="st-h">
-  <h3 id="st-h">Theme</h3>
-  <label class="tool-field">
-    <span>Color theme</span>
-    <select id="theme-select" aria-label="Color theme"></select>
-  </label>
-  <h3 id="st-h2" style="margin-top:1.5rem">Calendar data</h3>
-  <p class="status-line">Holiday visibility and reminders are kept in this browser. Clearing the holiday preferences restores the defaults; reminders are not affected.</p>
-  <button type="button" class="btn btn-ghost" id="reset-holiday-prefs">Reset holiday visibility</button>
-</section>
+        <p class="module-lead">Shared by every page. Everything here is stored only in this browser; nothing syncs between devices.</p>
+
+        <section class="status-card settings-card" aria-labelledby="appearance-h">
+          <h3 id="appearance-h">Appearance and display</h3>
+          <label class="tool-field">
+            <span>Color theme</span>
+            <select id="theme-select" aria-label="Color theme"></select>
+          </label>
+          <div class="settings-row">
+            <button type="button" class="btn btn-ghost" data-tv-toggle aria-pressed="false">TV mode</button>
+            <button type="button" class="btn btn-ghost" data-fullscreen-toggle>Fullscreen</button>
+          </div>
+          <p class="status-line">TV mode makes text and clocks larger, strengthens focus outlines, hides secondary controls and lets the arrow keys move focus. It is never switched on automatically, whatever the screen size.</p>
+        </section>
+
+        <section class="status-card settings-card" aria-labelledby="ai-h">
+          <h3 id="ai-h">AI summaries</h3>
+          <p class="status-line">
+            Optional. Summaries are generated only when you press a button on a news story, never automatically, and always show
+            what they were based on. Pick a provider, or leave AI off.
+          </p>
+          <form id="ai-form" class="deal-form settings-form" autocomplete="off">
+            <label for="ai-provider">Provider</label>
+            <select id="ai-provider"></select>
+
+            <div data-for="anthropic">
+              <label for="ai-key">API key</label>
+              <input id="ai-key" type="password" autocomplete="off" placeholder="sk-ant-..." />
+              <label class="check-pill">
+                <input type="checkbox" id="ai-persist" />
+                <span>Remember the key on this device (otherwise it is forgotten when the tab closes)</span>
+              </label>
+              <p class="status-line warn-text">
+                A key kept in browser storage can be read by any script running on this page, and by browser extensions. Calendra
+                does not encrypt it because that would not protect it from such code. Use a key with a low spending limit, and
+                remove it when you are done. It is never exported and never logged.
+              </p>
+              <label class="check-pill">
+                <input type="checkbox" id="ai-consent" />
+                <span>I understand that headlines and short excerpts of the stories I summarize are sent to Anthropic (a cloud service)</span>
+              </label>
+            </div>
+
+            <div data-for="ollama">
+              <label for="ai-url">Local endpoint address</label>
+              <input id="ai-url" type="url" placeholder="http://127.0.0.1:11434" />
+              <p class="status-line">
+                This must be a running Ollama server. A web page cannot start programs on your computer. Browsers only allow the call
+                if Ollama accepts this site's origin: start it with <code>OLLAMA_ORIGINS=https://lcarlini.github.io</code> (or the
+                address you use). A page on https may also be blocked from calling a plain-http address by some browsers.
+              </p>
+            </div>
+
+            <div data-for="anthropic ollama">
+              <label for="ai-model">Model</label>
+              <input id="ai-model" type="text" placeholder="" />
+              <label for="ai-timeout">Timeout (seconds)</label>
+              <input id="ai-timeout" type="number" min="5" max="300" step="5" />
+              <label for="ai-language">Summary language</label>
+              <select id="ai-language">
+                <option value="pt">Português</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+
+            <div class="settings-row">
+              <button type="submit" class="btn btn-primary">Save</button>
+              <button type="button" class="btn btn-ghost" id="ai-test">Test connection</button>
+              <button type="button" class="btn btn-ghost" id="ai-clear">Remove configuration</button>
+            </div>
+            <p class="status-line" id="ai-status" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <section class="status-card settings-card" aria-labelledby="data-h">
+          <h3 id="data-h">Your data</h3>
+          <p class="status-line">
+            Calendar preferences, reminders, watchlists, saved deals and settings live in this browser (localStorage). Clearing site
+            data or using another browser starts fresh. API keys are never included in an export.
+          </p>
+          <div class="settings-row">
+            <button type="button" class="btn btn-primary" id="export-data">Export settings and data</button>
+            <label class="btn btn-ghost file-btn">
+              Import…
+              <input type="file" id="import-file" accept="application/json,.json" />
+            </label>
+          </div>
+          <div id="import-preview" class="summary-box" hidden></div>
+          <div class="settings-row">
+            <button type="button" class="btn btn-ghost" id="reset-holiday-prefs">Reset holiday visibility</button>
+            <button type="button" class="btn btn-ghost danger" id="reset-all">Delete all Calendra data in this browser</button>
+          </div>
+          <p class="status-line" id="data-status" role="status" aria-live="polite"></p>
+        </section>
       </main>
 
       <footer class="site-footer">

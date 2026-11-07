@@ -34,7 +34,10 @@ export const EXTRA_CLOCKS = [
 ];
 
 export function defaultClockAssignments() {
-  return Object.fromEntries(PRIMARY_CLOCKS.map((slot) => [slot.id, slot.id]));
+  // Slot ids are kept for compatibility with saved assignments. Defaults for new users:
+  // Brazil, New York, Amsterdam. Saved choices always win.
+  const DEFAULT_CITY_BY_SLOT = { brasil: "brasil", chicago: "newyork", newyork: "amsterdam" };
+  return Object.fromEntries(PRIMARY_CLOCKS.map((slot) => [slot.id, DEFAULT_CITY_BY_SLOT[slot.id] || slot.id]));
 }
 
 export function loadClockAssignments() {
@@ -89,15 +92,12 @@ export const FIXED_CLOCKS = [...PRIMARY_CLOCKS, ...EXTRA_CLOCKS.filter((c) => c.
 const VERIFIED_IMAGES = {
   chicago: [
     'photo-1494522855154-9297ac14b55f',
-    'photo-1477959858617-67f85b34b5a0',
-    'photo-1514924013411-cbfbb242c8a7',
     'photo-1449824913935-59a10b8d2000',
     'photo-1480714378408-67cf0d13bc1b',
     'photo-1514565131-fce0801e5785',
     'photo-1468436139062-f60a71c5c892',
     'photo-1486325212027-8081e485255e',
     'photo-1444723121867-7a241cacace9',
-    'photo-1496568816309-51d7c20e3d21',
     'photo-1519501025264-65ba15a82390',
     'photo-1486325212027-8081e485255e',
   ],
@@ -108,12 +108,8 @@ const VERIFIED_IMAGES = {
     'photo-1518391846015-55a9cc003b25',
     'photo-1500917293891-ef795e70e1f6',
     'photo-1546436836-07a91091f160',
-    'photo-1518235506717-e1edbd870e98',
-    'photo-1532960402127-021409877d49',
     'photo-1534430480872-3498386e7856',
-    'photo-1474181487882-7ab0b40f3715',
     'photo-1541336032412-2048a678540d',
-    'photo-1506353826978-0b5fd676f1e7',
   ],
   london: [
     'photo-1513635269975-59663e0ac1ad',
@@ -122,9 +118,7 @@ const VERIFIED_IMAGES = {
     'photo-1520986606214-8b456906c813',
     'photo-1505761671935-60b3a7427bad',
     'photo-1533929736458-ca588d08c8be',
-    'photo-1488747279002-c64737439555',
     'photo-1526129318478-62ed807ebdf9',
-    'photo-1558618666-fcd25c85cd1c',
     'photo-1529655683826-aba9b3e77383',
     'photo-1513635269975-59663e0ac1ad',
     'photo-1505761671935-60b3a7427bad',
@@ -132,14 +126,10 @@ const VERIFIED_IMAGES = {
   amsterdam: [
     'photo-1534351590666-13e3e96b5017',
     'photo-1512470876302-972faa2aa9a4',
-    'photo-1576924542622-772281b1b9a5',
-    'photo-1558005530-a45227856a59',
     'photo-1562860149-691401a306f8',
     'photo-1467269204594-9661b134dd2b',
     'photo-1534351590666-13e3e96b5017',
     'photo-1512470876302-972faa2aa9a4',
-    'photo-1576924542622-772281b1b9a5',
-    'photo-1558005530-a45227856a59',
     'photo-1562860149-691401a306f8',
     'photo-1467269204594-9661b134dd2b',
   ],
@@ -150,7 +140,6 @@ const VERIFIED_IMAGES = {
     'photo-1612294037637-ec328d0e075e',
     'photo-1483729558449-99ef09a8c325',
     'photo-1544989164-31dc3c645987',
-    'photo-1518639192441-8f55a555f940',
     'photo-1543059080-f9b1272213d5',
     'photo-1555881400-74d7acaacd8b',
     'photo-1587593810167-a84920ea0781',
@@ -161,20 +150,16 @@ const VERIFIED_IMAGES = {
     'photo-1483729558449-99ef09a8c325',
     'photo-1544989164-31dc3c645987',
     'photo-1612294037637-ec328d0e075e',
-    'photo-1518639192441-8f55a555f940',
     'photo-1483729558449-99ef09a8c325',
     'photo-1544989164-31dc3c645987',
     'photo-1612294037637-ec328d0e075e',
-    'photo-1518639192441-8f55a555f940',
     'photo-1483729558449-99ef09a8c325',
     'photo-1544989164-31dc3c645987',
     'photo-1612294037637-ec328d0e075e',
-    'photo-1518639192441-8f55a555f940',
   ],
   world: [
     'photo-1449824913935-59a10b8d2000',
     'photo-1480714378408-67cf0d13bc1b',
-    'photo-1477959858617-67f85b34b5a0',
     'photo-1514565131-fce0801e5785',
     'photo-1467269204594-9661b134dd2b',
     'photo-1505761671935-60b3a7427bad',
@@ -428,7 +413,7 @@ function clockCardHtml(clock, now, baseZone, { editable = false } = {}) {
   return `
     <article class="clock-card ${clock.isLocal ? 'local' : ''}" data-clock="${clock.id}" data-img-key="${imgKey}">
       <div class="clock-media" aria-hidden="true">
-        <img class="clock-image" src="${img}" alt="" loading="lazy" decoding="async" />
+        <img class="clock-image" src="${img}" alt="" loading="lazy" decoding="async" onerror="this.style.display='none'" />
         <div class="clock-media-shade"></div>
         <span class="clock-tz-badge" title="Timezone">${abbr || '—'}</span>
       </div>

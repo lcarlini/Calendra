@@ -6,7 +6,7 @@
     <meta name="description" content="Calendra full calendar — year, month, week, and day views with USA and Brazil holidays." />
     <title>Calendra — Calendário</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1620'/%3E%3Cpath d='M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z' fill='%2314b8a6'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/styles.css?v=20261107o" />
     <script>
       try {
         var t = localStorage.getItem('calendra.theme.v1') || 'mist';
@@ -156,6 +156,48 @@
         </article>
       </div>
 
+      <section class="travel" id="travel" aria-labelledby="travel-h">
+        <header class="travel-head">
+          <div>
+            <h2 id="travel-h">Travel &amp; Holiday Intelligence</h2>
+            <p class="status-line">
+              Long weekends, bridge days and extended breaks, worked out from statutory holidays. It uses the same holiday data and
+              country toggles as the calendar above.
+            </p>
+          </div>
+          <div class="chip-row" role="group" aria-label="Year" id="travel-years"></div>
+        </header>
+
+        <div id="travel-next" class="travel-next" aria-live="polite"></div>
+
+        <div class="travel-toolbar">
+          <div class="chip-row" role="group" aria-label="Filter by type" id="travel-filters">
+            <button type="button" class="chip" data-type="all" aria-pressed="true">All</button>
+            <button type="button" class="chip" data-type="long-weekend" aria-pressed="false">Long weekends</button>
+            <button type="button" class="chip" data-type="bridge" aria-pressed="false">Bridge days</button>
+            <button type="button" class="chip" data-type="extended-break" aria-pressed="false">Extended breaks</button>
+          </div>
+          <label class="tool-field">
+            <span>Sort by</span>
+            <select id="travel-sort" aria-label="Sort breaks">
+              <option value="days">Most days off</option>
+              <option value="leave">Least leave needed</option>
+              <option value="date">Date</option>
+            </select>
+          </label>
+          <label class="check-pill">
+            <input type="checkbox" id="travel-optional" />
+            <span>Mark optional observances</span>
+          </label>
+          <button type="button" class="btn btn-primary btn-sm" id="travel-export-year">Export year (.ics)</button>
+        </div>
+        <p class="status-line" id="travel-count" role="status"></p>
+
+        <div id="travel-heatmap" class="heatmap"></div>
+        <ul id="travel-list" class="opp-list" role="list"></ul>
+        <p class="status-line" id="travel-provenance"></p>
+      </section>
+
       <footer class="site-footer">
         <span><a href="index.html">← Back to dashboard</a></span>
         <span>
@@ -179,5 +221,6 @@
     </div>
 
     <script type="module" src="js/calendar-page.js"></script>
+      <script type="module" src="js/core/boot.js"></script>
   </body>
 </html>

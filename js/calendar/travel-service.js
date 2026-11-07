@@ -194,3 +194,87 @@ export function toIcs(opportunities, { calendarName = 'Calendra time off', stamp
   lines.push('END:VCALENDAR');
   return lines.join('\r\n') + '\r\n';
 }
+
+// ---------------------------------------------------------------------------
+// Labels, summaries and reminders
+// ---------------------------------------------------------------------------
+
+/**
+ * Transparent label, based only on rest days gained versus leave days spent:
+ *   0 leave days : 4+ days Excellent, 3 days Great
+ *   1 leave day  : 5+ days Excellent, 4 days Good, otherwise Fair
+ *   2+ leave days: 6+ days Good, otherwise Fair
+ * It does not model travel demand, prices or personal policy (no data for those),
+ * and it is a label, not a numeric score.
+ */
+export function travelLabel(opp) {
+  const leave = opp.leaveDates.length;
+  const days = opp.days;
+  let label;
+  if (leave === 0) label = days >= 4 ? 'Excellent' : 'Great';
+  else if (leave === 1) label = days >= 5 ? 'Excellent' : days === 4 ? 'Good' : 'Fair';
+  else label = days >= 6 ? 'Good' : 'Fair';
+  const reason =
+    leave === 0
+      ? `${days} days off with no leave needed`
+      : `${days} days off for ${leave} leave day${leave === 1 ? '' : 's'}`;
+  return { label, reason, requiresLeave: leave > 0 };
+}
+
+const WEEKDAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const MONTH_NAMES = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+
+export function describeDate(iso) {
+  const [y, m, d] = iso.split('-').map(Number);
+  return `${WEEKDAY_NAMES[weekdayOf(iso)]}, ${d} ${MONTH_NAMES[m - 1]} ${y}`;
+}
+
+/** Plain-text summary for copy/share. Never states anything the rules did not produce. */
+export function summaryText(opp) {
+  const { label, reason } = travelLabel(opp);
+  const lines = [
+    `${describeDate(opp.start)} to ${describeDate(opp.end)}`,
+    `${opp.days} consecutive days off (${label}: ${reason})`,
+    `Holidays: ${opp.holidays.join(', ') || 'none'}`,
+    opp.leaveDates.length
+      ? `Request leave on: ${opp.leaveDates.map(describeDate).join('; ')}`
+      : 'No leave needed',
+    'Based on statutory holidays only. Confirm with your employer; optional observances are not counted.',
+  ];
+  return lines.join('\n');
+}
+
+/** Reminder (for the existing alert system): a prompt to request leave ~2 weeks ahead, never in the past. */
+export function reminderFor(opp, today) {
+  const target = addDays(opp.start, -14);
+  const date = target < today ? today : target;
+  const needsLeave = opp.leaveDates.length > 0;
+  return {
+    title: needsLeave
+      ? `Request leave: ${opp.leaveDates.join(', ')} (${opp.holidays.join(', ')})`
+      : `Plan ahead: ${opp.days}-day break (${opp.holidays.join(', ')})`,
+    date,
+    time: '09:00',
+    leadMinutes: 0,
+    notes: summaryText(opp),
+  };
+}
+
+/** The first opportunity that has not ended yet, or null. */
+export function nextOpportunity(list, today) {
+  return [...list].sort((a, b) => a.start.localeCompare(b.start)).find((o) => o.end >= today) || null;
+}
+
+/** Filter by type ('all' | 'long-weekend' | 'bridge' | 'extended-break') and sort. */
+export function filterAndSort(list, { type = 'all', sort = 'days' } = {}) {
+  const out = type === 'all' ? [...list] : list.filter((o) => o.type === type);
+  const by = {
+    days: (a, b) => b.days - a.days || a.leaveDates.length - b.leaveDates.length || a.start.localeCompare(b.start),
+    leave: (a, b) => a.leaveDates.length - b.leaveDates.length || b.days - a.days || a.start.localeCompare(b.start),
+    date: (a, b) => a.start.localeCompare(b.start),
+  };
+  return out.sort(by[sort] || by.days);
+}

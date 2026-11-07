@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Calendra — Deals." />
+    <meta name="description" content="Calendra — Price &amp; Deals: community deals, your own price tracking, coupons and US price comparison." />
     <title>Calendra — Deals</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2716%27 fill=%27%230b1620%27/%3E%3Cpath d=%27M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z%27 fill=%27%23a3e635%27/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="css/styles.css?v=20261107b" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1620'/%3E%3Cpath d='M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z' fill='%23a3e635'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="css/styles.css?v=20261107o" />
     <script>
       try {
         var t = localStorage.getItem("calendra.theme.v1") || "ink";
@@ -23,7 +23,7 @@
           <div class="brand-mark" aria-hidden="true">C</div>
           <div class="brand-text">
             <h1>Calendra</h1>
-            <p>Price & Deals</p>
+            <p>Price &amp; Deals</p>
           </div>
         </a>
         <div class="topbar-tools">
@@ -39,20 +39,108 @@
         </div>
       </header>
 
-      <main class="module-page" id="main">
+      <main class="module-page wide" id="main">
         <p class="back-home"><a href="index.html">&larr; Back to Home</a></p>
-        <h2 class="module-title">Price & Deals</h2>
-        <p class="module-lead">Product search, deals, coupons and alerts. Not connected yet: no store or community source has been integrated.</p>
-        <section class="status-card" aria-labelledby="dl-h">
-  <h3 id="dl-h">Status</h3>
-  <p class="status-line">Automated integration unavailable. No store, marketplace or forum data is fetched or displayed. Nothing on this page is a price or a verified deal.</p>
-  <p class="status-line">Use the search fallback below to research a product yourself, opening the results in a new tab.</p>
-  <form class="search-fallback" id="deal-search" role="search">
-    <label for="deal-q">Product</label>
-    <input id="deal-q" type="search" placeholder="e.g. monitor 27 polegadas" required />
-    <button type="submit" class="btn btn-primary">Search on Google</button>
-  </form>
-</section>
+        <h2 class="module-title">Price &amp; Deals</h2>
+        <p class="module-lead">
+          One community deal feed is read live. Stores and price-comparison sites have no permitted automated access, so for those
+          this page gives you a ready search and lets you track prices yourself. Nothing here is a verified price: numbers are either
+          labelled with their source or typed by you.
+        </p>
+
+        <section class="market-section" aria-labelledby="search-h">
+          <h3 id="search-h">Search</h3>
+          <form id="deal-search" class="inline-form search-bar" role="search" autocomplete="off">
+            <label for="deal-q" class="sr-only">Product</label>
+            <input id="deal-q" type="search" placeholder="Product, e.g. SSD 1TB or monitor 27 polegadas" required />
+            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="button" class="btn btn-ghost" id="save-search">Save this search</button>
+          </form>
+          <div class="chip-row" id="recent-searches" aria-label="Recent and saved searches"></div>
+          <div id="deal-results" aria-live="polite"></div>
+        </section>
+
+        <section class="market-section" aria-labelledby="feed-h">
+          <div class="rates-head">
+            <h3 id="feed-h">Community feed: Adrenaline Ofertas</h3>
+            <button type="button" class="btn-icon" id="feed-refresh" title="Refresh" aria-label="Refresh the community feed">↻</button>
+          </div>
+          <p class="status-line" id="feed-status" role="status"></p>
+          <form id="feed-filters" class="deal-form filter-grid" autocomplete="off">
+            <label>Words<input id="f-q" type="text" placeholder="all words must match" /></label>
+            <label>Leave out<input id="f-exclude" type="text" placeholder="comma-separated words" /></label>
+            <label>Min price (R$)<input id="f-min" type="text" inputmode="decimal" /></label>
+            <label>Max price (R$)<input id="f-max" type="text" inputmode="decimal" /></label>
+            <label>Age
+              <select id="f-age"><option value="0">Any</option><option value="24">Last 24 hours</option><option value="72">Last 3 days</option><option value="168">Last 7 days</option></select>
+            </label>
+            <label class="check-pill"><input type="checkbox" id="f-saved" /><span>Saved only</span></label>
+            <label class="check-pill"><input type="checkbox" id="f-hidden" /><span>Show hidden</span></label>
+          </form>
+          <p class="status-line" id="feed-count" role="status"></p>
+          <div id="thread-list" class="thread-list"></div>
+          <p class="status-line">
+            Prices shown on a thread are only what the title or first lines say, and are not checked. Community activity does not
+            mean an offer is genuine or still valid. Only the headline, a short excerpt and a link are shown; open the thread to read
+            it. The feed lists the newest threads only (older pages are not available).
+          </p>
+        </section>
+
+        <section class="market-section" aria-labelledby="items-h">
+          <h3 id="items-h">Products I'm tracking</h3>
+          <p class="status-line">
+            Add a product and record the prices you see. History, trend and alerts use only the prices you enter (there is no
+            automatic price checking, because no store offers a permitted way to do it).
+          </p>
+          <form id="item-form" class="deal-form filter-grid" autocomplete="off">
+            <label>Product<input id="i-title" type="text" required maxlength="160" /></label>
+            <label>Link (optional)<input id="i-url" type="url" placeholder="https://" /></label>
+            <label>Store<input id="i-store" type="text" maxlength="60" /></label>
+            <label>Country<select id="i-country"><option value="BR">Brazil</option><option value="US">United States</option></select></label>
+            <label>Currency<select id="i-currency"><option value="BRL">BRL</option><option value="USD">USD</option></select></label>
+            <label>Condition<select id="i-condition"><option value="new">New</option><option value="used">Used</option><option value="refurbished">Refurbished</option></select></label>
+            <label>First price<input id="i-price" type="text" inputmode="decimal" placeholder="1.299,90" /></label>
+            <button type="submit" class="btn btn-primary">Add product</button>
+          </form>
+          <div id="item-list" class="item-list"></div>
+        </section>
+
+        <section class="market-section" aria-labelledby="coupons-h">
+          <h3 id="coupons-h">Coupons</h3>
+          <p class="status-line">Coupons you find are saved by hand. They stay marked unverified: Calendra cannot tell whether a code still works.</p>
+          <form id="coupon-form" class="deal-form filter-grid" autocomplete="off">
+            <label>Store<input id="c-store" type="text" required maxlength="60" /></label>
+            <label>Code<input id="c-code" type="text" required maxlength="60" /></label>
+            <label>Discount<input id="c-desc" type="text" maxlength="200" placeholder="10% off electronics" /></label>
+            <label>Conditions<input id="c-cond" type="text" maxlength="300" /></label>
+            <label>Minimum purchase (R$)<input id="c-min" type="text" inputmode="decimal" /></label>
+            <label>Expires on<input id="c-exp" type="date" /></label>
+            <label>Store link<input id="c-url" type="url" placeholder="https://" /></label>
+            <button type="submit" class="btn btn-primary">Add coupon</button>
+          </form>
+          <div id="coupon-list" class="item-list"></div>
+        </section>
+
+        <section class="market-section" aria-labelledby="alerts-h">
+          <div class="rates-head">
+            <h3 id="alerts-h">Alerts</h3>
+            <div>
+              <button type="button" class="btn btn-ghost btn-sm" id="notify-enable">Enable browser notifications</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="alerts-clear">Clear</button>
+            </div>
+          </div>
+          <p class="status-line">
+            Alerts appear here when a price you record meets a rule you set. Browser notifications only work while this page is open.
+            Email, push and webhooks are not available: they would need a server and an email service.
+          </p>
+          <ul class="alert-log" id="alert-log"></ul>
+        </section>
+
+        <section class="market-section" aria-labelledby="status-h">
+          <h3 id="status-h">Sources and what they allow</h3>
+          <p class="status-line">Checked on 2026-11-07 with plain requests. Nothing was bypassed, and no source is scraped.</p>
+          <ul class="source-status" id="provider-status"></ul>
+        </section>
       </main>
 
       <footer class="site-footer">
@@ -60,6 +148,6 @@
         <span>Live at <a href="https://lcarlini.github.io/Calendra/" target="_blank" rel="noopener">lcarlini.github.io/Calendra</a></span>
       </footer>
     </div>
-    <script type="module" src="js/deals-page.js"></script>
+    <script type="module" src="js/deals/deals-page.js"></script>
   </body>
 </html>

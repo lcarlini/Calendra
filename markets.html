@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Calendra — Markets." />
+    <meta name="description" content="Calendra — Markets: policy rates, currencies and Brazilian stocks from public APIs." />
     <title>Calendra — Markets</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2716%27 fill=%27%230b1620%27/%3E%3Cpath d=%27M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z%27 fill=%27%23a3e635%27/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="css/styles.css?v=20261107b" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1620'/%3E%3Cpath d='M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z' fill='%23a3e635'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="css/styles.css?v=20261107o" />
     <script>
       try {
         var t = localStorage.getItem("calendra.theme.v1") || "ink";
@@ -39,15 +39,111 @@
         </div>
       </header>
 
-      <main class="module-page" id="main">
+      <main class="module-page wide" id="main">
         <p class="back-home"><a href="index.html">&larr; Back to Home</a></p>
         <h2 class="module-title">Markets</h2>
-        <p class="module-lead">Financial dashboard. Not connected yet: the market strip on the Calendar page is the only live market data in this version.</p>
-        <section class="status-card" aria-labelledby="mk-h">
-  <h3 id="mk-h">Planned coverage</h3>
-  <p class="status-line">US and Brazilian stocks, US ETFs, indices, currencies and policy rates. Each item is shown only once a permitted data provider is wired in.</p>
-  <p class="status-line"><a href="dashboard.html">Open the Calendar page for the current market strip</a></p>
-</section>
+        <p class="module-lead">
+          Data comes from public central-bank and exchange-data APIs that a browser can read. Quotes are delayed, end-of-day
+          values are labelled as such, and anything that cannot be loaded is shown as unavailable instead of estimated.
+        </p>
+
+        <section class="market-section" aria-labelledby="rates-h">
+          <div class="rates-head">
+            <h3 id="rates-h">Policy interest rates</h3>
+            <button type="button" class="btn-icon" id="rates-refresh" title="Refresh rates" aria-label="Refresh policy rates">↻</button>
+          </div>
+          <p class="status-line">
+            Policy targets (Selic, Fed funds range, ECB deposit rate) are set by committees. The effective federal funds rate is a
+            market outcome and is shown separately. Rates change a few times a year, so they are not polled every second.
+          </p>
+          <div id="rates-grid" aria-live="polite"></div>
+        </section>
+
+        <section class="market-section" aria-labelledby="fx-h">
+          <div class="rates-head">
+            <h3 id="fx-h">Currencies</h3>
+            <button type="button" class="btn-icon" id="fx-refresh" title="Refresh currencies" aria-label="Refresh currencies">↻</button>
+          </div>
+          <p class="status-line">Daily closing rates from the Central Bank of Brazil (sell rate). These are end-of-day values, not a live feed.</p>
+          <div id="fx-grid" class="rates-grid" aria-live="polite"></div>
+        </section>
+
+        <section class="market-section" aria-labelledby="br-h">
+          <div class="rates-head">
+            <h3 id="br-h">Brazilian stocks (B3)</h3>
+            <button type="button" class="btn-icon" id="br-refresh" title="Refresh quotes" aria-label="Refresh B3 quotes">↻</button>
+          </div>
+          <p class="status-line">
+            Default list: a curated example of large, well-known B3 tickers. It is not a live ranking by market capitalization or
+            volume and not a recommendation. Edit it freely.
+          </p>
+          <div class="market-toolbar">
+            <form id="br-add" class="inline-form" autocomplete="off">
+              <label for="br-symbol">Add ticker</label>
+              <input id="br-symbol" type="text" placeholder="e.g. BBAS3" maxlength="8" required pattern="[A-Za-z]{4}[0-9]{1,2}[A-Za-z]?" />
+              <button type="submit" class="btn btn-ghost btn-sm">Add</button>
+            </form>
+            <label class="tool-field">
+              <span>History range</span>
+              <select id="br-range" aria-label="History range">
+                <option value="5d">5 days</option>
+                <option value="1mo" selected>1 month</option>
+                <option value="6mo">6 months</option>
+                <option value="1y">1 year</option>
+                <option value="5y">5 years</option>
+              </select>
+            </label>
+            <form id="br-token-form" class="inline-form" autocomplete="off">
+              <label for="br-token">brapi token (optional)</label>
+              <input id="br-token" type="password" placeholder="kept for this session only" autocomplete="off" />
+              <button type="submit" class="btn btn-ghost btn-sm">Use</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="br-token-clear">Clear</button>
+            </form>
+          </div>
+          <p class="status-line" id="br-status" role="status"></p>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="B3 quotes table (scrolls sideways on small screens)">
+            <table class="data-table" id="br-table">
+              <caption class="sr-only">B3 quotes</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Symbol</th>
+                  <th scope="col">Name</th>
+                  <th scope="col" class="num">Price (BRL)</th>
+                  <th scope="col" class="num">Change</th>
+                  <th scope="col">Trend</th>
+                  <th scope="col" class="num" id="br-return-head">Return</th>
+                  <th scope="col">Quote time</th>
+                  <th scope="col">Status</th>
+                  <th scope="col"><span class="sr-only">Remove</span></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p class="status-line">
+            Source: brapi.dev. Quotes are delayed. Trend and return use the provider's adjusted closes (adjusted for splits and
+            dividends); this is an adjusted price return, not a total-return index. The exchange session is not provided, so it is
+            not shown. B3 times are in the exchange timezone (America/Sao_Paulo); the quote time below is shown in your local time.
+            Without a token, only a few tickers are served; the others say so.
+          </p>
+        </section>
+
+        <section class="market-section" aria-labelledby="us-h">
+          <h3 id="us-h">US stocks, ETFs and indices</h3>
+          <div class="status-card" role="status">
+            <p>
+              <strong>Automated quotes unavailable.</strong> The free US market-data sources tested (Yahoo Finance, Stooq) block
+              browser requests or rate-limit them, and no US provider with browser access is configured, so no US prices are shown
+              and none are estimated.
+            </p>
+            <p class="status-line">
+              The lists below are editable examples (not recommendations). Each symbol links to an external search so you can
+              check it yourself. A provider can be added in <code>js/markets/providers.js</code> using the same interface as the
+              B3 provider.
+            </p>
+          </div>
+          <div id="us-lists"></div>
+        </section>
       </main>
 
       <footer class="site-footer">
@@ -55,6 +151,6 @@
         <span>Live at <a href="https://lcarlini.github.io/Calendra/" target="_blank" rel="noopener">lcarlini.github.io/Calendra</a></span>
       </footer>
     </div>
-    
+    <script type="module" src="js/markets/markets-page.js"></script>
   </body>
 </html>

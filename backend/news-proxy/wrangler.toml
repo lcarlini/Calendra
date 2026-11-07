@@ -1,0 +1,10 @@
+# Cloudflare Worker config for the news proxy. Deploy with: npx wrangler deploy
+# (run from backend/news-proxy). Set the allowed origins as a variable or with
+# `npx wrangler secret put ALLOWED_ORIGINS`. No API keys are needed.
+name = "calendra-news-proxy"
+main = "worker.js"
+compatibility_date = "2026-01-01"
+
+[vars]
+# Comma-separated list of exact origins allowed to read the feeds (no trailing slash).
+ALLOWED_ORIGINS = "https://lcarlini.github.io"

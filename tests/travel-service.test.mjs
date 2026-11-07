@@ -167,3 +167,74 @@ test('.ics: empty list still yields a valid calendar', () => {
   assert.ok(ics.includes('BEGIN:VCALENDAR'));
   assert.ok(!ics.includes('BEGIN:VEVENT'));
 });
+
+// --- Labels, summaries, reminders, filtering ----------------------------------
+
+import { describeDate, filterAndSort, nextOpportunity, reminderFor, summaryText, travelLabel } from '../js/calendar/travel-service.js';
+
+test('travelLabel is transparent and based on days versus leave', () => {
+  assert.equal(travelLabel({ days: 4, leaveDates: [] }).label, 'Excellent');
+  assert.equal(travelLabel({ days: 3, leaveDates: [] }).label, 'Great');
+  assert.equal(travelLabel({ days: 5, leaveDates: ['x'] }).label, 'Excellent');
+  assert.equal(travelLabel({ days: 4, leaveDates: ['x'] }).label, 'Good');
+  assert.equal(travelLabel({ days: 3, leaveDates: ['x'] }).label, 'Fair');
+  assert.equal(travelLabel({ days: 6, leaveDates: ['x', 'y'] }).label, 'Good');
+  assert.equal(travelLabel({ days: 5, leaveDates: ['x', 'y'] }).label, 'Fair');
+  const t = travelLabel({ days: 4, leaveDates: ['x'] });
+  assert.equal(t.requiresLeave, true);
+  assert.match(t.reason, /4 days off for 1 leave day/);
+});
+
+test('describeDate uses UTC weekday names (no timezone drift)', () => {
+  assert.equal(describeDate('2027-09-07'), 'Tuesday, 7 September 2027');
+  assert.equal(describeDate('2028-02-29'), 'Tuesday, 29 February 2028');
+});
+
+test('summaryText states dates, leave and the limits of the data', () => {
+  const opp = findTimeOff(2026).find((o) => o.start === '2026-04-18');
+  const text = summaryText(opp);
+  assert.match(text, /Saturday, 18 April 2026 to Tuesday, 21 April 2026/);
+  assert.match(text, /4 consecutive days off/);
+  assert.match(text, /Request leave on: Monday, 20 April 2026/);
+  assert.match(text, /Confirm with your employer/);
+});
+
+test('reminderFor schedules ~2 weeks ahead and never in the past', () => {
+  const opp = findTimeOff(2027).find((o) => o.start === '2027-09-04');
+  assert.equal(reminderFor(opp, '2027-01-01').date, '2027-08-21');
+  assert.equal(reminderFor(opp, '2027-09-01').date, '2027-09-01', 'clamped to today');
+  const bridge = findTimeOff(2026).find((o) => o.start === '2026-04-18');
+  assert.match(reminderFor(bridge, '2026-01-01').title, /Request leave: 2026-04-20/);
+  assert.equal(reminderFor(bridge, '2026-01-01').time, '09:00');
+});
+
+test('nextOpportunity skips finished breaks and is date-ordered', () => {
+  const list = findTimeOff(2026);
+  const next = nextOpportunity(list, '2026-11-07');
+  assert.ok(next.end >= '2026-11-07');
+  assert.ok(list.filter((o) => o.end >= '2026-11-07').every((o) => o.start >= next.start));
+  assert.equal(nextOpportunity(list, '2027-01-01'), null);
+});
+
+test('filterAndSort filters by type and sorts three ways', () => {
+  const list = findTimeOff(2027);
+  const bridges = filterAndSort(list, { type: 'bridge' });
+  assert.ok(bridges.every((o) => o.type === 'bridge'));
+  const byDate = filterAndSort(list, { sort: 'date' });
+  for (let i = 1; i < byDate.length; i += 1) assert.ok(byDate[i - 1].start <= byDate[i].start);
+  const byLeave = filterAndSort(list, { sort: 'leave' });
+  for (let i = 1; i < byLeave.length; i += 1) assert.ok(byLeave[i - 1].leaveDates.length <= byLeave[i].leaveDates.length);
+  assert.equal(filterAndSort(list, { type: 'all' }).length, list.length);
+});
+
+test('country preferences are respected: BR-only and US-only differ, none gives nothing', () => {
+  const br = findTimeOff(2027, { US: false, BR: true, GCM: false, BRREF: false, DAVI: false });
+  const us = findTimeOff(2027, { US: true, BR: false, GCM: false, BRREF: false, DAVI: false });
+  const none = findTimeOff(2027, { US: false, BR: false, GCM: false, BRREF: false, DAVI: false });
+  assert.ok(br.length > 0 && us.length > 0);
+  assert.equal(none.length, 0);
+  // Independence (Tue 7 Sep 2027) needs a Monday bridge when only Brazil's holidays count.
+  const indep = br.find((o) => o.holidays.includes('Independência do Brasil'));
+  assert.deepEqual(indep.leaveDates, ['2027-09-06']);
+  assert.equal(indep.days, 4);
+});

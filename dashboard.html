@@ -9,7 +9,7 @@
     />
     <title>Calendra — Calendar</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1620'/%3E%3Cpath d='M18 14h28v8H18zm0 14h12v22H18zm16 0h12v10H34zm0 14h12v8H34z' fill='%23a3e635'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="css/styles.css?v=20261107b" />
+    <link rel="stylesheet" href="css/styles.css?v=20261107o" />
     <script>
       try {
         var t = localStorage.getItem('calendra.theme.v1') || 'ink';
@@ -40,6 +40,8 @@
           </label>
           <button type="button" class="btn btn-ghost btn-sm" id="edit-layout">Organizar</button>
           <button type="button" class="btn btn-ghost btn-sm" id="reset-layout" title="Reset layout">Reset</button>
+          <button type="button" class="btn btn-ghost btn-sm" data-tv-toggle aria-pressed="false" title="TV mode: larger text, stronger focus, fewer controls">TV</button>
+          <button type="button" class="btn btn-ghost btn-sm" data-fullscreen-toggle title="Toggle fullscreen" aria-label="Toggle fullscreen">Fullscreen</button>
           <nav class="nav-links" aria-label="Principal">
             <a href="index.html">Home</a>
             <a href="dashboard.html" class="active" aria-current="page">Calendar</a>
@@ -51,37 +53,6 @@
           </nav>
         </div>
       </header>
-
-      <section class="hero-strip hero-strip-compact" hidden>
-        <article class="hero-panel">
-          <div class="hero-content">
-            <div>
-              <div class="hero-kicker"><span></span> Ao vivo · atualiza a cada 1 min</div>
-              <h2>Seu dia, no centro</h2>
-              <p class="hero-sub">
-                Relógios, clima, mercados e alertas — compactos, coloridos e no mesmo lugar.
-              </p>
-            </div>
-            <div class="hero-meta">
-              <div class="meta-chip" id="hero-date">—</div>
-              <div class="meta-chip" id="hero-time">—</div>
-              <div class="meta-chip" id="hero-location">Localizando…</div>
-            </div>
-          </div>
-        </article>
-
-        <div class="hero-side">
-          <article class="gadget" style="min-height: auto">
-            <div class="gadget-inner">
-              <div class="gadget-head">
-                <h3 class="gadget-title">Agenda de hoje</h3>
-                <a class="gadget-action" href="calendario.html">Abrir</a>
-              </div>
-              <div class="agenda-list" id="agenda-list"></div>
-            </div>
-          </article>
-        </div>
-      </section>
 
       <section class="gadgets gadgets-columns" id="gadget-grid" aria-label="Dashboard gadgets">
         <article class="gadget g-sm g-tall g-clocks" data-gadget="clocks" data-size="sm">
@@ -260,6 +231,46 @@
         </article>
       </section>
 
+      <section class="hero-strip hero-strip-compact" hidden>
+        <article class="hero-panel">
+          <div class="hero-content">
+            <div>
+              <div class="hero-kicker"><span></span> Ao vivo · atualiza a cada 1 min</div>
+              <h2>Seu dia, no centro</h2>
+              <p class="hero-sub">
+                Relógios, clima, mercados e alertas — compactos, coloridos e no mesmo lugar.
+              </p>
+            </div>
+            <div class="hero-meta">
+              <div class="meta-chip" id="hero-date">—</div>
+              <div class="meta-chip" id="hero-time">—</div>
+              <div class="meta-chip" id="hero-location">Localizando…</div>
+            </div>
+          </div>
+        </article>
+
+        <div class="hero-side">
+          <article class="gadget" style="min-height: auto">
+            <div class="gadget-inner">
+              <div class="gadget-head">
+                <h3 class="gadget-title">Agenda de hoje</h3>
+                <a class="gadget-action" href="calendario.html">Abrir</a>
+              </div>
+              <div class="agenda-list" id="agenda-list"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="rates-strip" aria-labelledby="rates-h">
+        <div class="rates-head">
+          <h3 id="rates-h">Policy interest rates</h3>
+          <button type="button" class="btn-icon" id="rates-refresh" title="Refresh rates" aria-label="Refresh policy rates">↻</button>
+        </div>
+        <p class="status-line">Policy targets and effective rates are shown separately. Values come from central-bank APIs and are not polled every second.</p>
+        <div id="rates-grid" aria-live="polite"></div>
+      </section>
+
       <footer class="site-footer">
         <span>Calendra · crafted for clarity</span>
         <span>
@@ -270,5 +281,6 @@
     </div>
 
     <script type="module" src="js/app.js?v=20260807a"></script>
+    <script type="module" src="js/dashboard-extras.js"></script>
   </body>
 </html>
