@@ -25,7 +25,8 @@ const status = await text('#provider-status');
 c((status.match(/Unavailable/g) || []).length === 13 && /Feed/.test(status), 'source list: 1 integrated feed and 13 sources marked unavailable');
 c(/bot challenge, which this app does not bypass/.test(status) && /Associates account/.test(status) && /HTTP 403/.test(status), 'each unavailable source states its real reason (no workaround suggested)');
 c((await count('#provider-status a[href^="https://"]')) === 14, 'every source keeps a direct link');
-c(/needs the news proxy/i.test(await text('#feed-status')) && (await count('.thread')) === 0, 'no proxy: no threads and a clear explanation');
+await sleep(1500);
+c(!/needs the news proxy/i.test(await text('#feed-status')), 'no proxy: the community feed no longer demands a proxy (loads through rss2json, or shows a real error)');
 
 // 2. Search fallback.
 await setVal('#deal-q', 'ssd 1tb');

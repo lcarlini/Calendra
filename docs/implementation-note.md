@@ -48,19 +48,19 @@ GitHub Pages serves the **`main` branch**, static files only. Anything needing s
 |---|---|
 | **Portal** | `index.html` with five cards (Calendar, Calendário, News, Markets, Deals), shared nav and Home links on every page, theme kept across pages, legacy `calendar.html` redirects (query string kept). |
 | **Calendar dashboard** | Clock-first layout: three clocks per row on wide screens (default Brazil, New York, Amsterdam; saved choices win), compact calendar high on the page with the market cards beside it, weather below, policy-rate strip. Photos fail gracefully. TV mode, fullscreen button, arrow-key focus movement. |
-| **Calendário** | Same holiday/reminder modules as the dashboard; GCM / Brasil / Davi toggles; equal weekday columns at every width; overflow "+N holidays"; `?date=` carry-over; cross-tab refresh. **Travel & Holiday Intelligence**: 2026–2030, long weekends, bridge days, extended breaks, transparent labels, year map, filters/sort, per-break and whole-year `.ics`, copy summary, reminder through the existing alert store. |
-| **News** | 7 integrated RSS sources + Globo.com marked unavailable with a reason; dedupe, conservative clustering, coverage counting (UOL + UOL Economia = 1), explainable ranking, tabs, source/date filters, search with an explicit scope, partial-failure and stale states. Needs the companion proxy. |
+| **Calendário** | Opens on a year view modelled on `UI/Calendar.html` (12 full-size months, D/B/G badges with combo colours, tooltip, jump-to-month, legend, keyboard access). Same holiday/reminder modules as the dashboard; GCM / Brasil / Davi toggles; equal weekday columns at every width; overflow "+N holidays"; `?date=` carry-over; cross-tab refresh. **Travel & Holiday Intelligence**: 2026–2030, long weekends, bridge days, extended breaks, transparent labels, year map, filters/sort, per-break and whole-year `.ics`, copy summary, reminder through the existing alert store. |
+| **News** | Works from static files, no server: each outlet's own RSS feed through rss2json.com (CORS-enabled, 10 items per feed; g1 also Economia/Política/Mundo) plus one GDELT index query set (up to 250 headlines per query, UTF-8, covers Globo.com too). Results appear as each source arrives; a throttled feed does not hide the rest. Dedupe, conservative clustering, coverage counting (UOL + UOL Economia = 1, g1 sections = 1), explainable ranking, tabs, source/date filters, search with an explicit scope, partial-failure and stale states. The optional proxy or an rss2json key gives more items. |
 | **Proxy** | `backend/news-proxy`: allowlist-only (feeds by id, no URL parameter), origin allowlist (default deny), redirect/size/time limits, per-client rate limit, cache, charset decoding. Runs as a Cloudflare Worker or `node server.mjs`. |
 | **AI** | Off / Anthropic (your key) / Ollama (local). Settings, connection test, session-only key by default, consent for cloud, on-demand short / bullet / cluster summaries with provenance, input limits, cache, cancel, actionable errors. |
 | **Markets** | Policy rates (Selic target, Fed target range, EFFR, ECB deposit/MRO/MLF) with type, source, effective date, fetch time, stale labels; BCB end-of-day USD/EUR; editable B3 watchlist with real history, adjusted returns, sparklines. US stocks/ETFs/indices honestly unavailable. |
 | **Deals** | 14-source registry with honest status; Adrenaline Ofertas live via the proxy; filters, saved/hidden threads; your own tracked products with price history, alerts, US-price comparison (inputs only); manual coupons with expiry state; in-app alert log; Google search fallbacks. |
-| **Settings** | Theme, TV mode, AI configuration, export/import (validated, never includes keys), reset actions with confirmation. |
+| **Settings** | Theme (also a quick picker in every page header), accent, density, contrast, motion and text size (modelled on the UI folder's Appearance and Text-size panels), TV mode, AI configuration, export/import (validated, never includes keys), reset actions with confirmation. |
 
 ## 3. Tests run (all passing at the time of writing)
 
 | Suite | Result |
 |---|---|
-| Unit (`node --test tests/*.test.mjs`) | **186 / 186** |
+| Unit (`node --test tests/*.test.mjs`) | **188 / 188** |
 | Layout, 9 viewports × 7 pages + Full HD clocks + phone + TV + Calendário columns | **79 / 79** |
 | Travel section (real browser) | 19 / 19 |
 | Markets (real public APIs) | 25 / 25 |
@@ -86,11 +86,12 @@ broken city photos; TV-mode digits clipped at 4K.
 * **News:** needs the proxy; RSS only exposes the newest items (no archive search); no embeddings; cross-language clustering deliberately off; publisher terms of use were **not** reviewed.
 * **Deals:** only one live source. No automatic price checking, no product matching by GTIN/MPN, no multi-listing comparison view, no "latest eight pages" (the feed has no pages). Hardmob, Pelando, Gatry, Méliuz, Buscapé, Zoom, PCPartPicker, Amazon, Shopee, AliExpress, Mercado Livre, Google Shopping are links only, with reasons.
 * **AI:** Anthropic was tested only against a mock server (no real key was available), and Ollama only against a mock (no local server was running). The default model id `claude-haiku-5-5` was not confirmed against the live API. Prompt-injection resistance is tested **structurally** (data block, sanitising, system rules); model behaviour cannot be unit-tested.
-* **Design:** the Appearance (accent, density, contrast) and Text-size panels in `UI/` were not reproduced; TV mode covers larger text only.
+* **Design:** the Appearance and Text-size panels in `UI/` are reproduced in Settings (accent, density, contrast, motion, text size); the Blue/White/Black theme names are not: the six existing themes are kept.
+* **News without a server depends on two public services** (rss2json.com and gdeltproject.org). Both rate-limit: rss2json throttled several feeds after heavy repeated testing and GDELT asks for one request per 5 seconds. UOL's feeds are ISO-8859-1 and rss2json garbles their accents; garbled copies are replaced by GDELT's UTF-8 copy when it has one, otherwise the headline is kept and the excerpt dropped. The wide, rarely-throttled path is your own proxy or an rss2json key.
 * Tested in Chrome (headless) only; not Firefox or Safari, and not on real TV hardware. Dashboard drag/resize ("Organizar") with the new row layout was not exercised.
 * Cross-device sync does not exist; "synchronization" is same-browser, same-origin only (storage events).
 
 ## 6. Remaining manual setup
-1. To see News and the Deals feed: run `ALLOWED_ORIGINS=https://lcarlini.github.io node backend/news-proxy/server.mjs` (or deploy the Worker) and paste its address on the News page. Chrome asks the user to allow "local network access" before an https page may call a local server (the proxy answers the Private Network Access preflight, but only the user can grant the permission, and a headless browser cannot be asked). Deploy the proxy over https for everyday use.
+1. News and the Deals feed work without any setup. For more headlines (and to avoid third-party rate limits): get a free rss2json key, or run `ALLOWED_ORIGINS=https://lcarlini.github.io node backend/news-proxy/server.mjs` (or deploy the Worker) and paste its address on the News page. Chrome asks the user to allow "local network access" before an https page may call a local server (the proxy answers the Private Network Access preflight, but only the user can grant the permission, and a headless browser cannot be asked). Deploy the proxy over https for everyday use.
 2. For AI summaries: choose a provider in Settings; for Ollama start it with `OLLAMA_ORIGINS` including the site's origin.
 3. Merge to `main` to publish (GitHub Pages serves `main`).

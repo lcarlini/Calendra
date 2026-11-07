@@ -19,11 +19,11 @@ import {
   loadHolidayPrefs,
   saveHolidayPrefs,
 } from './holidays.js';
-import { initTheme, THEMES, applyTheme, getTheme } from './themes.js';
+import { initThemeEverywhere, THEMES, applyTheme, getTheme } from './themes.js';
 import { initTravel } from './calendar/travel-ui.js';
 import { $, toast } from './ui.js';
 
-initTheme();
+initThemeEverywhere();
 
 function dateFromUrl() {
   const raw = new URLSearchParams(location.search).get("date");
@@ -34,7 +34,7 @@ const initialDate = dateFromUrl();
 const initialAnchor = initialDate ? new Date(initialDate + "T12:00:00") : new Date();
 
 const state = {
-  view: localStorage.getItem('calendra.calView.v1') || 'month',
+  view: localStorage.getItem('calendra.calView.v1') || 'year',
   year: initialAnchor.getFullYear(),
   month: initialAnchor.getMonth(),
   anchor: initialAnchor,
@@ -126,6 +126,7 @@ function selectDay(iso) {
 }
 
 function refresh() {
+  document.body.dataset.calView = state.view;
   const title = $('#cal-title');
   if (title) title.textContent = titleText();
 

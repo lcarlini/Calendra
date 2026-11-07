@@ -41,14 +41,14 @@ function art(sourceId, title, { minutesAgo = 30, url, position = 0, language, ca
 // --- sources ------------------------------------------------------------------
 
 test('all eight requested sources are listed; unavailable ones say why', () => {
-  assert.equal(SOURCES.length, 8);
+  assert.equal(SOURCES.length, 11);
   const names = SOURCES.map((s) => s.name).sort();
-  assert.deepEqual(names, ['BBC News Brasil', 'CNN Brasil', 'DutchNews.nl', 'Globo.com', 'O Antagonista', 'UOL', 'UOL Economia', 'g1']);
+  assert.deepEqual(names, ['BBC News Brasil', 'CNN Brasil', 'DutchNews.nl', 'Globo.com', 'O Antagonista', 'UOL', 'UOL Economia', 'g1', 'g1 Economia', 'g1 Mundo', 'g1 Política']);
   for (const s of SOURCES) {
     assert.ok(s.homepage.startsWith('https://'), `${s.id} keeps a direct publisher link`);
     if (!s.feed) assert.ok(s.unavailableReason, `${s.id} explains why it is unavailable`);
   }
-  assert.equal(integratedSources().length, 7);
+  assert.equal(integratedSources().length, 10);
   assert.equal(sourceById('globo').feed, null);
 });
 

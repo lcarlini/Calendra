@@ -2,7 +2,7 @@
  * Deals page. Every number is either typed by the user or comes from a labelled source.
  * The community feed is the only live data; everything else is local to this browser.
  */
-import { initTheme } from '../themes.js';
+import { initThemeEverywhere } from '../themes.js';
 import { initDisplay } from '../core/display.js';
 import { cacheGet, cacheSet } from '../core/cache.js';
 import { copyText, esc, formatMoney, formatPercent, timeAgo } from '../core/format.js';
@@ -32,7 +32,7 @@ import {
   saveDeals,
 } from './model.js';
 
-initTheme();
+initThemeEverywhere();
 initDisplay();
 
 const $ = (id) => document.getElementById(id);
@@ -165,18 +165,6 @@ function renderFeed() {
 async function loadFeed() {
   const proxyUrl = loadNewsPrefs().proxyUrl;
   const cached = cacheGet(THREADS_CACHE, { maxAgeMs: 6 * 3600000 });
-  if (!proxyUrl) {
-    if (cached) {
-      threads = cached.value.threads;
-      feed = { state: 'needs-proxy', message: '', fetchedAt: cached.fetchedAt, stale: true };
-    } else {
-      threads = [];
-      feed = { state: 'needs-proxy', message: '', fetchedAt: '', stale: false };
-    }
-    renderFeed();
-    renderResults();
-    return;
-  }
   feed = { ...feed, state: 'loading' };
   renderFeed();
   try {

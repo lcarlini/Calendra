@@ -70,7 +70,7 @@ export function pickNextFocus(rects, currentIndex, direction) {
   return best;
 }
 
-const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]):not(#theme-quick), [tabindex]:not([tabindex="-1"])';
 const ARROWS = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' };
 
 function installDirectionalFocus(doc) {

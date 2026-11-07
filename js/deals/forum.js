@@ -4,7 +4,8 @@
  */
 import { getAllTags, getTag, parseFeedDate, stripHtml } from '../news/rss.js';
 import { hashId, normalizeTitle } from '../news/normalize.js';
-import { fetchText } from '../core/http.js';
+import { fetchText, fetchJson } from '../core/http.js';
+import { DEAL_FEEDS } from './feeds.js';
 
 const EXCERPT_MAX = 200;
 
@@ -98,9 +99,34 @@ export function filterThreads(threads, { q = '', exclude = [], minPrice = null, 
   });
 }
 
+const cdata = (t) => '<![CDATA[' + String(t ?? '').replace(/]]>/g, ']]]]><![CDATA[>') + ']]>';
+
+/** rss2json items rebuilt as minimal RSS so the same parser (and the same rules) apply. */
+export function rss2jsonToXml(data) {
+  const items = (data?.items || [])
+    .map((i) => {
+      const when = i.pubDate ? new Date(String(i.pubDate).replace(' ', 'T') + 'Z') : null;
+      return '<item><title>' + cdata(i.title) + '</title><link>' + cdata(i.link) + '</link><description>' + cdata(i.description || i.content) +
+        '</description>' + (when && !Number.isNaN(+when) ? '<pubDate>' + when.toUTCString() + '</pubDate>' : '') +
+        (i.author ? '<dc:creator>' + cdata(i.author) + '</dc:creator>' : '') +
+        (i.categories || []).map((c) => '<category>' + cdata(c) + '</category>').join('') + '</item>';
+    })
+    .join('');
+  return '<rss><channel>' + items + '</channel></rss>';
+}
+
 export async function loadForumThreads({ proxyUrl, sourceId = 'adrenaline-ofertas', limit = 40, fetchOpts = {}, now = Date.now() } = {}) {
-  if (!proxyUrl) throw new Error('The proxy address is not set');
-  const xml = await fetchText(`${proxyUrl}/feed?source=${encodeURIComponent(sourceId)}&limit=${limit}`, { retries: 1, timeoutMs: 15000, ...fetchOpts });
+  let xml;
+  if (proxyUrl) {
+    xml = await fetchText(`${proxyUrl}/feed?source=${encodeURIComponent(sourceId)}&limit=${limit}`, { retries: 1, timeoutMs: 15000, ...fetchOpts });
+  } else {
+    // No server: the public feed converter rss2json.com answers browsers (10 newest threads on its free tier).
+    const feed = DEAL_FEEDS.find((d) => d.id === sourceId);
+    if (!feed) throw new Error('Unknown deal feed');
+    const data = await fetchJson(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.feed)}`, { retries: 1, timeoutMs: 20000, ...fetchOpts });
+    if (data?.status !== 'ok') throw new Error(data?.message || 'The feed converter returned no items');
+    xml = rss2jsonToXml(data);
+  }
   const threads = dedupeThreads(parseThreads(xml, { sourceId, now }));
   if (!threads.length) throw new Error('The feed had no readable threads');
   return threads;

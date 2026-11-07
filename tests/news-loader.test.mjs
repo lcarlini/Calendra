@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
 import { createCircuitBreaker } from '../js/core/http.js';
-import { dateCutoff, defaultNewsPrefs, feedUrl, loadNews, loadNewsPrefs, normalizeProxyUrl, saveNewsPrefs, searchArticles } from '../js/news/loader.js';
+import { dateCutoff, defaultNewsPrefs, feedUrl, loadNews, loadNewsPrefs, normalizeProxyUrl, saveNewsPrefs, searchArticles, fetchGdelt, parseGdeltDate, repairGarbled } from '../js/news/loader.js';
 import { buildStories } from '../js/news/cluster.js';
 
 function memoryStorage() {
@@ -55,7 +55,7 @@ test('every source reports a status: ok, unavailable (with reason), disabled', a
   const storage = memoryStorage();
   const res = await loadNews({ proxyUrl: PROXY, disabled: ['dutchnews'], now: NOW, storage, ...opts(async (url) => okXml(feed(new URL(url).searchParams.get('source')))) });
   const byId = Object.fromEntries(res.statuses.map((s) => [s.id, s]));
-  assert.equal(res.statuses.length, 8);
+  assert.equal(res.statuses.length, 11);
   assert.equal(byId.g1.state, 'ok');
   assert.equal(byId.g1.count, 3);
   assert.equal(byId.globo.state, 'unavailable');
@@ -92,17 +92,17 @@ test('a failed refresh falls back to saved articles and marks them stale', async
   assert.ok(res.articles.length > 0 && res.articles.every((a) => a.stale === true));
 });
 
-test('without a proxy nothing is fetched: sources need the proxy, or show saved articles as stale', async () => {
-  const storage = memoryStorage();
-  const noFetch = async () => assert.fail('must not fetch without a proxy');
-  const res = await loadNews({ proxyUrl: '', now: NOW, storage, ...opts(noFetch) });
-  assert.equal(res.articles.length, 0);
-  assert.ok(res.statuses.filter((s) => s.state === 'needs-proxy').length >= 6);
-
-  await loadNews({ proxyUrl: PROXY, now: NOW, storage, ...opts(async (url) => okXml(feed(new URL(url).searchParams.get('source')))) });
-  const again = await loadNews({ proxyUrl: '', now: NOW, storage, ...opts(noFetch) });
-  assert.ok(again.articles.length > 0 && again.articles.every((a) => a.stale));
-  assert.equal(again.statuses.find((s) => s.id === 'g1').state, 'stale');
+test('without a proxy the serverless transport (rss2json) is used and mapped to articles', async () => {
+  const urls = [];
+  const fakeJson = async (url) => {
+    urls.push(url);
+    return { ok: true, status: 200, headers: new Headers(), json: async () => ({ status: 'ok', items: [{ title: 'Headline ' + urls.length, link: 'https://x.test/a' + urls.length, pubDate: '2026-11-07 12:00:00', description: 'Excerpt text here that is long enough', categories: ['Mundo'] }] }), text: async () => '' };
+  };
+  const res = await loadNews({ proxyUrl: '', now: NOW, storage: memoryStorage(), fetchOpts: { ...opts(fakeJson).fetchOpts, staggerMs: 0, gdelt: false } });
+  assert.ok(urls.every((u) => u.startsWith('https://api.rss2json.com/v1/api.json?rss_url=')));
+  assert.ok(res.articles.length >= 8);
+  assert.ok(res.statuses.filter((s) => s.state === 'ok').length >= 8);
+  assert.equal(res.statuses.filter((s) => s.state === 'needs-proxy').length, 0);
 });
 
 test('an empty or unreadable feed is an error, not an empty success', async () => {
@@ -143,4 +143,43 @@ test('date filter cutoffs', () => {
   assert.equal(dateCutoff('24h', now), '2026-11-06T15:00:00.000Z');
   assert.equal(dateCutoff('7d', now), '2026-10-31T15:00:00.000Z');
   assert.equal(dateCutoff('any', now), '');
+});
+
+test('GDELT index: dates parse, domains map to our sources, foreign domains are dropped', async () => {
+  assert.equal(parseGdeltDate('20261107T142200Z'), '2026-11-07T14:22:00Z');
+  assert.equal(parseGdeltDate('nope'), '');
+  const rows = await fetchGdelt({
+    now: NOW.getTime(),
+    fetchOpts: {
+      retries: 0,
+      gdeltGapMs: 0,
+      breaker: createCircuitBreaker({ threshold: 99 }),
+      fetchImpl: async (url) => {
+        assert.ok(url.startsWith('https://api.gdeltproject.org/api/v2/doc/doc?'));
+        assert.ok(decodeURIComponent(url).includes('domain:'));
+        return { ok: true, json: async () => ({ articles: [
+          { url: 'https://g1.globo.com/a', title: 'Manchete g1', seendate: '20261107T120000Z', domain: 'g1.globo.com' },
+          { url: 'https://economia.uol.com.br/b', title: 'Manchete UOL Economia', seendate: '20261107T110000Z', domain: 'economia.uol.com.br' },
+          { url: 'https://www.bbc.com/portuguese/articles/x', title: 'BBC pt', seendate: '20261107T100000Z', domain: 'bbc.com' },
+          { url: 'https://www.bbc.com/news/world-1', title: 'BBC English', seendate: '20261107T100000Z', domain: 'bbc.com' },
+          { url: 'https://other.example/z', title: 'Other', seendate: '20261107T100000Z', domain: 'other.example' },
+        ] }) };
+      },
+    },
+  });
+  assert.deepEqual(rows.map((r) => r.sourceId), ['g1', 'uol-economia', 'bbc-pt']);
+  assert.equal(rows[0].item.publishedAt, '2026-11-07T12:00:00.000Z');
+});
+
+test('garbled (non UTF-8) feed copies are replaced by the index copy, or lose their excerpt', () => {
+  const list = [
+    { id: 'a', title: 'Morre m?sico famoso', excerpt: 'x' },
+    { id: 'a', title: 'Morre músico famoso', excerpt: '', viaIndex: true },
+    { id: 'b', title: 'Sem alternativa ap?s tudo', excerpt: 'resumo ?til aqui' },
+    { id: 'c', title: 'Normal title? Yes', excerpt: 'ok' },
+  ];
+  repairGarbled(list);
+  assert.deepEqual(list.map((x) => x.title), ['Morre músico famoso', 'Sem alternativa ap?s tudo', 'Normal title? Yes']);
+  assert.equal(list[1].excerpt, '');
+  assert.equal(list[2].excerpt, 'ok');
 });

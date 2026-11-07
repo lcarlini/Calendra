@@ -4316,3 +4316,89 @@ html[data-tv='on'] .module-page {
 html[data-tv='on'] .clock-media {
   display: none;
 }
+
+/* ---- Calendário year view: modelled on UI/Calendar.html (full-size months, letter badges, combo colours) ---- */
+.ref-controls { display: flex; flex-wrap: wrap; gap: 0.6rem 1rem; align-items: center; padding: 0.7rem 0.9rem; margin-bottom: 0.9rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-soft); }
+.ref-jump { display: inline-flex; gap: 0.5rem; align-items: center; color: var(--muted); font-size: 0.85rem; }
+.ref-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 0.95rem; flex-basis: 100%; color: var(--ink-soft); font-size: 0.8rem; }
+.ref-legend .tag { display: inline-flex; align-items: center; gap: 0.4rem; }
+.ref-legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; box-shadow: 0 0 0 3px color-mix(in oklab, var(--ink) 8%, transparent); }
+.ref-calendar { --davi: #58c46a; --gcm: #4aa3ff; --brasil: #ff9a3d; --us: #94a3b8; --dg: #7b7cff; --db: #ffd166; --gb: #ff5ea8; --dgb: #b06cff;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.85rem; }
+.ref-controls { --davi: #58c46a; --gcm: #4aa3ff; --brasil: #ff9a3d; --us: #94a3b8; --dg: #7b7cff; --db: #ffd166; --gb: #ff5ea8; --dgb: #b06cff; }
+.dot.davi { background: var(--davi); } .dot.gcm { background: var(--gcm); } .dot.brasil { background: var(--brasil); } .dot.us { background: var(--us); }
+.dot.dg { background: var(--dg); } .dot.db { background: var(--db); } .dot.gb { background: var(--gb); } .dot.dgb { background: var(--dgb); }
+.ref-month { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--surface-soft); min-width: 0; }
+.ref-month-header { display: flex; justify-content: space-between; align-items: baseline; padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--line); }
+.ref-month-header .year-month-btn { font-weight: 700; font-size: 1rem; background: none; border: 0; color: var(--ink); padding: 0; cursor: pointer; }
+.ref-year { color: var(--muted); font-size: 0.75rem; }
+.ref-dow, .ref-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.ref-dow div { padding: 0.4rem 0.2rem; text-align: center; color: var(--muted); font-size: 0.72rem; border-bottom: 1px solid var(--line); background: color-mix(in oklab, var(--ink) 4%, transparent); }
+.ref-dow div.weekend { color: var(--ink); background: color-mix(in oklab, var(--ink) 9%, transparent); }
+.ref-grid .cell { position: relative; min-height: 78px; padding: 0.3rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-width: 0; cursor: pointer; }
+.ref-grid .cell:nth-child(7n) { border-right: 0; }
+.ref-grid .cell.stripe { background: color-mix(in oklab, var(--ink) 2.5%, transparent); }
+.ref-grid .cell.weekend { background: color-mix(in oklab, var(--ink) 6%, transparent); }
+.ref-grid .cell.outside { cursor: default; background: none; }
+.ref-grid .cell.outside .daynum { opacity: 0.2; }
+.ref-grid .cell:not(.outside):hover, .ref-grid .cell:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.ref-grid .cell.has-holiday { box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--ink) 8%, transparent); }
+.ref-grid .cell.today { box-shadow: inset 0 0 0 2px var(--accent); }
+.ref-grid .cell.today .daynum { background: var(--accent); color: #fff; border-radius: 999px; padding: 0 0.35rem; }
+.ref-grid .cell.has-event::after { content: ''; position: absolute; right: 6px; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-rose); }
+.ref-grid .daynum { font-size: 0.75rem; color: var(--ink); position: absolute; top: 5px; left: 6px; }
+.ref-grid .markers { position: absolute; left: 4px; right: 4px; top: 26px; display: flex; flex-wrap: wrap; gap: 3px; }
+.ref-grid .badge { width: 20px; height: 20px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: var(--ink); border: 1px solid var(--line); }
+.ref-grid .badge-more { font-size: 0.7rem; color: var(--muted); align-self: center; }
+.ref-grid .badge.gcm { background: color-mix(in oklab, var(--gcm) 30%, transparent); border-color: var(--gcm); }
+.ref-grid .badge.brasil { background: color-mix(in oklab, var(--brasil) 30%, transparent); border-color: var(--brasil); }
+.ref-grid .badge.davi { background: color-mix(in oklab, var(--davi) 30%, transparent); border-color: var(--davi); }
+.ref-grid .badge.us { background: color-mix(in oklab, var(--us) 30%, transparent); border-color: var(--us); }
+.ref-grid .badge.dg { background: color-mix(in oklab, var(--dg) 32%, transparent); border-color: var(--dg); }
+.ref-grid .badge.db { background: color-mix(in oklab, var(--db) 40%, transparent); border-color: var(--db); }
+.ref-grid .badge.gb { background: color-mix(in oklab, var(--gb) 32%, transparent); border-color: var(--gb); }
+.ref-grid .badge.dgb { background: color-mix(in oklab, var(--dgb) 32%, transparent); border-color: var(--dgb); }
+.cal-tip { position: fixed; z-index: 9999; pointer-events: none; background: var(--deep, #0a0f24); color: #e8ecff; border: 1px solid rgba(255, 255, 255, 0.14); padding: 0.5rem 0.65rem; border-radius: 10px; font-size: 0.78rem; max-width: 340px; box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45); opacity: 0; transform: translateY(6px); transition: opacity 0.12s ease, transform 0.12s ease; }
+.cal-tip.show { opacity: 1; transform: none; }
+.cal-tip .line { margin: 2px 0; }
+.cal-tip .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 0.7rem; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.08); margin: 4px 0; }
+@media (max-width: 1100px) { .ref-calendar { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 680px) { .ref-calendar { grid-template-columns: minmax(0, 1fr); } .ref-grid .cell { min-height: 64px; } }
+@media (prefers-reduced-motion: reduce) { .cal-tip { transition: none; } }
+
+/* Year view takes the full width (like UI/Calendar.html); the day panel and calendar toggles move below it. */
+body[data-cal-view='year'] .cal-main { grid-column: 1 / -1; }
+body[data-cal-view='year'] .cal-layout .g-md { grid-column: span 6; }
+.ref-grid .cell { min-height: 100px; }
+.ref-grid .markers { display: grid; grid-template-columns: repeat(2, 20px); grid-auto-rows: 20px; gap: 4px 6px; justify-content: start; }
+@media (max-width: 680px) { .ref-grid .cell { min-height: 84px; } body[data-cal-view='year'] .cal-layout .g-md { grid-column: 1 / -1; } }
+
+/* Theme: native form controls follow the selected theme everywhere (was only styled in some scopes). */
+html[data-mode='dark'] { color-scheme: dark; }
+html[data-mode='light'] { color-scheme: light; }
+select, textarea, input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='color']) {
+  background-color: var(--surface-solid);
+  color: var(--ink);
+  border-color: var(--line);
+}
+select option { background: var(--surface-solid); color: var(--ink); }
+input::placeholder, textarea::placeholder { color: var(--muted); opacity: 1; }
+
+/* Quick theme picker injected in every header, plus appearance options (accent, density, contrast, motion). */
+.theme-quick { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.6rem 0.3rem 0.9rem; border: 1px solid var(--line); border-radius: 999px; background: var(--nav-bg); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.theme-quick select { min-height: 34px; border-radius: 999px; border: 1px solid var(--line); padding: 0 0.6rem; font: inherit; letter-spacing: 0; text-transform: none; }
+html[data-density='compact'] .gadget-inner, html[data-density='compact'] .status-card { padding: 0.7rem; }
+html[data-density='compact'] { --radius: 16px; --radius-sm: 10px; }
+html[data-contrast='more'] { --line: color-mix(in oklab, var(--ink) 38%, transparent); --muted: var(--ink-soft); }
+html[data-contrast='more'] :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+html[data-motion='off'] *, html[data-motion='off'] *::before, html[data-motion='off'] *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+.appearance-group { display: grid; gap: 0.35rem; margin: 0.9rem 0; }
+.appearance-group > span { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 700; }
+.seg { display: flex; flex-wrap: wrap; gap: 0.3rem; padding: 0.3rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-soft); }
+.seg button { flex: 1 1 auto; min-height: 40px; padding: 0.3rem 0.9rem; border-radius: 10px; border: 1px solid transparent; background: transparent; color: var(--ink); font: inherit; font-weight: 600; cursor: pointer; }
+.seg button[aria-pressed='true'] { background: var(--surface-solid); border-color: var(--line); box-shadow: var(--shadow-sm); outline: 2px solid var(--accent); outline-offset: -2px; }
+.seg .swatch { width: 22px; height: 22px; border-radius: 50%; display: inline-block; vertical-align: middle; border: 1px solid var(--line); }
+.text-size-readout { text-align: center; font-family: var(--font-display); font-size: 2rem; }
+
+/* City photos were unrelated stock images (and some broke): clocks are typographic now. */
+.clock-media { display: none !important; }

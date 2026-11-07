@@ -40,17 +40,19 @@ const count = (sel) => b.ev(`document.querySelectorAll(${JSON.stringify(sel)}).l
 const setStore = (key, value) => b.ev(`localStorage.setItem(${JSON.stringify(key)}, ${JSON.stringify(JSON.stringify(value))})`);
 const IGNORE = ['ERR_CONNECTION_REFUSED', 'Failed to load resource'];
 
-// 1. No proxy: honest empty state, no sample headlines.
+// 1. No proxy: the page still works with no server (rss2json + GDELT, public CORS-enabled services).
 await b.visit(`${base}/news.html`, { width: 1366, height: 900, wait: 800 });
 await b.ev(`localStorage.clear(); sessionStorage.clear()`);
 await b.visit(`${base}/news.html`, { width: 1366, height: 900, wait: 1500 });
-c(/Live feeds need the news proxy/.test(await text('#news-setup')), 'no proxy: setup instructions are shown');
-c(/No live headlines yet/.test(await text('#news-list')) && (await count('.story-card')) === 0, 'no proxy: no headlines, and none are invented');
+c(/rss2json/.test(await text('#news-setup')) && /No server of yours is needed/.test(await text('#news-setup')), 'no proxy: the page explains the serverless sources');
 const noProxyStatus = await text('#news-source-status');
-c(/Needs proxy/.test(noProxyStatus) && /Unavailable/.test(noProxyStatus) && /does not publish an RSS feed/.test(noProxyStatus), 'no proxy: sources show "Needs proxy"; Globo shows why it is unavailable');
-c((await count('#news-source-status a[href^="https://"]')) === 8, 'every source keeps a direct publisher link');
-if (shotDir) await b.shot(path.join(shotDir, 'news-no-proxy-1366.png'));
-
+c(!/Needs proxy/.test(noProxyStatus) && /Unavailable/.test(noProxyStatus) && /does not publish an RSS feed/.test(noProxyStatus), 'no proxy: nothing says "needs proxy"; Globo shows why its own feed is unavailable');
+c((await count('#news-source-status a[href^="https://"]')) >= 11, 'every source keeps a direct publisher link');
+await sleep(25000);
+const serverless = await count('.story-card');
+console.log('  info: serverless stories after 25s:', serverless);
+c(serverless > 0, 'no proxy: headlines load with no server (rss2json / GDELT)');
+c((await count('#news-list img')) === 0, 'no proxy: no images rendered');
 // 2. Invalid proxy address is rejected, valid one loads real feeds.
 await b.ev(`document.getElementById('proxy-url').value = 'javascript:alert(1)'; document.getElementById('proxy-form').requestSubmit()`);
 await sleep(300);
@@ -60,7 +62,7 @@ await sleep(14000);
 
 const statusText = await text('#news-source-status');
 const live = (statusText.match(/Live/g) || []).length;
-c(live >= 5, `at least 5 of 7 real feeds loaded live (${live})`);
+c(live >= 5, `at least 5 real feeds loaded live (${live})`);
 c(/Unavailable/.test(statusText), 'Globo.com is still marked unavailable');
 const storyCount = await count('.story-card');
 c(storyCount >= 10, `stories are rendered from real headlines (${storyCount})`);

@@ -1,4 +1,4 @@
-import { THEMES, applyTheme, getTheme, initTheme } from './themes.js';
+import { ACCENTS, TEXT_SIZES, THEMES, applyTheme, getTheme, initThemeEverywhere, loadAppearance, saveAppearance } from './themes.js';
 import { initDisplay } from './core/display.js';
 import { HOLIDAY_CATEGORY_DEFAULTS } from './holidays.js';
 import { KEY_PREFIX, exportSettings, importSettings, validateImport, writeJSON } from './core/store.js';
@@ -6,7 +6,7 @@ import { downloadText, esc } from './core/format.js';
 import { PROVIDERS, clearAi, effectiveModel, getApiKey, hasPersistedKey, loadAiSettings, normalizeSettings, saveAiSettings, setApiKey } from './ai/settings.js';
 import { AiError, testConnection } from './ai/providers.js';
 
-initTheme();
+initThemeEverywhere();
 initDisplay();
 
 const $ = (id) => document.getElementById(id);
@@ -16,6 +16,33 @@ const select = $('theme-select');
 select.innerHTML = THEMES.map((t) => `<option value="${t.id}">${t.label}</option>`).join('');
 select.value = getTheme();
 select.addEventListener('change', () => applyTheme(select.value));
+
+// --- Appearance: accent, density, contrast, motion, text size (as in the UI folder) -------------
+const appearanceHost = $('appearance-controls');
+function seg(label, id, options, current, render) {
+  const buttons = options
+    .map((o) => `<button type="button" data-ap="${id}" data-value="${o.value}" aria-pressed="${String(o.value) === String(current)}">${render(o)}</button>`)
+    .join('');
+  return `<div class="appearance-group"><span id="ap-${id}">${label}</span><div class="seg" role="group" aria-labelledby="ap-${id}">${buttons}</div></div>`;
+}
+function paintAppearance() {
+  const a = loadAppearance();
+  const sizes = TEXT_SIZES.map((n) => `<button type="button" data-ap="textSize" data-value="${n}" aria-pressed="${n === a.textSize}">${n}%</button>`).join('');
+  appearanceHost.innerHTML =
+    seg('Accent', 'accent', ACCENTS.map((x) => ({ value: x.id, label: x.label, color: x.color })), a.accent, (o) =>
+      o.color ? `<span class="swatch" style="background:${o.color}" aria-hidden="true"></span> ${o.label}` : o.label) +
+    seg('Density', 'density', [{ value: 'comfortable', label: 'Comfortable' }, { value: 'compact', label: 'Compact' }], a.density, (o) => o.label) +
+    seg('Contrast', 'contrast', [{ value: 'standard', label: 'Standard' }, { value: 'more', label: 'More' }], a.contrast, (o) => o.label) +
+    seg('Motion', 'motion', [{ value: 'on', label: 'On' }, { value: 'off', label: 'Off' }], a.motion, (o) => o.label) +
+    `<div class="appearance-group"><span id="ap-size">Text size</span><div class="text-size-readout" aria-live="polite">${a.textSize}%</div><div class="seg" role="group" aria-labelledby="ap-size">${sizes}</div></div>`;
+}
+appearanceHost.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-ap]');
+  if (!b) return;
+  saveAppearance({ [b.dataset.ap]: b.dataset.ap === 'textSize' ? Number(b.dataset.value) : b.dataset.value });
+  paintAppearance();
+});
+paintAppearance();
 
 // --- AI ---------------------------------------------------------------------------
 const providerSelect = $('ai-provider');

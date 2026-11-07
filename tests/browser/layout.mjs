@@ -12,7 +12,7 @@ const b = await launch();
 const sizes = [[320, 568], [360, 640], [390, 844], [768, 1024], [1024, 768], [1366, 768], [1920, 1080], [2560, 1440], [3840, 2160]];
 const pages = ['index.html', 'dashboard.html', 'calendario.html', 'news.html', 'markets.html', 'deals.html', 'settings.html'];
 // Known and handled: the UOL quotes endpoint is blocked by CORS on some origins and the app falls back.
-const IGNORE = ['cotacoes.uol.com', 'ERR_FAILED', 'status of 429'];
+const IGNORE = ['cotacoes.uol.com', 'ERR_FAILED', 'status of 429', 'api.gdeltproject.org', 'api.rss2json.com'];
 
 for (const [w, h] of process.env.QUICK ? [] : sizes) {
   for (const p of pages) {
@@ -49,11 +49,18 @@ const phone = JSON.parse(await b.ev(`JSON.stringify([...document.querySelectorAl
 c(new Set(phone).size === 3, `Phone: clocks stacked (tops ${phone})`);
 if (shotDir) await b.shot(path.join(shotDir, 'dashboard-390.png'));
 
-// Calendário weekday columns equal at every size.
+// Calendário weekday columns equal at every size (month view, then the year view modelled on UI/Calendar.html).
+await b.ev("localStorage.setItem('calendra.calView.v1','month')");
 for (const [w, h] of [[390, 844], [768, 1024], [1366, 768], [1920, 1080]]) {
   await b.visit(`${base}/calendario.html?date=2026-09-07`, { width: w, height: h, wait: 2500 });
   const widths = JSON.parse(await b.ev(`JSON.stringify([...document.querySelectorAll('.full-cal-days > .full-day')].slice(0,7).map(c => Math.round(c.getBoundingClientRect().width)))`));
   c(widths.length === 7 && Math.max(...widths) - Math.min(...widths) <= 1, `Calendário @${w}: seven equal columns ${widths}`);
+}
+await b.ev("localStorage.setItem('calendra.calView.v1','year')");
+for (const [w, h] of [[390, 844], [768, 1024], [1366, 768], [1920, 1080]]) {
+  await b.visit(`${base}/calendario.html`, { width: w, height: h, wait: 2500 });
+  const r = JSON.parse(await b.ev(`JSON.stringify({ months: document.querySelectorAll('.ref-month').length, widths: [...document.querySelector('.ref-grid').children].slice(0,7).map(c => Math.round(c.getBoundingClientRect().width)), over: document.documentElement.scrollWidth - document.documentElement.clientWidth })`));
+  c(r.months === 12 && Math.max(...r.widths) - Math.min(...r.widths) <= 1 && r.widths[0] >= 30 && r.over <= 0, `Calendário year view @${w}: 12 months, seven equal columns ${r.widths}, overflow ${r.over}`);
 }
 
 // TV mode.

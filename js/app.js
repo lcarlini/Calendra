@@ -45,11 +45,11 @@ import {
   digitsFor,
   mountInteractiveChart,
 } from './markets.js';
-import { initTheme, THEMES, applyTheme, getTheme } from './themes.js';
+import { initThemeEverywhere, THEMES, applyTheme, getTheme } from './themes.js';
 import { initLayoutEditor } from './layout.js';
 import { $, toast, openModal } from './ui.js';
 
-initTheme();
+initThemeEverywhere();
 
 const ACCENT_BY_TICKER = {
   usd: '#38bdf8',

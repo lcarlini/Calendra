@@ -71,6 +71,33 @@ export const SOURCES = [
     feed: 'https://g1.globo.com/rss/g1/',
   },
   {
+    id: 'g1-economia',
+    name: 'g1 Economia',
+    group: 'Globo',
+    language: 'pt',
+    tags: ['brazil', 'economy'],
+    homepage: 'https://g1.globo.com/economia/',
+    feed: 'https://g1.globo.com/rss/g1/economia/',
+  },
+  {
+    id: 'g1-politica',
+    name: 'g1 Política',
+    group: 'Globo',
+    language: 'pt',
+    tags: ['brazil'],
+    homepage: 'https://g1.globo.com/politica/',
+    feed: 'https://g1.globo.com/rss/g1/politica/',
+  },
+  {
+    id: 'g1-mundo',
+    name: 'g1 Mundo',
+    group: 'Globo',
+    language: 'pt',
+    tags: ['world'],
+    homepage: 'https://g1.globo.com/mundo/',
+    feed: 'https://g1.globo.com/rss/g1/mundo/',
+  },
+  {
     id: 'bbc-pt',
     name: 'BBC News Brasil',
     group: 'BBC',
@@ -101,3 +128,27 @@ export const TABS = [
 
 export const sourceById = (id) => SOURCES.find((s) => s.id === id) || null;
 export const integratedSources = () => SOURCES.filter((s) => s.feed);
+
+/**
+ * GDELT (https://www.gdeltproject.org) is an open, CORS-enabled index of published articles. One query for all
+ * outlets returns up to 250 recent headlines (title, link, date), with no server of ours. It is headline-only.
+ */
+export const GDELT_QUERIES = [
+  '(domain:g1.globo.com OR domain:uol.com.br OR domain:economia.uol.com.br)',
+  '(domain:oantagonista.com.br OR domain:dutchnews.nl OR domain:cnnbrasil.com.br OR (domain:bbc.com sourcelang:portuguese))',
+  'domain:globo.com',
+];
+
+/** Which integrated source a GDELT result belongs to, from its domain and URL. null when it is none of ours. */
+export function sourceForGdelt(domain, url = '') {
+  const d = String(domain || '').toLowerCase().replace(/^www\./, '');
+  if (d === 'g1.globo.com') return 'g1';
+  if (d === 'economia.uol.com.br') return 'uol-economia';
+  if (d.endsWith('uol.com.br')) return 'uol';
+  if (d === 'oantagonista.com.br') return 'oantagonista';
+  if (d === 'dutchnews.nl') return 'dutchnews';
+  if (d === 'cnnbrasil.com.br') return 'cnn-brasil';
+  if (d.endsWith('bbc.com') || d.endsWith('bbc.co.uk')) return /\/portuguese\b/.test(url) ? 'bbc-pt' : null;
+  if (d.endsWith('globo.com')) return 'globo';
+  return null;
+}

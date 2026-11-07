@@ -188,52 +188,172 @@ export function renderMonthView(container, year, month, today = new Date(), onDa
   bindDayClicks(container, onDayClick);
 }
 
+/* ---- Year view, modelled on UI/Calendar.html: 12 full-size months, letter badges, combo colours, tooltip ---- */
+const GROUPS = {
+  davi: { key: 'Davi', letter: 'D', order: 0 },
+  brasil: { key: 'Brasil', letter: 'B', order: 1 },
+  gcm: { key: 'GCM', letter: 'G', order: 2 },
+  us: { key: 'US', letter: 'U', order: 3 },
+};
+const COMBOS = { 'Davi+GCM': 'dg', 'Davi+Brasil': 'db', 'GCM+Brasil': 'gb', 'Davi+GCM+Brasil': 'dgb' };
+const MONTHS_PT_CAP = MESES_PT.map((m) => m.charAt(0).toUpperCase() + m.slice(1));
+const WEEKDAYS_PT_SHORT = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
+function groupOf(h) {
+  if (h.category === 'gcm') return GROUPS.gcm;
+  if (h.category === 'davi') return GROUPS.davi;
+  if (h.category === 'brasil-ref' || h.country !== 'US') return GROUPS.brasil;
+  return GROUPS.us;
+}
+
+/** Holidays of one day collapsed to one entry per (group, name): the UI calendar's three categories plus US. */
+function groupedDay(list, weekday) {
+  const seen = new Set();
+  const out = [];
+  for (const h of list) {
+    const g = groupOf(h);
+    if (g.key === 'Davi' && (weekday === 0 || weekday === 6)) continue; // the source says: no Davi events on weekends
+    const key = `${g.key}|${h.name.toLowerCase()}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push({ g, name: h.name });
+  }
+  return out.sort((x, y) => x.g.order - y.g.order);
+}
+
+function ensureTipLayer() {
+  let tip = document.getElementById('cal-tip');
+  if (!tip) {
+    tip = document.createElement('div');
+    tip.id = 'cal-tip';
+    tip.className = 'cal-tip';
+    tip.setAttribute('role', 'tooltip');
+    document.body.appendChild(tip);
+  }
+  return tip;
+}
+
+function placeTip(tip, html, x, y) {
+  tip.innerHTML = html;
+  tip.style.left = '0px';
+  tip.style.top = '0px';
+  tip.classList.add('show');
+  const r = tip.getBoundingClientRect();
+  const m = 12;
+  let px = x + 12;
+  let py = y + 12;
+  if (px + r.width + m > window.innerWidth) px = window.innerWidth - r.width - m;
+  if (py + r.height + m > window.innerHeight) py = window.innerHeight - r.height - m;
+  tip.style.left = `${Math.max(m, px)}px`;
+  tip.style.top = `${Math.max(m, py)}px`;
+}
+
+const prettyPt = (iso) =>
+  new Date(`${iso}T12:00:00`).toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
 export function renderYearView(container, year, today = new Date(), onDayClick, onMonthClick) {
   if (!container) return;
   const prefs = loadHolidayPrefs();
   const holidayMap = holidayMapForYears([year], prefs);
 
   const months = MONTHS.map((_, month) => {
-    const cells = buildMonthMatrix(year, month).filter((c) => !c.other);
-    const days = buildMonthMatrix(year, month)
-      .map((cell) => {
-        const { events, holidays } = dayMarks(cell.iso, holidayMap);
+    const cells = buildMonthMatrix(year, month);
+    const days = cells
+      .map((cell, index) => {
+        const weekday = cell.date.getDay();
+        const events = cell.other ? [] : remindersForDate(cell.iso);
+        const entries = cell.other ? [] : groupedDay(holidayMap.get(cell.iso) || [], weekday);
+        const involved = new Set(entries.map((e) => e.g.key));
+        const combo = involved.size > 1 ? COMBOS[['Davi', 'GCM', 'Brasil'].filter((k) => involved.has(k)).join('+')] || '' : '';
         const classes = [
-          'year-day',
-          cell.other ? 'other' : '',
-          sameDay(cell.date, today) ? 'today' : '',
+          'cell',
+          cell.other ? 'outside' : '',
+          weekday === 0 || weekday === 6 ? 'weekend' : '',
+          Math.floor(index / 7) % 2 ? 'stripe' : '',
+          sameDay(cell.date, today) && !cell.other ? 'today' : '',
+          entries.length ? 'has-holiday' : '',
           events.length ? 'has-event' : '',
-          holidays.length ? 'has-holiday' : '',
-        ]
-          .filter(Boolean)
-          .join(' ');
-        return `<button type="button" class="${classes}" data-date="${cell.iso}">${cell.other ? '' : cell.day}</button>`;
+        ].filter(Boolean).join(' ');
+        const badges = entries.slice(0, 4).map((e) => `<span class="badge ${combo || e.g.key.toLowerCase()}" aria-hidden="true">${e.g.letter}</span>`).join('');
+        const more = entries.length > 4 ? `<span class="badge-more">+${entries.length - 4}</span>` : '';
+        const label = entries.map((e) => `${e.g.key}: ${e.name}`).join('; ');
+        const attrs = cell.other
+          ? ' aria-hidden="true"'
+          : ` data-date="${cell.iso}" tabindex="0" role="button" aria-label="${escapeHtml(prettyPt(cell.iso))}${label ? ` — ${escapeHtml(label)}` : ''}"`;
+        return `<div class="${classes}"${attrs}><span class="daynum">${cell.day}</span><div class="markers">${badges}${more}</div></div>`;
       })
       .join('');
-
-    const holidayCount = cells.filter((c) => (holidayMap.get(c.iso) || []).length).length;
-
+    const count = cells.filter((c) => !c.other && groupedDay(holidayMap.get(c.iso) || [], c.date.getDay()).length).length;
     return `
-      <article class="year-month" data-month="${month}">
-        <header class="year-month-head">
-          <button type="button" class="year-month-btn" data-month="${month}">${MONTHS[month]}</button>
-          <span class="year-month-meta">${holidayCount ? `${holidayCount} holidays` : ''}</span>
-        </header>
-        <div class="year-weekdays">${WEEKDAYS.map((d) => `<span>${d[0]}</span>`).join('')}</div>
-        <div class="year-days">${days}</div>
-      </article>
-    `;
+      <section class="ref-month" id="ref-m${month + 1}" data-month="${month}">
+        <div class="ref-month-header">
+          <button type="button" class="year-month-btn" data-month="${month}">${MONTHS_PT_CAP[month]}</button>
+          <span class="ref-year">${year}${count ? ` · ${count} dias` : ''}</span>
+        </div>
+        <div class="ref-dow">${WEEKDAYS_PT_SHORT.map((d, i) => `<div class="${i === 0 || i === 6 ? 'weekend' : ''}">${d}</div>`).join('')}</div>
+        <div class="ref-grid">${days}</div>
+      </section>`;
   }).join('');
 
-  container.innerHTML = `<div class="year-grid">${months}</div>`;
+  container.innerHTML = `
+    <div class="ref-controls">
+      <label class="ref-jump">Ir para <select id="ref-jump" aria-label="Ir para o mês">${MONTHS_PT_CAP.map((m, i) => `<option value="${i + 1}">${i + 1} - ${m}</option>`).join('')}</select></label>
+      <button type="button" class="btn btn-ghost btn-sm" id="ref-today">Mês atual</button>
+      <div class="ref-legend" aria-label="Legenda">
+        <span class="tag"><span class="dot davi"></span>Davi</span>
+        <span class="tag"><span class="dot gcm"></span>GCM</span>
+        <span class="tag"><span class="dot brasil"></span>Brasil</span>
+        <span class="tag"><span class="dot us"></span>EUA</span>
+        <span class="tag"><span class="dot dg"></span>Davi + GCM</span>
+        <span class="tag"><span class="dot db"></span>Davi + Brasil</span>
+        <span class="tag"><span class="dot gb"></span>GCM + Brasil</span>
+        <span class="tag"><span class="dot dgb"></span>Davi + GCM + Brasil</span>
+      </div>
+    </div>
+    <div class="ref-calendar">${months}</div>`;
 
-  container.querySelectorAll('.year-day[data-date]').forEach((el) => {
-    if (el.classList.contains('other')) return;
-    el.addEventListener('click', () => onDayClick?.(el.dataset.date));
+  const tip = ensureTipLayer();
+  const hide = () => tip.classList.remove('show');
+  const tipHtml = (cell) => {
+    const iso = cell.dataset.date;
+    const list = groupedDay(holidayMap.get(iso) || [], new Date(`${iso}T12:00:00`).getDay());
+    const events = remindersForDate(iso);
+    if (!list.length && !events.length) return '';
+    const involved = new Set(list.map((e) => e.g.key));
+    const pill = involved.size > 1 ? `<div class="pill">${['Davi', 'GCM', 'Brasil'].filter((k) => involved.has(k)).join(' + ')}</div>` : '';
+    return `<div><strong>${escapeHtml(prettyPt(iso))}</strong></div>${pill}${list.map((e) => `<div class="line"><b>${e.g.key}:</b> ${escapeHtml(e.name)}</div>`).join('')}${events.map((e) => `<div class="line"><b>Lembrete:</b> ${escapeHtml(e.title)}</div>`).join('')}`;
+  };
+  container.querySelectorAll('.cell[data-date]').forEach((cell) => {
+    const html = tipHtml(cell);
+    const open = () => { hide(); onDayClick?.(cell.dataset.date); };
+    cell.addEventListener('click', open);
+    cell.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+    });
+    if (!html) return;
+    cell.addEventListener('mouseenter', (e) => placeTip(tip, html, e.clientX, e.clientY));
+    cell.addEventListener('mousemove', (e) => { if (tip.classList.contains('show')) placeTip(tip, html, e.clientX, e.clientY); });
+    cell.addEventListener('mouseleave', hide);
+    cell.addEventListener('focus', () => { const r = cell.getBoundingClientRect(); placeTip(tip, html, r.left + 10, r.top + 10); });
+    cell.addEventListener('blur', hide);
   });
   container.querySelectorAll('.year-month-btn').forEach((el) => {
     el.addEventListener('click', () => onMonthClick?.(Number(el.dataset.month)));
   });
+  const jump = container.querySelector('#ref-jump');
+  const goto = (m) => {
+    jump.value = String(m);
+    container.querySelector(`#ref-m${m}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  const nowMonth = today.getFullYear() === year ? today.getMonth() + 1 : 1;
+  jump.value = String(nowMonth);
+  jump.addEventListener('change', () => goto(jump.value));
+  container.querySelector('#ref-today').addEventListener('click', () => goto(nowMonth));
+  if (!window.__calTipBound) {
+    window.__calTipBound = true;
+    window.addEventListener('scroll', () => document.getElementById('cal-tip')?.classList.remove('show'), { passive: true });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.getElementById('cal-tip')?.classList.remove('show'); });
+  }
 }
 
 export function renderWeekView(container, anchorDate, today = new Date(), onDayClick) {

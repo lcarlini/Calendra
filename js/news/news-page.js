@@ -2,7 +2,7 @@
  * News page: loads feeds through the proxy, groups articles into stories, and offers on-demand
  * AI summaries with visible provenance. All text from publishers is escaped before display.
  */
-import { initTheme } from '../themes.js';
+import { initThemeEverywhere } from '../themes.js';
 import { initDisplay } from '../core/display.js';
 import { esc, timeAgo } from '../core/format.js';
 import { onStoreChange } from '../core/store.js';
@@ -13,7 +13,7 @@ import { prepareInputs, sendsToCloud, summarize } from '../ai/providers.js';
 import { getApiKey, loadAiSettings, AI_KEY } from '../ai/settings.js';
 import { describeError, summaryHtml } from '../ai/summary-ui.js';
 
-initTheme();
+initThemeEverywhere();
 initDisplay();
 
 const $ = (id) => document.getElementById(id);
@@ -28,24 +28,22 @@ let activeSummary = null; // { controller }
 function setupHtml() {
   const hasProxy = Boolean(prefs.proxyUrl);
   return `
-    <h3 id="setup-h">${hasProxy ? 'News proxy' : 'Live feeds need the news proxy'}</h3>
+    <h3 id="setup-h">Where the headlines come from</h3>
     <p class="status-line">
-      The publishers' RSS feeds cannot be read directly by a web page (they send no CORS headers), so Calendra uses a small
-      companion proxy that only fetches these feeds, never arbitrary addresses. ${hasProxy ? '' : 'Until one is configured, no live headlines are shown.'}
+      Calendra runs entirely in your browser, so it reads each outlet's own public RSS feed through <strong>rss2json.com</strong>, a public feed converter that
+      browsers are allowed to call. The free tier returns the newest 10 items per feed, which is why several feeds per outlet are loaded. No server of yours is needed.
     </p>
-    <form id="proxy-form" class="inline-form" autocomplete="off">
-      <label for="proxy-url">Proxy address</label>
-      <input id="proxy-url" type="url" inputmode="url" placeholder="http://127.0.0.1:8791" value="${esc(prefs.proxyUrl)}" />
-      <button type="submit" class="btn btn-primary btn-sm">Save</button>
-      ${hasProxy ? '<button type="button" class="btn btn-ghost btn-sm" id="proxy-clear">Remove</button>' : ''}
-    </form>
-    <details class="how-details"${hasProxy ? '' : ' open'}>
-      <summary>How to run the proxy</summary>
-      <ol>
-        <li>On your own computer: <code>ALLOWED_ORIGINS=https://lcarlini.github.io node backend/news-proxy/server.mjs</code> then use <code>http://127.0.0.1:8791</code>. Chrome asks you to allow “local network access” before an https page (like this site) may call a server on your own computer. If you decline, or your browser does not offer it, use option 2 and deploy the proxy over https.</li>
-        <li>Or deploy <code>backend/news-proxy</code> as a Cloudflare Worker (<code>npx wrangler deploy</code>) and paste its https address here.</li>
-        <li>Set <code>ALLOWED_ORIGINS</code> to the exact site address that will read it. The proxy refuses every other origin.</li>
-      </ol>
+    <details class="how-details">
+      <summary>Optional: get more headlines</summary>
+      <form id="proxy-form" class="inline-form" autocomplete="off">
+        <label for="rss-key">rss2json API key</label>
+        <input id="rss-key" type="text" autocomplete="off" spellcheck="false" placeholder="free key from rss2json.com (50 items per feed)" value="${esc(prefs.rss2jsonKey)}" />
+        <label for="proxy-url">or your own proxy</label>
+        <input id="proxy-url" type="url" inputmode="url" placeholder="http://127.0.0.1:8791" value="${esc(prefs.proxyUrl)}" />
+        <button type="submit" class="btn btn-primary btn-sm">Save</button>
+        ${hasProxy ? '<button type="button" class="btn btn-ghost btn-sm" id="proxy-clear">Remove proxy</button>' : ''}
+      </form>
+      <p class="status-line">A key is stored in this browser only. A proxy (<code>backend/news-proxy</code>) takes priority over rss2json when set.</p>
     </details>`;
 }
 
@@ -126,9 +124,12 @@ function latestRow(a) {
 }
 
 function renderStatus() {
-  $('news-source-status').innerHTML = (data.statuses.length ? data.statuses : SOURCES.map((s) => ({ id: s.id, name: s.name, homepage: s.homepage, state: s.feed ? 'needs-proxy' : 'unavailable', message: s.unavailableReason || 'Needs the news proxy' })))
+  const have = new Map(data.statuses.map((x) => [x.id, x]));
+  const rows = SOURCES.map((x) => have.get(x.id) || { id: x.id, name: x.name, homepage: x.homepage, state: x.feed ? 'loading' : 'unavailable', message: x.unavailableReason || 'Loading' });
+  rows.push(...data.statuses.filter((x) => !SOURCES.some((y) => y.id === x.id)));
+  $('news-source-status').innerHTML = rows
     .map((s) => {
-      const label = { ok: 'Live', stale: 'Saved copy', error: 'Error', unavailable: 'Unavailable', disabled: 'Off', 'needs-proxy': 'Needs proxy' }[s.state];
+      const label = { ok: 'Live', stale: 'Saved copy', error: 'Error', unavailable: 'Unavailable', disabled: 'Off', 'needs-proxy': 'Needs proxy', loading: 'Loading' }[s.state];
       const cls = s.state === 'ok' ? 'badge-ok' : s.state === 'error' || s.state === 'stale' ? 'badge-warn' : 'badge-muted';
       const detail = s.state === 'ok' ? `${s.count} items · fetched ${timeAgo(s.fetchedAt)}` : s.message || '';
       return `<li><span class="badge ${cls}">${esc(label)}</span> <strong>${esc(s.name)}</strong> <span class="muted">${esc(detail)}</span> <a href="${esc(s.homepage)}" target="_blank" rel="noopener noreferrer">Open publisher</a></li>`;
@@ -151,9 +152,7 @@ function render() {
     return;
   }
   if (!data.articles.length) {
-    container.innerHTML = prefs.proxyUrl
-      ? '<div class="status-card" role="status"><p><strong>No headlines could be loaded.</strong> Check that the proxy is running and allows this site, then refresh. The source list below shows what failed.</p></div>'
-      : '<div class="status-card" role="status"><p><strong>No live headlines yet.</strong> Add the news proxy address above to load them. Nothing is shown in the meantime, and no sample headlines are used.</p></div>';
+    container.innerHTML = '<div class="status-card" role="status"><p><strong>No headlines could be loaded.</strong> The feed converter (rss2json.com) or your connection may be unavailable, or it is rate-limiting. Press Refresh in a minute; the source list below shows what failed. No sample headlines are used.</p></div>';
     $('news-summary-line').textContent = '';
     return;
   }
@@ -178,17 +177,32 @@ function render() {
   }
 }
 
-async function refresh() {
-  if (loading) return;
+let loadId = 0;
+/** A newer request (e.g. after changing the proxy or key) supersedes one still running; a plain refresh does not stack. */
+async function refresh({ force = false } = {}) {
+  if (loading && !force) return;
+  const id = ++loadId;
   loading = true;
   $('news-refresh').disabled = true;
   render();
   try {
-    data = await loadNews({ proxyUrl: prefs.proxyUrl, disabled: prefs.disabledSources });
+    const result = await loadNews({
+      proxyUrl: prefs.proxyUrl,
+      rss2jsonKey: prefs.rss2jsonKey,
+      disabled: prefs.disabledSources,
+      onUpdate: (partial) => {
+        if (id !== loadId) return;
+        data = partial;
+        render();
+      },
+    });
+    if (id === loadId) data = result;
   } finally {
-    loading = false;
-    $('news-refresh').disabled = false;
-    render();
+    if (id === loadId) {
+      loading = false;
+      $('news-refresh').disabled = false;
+      render();
+    }
   }
 }
 
@@ -250,7 +264,7 @@ document.addEventListener('click', (event) => {
     prefs = { ...prefs, proxyUrl: '' };
     saveNewsPrefs(prefs);
     renderSetup();
-    refresh();
+    refresh({ force: true });
   }
 });
 
@@ -264,10 +278,10 @@ document.addEventListener('submit', (event) => {
       $('proxy-url').setCustomValidity('');
       return;
     }
-    prefs = { ...prefs, proxyUrl: url };
+    prefs = { ...prefs, proxyUrl: url, rss2jsonKey: $('rss-key').value.trim() };
     saveNewsPrefs(prefs);
     renderSetup();
-    refresh();
+    refresh({ force: true });
   }
   if (event.target.id === 'news-search-form') {
     event.preventDefault();
@@ -305,5 +319,5 @@ renderSetup();
 render();
 refresh();
 setInterval(() => {
-  if (!document.hidden && prefs.proxyUrl) refresh();
+  if (!document.hidden) refresh();
 }, REFRESH_MS);

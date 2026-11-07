@@ -11,10 +11,10 @@ travel planning, a news reader, markets, and a price-and-deals tracker. No build
 |------|------|--------------|
 | Home (portal, GitHub Pages) | [index.html](https://lcarlini.github.io/Calendra/index.html) | Five launch cards. The root URL opens the same page. |
 | Calendar | [dashboard.html](https://lcarlini.github.io/Calendra/dashboard.html) | Three world clocks per row, compact calendar, markets, weather, policy-rate strip, TV mode |
-| Calendário | [calendario.html](https://lcarlini.github.io/Calendra/calendario.html) | Year/month/week/day, US + Brazil + GCM/Brasil/Davi calendars, **Travel & Holiday Intelligence** (2026–2030, `.ics` export) |
-| News | [news.html](https://lcarlini.github.io/Calendra/news.html) | Stories grouped across outlets, explainable ranking, optional AI summaries. **Needs the news proxy** |
+| Calendário | [calendario.html](https://lcarlini.github.io/Calendra/calendario.html) | Opens on the year view modelled on `UI/Calendar.html` (12 full months, D/B/G badges, combo colours, tooltips), plus month/week/day, US + Brazil + GCM/Brasil/Davi calendars, **Travel & Holiday Intelligence** (2026–2030, `.ics` export) |
+| News | [news.html](https://lcarlini.github.io/Calendra/news.html) | Stories grouped across outlets, explainable ranking, optional AI summaries. Loads with no server |
 | Markets | [markets.html](https://lcarlini.github.io/Calendra/markets.html) | Policy rates, currencies, B3 watchlist. US assets are shown as unavailable |
-| Deals | [deals.html](https://lcarlini.github.io/Calendra/deals.html) | Community deals feed (needs the proxy), your own price tracking, coupons, US price comparison |
+| Deals | [deals.html](https://lcarlini.github.io/Calendra/deals.html) | Community deals feed, your own price tracking, coupons, US price comparison |
 | Settings | [settings.html](https://lcarlini.github.io/Calendra/settings.html) | Theme, TV mode, AI provider, export/import/reset |
 
 Legacy: `calendar.html` redirects to `calendario.html` and keeps the query string (for example `?date=2026-09-07`).
@@ -22,23 +22,17 @@ Legacy: `calendar.html` redirects to `calendario.html` and keeps the query strin
 Status of every integration, what is not done, and the test results are in [docs/implementation-note.md](docs/implementation-note.md).
 Screenshots (small phone, Full HD, TV/4K) are in [docs/screenshots](docs/screenshots).
 
-## What needs a companion service
+## Everything runs from static files (no server)
 
-GitHub Pages serves static files only. The publishers' RSS feeds send no CORS headers, so a browser cannot read them directly. The small
-proxy in `backend/news-proxy` fetches **only** the feeds listed in `js/news/sources.js` and `js/deals/feeds.js` (chosen by id, never by URL),
-answers only the origins you list, and limits size, time and request rate.
+Open the site and every page works from HTML, CSS and JavaScript alone. **News** and the **Deals** community feed read the publishers' own public RSS
+feeds through [rss2json.com](https://rss2json.com), a public feed converter that browsers may call (the publishers' feeds send no CORS headers, so a page
+cannot read them directly). Its free tier returns the newest 10 items per feed, so News loads several feeds per outlet (g1 has Economia, Política and Mundo too).
+It is rate limited: if a feed is throttled, that source shows its status and the others still load; saved copies are shown as stale.
 
-```bash
-# on your computer (binds to 127.0.0.1 only)
-ALLOWED_ORIGINS=http://localhost:8080,https://lcarlini.github.io node backend/news-proxy/server.mjs
-# then paste http://127.0.0.1:8791 on the News page
-```
-
-Browser note: Chrome asks you to allow "local network access" before an **https** page (this site) may call a server on your own computer; the proxy answers the
-required preflight, but the permission is yours to grant. If it is declined or unavailable, deploy the proxy over https (the Cloudflare Worker below).
-
-Or deploy `backend/news-proxy` as a Cloudflare Worker (`npx wrangler deploy`, edit `ALLOWED_ORIGINS` in `wrangler.toml`).
-See `.env.example` (placeholders only). Without a proxy, Calendar, Calendário, Markets and Settings work fully; News and the Deals feed show a clear setup state and no invented headlines.
+Optional ways to get more headlines (News page, "Optional: get more headlines"):
+* a free rss2json API key (up to 50 items per feed), kept in this browser only;
+* or your own proxy: `ALLOWED_ORIGINS=https://lcarlini.github.io node backend/news-proxy/server.mjs` (or deploy it as a Cloudflare Worker with `npx wrangler deploy`).
+  A proxy, when configured, takes priority. See `.env.example` (placeholders only).
 
 ## AI summaries (optional, off by default)
 
@@ -54,7 +48,7 @@ Everything is stored in this browser (`localStorage`, keys start with `calendra.
 ## Tests
 
 ```bash
-node --test tests/*.test.mjs                      # 186 unit tests, no dependencies (Node 18+)
+node --test tests/*.test.mjs                      # 188 unit tests, no dependencies (Node 18+)
 
 # Real-browser tests need Chrome (set CHROME_PATH if it is not in the default Windows location)
 python -m http.server 8770 &

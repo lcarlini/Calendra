@@ -136,9 +136,12 @@ test('filterThreads: keywords, exclusions, price range, age, hidden and saved', 
   assert.equal(ids(filterThreads(list, {})).length, 3);
 });
 
-test('loadForumThreads needs a proxy, surfaces failures and parses a good feed', async () => {
-  await assert.rejects(loadForumThreads({ proxyUrl: '' }), /proxy address is not set/);
+test('loadForumThreads (proxy or rss2json), surfaces failures and parses a good feed', async () => {
   const base = { retries: 0, sleep: async () => {}, breaker: createCircuitBreaker({ threshold: 99 }) };
+  const viaJson = await loadForumThreads({ proxyUrl: '', now: NOW, fetchOpts: { ...base, fetchImpl: async (url) => { assert.ok(url.startsWith('https://api.rss2json.com/')); return { ok: true, json: async () => ({ status: 'ok', items: [{ title: 'Fone R$ 99,90 na loja', link: 'https://f.test/t/1', pubDate: '2026-11-07 12:00:00', description: 'x' }] }) }; } } });
+  assert.equal(viaJson.length, 1);
+  assert.equal(viaJson[0].price, 99.9);
+  await assert.rejects(loadForumThreads({ proxyUrl: '', fetchOpts: { ...base, fetchImpl: async () => ({ ok: true, json: async () => ({ status: 'error', message: 'throttled' }) }) } }), /throttled/);
   const ok = await loadForumThreads({ proxyUrl: 'http://p.test', now: NOW, fetchOpts: { ...base, fetchImpl: async (url) => { assert.ok(url.includes('source=adrenaline-ofertas')); return { ok: true, text: async () => FEED }; } } });
   assert.equal(ok.length, 3);
   await assert.rejects(loadForumThreads({ proxyUrl: 'http://p.test', fetchOpts: { ...base, fetchImpl: async () => ({ ok: false, status: 502, headers: { get: () => null } }) } }), /HTTP 502/);

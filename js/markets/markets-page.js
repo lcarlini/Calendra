@@ -2,7 +2,7 @@
  * Markets page. Policy rates share rates-ui.js with the dashboard strip; quotes come
  * from the provider layer in providers.js. Nothing here fills gaps with invented values.
  */
-import { initTheme } from '../themes.js';
+import { initThemeEverywhere } from '../themes.js';
 import { initDisplay } from '../core/display.js';
 import { onStoreChange, readJSON, writeJSON } from '../core/store.js';
 import { esc, formatMoney, formatPercent, formatWhen } from '../core/format.js';
@@ -10,7 +10,7 @@ import { mountRates } from './rates-ui.js';
 import { BRAPI_KEYLESS, createBrapiProvider, fetchFxRates, periodReturn, splitByAvailability } from './providers.js';
 import { sparklineSvg } from './chart.js';
 
-initTheme();
+initThemeEverywhere();
 initDisplay();
 
 export const WATCH_KEY = 'calendra.watchlists.v1';
