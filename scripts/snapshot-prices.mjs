@@ -157,6 +157,7 @@ async function main() {
     for (const [id, s] of Object.entries(sources)) {
       if (s.ok || !before) continue;
       const seenAt = before.sources?.[id]?.seenAt || previous.updatedAt;
+      if (!seenAt || now - new Date(seenAt) > 7 * 864e5) continue; // older than a week: drop rather than mislead
       const keep = (list) => (list || []).filter((x) => x.source === id).map((x) => ({ ...x, seenAt: x.seenAt || seenAt }));
       const old = [...keep(before.offers), ...keep(before.community)];
       if (!old.length) continue;
