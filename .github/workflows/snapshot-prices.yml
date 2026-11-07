@@ -1,0 +1,39 @@
+# Price snapshot for the Deals page: reads the watchlist products on Buscapé, Zoom and the deal communities
+# (only robots.txt-allowed pages, one request per host every 1.5 s) and commits data/prices/*.json.
+name: Snapshot prices
+
+on:
+  schedule:
+    - cron: '41 */3 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/snapshot-prices.yml', 'scripts/snapshot-prices.mjs', 'js/deals/price-parsers.js', 'data/prices/watchlist.json']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: calendra-data
+  cancel-in-progress: false
+
+jobs:
+  prices:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Read prices
+        run: node scripts/snapshot-prices.mjs
+      - name: Commit the snapshot
+        run: |
+          git config user.name 'calendra-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/prices/
+          git diff --cached --quiet && exit 0
+          git commit -m "Price snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+          git pull --rebase --autostash
+          git push

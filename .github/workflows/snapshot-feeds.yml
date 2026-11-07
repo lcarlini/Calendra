@@ -14,7 +14,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: snapshot-feeds
+  group: calendra-data
   cancel-in-progress: false
 
 jobs:

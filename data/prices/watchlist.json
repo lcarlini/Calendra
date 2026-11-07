@@ -1,0 +1,199 @@
+{
+  "note": "Products the price snapshot checks. Edit this file to add products. 'page' (or a 'pages' list) is a Buscapé path (the same path is read on Zoom); it must be a product or category page, never a search page (robots.txt disallows those). 'term' is the Pelando and Gatry search term. 'match' decides which community deals count. Category pages are filtered with 'match'.",
+  "items": [
+    {
+      "id": "ps5",
+      "name": "PlayStation 5",
+      "category": "console",
+      "page": "/console-de-video-game/console-playstation-5-sony",
+      "term": "playstation 5",
+      "match": {
+        "any": [
+          "ps5",
+          "playstation 5",
+          "playstation5"
+        ],
+        "not": [
+          "controle",
+          "dualsense",
+          "jogo",
+          "game",
+          "suporte",
+          "capa",
+          "headset",
+          "fone",
+          "pulse",
+          "cabo",
+          "base",
+          "skin",
+          "volante",
+          "camera",
+          "portal",
+          "pack de jogos"
+        ]
+      }
+    },
+    {
+      "id": "ssd-1tb",
+      "name": "SSD 1TB NVMe",
+      "category": "storage",
+      "term": "ssd 1tb",
+      "match": {
+        "all": [
+          "ssd"
+        ],
+        "any": [
+          "1tb",
+          "1 tb",
+          "1000gb"
+        ],
+        "not": [
+          "notebook",
+          "pc gamer",
+          "computador",
+          "case",
+          "gaveta"
+        ]
+      },
+      "pages": [
+        "/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
+        "/hd/ssd"
+      ]
+    },
+    {
+      "id": "rtx-5070",
+      "name": "GeForce RTX 5070",
+      "category": "gpu",
+      "term": "rtx 5070",
+      "match": {
+        "any": [
+          "rtx 5070",
+          "rtx5070"
+        ],
+        "not": [
+          "ti",
+          "notebook",
+          "pc gamer",
+          "computador",
+          "pc completo"
+        ]
+      },
+      "pages": [
+        "/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
+        "/placa-de-video"
+      ]
+    },
+    {
+      "id": "tv-55",
+      "name": "Smart TV 55\"",
+      "category": "tv",
+      "page": "/tv/tamanho-55-polegadas",
+      "term": "tv 55",
+      "match": {
+        "all": [
+          "tv"
+        ],
+        "any": [
+          "55"
+        ],
+        "not": [
+          "suporte",
+          "controle",
+          "65",
+          "50",
+          "43"
+        ]
+      }
+    },
+    {
+      "id": "galaxy-s26",
+      "name": "Galaxy S26 256GB",
+      "category": "phone",
+      "page": "/celular/celular-samsung-galaxy-s26-5g-256gb",
+      "term": "galaxy s26",
+      "match": {
+        "any": [
+          "galaxy s26",
+          "s26"
+        ],
+        "not": [
+          "ultra",
+          "plus",
+          "s26+",
+          "capa",
+          "pelicula",
+          "case",
+          "carregador"
+        ]
+      }
+    },
+    {
+      "id": "switch-2",
+      "name": "Nintendo Switch 2",
+      "category": "console",
+      "page": "/console-de-video-game/console-switch-2-com-joy-con-nintendo",
+      "term": "switch 2",
+      "match": {
+        "any": [
+          "switch 2",
+          "switch2"
+        ],
+        "not": [
+          "jogo",
+          "game",
+          "capa",
+          "case",
+          "pelicula",
+          "controle",
+          "cartao",
+          "joy con",
+          "suporte",
+          "amiibo"
+        ]
+      }
+    },
+    {
+      "id": "iphone-17",
+      "name": "iPhone 17 256GB",
+      "category": "phone",
+      "page": "/celular/celular-apple-iphone-17-256gb",
+      "term": "iphone 17",
+      "match": {
+        "any": [
+          "iphone 17"
+        ],
+        "not": [
+          "pro",
+          "max",
+          "air",
+          "capa",
+          "case",
+          "pelicula",
+          "carregador",
+          "cabo"
+        ]
+      }
+    },
+    {
+      "id": "xbox-series-x",
+      "name": "Xbox Series X",
+      "category": "console",
+      "page": "/console-de-video-game/console-xbox-series-x-microsoft",
+      "term": "xbox series x",
+      "match": {
+        "any": [
+          "xbox series x"
+        ],
+        "not": [
+          "jogo",
+          "game pass",
+          "controle",
+          "headset",
+          "suporte",
+          "capa",
+          "cabo"
+        ]
+      }
+    }
+  ]
+}
