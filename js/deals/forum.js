@@ -121,9 +121,11 @@ export function rss2jsonToXml(data) {
  * challenge page or time out), and rss2json is the only serverless route. It throttles bursts from one address
  * ("converting new feeds in a very short period", HTTP 429), so a 429 is retried patiently, and an optional free
  * rss2json key removes the limit. The page keeps the last good copy for 24 hours.
+ * First choice, when `snapshotBase` is given: the copy a scheduled GitHub Action saves into the site (data/), read
+ * from the same origin.
  * @returns {Promise<{ threads: object[], via: string }>}
  */
-export async function loadForumThreadsDetailed({ proxyUrl, sourceId = 'adrenaline-ofertas', limit = 40, rss2jsonKey = '', fetchOpts = {}, now = Date.now() } = {}) {
+export async function loadForumThreadsDetailed({ proxyUrl, sourceId = 'adrenaline-ofertas', limit = 40, rss2jsonKey = '', snapshotBase = '', fetchOpts = {}, now = Date.now() } = {}) {
   const parse = (xml) => {
     const threads = dedupeThreads(parseThreads(xml, { sourceId, now }));
     if (!threads.length) throw new Error('The feed had no readable threads');
@@ -135,11 +137,45 @@ export async function loadForumThreadsDetailed({ proxyUrl, sourceId = 'adrenalin
   }
   const feed = DEAL_FEEDS.find((d) => d.id === sourceId);
   if (!feed) throw new Error('Unknown deal feed');
-  const key = rss2jsonKey ? `&api_key=${encodeURIComponent(rss2jsonKey)}&count=${limit}` : '';
-  const data = await fetchJson(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.feed)}${key}`, { retries: rss2jsonKey ? 1 : 3, backoffMs: 5000, timeoutMs: 20000, ...fetchOpts });
-  if (data?.status !== 'ok') throw new Error(data?.message || 'The feed converter returned no items');
-  return { threads: parse(rss2jsonToXml(data)), via: rss2jsonKey ? 'rss2json.com (your key)' : 'rss2json.com' };
+
+  // 1. The copy the site saves itself (GitHub Action, every 30 minutes): same origin, so no CORS and no rate limit.
+  let snapshot = null;
+  if (snapshotBase) {
+    try {
+      const xml = await fetchText(`${snapshotBase}deals-${sourceId}.xml`, { retries: 0, timeoutMs: 10000, ...fetchOpts });
+      let savedAt = '';
+      try {
+        savedAt = (await fetchText(`${snapshotBase}deals-${sourceId}.updated`, { retries: 0, timeoutMs: 5000, ...fetchOpts })).trim();
+      } catch {
+        /* the time stamp is optional */
+      }
+      const saved = Date.parse(savedAt);
+      snapshot = { threads: parse(xml), via: 'Calendra feed snapshot', fetchedAt: Number.isFinite(saved) ? new Date(saved).toISOString() : '' };
+      if (Number.isFinite(saved) && now - saved < SNAPSHOT_FRESH_MS) return snapshot;
+    } catch {
+      /* no snapshot yet (or unreadable): fall through to the live route */
+    }
+  }
+
+  // 2. rss2json.com (free, CORS enabled, throttles bursts). Patient only when there is nothing else to show.
+  try {
+    const key = rss2jsonKey ? `&api_key=${encodeURIComponent(rss2jsonKey)}&count=${limit}` : '';
+    const data = await fetchJson(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.feed)}${key}`, {
+      retries: snapshot ? 0 : rss2jsonKey ? 1 : 3,
+      backoffMs: 5000,
+      timeoutMs: 20000,
+      ...fetchOpts,
+    });
+    if (data?.status !== 'ok') throw new Error(data?.message || 'The feed converter returned no items');
+    return { threads: parse(rss2jsonToXml(data)), via: rss2jsonKey ? 'rss2json.com (your key)' : 'rss2json.com', fetchedAt: new Date(now).toISOString() };
+  } catch (error) {
+    if (snapshot) return snapshot; // older snapshot beats nothing
+    throw error;
+  }
 }
+
+/** A snapshot younger than this is used as is; an older one is used only when the live route fails. */
+export const SNAPSHOT_FRESH_MS = 3 * 60 * 60 * 1000;
 
 export async function loadForumThreads(options = {}) {
   return (await loadForumThreadsDetailed(options)).threads;

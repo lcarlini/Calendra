@@ -158,10 +158,14 @@ async function loadFeed() {
   }
   renderFeed();
   try {
-    const result = await loadForumThreadsDetailed({ proxyUrl: prefs.proxyUrl, rss2jsonKey: prefs.rss2jsonKey });
+    const result = await loadForumThreadsDetailed({
+      proxyUrl: prefs.proxyUrl,
+      rss2jsonKey: prefs.rss2jsonKey,
+      snapshotBase: new URL('data/', location.href).href,
+    });
     threads = result.threads;
     cacheSet(THREADS_CACHE, { threads });
-    feed = { state: 'ok', message: '', fetchedAt: new Date().toISOString(), stale: false, via: result.via };
+    feed = { state: 'ok', message: '', fetchedAt: result.fetchedAt || new Date().toISOString(), stale: false, via: result.via };
   } catch (error) {
     if (cached) {
       threads = cached.value.threads;

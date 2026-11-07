@@ -14,7 +14,7 @@ now and then: a step marked **(live)** depends on them. If one fails, wait a min
 ## 1. Every page (Home, Dashboard, Calendar, Calendário, News, Markets, Deals, Settings)
 - [ ] The top navigation reaches every page, and the current page is highlighted. "Back to Home" works.
 - [ ] **Theme picker:** a "Theme" selector is in the header (Settings has buttons instead). It lists **Mist, Midnight, Ocean, Sand, Ink, Black, Aurora**. Pick each: colours change at once, text stays readable, dropdowns and text fields follow the theme (no white boxes on dark themes).
-- [ ] **Black:** the page background is pure black, cards are near-black with thin light borders, and there are no coloured glows.
+- [ ] **Black:** pure black and monochrome: black background and cards, thin light borders, white buttons and active tab, no coloured glows. It looks clearly different from Ink (Ink is dark grey with lime accents).
 - [ ] Reload: the chosen theme stays. Open a second tab of the site, change the theme in one tab: the other tab follows without a reload.
 - [ ] **Widths:** at 360, 768, 1366, 1920 and 3840 px wide there is no sideways scroll, nothing is cut off and the nav is reachable (on phones it scrolls sideways inside its own bar).
 - [ ] **Keyboard:** Tab reaches every link and button in order with a visible outline. Enter and Space activate buttons.
@@ -63,7 +63,7 @@ now and then: a step marked **(live)** depends on them. If one fails, wait a min
 - [ ] Helper chips: Price history, Coupon, US price open Google searches in a new tab.
 - [ ] "Save this search" puts a starred chip in the recent searches. It survives a reload and can be removed with ×.
 - [ ] **Community feed (live):**
-  - [ ] Threads load with the status "Updated … · source: Adrenaline Ofertas RSS feed · via rss2json.com".
+  - [ ] Threads load at once with the status "Updated … · source: Adrenaline Ofertas RSS feed · via Calendra feed snapshot" (the copy a GitHub Action saves into the site every 30 minutes). When that copy is older than 3 hours the page tries rss2json.com for a fresher one and says "via rss2json.com".
   - [ ] Every thread says "Community-reported", links to the original forum thread, shows no images, and shows a price only when the title states one ("not verified").
   - [ ] Filters work: words, leave out, min/max price, age, saved only, show hidden. Save, Hide and Copy link work. Summarize follows the AI setting.
   - [ ] **When the converter is throttled:** the message reads "Live refresh is throttled or unreachable right now (…)" and, if you opened the page before, the saved copy stays on screen. It retries once after a minute. ↻ retries on demand. It never shows a bare "HTTP 429".

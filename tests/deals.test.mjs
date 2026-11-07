@@ -343,6 +343,38 @@ test('the optional rss2json key is sent with a larger item count, and a total fa
   );
 });
 
+test('a fresh site snapshot is used first, without touching rss2json', async () => {
+  const urls = [];
+  const savedAt = new Date(NOW - 20 * 60 * 1000).toISOString();
+  const fetchImpl = async (u) => {
+    urls.push(u);
+    if (u.endsWith('.xml')) return { ok: true, status: 200, text: async () => RAW_RSS, headers: { get: () => null } };
+    if (u.endsWith('.updated')) return { ok: true, status: 200, text: async () => savedAt + '\n', headers: { get: () => null } };
+    throw new Error('rss2json must not be called');
+  };
+  const r = await loadForumThreadsDetailed({ proxyUrl: '', snapshotBase: 'https://site.test/data/', now: NOW, fetchOpts: { ...fastOpts, fetchImpl } });
+  assert.equal(r.via, 'Calendra feed snapshot');
+  assert.equal(r.fetchedAt, savedAt);
+  assert.equal(r.threads.length, 1);
+  assert.ok(urls.every((u) => u.startsWith('https://site.test/data/deals-adrenaline-ofertas.')));
+});
+
+test('an old snapshot gives way to rss2json, and is still used when rss2json is throttled', async () => {
+  const old = new Date(NOW - 10 * 60 * 60 * 1000).toISOString();
+  const snap = (u) => (u.endsWith('.xml') ? { ok: true, status: 200, text: async () => RAW_RSS, headers: { get: () => null } } : { ok: true, status: 200, text: async () => old, headers: { get: () => null } });
+  const live = await loadForumThreadsDetailed({
+    proxyUrl: '', snapshotBase: 'https://site.test/data/', now: NOW,
+    fetchOpts: { ...fastOpts, fetchImpl: async (u) => (u.includes('rss2json') ? { ok: true, json: async () => ({ status: 'ok', items: [{ title: 'Fone R$ 59', link: 'https://f.test/t/2', pubDate: '2026-11-07 12:00:00' }] }) } : snap(u)) },
+  });
+  assert.equal(live.via, 'rss2json.com');
+  const fallback = await loadForumThreadsDetailed({
+    proxyUrl: '', snapshotBase: 'https://site.test/data/', now: NOW,
+    fetchOpts: { ...fastOpts, fetchImpl: async (u) => (u.includes('rss2json') ? { ok: false, status: 429, headers: { get: () => null } } : snap(u)) },
+  });
+  assert.equal(fallback.via, 'Calendra feed snapshot');
+  assert.equal(fallback.fetchedAt, old);
+});
+
 test('extractCouponCodes finds ALL-CAPS codes after cupom/código and ignores ordinary words', () => {
   assert.deepEqual(extractCouponCodes('Use o cupom: BLACK10 e código PROMO15'), ['BLACK10', 'PROMO15']);
   assert.deepEqual(extractCouponCodes('cupom de desconto "SSD20" na Kabum'), ['SSD20']);

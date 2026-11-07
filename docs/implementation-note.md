@@ -99,4 +99,8 @@ broken city photos; TV-mode digits clipped at 4K.
 ## Deals feed notes (2026-11-07)
 * The forum feed is readable by `curl` but has **no CORS header**, and generic CORS relays (allorigins, codetabs, yacdn) cannot read it (they get the bot challenge or HTTP 522), so they are not used. Pelando and Hardmob answer 403 with a challenge, Gatry and Promobit have no feed.
 * The only serverless route is rss2json.com, which throttles bursts per address (HTTP 429, "converting new feeds in a very short period"). Mitigations: patient retry, one automatic retry after a minute, a 24 h saved copy, and an optional free rss2json key (field on the Deals page, shared with News).
+* **Primary route since 2026-11-07: a site snapshot.** `.github/workflows/snapshot-feeds.yml` fetches the RSS every 30 minutes
+  (plain `curl`, which the forum answers) and commits it to `data/deals-adrenaline-ofertas.xml` plus a `.updated` time stamp. The page
+  reads it from the same origin (no CORS, no rate limit). A snapshot older than 3 hours is refreshed through rss2json when possible,
+  and is still shown if rss2json is throttled.
 * Manual test guide: [manual-test-guide.md](manual-test-guide.md).
