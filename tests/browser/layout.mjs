@@ -86,6 +86,21 @@ c(k.tv === 'on' && k.over <= 0 && !k.clip, `TV mode persists across reload; 3840
 if (shotDir) await b.shot(path.join(shotDir, 'dashboard-tv-3840.png'));
 await b.ev(`localStorage.removeItem('calendra.display.v1')`);
 
+// Settings: the Appearance and Text size panels (as in the UI folder) work and stay inside a phone screen.
+for (const [w, h] of [[360, 740], [1280, 900]]) {
+  await b.visit(`${base}/settings.html`, { width: w, height: h, wait: 1200 });
+  const before = await b.ev(`parseFloat(getComputedStyle(document.documentElement).fontSize)`);
+  await b.ev(`document.querySelector('[data-step="1"]').click()`);
+  const after = JSON.parse(await b.ev(`JSON.stringify({ px: parseFloat(getComputedStyle(document.documentElement).fontSize), readout: document.querySelector('.text-size-readout strong').textContent })`));
+  await b.ev(`document.querySelector('[data-ap="accent"][data-value="purple"]').click(); document.querySelector('[data-ap="density"][data-value="compact"]').click(); document.querySelector('[data-ap="autoscale"][data-value="off"]').click(); document.querySelector('[data-ap="theme"][data-value="mist"]').click()`);
+  const st = JSON.parse(await b.ev(`JSON.stringify({ accent: getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(), density: document.documentElement.dataset.density, autoscale: document.documentElement.dataset.autoscale, theme: document.documentElement.dataset.theme, over: document.documentElement.scrollWidth - document.documentElement.clientWidth, stepLeft: Math.round(document.querySelector('[data-step="-1"]').getBoundingClientRect().left), stepRight: Math.round(document.querySelector('[data-step="1"]').getBoundingClientRect().right) })`));
+  c(after.readout === '105%' && after.px > before, `Settings @${w}: "+" raises text size to 105% (${before}px -> ${after.px}px)`);
+  c(st.accent === '#a855f7' && st.density === 'compact' && st.autoscale === 'off' && st.theme === 'mist', `Settings @${w}: accent, density, autoscale and theme buttons apply ${JSON.stringify(st)}`);
+  c(st.over <= 0 && st.stepLeft >= 0 && st.stepRight <= w, `Settings @${w}: panels fit the screen (overflow ${st.over}px)`);
+  if (shotDir) await b.shot(path.join(shotDir, `settings-${w}.png`));
+  await b.ev(`localStorage.removeItem('calendra.appearance.v1'); localStorage.removeItem('calendra.theme.v1')`);
+}
+
 b.close();
 console.log(t.failed ? `\n${t.failed} check(s) FAILED` : '\nAll layout checks passed');
 process.exit(t.failed ? 1 : 0);

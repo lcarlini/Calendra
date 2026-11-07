@@ -35,8 +35,21 @@ export const ACCENTS = [
   { id: 'rose', label: 'Rose', color: '#f43f5e' },
 ];
 export const TEXT_SIZES = [90, 100, 115, 130, 150];
+export const TEXT_MIN = 80;
+export const TEXT_MAX = 200;
+export const TEXT_STEP = 5;
+
+/** Autoscale: nudges the text size with the screen so phones and TVs both stay readable. */
+export function autoscaleFactor(width) {
+  if (!Number.isFinite(width)) return 1;
+  if (width < 340) return 0.92;
+  if (width >= 3400) return 1.5;
+  if (width >= 2560) return 1.25;
+  if (width >= 1920) return 1.1;
+  return 1;
+}
 const APPEARANCE_KEY = 'calendra.appearance.v1';
-const APPEARANCE_DEFAULTS = { accent: 'default', density: 'comfortable', contrast: 'standard', motion: 'on', textSize: 100 };
+const APPEARANCE_DEFAULTS = { accent: 'default', density: 'comfortable', contrast: 'standard', motion: 'on', textSize: 100, autoscale: 'on' };
 
 export function loadAppearance() {
   try {
@@ -46,7 +59,8 @@ export function loadAppearance() {
     if (['comfortable', 'compact'].includes(saved.density)) a.density = saved.density;
     if (['standard', 'more'].includes(saved.contrast)) a.contrast = saved.contrast;
     if (['on', 'off'].includes(saved.motion)) a.motion = saved.motion;
-    if (Number.isFinite(saved.textSize)) a.textSize = Math.min(150, Math.max(90, Math.round(saved.textSize)));
+    if (Number.isFinite(saved.textSize)) a.textSize = Math.min(TEXT_MAX, Math.max(TEXT_MIN, Math.round(saved.textSize)));
+    if (['on', 'off'].includes(saved.autoscale)) a.autoscale = saved.autoscale;
     return a;
   } catch {
     return { ...APPEARANCE_DEFAULTS };
@@ -66,7 +80,9 @@ export function applyAppearance(a = loadAppearance()) {
   root.dataset.density = a.density;
   root.dataset.contrast = a.contrast;
   root.dataset.motion = a.motion;
-  root.style.fontSize = a.textSize === 100 ? '' : `${a.textSize}%`;
+  root.dataset.autoscale = a.autoscale;
+  const pct = Math.round(a.textSize * (a.autoscale === 'on' && typeof window !== 'undefined' ? autoscaleFactor(window.innerWidth) : 1));
+  root.style.fontSize = pct === 100 ? '' : `${pct}%`;
   return a;
 }
 
@@ -85,6 +101,7 @@ export function saveAppearance(patch) {
 export function initThemeEverywhere() {
   const theme = initTheme();
   applyAppearance();
+  window.addEventListener('resize', () => applyAppearance());
   window.addEventListener('storage', (e) => {
     if (e.key === KEY) applyTheme(e.newValue || 'ink');
     if (e.key === APPEARANCE_KEY) applyAppearance();

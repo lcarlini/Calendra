@@ -45,12 +45,20 @@
         <p class="module-lead">Shared by every page. Everything here is stored only in this browser; nothing syncs between devices.</p>
 
         <section class="status-card settings-card" aria-labelledby="appearance-h">
-          <h3 id="appearance-h">Appearance and display</h3>
-          <label class="tool-field">
-            <span>Color theme</span>
-            <select id="theme-select" aria-label="Color theme"></select>
-          </label>
+          <h3 id="appearance-h">Appearance</h3>
+          <p class="status-line">Remembered on this device.</p>
+          <select id="theme-select" class="sr-only" aria-label="Color theme" tabindex="-1"></select>
           <div id="appearance-controls"></div>
+        </section>
+
+        <section class="status-card settings-card" aria-labelledby="size-h">
+          <h3 id="size-h">Text size</h3>
+          <p class="status-line">Scales every screen. Remembered on this device.</p>
+          <div id="text-size-controls"></div>
+        </section>
+
+        <section class="status-card settings-card" aria-labelledby="display-h">
+          <h3 id="display-h">Display</h3>
           <div class="settings-row">
             <button type="button" class="btn btn-ghost" data-tv-toggle aria-pressed="false">TV mode</button>
             <button type="button" class="btn btn-ghost" data-fullscreen-toggle>Fullscreen</button>

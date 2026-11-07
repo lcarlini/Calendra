@@ -1,4 +1,4 @@
-import { ACCENTS, TEXT_SIZES, THEMES, applyTheme, getTheme, initThemeEverywhere, loadAppearance, saveAppearance } from './themes.js';
+import { ACCENTS, TEXT_MAX, TEXT_MIN, TEXT_SIZES, TEXT_STEP, THEMES, applyTheme, getTheme, initThemeEverywhere, loadAppearance, saveAppearance } from './themes.js';
 import { initDisplay } from './core/display.js';
 import { HOLIDAY_CATEGORY_DEFAULTS } from './holidays.js';
 import { KEY_PREFIX, exportSettings, importSettings, validateImport, writeJSON } from './core/store.js';
@@ -17,32 +17,62 @@ select.innerHTML = THEMES.map((t) => `<option value="${t.id}">${t.label}</option
 select.value = getTheme();
 select.addEventListener('change', () => applyTheme(select.value));
 
-// --- Appearance: accent, density, contrast, motion, text size (as in the UI folder) -------------
+// --- Appearance + Text size (as in the UI folder's two panels) ------------------------------------
 const appearanceHost = $('appearance-controls');
-function seg(label, id, options, current, render) {
+const sizeHost = $('text-size-controls');
+const group = (label, id, body) => `<div class="appearance-group"><span id="ap-${id}">${label}</span>${body}</div>`;
+function seg(id, options, current, extra = '') {
   const buttons = options
-    .map((o) => `<button type="button" data-ap="${id}" data-value="${o.value}" aria-pressed="${String(o.value) === String(current)}">${render(o)}</button>`)
+    .map((o) => `<button type="button" data-ap="${id}" data-value="${o.value}" aria-pressed="${String(o.value) === String(current)}"${o.title ? ` aria-label="${o.title}" title="${o.title}"` : ''}>${o.html}</button>`)
     .join('');
-  return `<div class="appearance-group"><span id="ap-${id}">${label}</span><div class="seg" role="group" aria-labelledby="ap-${id}">${buttons}</div></div>`;
+  return `<div class="seg ${extra}" role="group" aria-labelledby="ap-${id}">${buttons}</div>`;
 }
+const txt = (list) => list.map(([value, html]) => ({ value, html }));
 function paintAppearance() {
   const a = loadAppearance();
-  const sizes = TEXT_SIZES.map((n) => `<button type="button" data-ap="textSize" data-value="${n}" aria-pressed="${n === a.textSize}">${n}%</button>`).join('');
+  const themes = THEMES.map((t) => ({ value: t.id, html: `<span aria-hidden="true">${t.mode === 'dark' ? '☾' : '☀'}</span> ${t.label}` }));
+  const accents = ACCENTS.map((x) => ({ value: x.id, title: x.label, html: x.color ? `<span class="swatch" style="background:${x.color}"></span>` : '<span class="swatch swatch-theme"></span>' }));
   appearanceHost.innerHTML =
-    seg('Accent', 'accent', ACCENTS.map((x) => ({ value: x.id, label: x.label, color: x.color })), a.accent, (o) =>
-      o.color ? `<span class="swatch" style="background:${o.color}" aria-hidden="true"></span> ${o.label}` : o.label) +
-    seg('Density', 'density', [{ value: 'comfortable', label: 'Comfortable' }, { value: 'compact', label: 'Compact' }], a.density, (o) => o.label) +
-    seg('Contrast', 'contrast', [{ value: 'standard', label: 'Standard' }, { value: 'more', label: 'More' }], a.contrast, (o) => o.label) +
-    seg('Motion', 'motion', [{ value: 'on', label: 'On' }, { value: 'off', label: 'Off' }], a.motion, (o) => o.label) +
-    `<div class="appearance-group"><span id="ap-size">Text size</span><div class="text-size-readout" aria-live="polite">${a.textSize}%</div><div class="seg" role="group" aria-labelledby="ap-size">${sizes}</div></div>`;
+    group('Theme', 'theme', seg('theme', themes, getTheme(), 'seg-themes')) +
+    group('Accent', 'accent', seg('accent', accents, a.accent, 'seg-accent')) +
+    group('Density', 'density', seg('density', txt([['comfortable', 'Comfortable'], ['compact', 'Compact']]), a.density)) +
+    '<div class="appearance-pair">' +
+    group('Contrast', 'contrast', seg('contrast', txt([['standard', 'Standard'], ['more', 'More']]), a.contrast)) +
+    group('Motion', 'motion', seg('motion', txt([['on', 'On'], ['off', 'Off']]), a.motion)) +
+    '</div>';
 }
-appearanceHost.addEventListener('click', (e) => {
+function paintSize() {
+  const a = loadAppearance();
+  sizeHost.innerHTML =
+    `<div class="size-stepper"><button type="button" class="step-btn" data-step="-1" aria-label="Smaller text" ${a.textSize <= TEXT_MIN ? 'disabled' : ''}>−</button>` +
+    `<div class="text-size-readout" aria-live="polite"><strong>${a.textSize}%</strong><small>of the default size</small></div>` +
+    `<button type="button" class="step-btn" data-step="1" aria-label="Larger text" ${a.textSize >= TEXT_MAX ? 'disabled' : ''}>+</button></div>` +
+    group('Presets', 'size', seg('textSize', TEXT_SIZES.map((n) => ({ value: n, html: `${n}%` })), a.textSize, 'seg-presets')) +
+    group('Autoscale', 'autoscale', seg('autoscale', txt([['on', 'On'], ['off', 'Off']]), a.autoscale)) +
+    '<p class="status-line">Autoscale grows the text a little on very large screens (TVs) and shrinks it on tiny phones.</p>';
+}
+const paintAll = () => {
+  paintAppearance();
+  paintSize();
+  select.value = getTheme();
+};
+function onChoose(e) {
+  const step = e.target.closest('[data-step]');
+  if (step) {
+    saveAppearance({ textSize: Math.min(TEXT_MAX, Math.max(TEXT_MIN, loadAppearance().textSize + Number(step.dataset.step) * TEXT_STEP)) });
+    paintSize();
+    return;
+  }
   const b = e.target.closest('[data-ap]');
   if (!b) return;
-  saveAppearance({ [b.dataset.ap]: b.dataset.ap === 'textSize' ? Number(b.dataset.value) : b.dataset.value });
-  paintAppearance();
-});
-paintAppearance();
+  if (b.dataset.ap === 'theme') applyTheme(b.dataset.value);
+  else saveAppearance({ [b.dataset.ap]: b.dataset.ap === 'textSize' ? Number(b.dataset.value) : b.dataset.value });
+  paintAll();
+}
+appearanceHost.addEventListener('click', onChoose);
+sizeHost.addEventListener('click', onChoose);
+select.addEventListener('change', paintAll);
+paintAll();
 
 // --- AI ---------------------------------------------------------------------------
 const providerSelect = $('ai-provider');
