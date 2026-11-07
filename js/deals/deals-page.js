@@ -1,48 +1,34 @@
 /**
- * Deals page. Every number is either typed by the user or comes from a labelled source.
- * The community feed is the only live data; everything else is local to this browser.
+ * Deals page: FIND things, never register them. A community deal feed (the only live data), ready searches for
+ * stores and coupon sites, and a coupon finder over the community threads. Every price is labelled with its source.
+ * Only light preferences (recent/saved searches, saved/hidden threads) are kept in this browser.
  */
 import { initThemeEverywhere } from '../themes.js';
 import { initDisplay } from '../core/display.js';
 import { cacheGet, cacheSet } from '../core/cache.js';
-import { copyText, esc, formatMoney, formatPercent, timeAgo } from '../core/format.js';
+import { copyText, esc, formatMoney, timeAgo } from '../core/format.js';
 import { onStoreChange } from '../core/store.js';
-import { loadNewsPrefs, NEWS_KEY } from '../news/loader.js';
-import { fetchFxRates } from '../markets/providers.js';
-import { sparklineSvg } from '../markets/chart.js';
+import { loadNewsPrefs, NEWS_KEY, saveNewsPrefs } from '../news/loader.js';
 import { prepareInputs, sendsToCloud, summarize } from '../ai/providers.js';
 import { getApiKey, loadAiSettings } from '../ai/settings.js';
 import { describeError, summaryHtml } from '../ai/summary-ui.js';
-import { CHECKED_ON, PROVIDERS, fallbackQuery, googleSearchUrl, helperQueries, integratedProviders, unavailableProviders } from './providers.js';
-import { ageLabel, filterThreads, loadForumThreads } from './forum.js';
-import {
-  DEALS_KEY,
-  addAlertLog,
-  addToList,
-  compareUs,
-  couponStatus,
-  evaluateAlerts,
-  isoToday,
-  loadDeals,
-  newCoupon,
-  newItem,
-  parseMoneyInput,
-  priceStats,
-  recordPrice,
-  saveDeals,
-} from './model.js';
+import { COUPON_STORES, PROVIDERS, couponSearches, fallbackQuery, googleSearchUrl, helperQueries, integratedProviders, unavailableProviders } from './providers.js';
+import { ageLabel, couponThreads, filterThreads, loadForumThreadsDetailed } from './forum.js';
+import { DEALS_KEY, addToList, loadDeals, parseMoneyInput, saveDeals } from './model.js';
 
 initThemeEverywhere();
 initDisplay();
 
 const $ = (id) => document.getElementById(id);
 const THREADS_CACHE = 'deals.threads.v1';
+const CACHE_MAX_AGE = 24 * 3600000;
 
 let state = loadDeals();
 let threads = [];
-let feed = { state: 'loading', message: '', fetchedAt: '', stale: false };
+let feed = { state: 'loading', message: '', fetchedAt: '', stale: false, via: '' };
 let lastQuery = '';
 let activeSummary = null;
+let autoRetried = false;
 
 const persist = () => saveDeals(state);
 
@@ -70,6 +56,8 @@ function providerCard(provider, query) {
   </article>`;
 }
 
+const feedProblem = () => `Live refresh is throttled or unreachable right now (${esc(feed.message)}).`;
+
 function renderResults() {
   const box = $('deal-results');
   if (!lastQuery) {
@@ -78,13 +66,11 @@ function renderResults() {
   }
   const matches = filterThreads(threads, { q: lastQuery, hiddenIds: state.hiddenThreads }).slice(0, 8);
   const feedPart =
-    feed.state === 'needs-proxy'
-      ? '<p class="status-line">The community feed needs the news proxy. <a href="news.html">Set its address on the News page</a> (the same proxy is used here).</p>'
-      : feed.state === 'error' && !threads.length
-        ? `<p class="status-line warn-text">The community feed could not be loaded: ${esc(feed.message)}</p>`
-        : matches.length
-          ? `<div class="thread-list">${matches.map(threadCard).join('')}</div><p class="status-line">Searched the ${threads.length} newest threads loaded from the feed${feed.stale ? ' (saved copy)' : ''}, not the forum's whole history.</p>`
-          : `<p class="status-line">No thread among the ${threads.length} newest ones matches "${esc(lastQuery)}".</p>`;
+    feed.state === 'error' && !threads.length
+      ? `<p class="status-line warn-text">${feedProblem()} Press the refresh button in a minute.</p>`
+      : matches.length
+        ? `<div class="thread-list">${matches.map(threadCard).join('')}</div><p class="status-line">Searched the ${threads.length} newest threads loaded from the feed${feed.stale ? ' (saved copy)' : ''}, not the forum's whole history.</p>`
+        : `<p class="status-line">No thread among the ${threads.length} newest ones matches "${esc(lastQuery)}".</p>`;
   const others = unavailableProviders().map((p) => providerCard(p, lastQuery)).join('');
   const helpers = helperQueries(lastQuery)
     .map((h) => `<a class="chip" href="${esc(googleSearchUrl(h.query))}" target="_blank" rel="noopener noreferrer">${esc(h.label)}: Google</a>`)
@@ -155,152 +141,79 @@ function renderFeed() {
   const status = $('feed-status');
   const list = filterThreads(threads, feedFilters());
   if (feed.state === 'loading' && !threads.length) status.textContent = 'Loading the community feed…';
-  else if (feed.state === 'needs-proxy' && !threads.length) status.innerHTML = 'The community feed needs the news proxy. <a href="news.html">Set its address on the News page</a>: the same proxy serves both pages.';
-  else if (feed.state === 'error') status.textContent = `Could not refresh: ${feed.message}${threads.length ? ' Showing the saved copy.' : ''}`;
-  else status.textContent = feed.fetchedAt ? `Updated ${timeAgo(feed.fetchedAt)}${feed.stale ? ' (saved copy)' : ''} · source: Adrenaline Ofertas RSS feed` : '';
+  else if (feed.state === 'error') status.innerHTML = `${feedProblem()} ${threads.length ? `Showing the saved copy from ${esc(timeAgo(feed.fetchedAt))}.` : `It retries on its own, or press ↻.${loadNewsPrefs().rss2jsonKey ? '' : ' A free rss2json key (below) removes the limit.'}`}`;
+  else status.textContent = feed.fetchedAt ? `Updated ${timeAgo(feed.fetchedAt)}${feed.stale ? ' (saved copy)' : ''} · source: Adrenaline Ofertas RSS feed${feed.via ? ` · via ${feed.via}` : ''}` : '';
   $('feed-count').textContent = threads.length ? `${list.length} of ${threads.length} threads` : '';
   $('thread-list').innerHTML = threads.length ? list.map(threadCard).join('') || '<p class="status-line">No thread matches these filters.</p>' : '';
 }
 
 async function loadFeed() {
-  const proxyUrl = loadNewsPrefs().proxyUrl;
-  const cached = cacheGet(THREADS_CACHE, { maxAgeMs: 6 * 3600000 });
-  feed = { ...feed, state: 'loading' };
+  const prefs = loadNewsPrefs();
+  const cached = cacheGet(THREADS_CACHE, { maxAgeMs: CACHE_MAX_AGE });
+  if (cached && !threads.length) {
+    threads = cached.value.threads;
+    feed = { state: 'loading', message: '', fetchedAt: cached.fetchedAt, stale: true, via: '' };
+  } else {
+    feed = { ...feed, state: 'loading' };
+  }
   renderFeed();
   try {
-    threads = await loadForumThreads({ proxyUrl });
+    const result = await loadForumThreadsDetailed({ proxyUrl: prefs.proxyUrl, rss2jsonKey: prefs.rss2jsonKey });
+    threads = result.threads;
     cacheSet(THREADS_CACHE, { threads });
-    feed = { state: 'ok', message: '', fetchedAt: new Date().toISOString(), stale: false };
+    feed = { state: 'ok', message: '', fetchedAt: new Date().toISOString(), stale: false, via: result.via };
   } catch (error) {
     if (cached) {
       threads = cached.value.threads;
-      feed = { state: 'error', message: error.message, fetchedAt: cached.fetchedAt, stale: true };
+      feed = { state: 'error', message: error.message, fetchedAt: cached.fetchedAt, stale: true, via: '' };
     } else {
       threads = [];
-      feed = { state: 'error', message: error.message, fetchedAt: '', stale: false };
+      feed = { state: 'error', message: error.message, fetchedAt: '', stale: false, via: '' };
+    }
+    if (!threads.length && !autoRetried) {
+      autoRetried = true;
+      setTimeout(loadFeed, 60_000);
     }
   }
   renderFeed();
   renderResults();
+  renderCoupons();
   renderProviders();
 }
 
 // ---------------------------------------------------------------------------
-// Tracked products
-// ---------------------------------------------------------------------------
-
-function usResultHtml(item) {
-  if (!item.us) return '';
-  const r = compareUs({ ...item.us, brPrice: item.country === 'BR' ? item.observations.at(-1)?.price ?? null : null });
-  if (r.total == null) return `<p class="status-line">${esc(r.note)}</p>`;
-  const rows = r.components.map((c) => `<tr><th scope="row">${esc(c.label)}</th><td class="num">${c.usd != null ? esc(formatMoney(c.usd, 'USD', 'en-US')) : ''}</td><td class="num">${esc(formatMoney(c.brl, 'BRL'))}</td></tr>`).join('');
-  const versus = r.versus
-    ? `<p>Brazilian price ${esc(formatMoney(r.versus.brPrice, 'BRL'))} is <strong>${esc(formatPercent(Math.abs(r.versus.percent), 1).replace('+', ''))} ${r.versus.differenceBrl >= 0 ? 'above' : 'below'}</strong> this estimate (${esc(formatMoney(Math.abs(r.versus.differenceBrl), 'BRL'))}).</p>`
-    : '<p class="status-line">Record a Brazilian price to compare.</p>';
-  return `<div class="table-scroll" tabindex="0" role="region" aria-label="US price breakdown"><table class="data-table"><thead><tr><th scope="col">Component</th><th scope="col" class="num">USD</th><th scope="col" class="num">BRL</th></tr></thead><tbody>${rows}<tr><th scope="row">Estimate</th><td></td><td class="num"><strong>${esc(formatMoney(r.total, 'BRL'))}</strong></td></tr></tbody></table></div>
-    ${versus}
-    <p class="status-line">Exchange rate used: ${esc(String(item.us.rate))} BRL per USD (${esc(item.us.rateSource || 'entered by you')}). ${esc(r.note)}</p>`;
-}
-
-function itemCard(item) {
-  const stats = priceStats(item.observations);
-  const prices = item.observations.map((o) => o.price);
-  const us = item.us || {};
-  const val = (v) => (v == null ? '' : String(v));
-  return `<article class="deal-item" data-item="${esc(item.id)}">
-    <header class="story-top">
-      <h4>${item.url ? `<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">${esc(item.title)}</a>` : esc(item.title)}</h4>
-      <span class="badge badge-muted">${esc(item.country)} · ${esc(item.currency)} · ${esc(item.condition)}</span>
-      ${item.store ? `<span class="badge badge-muted">${esc(item.store)}</span>` : ''}
-    </header>
-    ${
-      stats
-        ? `<dl class="stat-grid">
-        <div><dt>Latest</dt><dd>${esc(formatMoney(stats.current, item.currency))}<small> ${esc(stats.currentDate)}</small></dd></div>
-        <div><dt>Lowest</dt><dd>${esc(formatMoney(stats.lowest, item.currency))}</dd></div>
-        <div><dt>Highest</dt><dd>${esc(formatMoney(stats.highest, item.currency))}</dd></div>
-        <div><dt>Average</dt><dd>${esc(formatMoney(stats.average, item.currency))}</dd></div>
-        <div><dt>Trend</dt><dd>${stats.trend ? esc(stats.trend) : 'needs 2 prices'}</dd></div>
-        <div><dt>Last drop</dt><dd>${stats.lastDrop ? `${esc(formatPercent(-stats.lastDrop.percent, 1))} on ${esc(stats.lastDrop.date)}` : 'none recorded'}</dd></div>
-      </dl>
-      <div class="spark-row">${sparklineSvg(prices, { width: 160, height: 36, label: `${item.title} recorded prices` }) || '<span class="muted">Record one more price to see a chart.</span>'}<span class="muted">${stats.count} price${stats.count === 1 ? '' : 's'} · ${esc(stats.origin)}</span></div>`
-        : '<p class="status-line">No prices recorded yet. No price history exists until you add prices.</p>'
-    }
-    <form class="deal-form inline-grid" data-form="record" data-id="${esc(item.id)}" autocomplete="off">
-      <label>Price seen (${esc(item.currency)})<input name="price" type="text" inputmode="decimal" required /></label>
-      <label>Date<input name="date" type="date" value="${isoToday()}" max="${isoToday()}" /></label>
-      <button type="submit" class="btn btn-primary btn-sm">Record price</button>
-    </form>
-    <details class="how-details"><summary>Alert rules</summary>
-      <form class="deal-form inline-grid" data-form="alert" data-id="${esc(item.id)}" autocomplete="off">
-        <label>Target price<input name="target" type="text" inputmode="decimal" value="${esc(val(item.alert?.targetPrice))}" /></label>
-        <label>Drop % from highest<input name="drop" type="text" inputmode="decimal" value="${esc(val(item.alert?.dropPercent))}" /></label>
-        <button type="submit" class="btn btn-ghost btn-sm">Save rules</button>
-      </form>
-      <p class="status-line">Checked each time you record a price. Leave a box empty for no rule.</p>
-    </details>
-    <details class="how-details"><summary>Compare with a US price</summary>
-      <form class="deal-form inline-grid" data-form="us" data-id="${esc(item.id)}" autocomplete="off">
-        <label>US price (USD)<input name="priceUsd" type="text" inputmode="decimal" value="${esc(val(us.priceUsd))}" /></label>
-        <label>Shipping (USD)<input name="shippingUsd" type="text" inputmode="decimal" value="${esc(val(us.shippingUsd))}" /></label>
-        <label>Import duty %<input name="dutyPercent" type="text" inputmode="decimal" value="${esc(val(us.dutyPercent))}" /></label>
-        <label>Tax %<input name="taxPercent" type="text" inputmode="decimal" value="${esc(val(us.taxPercent))}" /></label>
-        <label>Other costs (BRL)<input name="otherBrl" type="text" inputmode="decimal" value="${esc(val(us.otherBrl))}" /></label>
-        <label>BRL per USD<input name="rate" type="text" inputmode="decimal" value="${esc(val(us.rate))}" /></label>
-        <button type="submit" class="btn btn-primary btn-sm">Calculate</button>
-        <button type="button" class="btn btn-ghost btn-sm" data-action="use-fx" data-id="${esc(item.id)}">Use today's BCB rate</button>
-      </form>
-      <p class="status-line">Only what you fill in is counted. Duty and tax are never guessed. The BCB rate is an end-of-day sell rate.</p>
-      <div data-us-result="${esc(item.id)}">${usResultHtml(item)}</div>
-    </details>
-    <div class="story-actions">
-      <a class="btn btn-ghost btn-sm" href="${esc(googleSearchUrl(`${item.title} histórico de preço`))}" target="_blank" rel="noopener noreferrer">Price history on Google</a>
-      ${item.url ? `<button type="button" class="btn btn-ghost btn-sm" data-copy="${esc(item.url)}">Copy link</button>` : ''}
-      <button type="button" class="btn btn-ghost btn-sm danger" data-action="item-delete" data-id="${esc(item.id)}">Delete</button>
-    </div>
-  </article>`;
-}
-
-function renderItems() {
-  $('item-list').innerHTML = state.items.length ? state.items.map(itemCard).join('') : '<p class="status-line">Nothing tracked yet.</p>';
-}
-
-// ---------------------------------------------------------------------------
-// Coupons, alerts, providers
+// Coupon finder (links and community-posted codes; nothing is stored or verified)
 // ---------------------------------------------------------------------------
 
 function renderCoupons() {
-  $('coupon-list').innerHTML = state.coupons.length
-    ? state.coupons
-        .map((c) => {
-          const s = couponStatus(c);
-          const badge = s.state === 'expired' ? 'badge-warn' : s.state === 'valid' || s.state === 'expires-today' ? 'badge-ok' : 'badge-muted';
-          return `<article class="deal-item" data-coupon="${esc(c.id)}">
-            <header class="story-top"><h4>${esc(c.store)}</h4><span class="badge ${badge}">${esc(s.label)}</span><span class="badge badge-muted">Unverified · ${esc(c.source)}</span></header>
-            <p><code class="coupon-code">${esc(c.code)}</code> ${c.description ? `· ${esc(c.description)}` : ''}</p>
-            ${c.conditions ? `<p class="excerpt">${esc(c.conditions)}</p>` : ''}
-            ${c.minPurchase != null ? `<p class="excerpt">Minimum purchase: ${esc(formatMoney(c.minPurchase, 'BRL'))}</p>` : ''}
-            <p class="status-line">Added ${esc(c.addedAt)}. Calendra cannot check whether this code works.</p>
-            <div class="story-actions">
-              <button type="button" class="btn btn-ghost btn-sm" data-copy="${esc(c.code)}">Copy code</button>
-              ${c.url ? `<a class="btn btn-ghost btn-sm" href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">Open store</a>` : ''}
-              <button type="button" class="btn btn-ghost btn-sm danger" data-action="coupon-delete" data-id="${esc(c.id)}">Delete</button>
-            </div></article>`;
-        })
+  const query = $('coupon-q').value.trim();
+  $('coupon-chips').innerHTML = COUPON_STORES.map((s) => `<button type="button" class="chip" data-coupon-store="${esc(s)}">${esc(s)}</button>`).join('');
+  const found = couponThreads(threads, query, { hiddenIds: state.hiddenThreads }).slice(0, 12);
+  const community = found.length
+    ? found
+        .map(({ thread, codes }) => `<article class="deal-item coupon-find" data-coupon-thread="${esc(thread.id)}">
+          <header class="story-top"><span class="badge badge-warn">Community-reported · unverified</span><span class="muted">${esc(ageLabel(thread.createdAt))}</span>${feed.stale ? '<span class="badge badge-warn">Saved copy</span>' : ''}</header>
+          <h4><a href="${esc(thread.url)}" target="_blank" rel="noopener noreferrer">${esc(thread.title)}</a></h4>
+          ${codes.length ? `<p class="coupon-codes">${codes.map((c) => `<span class="coupon-pill"><code class="coupon-code">${esc(c)}</code><button type="button" class="btn btn-ghost btn-sm" data-copy="${esc(c)}">Copy code</button></span>`).join(' ')}</p>` : '<p class="status-line">No code in the title or excerpt: open the thread to see the offer.</p>'}
+        </article>`)
         .join('')
-    : '<p class="status-line">No coupons saved.</p>';
-}
-
-function renderAlerts() {
-  $('alert-log').innerHTML = state.alerts.length
-    ? state.alerts.map((a) => `<li class="${a.read ? 'read' : 'unread'}"><span class="muted">${esc(timeAgo(a.at))}</span> ${esc(a.text)} ${a.read ? '' : `<button type="button" class="btn btn-ghost btn-sm" data-action="alert-read" data-id="${esc(a.id)}">Mark read</button>`}</li>`).join('')
-    : '<li class="status-line">No alerts yet.</li>';
-  const supported = typeof Notification !== 'undefined';
-  $('notify-enable').hidden = !supported || Notification.permission === 'granted';
+    : feed.state === 'error' && !threads.length
+      ? `<p class="status-line warn-text">${feedProblem()} The searches below still work.</p>`
+      : feed.state === 'loading' && !threads.length
+        ? '<p class="status-line">Loading the community feed…</p>'
+        : `<p class="status-line">No coupon thread among the ${threads.length} newest ones${query ? ` mentions "${esc(query)}"` : ''}. Try another store, or use the searches below.</p>`;
+  const searches = couponSearches(query)
+    .map((s) => `<a class="chip" href="${esc(googleSearchUrl(s.query))}" target="_blank" rel="noopener noreferrer">${esc(s.label)}</a>`)
+    .join('');
+  $('coupon-results').innerHTML = `<h4>Found in the community feed</h4>${community}
+    <h4>Search coupon sites</h4>
+    <p class="status-line">Links to a Google search on each coupon site, not live results. Open them to see current codes.</p>
+    <div class="chip-row">${searches}</div>
+    <p class="status-line">Codes are only what people posted. Calendra cannot tell whether a code still works.</p>`;
 }
 
 function renderProviders() {
-  const live = feed.state === 'ok' ? `Live · ${threads.length} threads · updated ${timeAgo(feed.fetchedAt)}` : feed.state === 'needs-proxy' ? 'Needs the news proxy' : feed.state === 'error' ? `Error: ${feed.message}` : 'Loading';
+  const live = feed.state === 'ok' ? `Live · ${threads.length} threads · updated ${timeAgo(feed.fetchedAt)}` : feed.state === 'error' ? `Throttled: ${feed.message}` : 'Loading';
   $('provider-status').innerHTML = [
     ...integratedProviders().map((p) => `<li><span class="badge ${feed.state === 'ok' ? 'badge-ok' : 'badge-warn'}">Feed</span> <strong>${esc(p.name)}</strong> <span class="muted">${esc(p.role)} · ${esc(live)}. ${esc(p.detail)}</span> <a href="${esc(p.homepage)}" target="_blank" rel="noopener noreferrer">Open</a></li>`),
     ...unavailableProviders().map((p) => `<li><span class="badge badge-muted">Unavailable</span> <strong>${esc(p.name)}</strong> <span class="muted">${esc(p.role)}. ${esc(p.reason)}</span> <a href="${esc(p.homepage)}" target="_blank" rel="noopener noreferrer">Open site</a></li>`),
@@ -311,9 +224,7 @@ function renderAll() {
   renderChips();
   renderResults();
   renderFeed();
-  renderItems();
   renderCoupons();
-  renderAlerts();
   renderProviders();
 }
 
@@ -321,25 +232,7 @@ function renderAll() {
 // Actions
 // ---------------------------------------------------------------------------
 
-function notify(messages) {
-  if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
-  for (const m of messages) {
-    try {
-      new Notification('Calendra price alert', { body: m.text });
-    } catch {
-      /* some browsers only allow notifications from a service worker */
-    }
-  }
-}
-
-const itemById = (id) => state.items.find((i) => i.id === id);
-function updateItem(id, fn) {
-  state = { ...state, items: state.items.map((i) => (i.id === id ? fn(i) : i)) };
-  persist();
-}
-const formNum = (form, name) => parseMoneyInput(form.elements[name]?.value);
-
-async function summarizeThread(id, button) {
+async function summarizeThread(id) {
   const t = threads.find((x) => x.id === id);
   const box = document.querySelector(`[data-summary-for="${CSS.escape(id)}"]`);
   if (!t || !box) return;
@@ -375,6 +268,11 @@ document.addEventListener('click', async (event) => {
     setTimeout(() => (copy.textContent = old), 1500);
     return;
   }
+  const store = event.target.closest('[data-coupon-store]');
+  if (store) {
+    $('coupon-q').value = store.dataset.couponStore;
+    return renderCoupons();
+  }
   const search = event.target.closest('[data-search]');
   if (search) return runSearch(search.dataset.search);
   const unsave = event.target.closest('[data-unsave]');
@@ -401,43 +299,12 @@ document.addEventListener('click', async (event) => {
       persist();
       renderFeed();
       renderResults();
+      renderCoupons();
       break;
     }
     case 'thread-summary':
-      summarizeThread(id, btn);
+      summarizeThread(id);
       break;
-    case 'item-delete':
-      if (window.confirm('Delete this product and its recorded prices?')) {
-        state = { ...state, items: state.items.filter((i) => i.id !== id) };
-        persist();
-        renderItems();
-      }
-      break;
-    case 'coupon-delete':
-      state = { ...state, coupons: state.coupons.filter((c) => c.id !== id) };
-      persist();
-      renderCoupons();
-      break;
-    case 'alert-read':
-      state = { ...state, alerts: state.alerts.map((a) => (a.id === id ? { ...a, read: true } : a)) };
-      persist();
-      renderAlerts();
-      break;
-    case 'use-fx': {
-      const form = document.querySelector(`[data-form="us"][data-id="${CSS.escape(id)}"]`);
-      btn.disabled = true;
-      const { rates, errors } = await fetchFxRates();
-      btn.disabled = false;
-      const usd = rates.find((r) => r.id === 'usdbrl');
-      if (!usd) {
-        form.insertAdjacentHTML('afterend', `<p class="status-line warn-text" role="alert">The exchange rate could not be loaded (${esc(errors.usdbrl || 'unavailable')}). Type a rate instead.</p>`);
-        break;
-      }
-      form.elements.rate.value = String(usd.value);
-      form.dataset.rateSource = `BCB end-of-day USD sell rate for ${usd.date}`;
-      form.requestSubmit();
-      break;
-    }
     default:
   }
 });
@@ -448,64 +315,16 @@ document.addEventListener('submit', (event) => {
     event.preventDefault();
     return runSearch($('deal-q').value);
   }
-  if (form.id === 'item-form') {
+  if (form.id === 'feed-key-form') {
     event.preventDefault();
-    let item = newItem({ title: $('i-title').value, url: $('i-url').value, store: $('i-store').value, country: $('i-country').value, currency: $('i-currency').value, condition: $('i-condition').value });
-    if (!item) return;
-    const first = parseMoneyInput($('i-price').value);
-    if (first != null) item = recordPrice(item, first);
-    state = { ...state, items: [item, ...state.items] };
-    persist();
-    form.reset();
-    return renderItems();
+    saveNewsPrefs({ ...loadNewsPrefs(), rss2jsonKey: $('feed-key').value.trim() });
+    autoRetried = false;
+    loadFeed();
+    return;
   }
-  if (form.id === 'coupon-form') {
+  if (form.id === 'coupon-search') {
     event.preventDefault();
-    const coupon = newCoupon({ store: $('c-store').value, code: $('c-code').value, description: $('c-desc').value, conditions: $('c-cond').value, minPurchase: $('c-min').value, expiresOn: $('c-exp').value, url: $('c-url').value });
-    if (!coupon) return;
-    state = { ...state, coupons: [coupon, ...state.coupons] };
-    persist();
-    form.reset();
-    return renderCoupons();
-  }
-  const kind = form.dataset?.form;
-  if (!kind) return;
-  event.preventDefault();
-  const id = form.dataset.id;
-  const item = itemById(id);
-  if (!item) return;
-  if (kind === 'record') {
-    const price = formNum(form, 'price');
-    if (price == null) return;
-    const date = form.elements.date.value || isoToday();
-    const before = item.observations;
-    const next = recordPrice(item, price, date);
-    const messages = evaluateAlerts(next, price, before.filter((o) => o.date !== date));
-    updateItem(id, () => next);
-    if (messages.length) {
-      state = addAlertLog(state, messages);
-      persist();
-      notify(messages);
-    }
-    renderItems();
-    renderAlerts();
-  } else if (kind === 'alert') {
-    updateItem(id, (i) => ({ ...i, alert: { targetPrice: formNum(form, 'target'), dropPercent: formNum(form, 'drop') } }));
-    renderItems();
-  } else if (kind === 'us') {
-    const us = {
-      priceUsd: formNum(form, 'priceUsd'),
-      shippingUsd: formNum(form, 'shippingUsd'),
-      dutyPercent: formNum(form, 'dutyPercent'),
-      taxPercent: formNum(form, 'taxPercent'),
-      otherBrl: formNum(form, 'otherBrl'),
-      rate: formNum(form, 'rate'),
-      rateSource: form.dataset.rateSource || 'entered by you',
-    };
-    updateItem(id, (i) => ({ ...i, us }));
-    renderItems();
-    // keep the US panel open so the result stays in view
-    document.querySelector(`[data-item="${CSS.escape(id)}"] [data-us-result]`)?.closest('details')?.setAttribute('open', '');
+    renderCoupons();
   }
 });
 
@@ -519,29 +338,16 @@ $('save-search').addEventListener('click', () => {
 $('feed-filters').addEventListener('input', renderFeed);
 $('feed-filters').addEventListener('submit', (e) => e.preventDefault());
 $('feed-refresh').addEventListener('click', loadFeed);
-$('notify-enable').addEventListener('click', async () => {
-  try {
-    await Notification.requestPermission();
-  } catch {
-    /* unsupported */
-  }
-  renderAlerts();
-});
-$('alerts-clear').addEventListener('click', () => {
-  state = { ...state, alerts: [] };
-  persist();
-  renderAlerts();
-});
+$('coupon-q').addEventListener('input', renderCoupons);
 
 onStoreChange([DEALS_KEY], () => {
   state = loadDeals();
   renderChips();
-  renderItems();
-  renderCoupons();
-  renderAlerts();
   renderFeed();
+  renderCoupons();
 });
 onStoreChange([NEWS_KEY], loadFeed);
 
+$('feed-key').value = loadNewsPrefs().rss2jsonKey;
 renderAll();
 loadFeed();

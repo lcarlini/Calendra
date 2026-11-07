@@ -14,12 +14,12 @@ travel planning, a news reader, markets, and a price-and-deals tracker. No build
 | Calendário | [calendario.html](https://lcarlini.github.io/Calendra/calendario.html) | Opens on the year view modelled on `UI/Calendar.html` (12 full months, D/B/G badges, combo colours, tooltips), plus month/week/day, US + Brazil + GCM/Brasil/Davi calendars, **Travel & Holiday Intelligence** (2026–2030, `.ics` export) |
 | News | [news.html](https://lcarlini.github.io/Calendra/news.html) | Stories grouped across outlets, explainable ranking, optional AI summaries. Loads with no server |
 | Markets | [markets.html](https://lcarlini.github.io/Calendra/markets.html) | Policy rates, currencies, B3 watchlist. US assets are shown as unavailable |
-| Deals | [deals.html](https://lcarlini.github.io/Calendra/deals.html) | Community deals feed, your own price tracking, coupons, US price comparison |
+| Deals | [deals.html](https://lcarlini.github.io/Calendra/deals.html) | Find deals: community feed, store searches, coupon finder (nothing to register) |
 | Settings | [settings.html](https://lcarlini.github.io/Calendra/settings.html) | Theme, TV mode, AI provider, export/import/reset |
 
 Legacy: `calendar.html` redirects to `calendario.html` and keeps the query string (for example `?date=2026-09-07`).
 
-Status of every integration, what is not done, and the test results are in [docs/implementation-note.md](docs/implementation-note.md).
+Status of every integration, what is not done, and the test results are in [docs/implementation-note.md](docs/implementation-note.md). A step-by-step manual test of every page and feature is in [docs/manual-test-guide.md](docs/manual-test-guide.md).
 Screenshots (small phone, Full HD, TV/4K) are in [docs/screenshots](docs/screenshots).
 
 ## Everything runs from static files (no server)

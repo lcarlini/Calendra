@@ -65,7 +65,7 @@ export const PROVIDERS = [
     role: 'Coupons and promotional offers',
     integration: 'unavailable',
     homepage: 'https://www.meliuz.com.br/',
-    reason: 'No public coupon feed or API found. Coupons you find can be saved by hand below.',
+    reason: 'No public coupon feed or API found. Use the coupon finder below for ready searches.',
     siteQuery: 'site:meliuz.com.br cupom',
   },
   {
@@ -163,4 +163,24 @@ export function helperQueries(product) {
     { label: 'Coupon', query: `${text} cupom` },
     { label: 'US price', query: `${text} price site:amazon.com OR site:bestbuy.com` },
   ].filter(() => text);
+}
+
+/** Coupon sites searched through Google (links only: their pages are never read by this app). */
+export const COUPON_SITES = [
+  { id: 'cuponomia', name: 'Cuponomia', siteQuery: 'site:cuponomia.com.br' },
+  { id: 'meliuz', name: 'Méliuz', siteQuery: 'site:meliuz.com.br' },
+  { id: 'promobit', name: 'Promobit', siteQuery: 'site:promobit.com.br' },
+  { id: 'pelando', name: 'Pelando', siteQuery: 'site:pelando.com.br' },
+  { id: 'cupomvalido', name: 'Cupom Válido', siteQuery: 'site:cupomvalido.com.br' },
+];
+export const COUPON_STORES = ['Amazon', 'Mercado Livre', 'Shopee', 'AliExpress', 'Kabum', 'Magalu', 'Pichau', 'Terabyte'];
+
+export function couponSearches(query) {
+  const text = String(query || '').trim();
+  const month = new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+  const subject = text ? `cupom de desconto ${text}` : 'cupom de desconto';
+  return [
+    { label: `Google: ${subject} ${month}`, query: `${subject} ${month}` },
+    ...COUPON_SITES.map((s) => ({ label: s.name, query: `${s.siteQuery} ${subject}` })),
+  ];
 }

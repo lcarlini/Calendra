@@ -115,19 +115,65 @@ export function rss2jsonToXml(data) {
   return '<rss><channel>' + items + '</channel></rss>';
 }
 
-export async function loadForumThreads({ proxyUrl, sourceId = 'adrenaline-ofertas', limit = 40, fetchOpts = {}, now = Date.now() } = {}) {
-  let xml;
+/**
+ * Load the threads and say which route answered. Without a proxy the feed goes through rss2json.com (free, CORS
+ * enabled). The forum sits behind a bot challenge, so generic CORS relays cannot read it (verified: they get the
+ * challenge page or time out), and rss2json is the only serverless route. It throttles bursts from one address
+ * ("converting new feeds in a very short period", HTTP 429), so a 429 is retried patiently, and an optional free
+ * rss2json key removes the limit. The page keeps the last good copy for 24 hours.
+ * @returns {Promise<{ threads: object[], via: string }>}
+ */
+export async function loadForumThreadsDetailed({ proxyUrl, sourceId = 'adrenaline-ofertas', limit = 40, rss2jsonKey = '', fetchOpts = {}, now = Date.now() } = {}) {
+  const parse = (xml) => {
+    const threads = dedupeThreads(parseThreads(xml, { sourceId, now }));
+    if (!threads.length) throw new Error('The feed had no readable threads');
+    return threads;
+  };
   if (proxyUrl) {
-    xml = await fetchText(`${proxyUrl}/feed?source=${encodeURIComponent(sourceId)}&limit=${limit}`, { retries: 1, timeoutMs: 15000, ...fetchOpts });
-  } else {
-    // No server: the public feed converter rss2json.com answers browsers (10 newest threads on its free tier).
-    const feed = DEAL_FEEDS.find((d) => d.id === sourceId);
-    if (!feed) throw new Error('Unknown deal feed');
-    const data = await fetchJson(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.feed)}`, { retries: 1, timeoutMs: 20000, ...fetchOpts });
-    if (data?.status !== 'ok') throw new Error(data?.message || 'The feed converter returned no items');
-    xml = rss2jsonToXml(data);
+    const xml = await fetchText(`${proxyUrl}/feed?source=${encodeURIComponent(sourceId)}&limit=${limit}`, { retries: 1, timeoutMs: 15000, ...fetchOpts });
+    return { threads: parse(xml), via: 'your news proxy' };
   }
-  const threads = dedupeThreads(parseThreads(xml, { sourceId, now }));
-  if (!threads.length) throw new Error('The feed had no readable threads');
-  return threads;
+  const feed = DEAL_FEEDS.find((d) => d.id === sourceId);
+  if (!feed) throw new Error('Unknown deal feed');
+  const key = rss2jsonKey ? `&api_key=${encodeURIComponent(rss2jsonKey)}&count=${limit}` : '';
+  const data = await fetchJson(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.feed)}${key}`, { retries: rss2jsonKey ? 1 : 3, backoffMs: 5000, timeoutMs: 20000, ...fetchOpts });
+  if (data?.status !== 'ok') throw new Error(data?.message || 'The feed converter returned no items');
+  return { threads: parse(rss2jsonToXml(data)), via: rss2jsonKey ? 'rss2json.com (your key)' : 'rss2json.com' };
+}
+
+export async function loadForumThreads(options = {}) {
+  return (await loadForumThreadsDetailed(options)).threads;
+}
+
+// ---------------------------------------------------------------------------
+// Coupon finder: codes people post in the community threads (never verified)
+// ---------------------------------------------------------------------------
+
+const COUPON_TOPIC = /\b(cupom|cupons|cup[aã]o|c[oó]digo|codigo)\b/i;
+const NOT_CODES = new Set(['CUPOM', 'CUPONS', 'CODIGO', 'CODE', 'DESCONTO', 'FRETE', 'GRATIS', 'LOJA', 'APP', 'PIX', 'AMAZON', 'SHOPEE']);
+
+/** Coupon-looking codes after the words "cupom"/"código"/"code". Only ALL-CAPS tokens of 4-20 characters count. */
+export function extractCouponCodes(text) {
+  const out = [];
+  const re = /\b(?:cupom|cupons|cup[aã]o|c[oó]digo|codigo|code)(?:\s+(?:de\s+desconto|promocional|do\s+app))?\s*[:\-–]?\s*[\"“'`]?([A-Za-z0-9][A-Za-z0-9_-]{3,19})\b/gi;
+  let m;
+  while ((m = re.exec(String(text ?? '')))) {
+    const code = m[1];
+    if (code !== code.toUpperCase() || !/[A-Z]/.test(code) || NOT_CODES.has(code) || out.includes(code)) continue;
+    out.push(code);
+  }
+  return out;
+}
+
+/** Threads that talk about a coupon, with the codes found in their title/excerpt; optionally narrowed by a store or product. */
+export function couponThreads(threads, query = '', { hiddenIds = [] } = {}) {
+  const words = norm(query).split(' ').filter((w) => w.length >= 2);
+  return threads
+    .filter((t) => !hiddenIds.includes(t.id))
+    .map((thread) => ({ thread, codes: extractCouponCodes(`${thread.title} ${thread.excerpt || ''}`) }))
+    .filter(({ thread, codes }) => {
+      if (!codes.length && !COUPON_TOPIC.test(thread.title)) return false;
+      const hay = norm(`${thread.title} ${thread.excerpt || ''}`);
+      return words.every((w) => hay.includes(w));
+    });
 }

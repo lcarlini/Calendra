@@ -309,3 +309,64 @@ test('state persists, tolerates junk and caps lists', () => {
   assert.deepEqual(addToList(['a', 'b'], 'b'), ['b', 'a'], 'repeated search moves to the front');
   assert.deepEqual(addToList(['a'], '  '), ['a']);
 });
+
+// ---- Throttled feed: fallback routes, and the coupon finder ------------------------------------------
+import { couponThreads, extractCouponCodes, loadForumThreadsDetailed } from '../js/deals/forum.js';
+import { COUPON_SITES, couponSearches } from '../js/deals/providers.js';
+import { THEMES } from '../js/themes.js';
+
+const RAW_RSS = '<rss><channel><item><title>Teclado R$ 120 cupom: TECLA10</title><link>https://f.test/t/9</link><description>x</description><pubDate>Sat, 07 Nov 2026 12:00:00 GMT</pubDate></item></channel></rss>';
+const fastOpts = { retries: 0, sleep: async () => {}, breaker: createCircuitBreaker({ threshold: 99 }) };
+
+test('a throttled rss2json (429) is retried and the feed then loads', async () => {
+  let calls = 0;
+  const fetchImpl = async () => {
+    calls += 1;
+    if (calls < 3) return { ok: false, status: 429, headers: { get: () => null } };
+    return { ok: true, json: async () => ({ status: 'ok', items: [{ title: 'Teclado R$ 120 cupom: TECLA10', link: 'https://f.test/t/9', pubDate: '2026-11-07 12:00:00', description: 'x' }] }) };
+  };
+  const r = await loadForumThreadsDetailed({ proxyUrl: '', now: NOW, fetchOpts: { ...fastOpts, retries: 3, fetchImpl } });
+  assert.equal(calls, 3);
+  assert.equal(r.threads.length, 1);
+  assert.equal(r.via, 'rss2json.com');
+});
+
+test('the optional rss2json key is sent with a larger item count, and a total failure says what failed', async () => {
+  let url = '';
+  const ok = async (u) => { url = u; return { ok: true, json: async () => ({ status: 'ok', items: [{ title: 'Fone R$ 59', link: 'https://f.test/t/2', pubDate: '2026-11-07 12:00:00' }] }) }; };
+  const r = await loadForumThreadsDetailed({ proxyUrl: '', rss2jsonKey: 'KEY123', now: NOW, fetchOpts: { ...fastOpts, fetchImpl: ok } });
+  assert.ok(url.includes('api_key=KEY123') && url.includes('count=40'));
+  assert.match(r.via, /your key/);
+  await assert.rejects(
+    loadForumThreadsDetailed({ proxyUrl: '', fetchOpts: { ...fastOpts, fetchImpl: async () => ({ ok: false, status: 429, headers: { get: () => null } }) } }),
+    /HTTP 429/
+  );
+});
+
+test('extractCouponCodes finds ALL-CAPS codes after cupom/código and ignores ordinary words', () => {
+  assert.deepEqual(extractCouponCodes('Use o cupom: BLACK10 e código PROMO15'), ['BLACK10', 'PROMO15']);
+  assert.deepEqual(extractCouponCodes('cupom de desconto "SSD20" na Kabum'), ['SSD20']);
+  assert.deepEqual(extractCouponCodes('cupom de desconto na loja, cupom abc123, código frete'), []);
+  assert.deepEqual(extractCouponCodes('sem nada aqui'), []);
+});
+
+test('couponThreads keeps coupon threads, narrows by store and hides hidden ones', () => {
+  const t = (id, title) => ({ id, title, excerpt: '', url: `https://f.test/${id}`, sourceId: 'x' });
+  const list = [t('a', 'Kabum cupom: KABUM15 em placas'), t('b', 'Monitor R$ 900'), t('c', 'Amazon código AMZ50 livros'), t('d', 'Cupom Kabum sem código visível')];
+  assert.deepEqual(couponThreads(list).map((x) => x.thread.id), ['a', 'c', 'd']);
+  assert.deepEqual(couponThreads(list, 'kabum').map((x) => x.thread.id), ['a', 'd']);
+  assert.deepEqual(couponThreads(list, 'kabum', { hiddenIds: ['a'] }).map((x) => x.thread.id), ['d']);
+  assert.deepEqual(couponThreads(list, 'amazon')[0].codes, ['AMZ50']);
+});
+
+test('couponSearches offers a general search plus one per coupon site, all as search queries', () => {
+  const searches = couponSearches('SSD');
+  assert.equal(searches.length, COUPON_SITES.length + 1);
+  assert.ok(searches.every((s) => /SSD/.test(s.query)));
+  assert.ok(searches.some((s) => s.query.includes('site:cuponomia.com.br')));
+});
+
+test('a Black theme exists and is dark', () => {
+  const black = THEMES.find((x) => x.id === 'black');
+  assert.ok(black && black.mode === 'dark');
+});

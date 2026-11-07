@@ -4,6 +4,7 @@ export const THEMES = [
   { id: 'ocean', label: 'Ocean', mode: 'dark' },
   { id: 'sand', label: 'Sand', mode: 'light' },
   { id: 'ink', label: 'Ink', mode: 'dark' },
+  { id: 'black', label: 'Black', mode: 'dark' },
   { id: 'aurora', label: 'Aurora', mode: 'dark' },
 ];
 

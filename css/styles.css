@@ -58,6 +58,31 @@
   --holiday: #f43f5e;
 }
 
+[data-theme='black'] {
+  --ink: #fafafa;
+  --ink-soft: #d4d4d8;
+  --muted: #a1a1aa;
+  --line: rgba(255, 255, 255, 0.14);
+  --surface: rgba(10, 10, 10, 0.92);
+  --surface-solid: #0a0a0a;
+  --surface-soft: rgba(24, 24, 24, 0.95);
+  --accent: #a3e635;
+  --accent-bright: #bef264;
+  --accent-warm: #fb923c;
+  --accent-rose: #f43f5e;
+  --deep: #000000;
+  --deep-soft: #0a0a0a;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --bg-1: transparent;
+  --bg-2: transparent;
+  --bg-3: transparent;
+  --bg-base: #000000;
+  --nav-bg: rgba(8, 8, 8, 0.92);
+  --gadget-border: rgba(255, 255, 255, 0.12);
+  --holiday: #f43f5e;
+}
+
 [data-theme='midnight'] {
   --ink: #e8eef4;
   --ink-soft: #b7c5d3;
@@ -4463,3 +4488,7 @@ html[data-motion='off'] .ai-modal-card::before { animation: none; }
   .ai-modal-body { padding: 0.3rem 1rem 0.8rem; }
   .ai-modal-foot { padding: 0.7rem 1rem 1rem; }
 }
+
+/* Checkboxes inside pills stay checkbox-sized even in the filter grids. */
+.filter-grid .check-pill input[type='checkbox'], .check-pill input[type='checkbox'] { width: 1.2rem; height: 1.2rem; min-height: 0; padding: 0; flex: none; }
+.filter-grid .check-pill { align-self: end; }
