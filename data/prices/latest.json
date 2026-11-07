@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-07T20:38:13.912Z",
+ "updatedAt": "2026-11-07T20:38:58.589Z",
  "sources": {
   "buscape": {
    "name": "Buscapé",
@@ -18,9 +18,11 @@
   "pelando": {
    "name": "Pelando",
    "kind": "community",
-   "ok": 8,
-   "failed": 0,
-   "errors": []
+   "ok": 0,
+   "failed": 8,
+   "errors": [
+    "HTTP 403"
+   ]
   },
   "promobit": {
    "name": "Promobit",
@@ -170,36 +172,6 @@
    ],
    "community": [
     {
-     "title": "Monster Jam Showdown - PlayStation 5",
-     "price": 89.9,
-     "store": "Amazon",
-     "url": "https://www.pelando.com.br/d/monster-jam-showdown-playstation-5-a89f",
-     "image": "https://media.pelando.com.br/RCRS2NWIl--o7N_hyO98mq5UTf0=/400x400/filters:format(webp)/d/scp-g5pxb-1793724808013.jpg",
-     "date": "2026-11-03T16:53:34.355Z",
-     "score": 126,
-     "source": "pelando"
-    },
-    {
-     "title": "Far Cry 6 - Playstation 5",
-     "price": 99,
-     "store": "Amazon",
-     "url": "https://www.pelando.com.br/d/far-cry-6-playstation-5-faf1",
-     "image": "https://media.pelando.com.br/tEIr49kcNhsZixV2E_T_HHwU1CA=/400x400/filters:format(webp)/d/scp-yinpz-1793985645031.jpg",
-     "date": "2026-11-06T17:20:53.414Z",
-     "score": 220,
-     "source": "pelando"
-    },
-    {
-     "title": "Dragon’s Dogma 2: Dark Arisen - PlayStation 5",
-     "price": 182,
-     "store": "Amazon",
-     "url": "https://www.pelando.com.br/d/dragons-dogma-2-dark-arisen-playstation-5-bf45",
-     "image": "https://media.pelando.com.br/N1kxuQ_nFv19K0LlKv22d-6uoQw=/400x400/filters:format(webp)/d/scp-gbo3r-1793709311668.jpg",
-     "date": "2026-11-03T12:35:25.145Z",
-     "score": 606,
-     "source": "pelando"
-    },
-    {
      "title": "Death Stranding 2: On The Beach - PlayStation 5",
      "price": 199.9,
      "store": "Amazon",
@@ -208,46 +180,6 @@
      "date": "",
      "score": 0,
      "source": "gatry"
-    },
-    {
-     "title": "Starfield Premium Edition - PlayStation 5",
-     "price": 209,
-     "store": "Playstation Store",
-     "url": "https://www.pelando.com.br/d/starfield-premium-edition-e3fd",
-     "image": "https://media.pelando.com.br/Dn2f3JBLh-8gM8jw3iFDBcVwGPQ=/400x400/filters:format(webp)/d/crawler-image-a5bf4627-1389-4bfc-a5bf-8b7ed77c2a5e-1793789148413-1793789149499.jpg",
-     "date": "2026-11-04T10:45:59.400Z",
-     "score": 48,
-     "source": "pelando"
-    },
-    {
-     "title": "Persona 4 Revival - PlayStation 5 ( Preço Exclusivo Prime )",
-     "price": 218.92,
-     "store": "Amazon",
-     "url": "https://www.pelando.com.br/d/persona-4-revival-playstation-5-preco-exclusivo-prime-523f",
-     "image": "https://media.pelando.com.br/tnX-hIE8C4bJzz-FqgAnbBYjBw4=/400x400/filters:format(webp)/d/crawler-image-ed6ddfe3-ffda-449b-b27a-0c60f057637e-1793710088502-1793710090543.jpg",
-     "date": "2026-11-03T12:49:48.852Z",
-     "score": 105,
-     "source": "pelando"
-    },
-    {
-     "title": "Resident Evil Requiem - PlayStation 5",
-     "price": 232,
-     "store": "Amazon",
-     "url": "https://www.pelando.com.br/d/resident-evil-requiem-playstation-5-96f4",
-     "image": "https://media.pelando.com.br/tQhMJWw1Rsu5gY8bM11HsfbsSw0=/400x400/filters:format(webp)/d/scp-lwhjyj-1793708918650.jpg",
-     "date": "2026-11-03T12:31:52.565Z",
-     "score": 118,
-     "source": "pelando"
-    },
-    {
-     "title": "Ghost of Yōtei™ Complete Edition - PlayStation 5",
-     "price": 241,
-     "store": "Amazon",
-     "url": "https://www.pelando.com.br/d/ghost-of-yoteitm-complete-edition-playstation-5-316a",
-     "image": "https://media.pelando.com.br/leGoFzi8EHUclNedgy3guRlh6rw=/400x400/filters:format(webp)/d/crawler-image-1030ac1f-51f2-409c-9264-5c930336662d-1793709033495-1793709034457.jpg",
-     "date": "2026-11-03T12:30:53.135Z",
-     "score": 168,
-     "source": "pelando"
     },
     {
      "title": "Bundle Marvel's Spider-Man 2 + Miles Morales - PlayStation 5",
@@ -280,14 +212,34 @@
      "source": "gatry"
     },
     {
-     "title": "Bundle Death Stranding 1+2 - PlayStation 5",
-     "price": 297,
+     "title": "Grand Theft Auto VI - PlayStation 5",
+     "price": 347,
      "store": "Amazon",
-     "url": "https://www.pelando.com.br/d/bundle-death-stranding-12-playstation-5-7204",
-     "image": "https://media.pelando.com.br/u_kShoxs230s4e4jCUvP0LyzFZQ=/400x400/filters:format(webp)/d/scp-fhb72-1793274855026.jpg",
-     "date": "2026-10-29T11:54:19.913Z",
-     "score": 721,
-     "source": "pelando"
+     "url": "https://gatry.com/promocoes/285453/grand-theft-auto-vi-playstation-3",
+     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/f0797860202590420cfd0bf8ea59bd2c.png",
+     "date": "",
+     "score": 0,
+     "source": "gatry"
+    },
+    {
+     "title": "Console Playstation 5 Slim Edição Digital 825 Gb",
+     "price": 3894.05,
+     "store": "Mercadolivre",
+     "url": "https://gatry.com/promocoes/286126/console-playstation-5-slim-edicao-digital-825-gb-2",
+     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/51b018e4b657fd250714bfb62c607dd6.jpg",
+     "date": "",
+     "score": 0,
+     "source": "gatry"
+    },
+    {
+     "title": "Console Playstation®5 Slim Digital - Pacote Astro Bot E Gran Turismo 7 - Branco",
+     "price": 4047.91,
+     "store": "Mercadolivre",
+     "url": "https://gatry.com/promocoes/282686/console-playstation-r-5-slim-digital-pacote-astro-bot-e-gran-turismo-7-branco-2",
+     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/f4c2ba8a835cb5093d870dd80b74cc4f.jpg",
+     "date": "",
+     "score": 0,
+     "source": "gatry"
     }
    ],
    "sources": {
@@ -302,8 +254,8 @@
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony"
     },
     "pelando": {
-     "ok": true,
-     "count": 12,
+     "ok": false,
+     "error": "HTTP 403",
      "url": "https://www.pelando.com.br/busca/playstation-5"
     },
     "gatry": {
@@ -521,8 +473,8 @@
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g"
     },
     "pelando": {
-     "ok": true,
-     "count": 0,
+     "ok": false,
+     "error": "HTTP 403",
      "url": "https://www.pelando.com.br/busca/ssd-1tb"
     },
     "gatry": {
@@ -594,18 +546,7 @@
      "image": "https://i.zst.com.br/thumbs/45/39/37/-1557334544.jpg"
     }
    ],
-   "community": [
-    {
-     "title": "Placa de Vídeo RTX 5070 12GB GDDR7 192bit",
-     "price": 5039,
-     "store": "KaBuM!",
-     "url": "https://www.pelando.com.br/d/placa-de-video-rtx-5070-12gb-gddr7-192bit-9588",
-     "image": "https://media.pelando.com.br/X4PoBz6pjY5vhfeuE6f_5y2wn1E=/400x400/filters:format(webp)/d/crawler-image-9e62b4a0-8532-4d79-9027-6cef215d77cc-1793904891434-1793904893418.jpg",
-     "date": "2026-11-05T18:55:02.938Z",
-     "score": 348,
-     "source": "pelando"
-    }
-   ],
+   "community": [],
    "sources": {
     "buscape": {
      "ok": true,
@@ -618,8 +559,8 @@
      "url": "https://www.zoom.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff"
     },
     "pelando": {
-     "ok": true,
-     "count": 1,
+     "ok": false,
+     "error": "HTTP 403",
      "url": "https://www.pelando.com.br/busca/rtx-5070"
     },
     "gatry": {
@@ -829,46 +770,6 @@
      "source": "gatry"
     },
     {
-     "title": "Smart TV 4K Haier QLED 55 Google TV Wi-Fi H55S80GUX",
-     "price": 2044,
-     "store": "Mercado Livre",
-     "url": "https://www.pelando.com.br/d/smart-tv-4k-haier-qled-55-google-tv-wi-fi-h55s80gux-7610",
-     "image": "https://media.pelando.com.br/jKIO9xjtb7C8mpDllk3e1dXLjac=/400x400/filters:format(webp)/d/scp-fhmey-1793826957367.jpg",
-     "date": "2026-11-04T21:16:08.296Z",
-     "score": 154,
-     "source": "pelando"
-    },
-    {
-     "title": "Smart Tv 55 TCL 55t6c",
-     "price": 2165,
-     "store": "AliExpress",
-     "url": "https://www.pelando.com.br/d/smart-tv-55-tcl-55t6c-6eb6",
-     "image": "https://media.pelando.com.br/G8xZvzDYj5D7pWP4zgyWKm4I7MA=/400x400/filters:format(webp)/d/crawler-image-48f5e2bd-245a-4fc6-814f-eed13775fc60-1793589081787-1793589082717.jpg",
-     "date": "2026-11-02T03:12:00.971Z",
-     "score": -41,
-     "source": "pelando"
-    },
-    {
-     "title": "Smart TV 55\" TCL 4K UHD QLED 55P7L Google TV 2026",
-     "price": 2167.95,
-     "store": "AliExpress",
-     "url": "https://www.pelando.com.br/d/smart-tv-tcl-55-p7l-f3f7",
-     "image": "https://media.pelando.com.br/TY0xXJ5P4O7mHE116FZDjDPT-i8=/400x400/filters:format(webp)/d/crawler-image-fde728b0-e63b-4903-bc50-a642161fb71e-1793912843708-1793912844692.jpg",
-     "date": "2026-11-05T21:10:49.400Z",
-     "score": 507,
-     "source": "pelando"
-    },
-    {
-     "title": "Smart TV PRO LG 55'' 4K Ultra HD AI 55UN85C",
-     "price": 2173,
-     "store": "Mercado Livre",
-     "url": "https://www.pelando.com.br/d/smart-tv-pro-lg-55-4k-ultra-hd-ai-55un85c-7647",
-     "image": "https://media.pelando.com.br/SV1SL39IVvYfr3oE1lKUZv6MdeQ=/400x400/filters:format(webp)/d/scp-npwl3j-1793900340293.jpg",
-     "date": "2026-11-05T17:39:32.040Z",
-     "score": 118,
-     "source": "pelando"
-    },
-    {
      "title": "Smart TV TCL 55 Polegadas QLED 4K P8K WiFi Bluetooth Google TV 144Hz HDR10+ Dolby Atmos",
      "price": 2236.25,
      "store": "Mercadolivre",
@@ -877,16 +778,6 @@
      "date": "",
      "score": 0,
      "source": "gatry"
-    },
-    {
-     "title": "Smart TV 4K 55\" Hisense Hi-QLED Google TV 55QD68SG",
-     "price": 2399,
-     "store": "Amazon",
-     "url": "https://www.pelando.com.br/d/smart-tv-4k-55-hisense-hi-qled-google-tv-55qd68sg-2baf",
-     "image": "https://media.pelando.com.br/_CHRxdLhgkFn180nhwgEwi7gfA0=/400x400/filters:format(webp)/d/scp-7d3di-1793813728277.jpg",
-     "date": "2026-11-04T17:35:41.149Z",
-     "score": 63,
-     "source": "pelando"
     },
     {
      "title": "Samsung Smart TV 55\" Crystal UHD 4K U8600F + Soundbar HW-B400F",
@@ -921,8 +812,8 @@
      "url": "https://www.zoom.com.br/tv/tamanho-55-polegadas"
     },
     "pelando": {
-     "ok": true,
-     "count": 9,
+     "ok": false,
+     "error": "HTTP 403",
      "url": "https://www.pelando.com.br/busca/tv-55"
     },
     "gatry": {
@@ -949,7 +840,7 @@
    "name": "Galaxy S26 256GB",
    "category": "phone",
    "listingName": "Celular Samsung Galaxy S26 5G 256GB 12 GB",
-   "image": "https://image.zst.com.br/5438AB33A2D4F1144E8536D6D794DF28_235_235.jpg",
+   "image": "https://i.zst.com.br/thumbs/51/indsp.gif",
    "buscapeUrl": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
    "lowest": {
     "source": "buscape",
@@ -957,7 +848,7 @@
     "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
     "price": 4799,
     "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-    "image": "https://image.zst.com.br/5438AB33A2D4F1144E8536D6D794DF28_235_235.jpg"
+    "image": "https://i.zst.com.br/thumbs/51/indsp.gif"
    },
    "avg40": 4799,
    "offers": [
@@ -967,7 +858,7 @@
      "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
      "price": 4799,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "image": "https://image.zst.com.br/5438AB33A2D4F1144E8536D6D794DF28_235_235.jpg"
+     "image": "https://i.zst.com.br/thumbs/51/indsp.gif"
     },
     {
      "source": "buscape",
@@ -999,7 +890,7 @@
      "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
      "price": 4799,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "image": "https://i.zst.com.br/thumbs/51/indsp.gif"
+     "image": "https://image.zst.com.br/19F286539B9037877402782C181AACE9_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -1007,7 +898,7 @@
      "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
      "price": 4799,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "image": "https://image.zst.com.br/19F286539B9037877402782C181AACE9_235_235.jpg"
+     "image": "https://image.zst.com.br/5438AB33A2D4F1144E8536D6D794DF28_235_235.jpg"
     },
     {
      "source": "zoom",
@@ -1071,8 +962,8 @@
      "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb"
     },
     "pelando": {
-     "ok": true,
-     "count": 0,
+     "ok": false,
+     "error": "HTTP 403",
      "url": "https://www.pelando.com.br/busca/galaxy-s26"
     },
     "gatry": {
@@ -1178,16 +1069,6 @@
    ],
    "community": [
     {
-     "title": "Pragmata - Nintendo Switch 2",
-     "price": 257.07,
-     "store": "Mercado Livre",
-     "url": "https://www.pelando.com.br/d/pragmata-ns2-adae",
-     "image": "https://media.pelando.com.br/dJ2BsiLP17i0ZykUJGHIq-9uTcM=/400x400/filters:format(webp)/d/imagecropper3ecf0d46-1136-45f2-981a-2b17c3456049-24107-000003a69ea6db09-1793062038427.jpg",
-     "date": "2026-10-27T00:47:24.173Z",
-     "score": 284,
-     "source": "pelando"
-    },
-    {
      "title": "Assassin’s Creed Shadows - Nintendo Switch 2",
      "price": 269.9,
      "store": "Amazon",
@@ -1208,16 +1089,6 @@
      "source": "gatry"
     },
     {
-     "title": "(Prime) Elden Ring: Tarnished Edition - Nintendo Switch 2",
-     "price": 374.25,
-     "store": "Amazon",
-     "url": "https://www.pelando.com.br/d/prime-elden-ring-tarnished-edition-nintendo-switch-2-567c",
-     "image": "https://media.pelando.com.br/WDi5WXvC0POaBYKm63zf2nLZ9WQ=/400x400/filters:format(webp)/d/scp-ecp2oh-1793738071521.jpg",
-     "date": "2026-11-03T20:36:33.825Z",
-     "score": 347,
-     "source": "pelando"
-    },
-    {
      "title": "Switch 24 Portas Gigabit 10/100/1000 Mbps Tp-link Tl-sg1024d",
      "price": 434,
      "store": "Mercadolivre",
@@ -1226,16 +1097,6 @@
      "date": "",
      "score": 0,
      "source": "gatry"
-    },
-    {
-     "title": "Resident Evil Generation Pack - Nintendo Switch 2",
-     "price": 439,
-     "store": "Amazon",
-     "url": "https://www.pelando.com.br/d/resident-evil-generation-pack-nintendo-switch-2-2a4b",
-     "image": "https://media.pelando.com.br/MLWaN5EcTvOEoY0zBBiQAuICk8U=/400x400/filters:format(webp)/d/scp-cto4s-1793792511528.jpg",
-     "date": "2026-11-04T11:41:57.971Z",
-     "score": 407,
-     "source": "pelando"
     },
     {
      "title": "Nintendo Switch 2 256GB Novo Lacrado Lançamento",
@@ -1256,46 +1117,6 @@
      "date": "",
      "score": 0,
      "source": "gatry"
-    },
-    {
-     "title": "Nintendo Switch 2: qual o menor preço que já viram e qual o teto que vale a pena pagar?",
-     "price": null,
-     "store": "",
-     "url": "https://www.pelando.com.br/d/nitendo-switch-2-47ea",
-     "image": "",
-     "date": "2026-11-07T02:18:43.851Z",
-     "score": -4,
-     "source": "pelando"
-    },
-    {
-     "title": "[11/11 & Black Friday] Nintendo Switch 2: dá pra esperar R$ 3.100 novamente?",
-     "price": null,
-     "store": "",
-     "url": "https://www.pelando.com.br/d/nintendo-switch-2-1111-black-friday-5dd2",
-     "image": "",
-     "date": "2026-11-06T00:57:07.533Z",
-     "score": 40,
-     "source": "pelando"
-    },
-    {
-     "title": "PS5 ou Switch 2 para quem só joga EA FC (FIFA)?",
-     "price": null,
-     "store": "",
-     "url": "https://www.pelando.com.br/d/ps5-ou-switch-2-a198",
-     "image": "",
-     "date": "2026-11-03T14:47:00.606Z",
-     "score": 16,
-     "source": "pelando"
-    },
-    {
-     "title": "Compensa esperar pra comprar Switch 2 parcelado?",
-     "price": null,
-     "store": "",
-     "url": "https://www.pelando.com.br/d/compensa-esperar-pra-comprar-switch-2-parcelado-0016",
-     "image": "",
-     "date": "2026-11-02T18:26:56.125Z",
-     "score": 25,
-     "source": "pelando"
     }
    ],
    "sources": {
@@ -1310,8 +1131,8 @@
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo"
     },
     "pelando": {
-     "ok": true,
-     "count": 8,
+     "ok": false,
+     "error": "HTTP 403",
      "url": "https://www.pelando.com.br/busca/switch-2"
     },
     "gatry": {
@@ -1449,16 +1270,6 @@
    ],
    "community": [
     {
-     "title": "Baseus 100W Carga Rápida Xiaomi Samsung iPhone 17 16 15",
-     "price": 145.47,
-     "store": "AliExpress",
-     "url": "https://www.pelando.com.br/d/baseus-100w-carga-rapida-xiaomi-samsung-iphone-17-16-15-b68b",
-     "image": "https://media.pelando.com.br/Z1jg9GQrAUDZH5QAP2x-UOTL5Yk=/400x400/filters:format(webp)/d/crawler-image-dd5d693c-b9ab-4a37-891c-3e59af93a98d-1793538640718-1793538643170.jpg",
-     "date": "2026-11-01T13:11:26.312Z",
-     "score": 278,
-     "source": "pelando"
-    },
-    {
      "title": "Apple IPhone 17e De 256 GB — Rosa-pálido",
      "price": 4049.1,
      "store": "Amazon",
@@ -1507,36 +1318,6 @@
      "date": "",
      "score": 0,
      "source": "gatry"
-    },
-    {
-     "title": "Dilema 2026: Tela e liberdade do S26+ ou revenda e vídeo do iPhone 17? Qual escolher?",
-     "price": null,
-     "store": "",
-     "url": "https://www.pelando.com.br/d/iphone-17-vs-s26-plus-226a",
-     "image": "",
-     "date": "2026-11-01T15:15:12.099Z",
-     "score": 76,
-     "source": "pelando"
-    },
-    {
-     "title": "Faixa de preço do Iphone 17 na black friday?",
-     "price": null,
-     "store": "",
-     "url": "https://www.pelando.com.br/d/iphone-17-na-black-friday-4e58",
-     "image": "",
-     "date": "2026-10-30T14:22:43.398Z",
-     "score": -10,
-     "source": "pelando"
-    },
-    {
-     "title": "Qual seria o preço ideal para um iPhone 17e de 256 gb na Black Friday ou no inicio de 2027?",
-     "price": null,
-     "store": "",
-     "url": "https://www.pelando.com.br/d/qual-seria-o-preco-ideal-para-um-iphone-17e-de-256-gb-na-black-friday-ou-no-inicio-de-2027-4d2f",
-     "image": "",
-     "date": "2026-11-06T15:30:48.962Z",
-     "score": 8,
-     "source": "pelando"
     }
    ],
    "sources": {
@@ -1551,8 +1332,8 @@
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb"
     },
     "pelando": {
-     "ok": true,
-     "count": 4,
+     "ok": false,
+     "error": "HTTP 403",
      "url": "https://www.pelando.com.br/busca/iphone-17"
     },
     "gatry": {
@@ -1666,26 +1447,6 @@
      "source": "gatry"
     },
     {
-     "title": "Blood of Dawnwalker Steelbook Xbox Series X Mídia Física",
-     "price": 325,
-     "store": "Shopee",
-     "url": "https://www.pelando.com.br/d/blood-of-dawnwalker-steelbook-xbox-series-x-midia-fisica-b9b4",
-     "image": "https://media.pelando.com.br/SL6pQOvVDxCVLj74szfCIK57yC4=/400x400/filters:format(webp)/d/crawler-image-b8a3c468-58da-40aa-be48-ed189c13e390-1793591063769-1793591065387.jpg",
-     "date": "2026-11-02T03:44:31.119Z",
-     "score": 56,
-     "source": "pelando"
-    },
-    {
-     "title": "Controlador sem fio Xbox Series X|S Lunar Shift",
-     "price": 348,
-     "store": "Mercado Livre",
-     "url": "https://www.pelando.com.br/d/controlador-sem-fio-xbox-series-xous-lunar-shift-3005",
-     "image": "https://media.pelando.com.br/Rvrvd_2iP4PpOAo3glyS9u7AKMg=/400x400/filters:format(webp)/d/scp-vsdo6h-1793393648150.jpg",
-     "date": "2026-10-30T20:59:31.939Z",
-     "score": 391,
-     "source": "pelando"
-    },
-    {
      "title": "Volante Logitech G920 Driving Force E Pedais Com Force Feedback Para Xbox Series X|S",
      "price": 1399,
      "store": "Amazon",
@@ -1714,16 +1475,6 @@
      "date": "",
      "score": 0,
      "source": "gatry"
-    },
-    {
-     "title": "PS5 Slim vs Xbox Series X: Qual a melhor escolha focando em GTA 6 e Warzone?",
-     "price": null,
-     "store": "",
-     "url": "https://www.pelando.com.br/d/ps5-slim-ou-xbox-6e19",
-     "image": "",
-     "date": "2026-11-04T17:07:58.247Z",
-     "score": 18,
-     "source": "pelando"
     }
    ],
    "sources": {
@@ -1738,8 +1489,8 @@
      "url": "https://www.zoom.com.br/console-de-video-game/console-xbox-series-x-microsoft"
     },
     "pelando": {
-     "ok": true,
-     "count": 3,
+     "ok": false,
+     "error": "HTTP 403",
      "url": "https://www.pelando.com.br/busca/xbox-series-x"
     },
     "gatry": {
