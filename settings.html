@@ -81,16 +81,16 @@
               <input id="ai-key" type="password" autocomplete="off" placeholder="sk-ant-..." />
               <label class="check-pill">
                 <input type="checkbox" id="ai-persist" />
-                <span>Remember the key on this device (otherwise it is forgotten when the tab closes)</span>
+                <span>Remember the key in this browser (stored only here, in localStorage; untick to forget it when the tab closes)</span>
               </label>
               <p class="status-line warn-text">
-                A key kept in browser storage can be read by any script running on this page, and by browser extensions. Calendra
-                does not encrypt it because that would not protect it from such code. Use a key with a low spending limit, and
-                remove it when you are done. It is never exported and never logged.
+                Your key never leaves this browser except in the request to api.anthropic.com. It is not sent to any other server, not exported and
+                not logged. Anything stored in a browser can be read by scripts on this page and by browser extensions, so use a key with a low
+                monthly spending limit and remove it when you are done.
               </p>
               <label class="check-pill">
                 <input type="checkbox" id="ai-consent" />
-                <span>I understand that headlines and short excerpts of the stories I summarize are sent to Anthropic (a cloud service)</span>
+                <span>I understand that the text of the stories I summarize with the AI button is sent to Anthropic (a cloud service). Ticked automatically when you save a key.</span>
               </label>
             </div>
 
@@ -104,9 +104,16 @@
               </p>
             </div>
 
-            <div data-for="anthropic ollama">
+            <div data-for="anthropic">
+              <p class="status-line">Cloud model is fixed to <strong>Claude Haiku 5.5</strong> at the <strong>lowest effort</strong>, with thinking off and a short answer cap, to keep each summary as cheap as possible.</p>
+            </div>
+
+            <div data-for="ollama">
               <label for="ai-model">Model</label>
               <input id="ai-model" type="text" placeholder="" />
+            </div>
+
+            <div data-for="anthropic ollama">
               <label for="ai-timeout">Timeout (seconds)</label>
               <input id="ai-timeout" type="number" min="5" max="300" step="5" />
               <label for="ai-language">Summary language</label>

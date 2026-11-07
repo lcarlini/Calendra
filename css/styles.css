@@ -4422,3 +4422,44 @@ html[data-motion='off'] *, html[data-motion='off'] *::before, html[data-motion='
 
 /* City photos were unrelated stock images (and some broke): clocks are typographic now. */
 .clock-media { display: none !important; }
+
+/* AI button on each story and its modal. */
+.btn-ai { background: linear-gradient(135deg, var(--accent), var(--accent-bright, var(--accent))); color: #fff; border: 0; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.35); cursor: pointer; border-radius: 999px; padding: 0.3rem 0.9rem; min-height: 36px; }
+.btn-ai:hover { filter: brightness(1.1); }
+.ai-modal { border: 0; padding: 0; background: transparent; max-width: min(680px, calc(100vw - 24px)); width: 100%; max-height: none; height: auto; color: var(--ink); overflow: visible; }
+.ai-modal::backdrop { background: rgba(5, 8, 20, 0.62); backdrop-filter: blur(6px); }
+.ai-modal[open] { animation: ai-pop 0.22s ease-out; }
+@keyframes ai-pop { from { opacity: 0; transform: translateY(14px) scale(0.97); } to { opacity: 1; transform: none; } }
+.ai-modal-card { display: flex; flex-direction: column; max-height: calc(100dvh - 24px); border-radius: 22px; border: 1px solid var(--line); background: var(--surface-solid); box-shadow: 0 30px 80px rgba(0,0,0,0.45), 0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent); overflow: hidden; position: relative; }
+.ai-modal-card::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 4px; background: linear-gradient(90deg, var(--accent), #a855f7, #f43f5e, var(--accent)); background-size: 200% 100%; animation: ai-flow 4s linear infinite; }
+@keyframes ai-flow { to { background-position: 200% 0; } }
+.ai-modal-head { display: grid; grid-template-columns: auto 1fr auto; gap: 0.9rem; align-items: start; padding: 1.3rem 1.3rem 0.8rem; }
+.ai-modal-head h3 { margin: 0.1rem 0 0.3rem; font-size: 1.1rem; line-height: 1.3; }
+.ai-modal-kicker { margin: 0; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; color: var(--accent); }
+.ai-spark { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; font-size: 1.4rem; background: color-mix(in oklab, var(--accent) 18%, transparent); }
+.ai-close { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface-soft); color: var(--ink); font-size: 1.4rem; cursor: pointer; }
+.ai-modal-body { padding: 0.4rem 1.3rem 1rem; overflow-y: auto; min-height: 120px; }
+.ai-bullets ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.55rem; }
+.ai-bullets li { position: relative; padding: 0.65rem 0.8rem 0.65rem 2.1rem; border-radius: 12px; background: var(--surface-soft); border: 1px solid var(--line); line-height: 1.45; }
+.ai-bullets li::before { content: ''; position: absolute; left: 0.8rem; top: 1.05rem; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+.ai-bullets p, .ai-note { margin: 0 0 0.6rem; }
+.ai-note { padding: 0.5rem 0.8rem; border-radius: 10px; font-size: 0.85rem; background: color-mix(in oklab, #f59e0b 18%, transparent); border: 1px solid color-mix(in oklab, #f59e0b 45%, transparent); }
+.ai-loading { display: flex; align-items: center; gap: 0.7rem; margin: 0.5rem 0 1rem; color: var(--muted); }
+.ai-dots { display: inline-flex; gap: 4px; }
+.ai-dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: ai-bounce 1s infinite ease-in-out; }
+.ai-dots i:nth-child(2) { animation-delay: 0.15s; }
+.ai-dots i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes ai-bounce { 0%, 80%, 100% { transform: scale(0.5); opacity: 0.4; } 40% { transform: scale(1); opacity: 1; } }
+.ai-skeleton { display: grid; gap: 0.55rem; }
+.ai-skeleton b { height: 40px; border-radius: 12px; background: linear-gradient(90deg, var(--surface-soft), color-mix(in oklab, var(--ink) 10%, transparent), var(--surface-soft)); background-size: 200% 100%; animation: ai-flow 1.4s linear infinite; }
+.ai-modal-foot { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; justify-content: space-between; padding: 0.8rem 1.3rem 1.1rem; border-top: 1px solid var(--line); }
+.ai-meta { font-size: 0.75rem; color: var(--muted); flex: 1 1 14rem; }
+.ai-actions { display: inline-flex; flex-wrap: wrap; gap: 0.4rem; }
+html[data-motion='off'] .ai-modal-card::before { animation: none; }
+@media (max-width: 520px) {
+  .ai-modal { max-width: 100vw; width: 100vw; margin: auto 0 0; }
+  .ai-modal-card { border-radius: 22px 22px 0 0; }
+  .ai-modal-head { grid-template-columns: auto 1fr auto; padding: 1rem 1rem 0.6rem; }
+  .ai-modal-body { padding: 0.3rem 1rem 0.8rem; }
+  .ai-modal-foot { padding: 0.7rem 1rem 1rem; }
+}

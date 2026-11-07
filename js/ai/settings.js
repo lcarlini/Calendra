@@ -33,7 +33,7 @@ export const PROVIDERS = {
 
 export function defaultSettings() {
   return {
-    provider: 'off',
+    provider: 'ollama', // local by default: nothing leaves this computer unless you add a Claude key
     model: '',
     baseUrl: PROVIDERS.ollama.defaultUrl,
     timeoutSec: 60,
@@ -59,7 +59,11 @@ export function normalizeSettings(raw = {}) {
 export const loadAiSettings = (storage) => normalizeSettings(readJSON(AI_KEY, {}, storage));
 export const saveAiSettings = (settings, storage) => writeJSON(AI_KEY, normalizeSettings(settings), storage);
 
+/** Cloud use is pinned to the cheapest model at its lowest effort; only a local Ollama model can be chosen. */
+export const CLOUD_EFFORT = 'low';
+
 export function effectiveModel(settings) {
+  if (settings.provider === 'anthropic') return PROVIDERS.anthropic.defaultModel;
   return settings.model || PROVIDERS[settings.provider]?.defaultModel || '';
 }
 

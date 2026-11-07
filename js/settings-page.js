@@ -88,7 +88,8 @@ function fillAi() {
   $('ai-timeout').value = s.timeoutSec;
   $('ai-language').value = s.language;
   $('ai-consent').checked = s.cloudConsent;
-  $('ai-persist').checked = hasPersistedKey();
+  $('ai-persist').checked = hasPersistedKey() || !getApiKey();
+  $('ai-consent').checked = s.cloudConsent || Boolean(getApiKey());
   $('ai-key').value = '';
   $('ai-key').placeholder = getApiKey() ? 'A key is set (hidden). Type a new one to replace it.' : 'sk-ant-...';
   syncVisibility();
@@ -132,6 +133,7 @@ providerSelect.addEventListener('change', syncVisibility);
 $('ai-form').addEventListener('submit', (event) => {
   event.preventDefault();
   const settings = readForm();
+  if (settings.provider === 'anthropic' && ($('ai-key').value.trim() || getApiKey())) settings.cloudConsent = true; // adding a key is the consent
   saveAiSettings(settings);
   if (settings.provider === 'anthropic') persistKeyFromForm();
   $('ai-key').value = '';

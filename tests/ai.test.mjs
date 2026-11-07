@@ -88,12 +88,12 @@ const local = (extra = {}) => ({ ...defaultSettings(), provider: 'ollama', baseU
 // --- settings and credentials ---------------------------------------------------
 
 test('settings normalise bad input and keep sensible defaults', () => {
-  assert.equal(normalizeSettings({ provider: 'evil' }).provider, 'off');
+  assert.equal(normalizeSettings({ provider: 'evil' }).provider, 'ollama');
   assert.equal(normalizeSettings({ timeoutSec: 99999 }).timeoutSec, 300);
   assert.equal(normalizeSettings({ timeoutSec: 1 }).timeoutSec, 5);
   assert.equal(normalizeSettings({ language: 'fr' }).language, 'pt');
   assert.equal(normalizeSettings({ baseUrl: 'http://x:1///' }).baseUrl, 'http://x:1');
-  assert.equal(defaultSettings().provider, 'off', 'AI is off by default');
+  assert.equal(defaultSettings().provider, 'ollama', 'local Ollama is the default (nothing leaves the computer)');
   assert.equal(defaultSettings().cloudConsent, false);
   assert.equal(effectiveModel(local()), PROVIDERS.ollama.defaultModel);
   assert.equal(effectiveModel(local({ model: 'mistral' })), 'mistral');
@@ -123,7 +123,7 @@ test('clearAi removes the key everywhere and resets settings', () => {
   setApiKey('sk-x', { persist: true, sessionStore: sess, localStore: loc });
   clearAi({ sessionStore: sess, localStore: loc });
   assert.equal(getApiKey({ sessionStore: sess, localStore: loc }), '');
-  assert.equal(loadAiSettings(loc).provider, 'off');
+  assert.equal(loadAiSettings(loc).provider, 'ollama');
 });
 
 test('the API key is a secret key: exports never contain it', () => {
@@ -291,11 +291,11 @@ test('cancellation stops the request and reports cancelled', async () => {
 test('AI disabled, missing key, missing consent and empty input are refused before any request', async () => {
   reset();
   const noFetch = async () => assert.fail('must not call the network');
-  await assert.rejects(summarize({ settings: defaultSettings(), articles: ARTICLES, fetchImpl: noFetch }), (e) => e.code === 'disabled');
+  await assert.rejects(summarize({ settings: { ...defaultSettings(), provider: 'off' }, articles: ARTICLES, fetchImpl: noFetch }), (e) => e.code === 'disabled');
   await assert.rejects(summarize({ settings: cloud(), apiKey: '', articles: ARTICLES, fetchImpl: noFetch }), (e) => e.code === 'no-key');
   await assert.rejects(summarize({ settings: cloud({ cloudConsent: false }), apiKey: 'k', articles: ARTICLES, fetchImpl: noFetch }), (e) => e.code === 'no-consent' && /sent to Anthropic/.test(e.message));
   await assert.rejects(summarize({ settings: local(), articles: [], fetchImpl: noFetch }), (e) => e.code === 'no-input');
-  await assert.rejects(testConnection({ settings: defaultSettings(), fetchImpl: noFetch }), (e) => e.code === 'disabled');
+  await assert.rejects(testConnection({ settings: { ...defaultSettings(), provider: 'off' }, fetchImpl: noFetch }), (e) => e.code === 'disabled');
   assert.equal(seen.length, 0);
 });
 
@@ -329,4 +329,40 @@ test('a failed request is not cached', async () => {
   reset();
   const ok = await summarize({ settings: local(), mode: 'short', articles: ARTICLES, fetchImpl: fetch, storage });
   assert.equal(ok.meta.cached, false);
+});
+
+// ---- Per-article "AI" button -------------------------------------------------------------------
+import { summarizeArticle, ARTICLE_PROMPT } from '../js/ai/providers.js';
+
+test('summarizeArticle sends the Portuguese bullet prompt to Haiku 5.5 at low effort, thinking off, small cap', async () => {
+  let req;
+  const fetchImpl = async (url, init) => {
+    req = { url, headers: init.headers, body: JSON.parse(init.body) };
+    return { ok: true, status: 200, headers: new Headers(), json: async () => ({ content: [{ type: 'text', text: '- ponto um\n- ponto dois' }] }) };
+  };
+  const r = await summarizeArticle({ settings: cloud({ model: 'something-else' }), apiKey: 'sk-test', article: { title: 'Titulo', sourceName: 'G1', originalUrl: 'https://x.test/a' }, text: 'Texto da noticia completa.', fetchImpl, storage: memoryStorage() });
+  assert.equal(req.url, 'https://api.anthropic.com/v1/messages');
+  assert.equal(req.body.model, 'claude-haiku-5-5', 'the cloud model is pinned to Haiku 5.5');
+  assert.deepEqual(req.body.output_config, { effort: 'low' });
+  assert.deepEqual(req.body.thinking, { type: 'disabled' });
+  assert.ok(req.body.max_tokens <= 800);
+  assert.ok(!('temperature' in req.body));
+  assert.ok(req.body.messages[0].content.startsWith(ARTICLE_PROMPT));
+  assert.match(req.body.messages[0].content, /Texto da noticia completa/);
+  assert.equal(r.text, '- ponto um\n- ponto dois');
+});
+
+test('summarizeArticle caches by content and refuses cloud without key or consent', async () => {
+  let calls = 0;
+  const fetchImpl = async () => { calls += 1; return { ok: true, status: 200, headers: new Headers(), json: async () => ({ content: [{ type: 'text', text: '- ok' }] }) }; };
+  const storage = memoryStorage();
+  const args = { settings: cloud(), apiKey: 'k', article: { title: 'T', sourceName: 'S' }, text: 'abc', fetchImpl, storage };
+  await summarizeArticle(args);
+  const again = await summarizeArticle(args);
+  assert.equal(calls, 1);
+  assert.equal(again.meta.cached, true);
+  await summarizeArticle({ ...args, fresh: true });
+  assert.equal(calls, 2);
+  await assert.rejects(summarizeArticle({ ...args, apiKey: '' }), (e) => e.code === 'no-key');
+  await assert.rejects(summarizeArticle({ ...args, settings: cloud({ cloudConsent: false }) }), (e) => e.code === 'no-consent');
 });

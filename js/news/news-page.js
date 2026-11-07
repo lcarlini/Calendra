@@ -10,6 +10,7 @@ import { SOURCES, TABS, integratedSources } from './sources.js';
 import { buildStories, explainCluster } from './cluster.js';
 import { dateCutoff, loadNews, loadNewsPrefs, normalizeProxyUrl, saveNewsPrefs, searchArticles, NEWS_KEY } from './loader.js';
 import { prepareInputs, sendsToCloud, summarize } from '../ai/providers.js';
+import { openNewsAi } from '../ai/news-modal.js';
 import { getApiKey, loadAiSettings, AI_KEY } from '../ai/settings.js';
 import { describeError, summaryHtml } from '../ai/summary-ui.js';
 
@@ -74,9 +75,10 @@ function visibleArticles() {
   return searchArticles(list, $('news-q').value);
 }
 
-function summaryButtons(clusterId, coverage) {
+function summaryButtons(clusterId, coverage, leadId) {
   const cluster = coverage > 1;
   return `<div class="story-actions" role="group" aria-label="Summary">
+    <button type="button" class="btn btn-ai btn-sm" data-ai-article="${esc(leadId)}" aria-label="Resumir esta noticia com IA">✨ AI</button>
     ${cluster ? `<button type="button" class="btn btn-ghost btn-sm" data-summary="cluster" data-id="${esc(clusterId)}">Summarize coverage</button>` : ''}
     <button type="button" class="btn btn-ghost btn-sm" data-summary="short" data-id="${esc(clusterId)}">Short summary</button>
     <button type="button" class="btn btn-ghost btn-sm" data-summary="bullets" data-id="${esc(clusterId)}">Bullets</button>
@@ -111,7 +113,7 @@ function storyCard(c) {
       <ul>${ex.reasons.map((r) => `<li>${esc(r)}</li>`).join('')}</ul>
     </details>
     ${c.articles.length > 1 ? `<details class="related"><summary>Related coverage (${c.articles.length})</summary><ul>${c.articles.map(articleLine).join('')}</ul></details>` : ''}
-    ${summaryButtons(c.id, c.coverage)}
+    ${summaryButtons(c.id, c.coverage, lead.id)}
   </article>`;
 }
 
@@ -120,6 +122,7 @@ function latestRow(a) {
     <div class="story-top"><span class="badge badge-muted">${esc(a.sourceName)}</span><span class="muted">${esc(a.publishedAt ? timeAgo(a.publishedAt) : 'time not provided')}</span>${a.stale ? '<span class="badge badge-warn">Saved copy</span>' : ''}</div>
     <h4><a href="${esc(a.originalUrl)}" target="_blank" rel="noopener noreferrer">${esc(a.title)}</a></h4>
     ${a.excerpt ? `<p class="excerpt">${esc(a.excerpt)}</p>` : ''}
+    <div class="story-actions"><button type="button" class="btn btn-ai btn-sm" data-ai-article="${esc(a.id)}" aria-label="Resumir esta noticia com IA">✨ AI</button></div>
   </article>`;
 }
 
@@ -253,6 +256,12 @@ document.addEventListener('click', (event) => {
     prefs = { ...prefs, tab: tab.dataset.tab };
     saveNewsPrefs(prefs);
     render();
+    return;
+  }
+  const ai = event.target.closest('[data-ai-article]');
+  if (ai) {
+    const article = data.articles.find((a) => a.id === ai.dataset.aiArticle);
+    if (article) openNewsAi(article);
     return;
   }
   const summary = event.target.closest('[data-summary]');

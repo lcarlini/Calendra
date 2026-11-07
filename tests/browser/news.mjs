@@ -119,6 +119,7 @@ await b.ev(`{ const q = document.getElementById('news-q'); q.value = ''; q.dispa
 
 // 7. Summary with AI off: nothing is sent, clear guidance.
 received.length = 0;
+await setStore('calendra.ai.v1', { provider: 'off' });
 await b.ev(`document.querySelector('[data-summary="short"]').click()`);
 await sleep(500);
 c(/AI summaries are off/.test(await text('.summary-box:not([hidden])')) && received.length === 0, 'AI off: button explains how to enable it and sends nothing');

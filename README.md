@@ -34,12 +34,14 @@ Optional ways to get more headlines (News page, "Optional: get more headlines"):
 * or your own proxy: `ALLOWED_ORIGINS=https://lcarlini.github.io node backend/news-proxy/server.mjs` (or deploy it as a Cloudflare Worker with `npx wrangler deploy`).
   A proxy, when configured, takes priority. See `.env.example` (placeholders only).
 
-## AI summaries (optional, off by default)
+## AI summaries (local Ollama by default)
 
-Settings offers **Anthropic** (your own API key) or **Ollama** (a running local server). Summaries are generated only when you press a button on a story,
-show that they are AI-generated, list the headlines/excerpts they were based on, and say when the input was only headlines.
-* The API key is kept **for the session only** unless you opt in to remembering it. Browser storage is readable by any script on the page, so use a key with a low spending limit. Keys are never exported or logged.
-* Anthropic summaries send headlines and short excerpts to Anthropic; you must confirm this first. Ollama stays on your machine, but the browser can only call it if Ollama allows the site's origin (`OLLAMA_ORIGINS`).
+Every story has a **✨ AI** button. It opens a modal that reads the article text (through the public reader r.jina.ai, falling back to the headline and
+feed excerpt, and saying so) and asks the AI: *"Resuma essa noticia em topicos, de maneira pequena mas sem perder nenhum detalhe"*. The answer is bullet topics.
+* **Default: Ollama** on your machine (`http://127.0.0.1:11434`; start it with `OLLAMA_ORIGINS` allowing this site).
+* **Optional: Claude.** Paste your Anthropic API key in Settings. The cloud model is pinned to **Claude Haiku 5.5, lowest effort, thinking off, 700-token cap**, the cheapest setting.
+* The key is stored only in this browser (localStorage; untick "Remember" to keep it for the tab only). It is sent only to `api.anthropic.com`, never exported or logged. Browser storage is readable by scripts on the page and extensions, so use a key with a low monthly limit.
+* Summaries are cached in the browser; "Gerar de novo" bypasses the cache.
 
 ## Your data
 
