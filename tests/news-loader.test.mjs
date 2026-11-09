@@ -190,7 +190,16 @@ test('damaged accents with no clean copy are restored from the vocabulary', () =
     { id: 's', title: 'Zz?qq?? unknown word stays', excerpt: 'Ucr?nia ?? ok' },
   ];
   repairGarbled(list);
+  assert.equal(list.length, 1);
   assert.equal(list[0].title, 'Rússia afirma ter atacado subestações de energia na Ucrânia e três navios no Mar Negro');
-  assert.equal(list[1].title, 'Zz?qq?? unknown word stays');
-  assert.equal(list[1].excerpt, 'Ucrânia ?? ok');
+});
+
+test('a headline that cannot be repaired is not shown, and no broken excerpt is either', () => {
+  const list = [
+    { id: 'p', title: 'Pipoca de p?o de queijo mostram criatividade', excerpt: 'Chefs em festival da Folha' },
+    { id: 'q', title: 'Normal headline', excerpt: 'Resumo com ?ataques' },
+  ];
+  repairGarbled(list);
+  assert.deepEqual(list.map((x) => x.id), ['q']);
+  assert.equal(list[0].excerpt, 'Resumo com ataques');
 });

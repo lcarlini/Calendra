@@ -42,6 +42,7 @@ export const SOURCES = [
     tags: ['brazil'],
     homepage: 'https://www.uol.com.br/',
     feed: 'https://rss.uol.com.br/feed/noticias.xml',
+    feedEncoding: 'iso-8859-1',
   },
   {
     id: 'uol-economia',
@@ -51,6 +52,7 @@ export const SOURCES = [
     tags: ['brazil', 'economy'],
     homepage: 'https://economia.uol.com.br/',
     feed: 'https://rss.uol.com.br/feed/economia.xml',
+    feedEncoding: 'iso-8859-1',
   },
   {
     id: 'dutchnews',

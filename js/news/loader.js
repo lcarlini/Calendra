@@ -188,6 +188,12 @@ export async function loadNews({ proxyUrl, rss2jsonKey = '', disabled = [], fetc
         statuses.push({ ...base, state: 'unavailable', message: source.unavailableReason });
         return;
       }
+      // rss2json cannot carry a non-UTF-8 feed without losing its accents, so without our own proxy such a feed
+      // is not fetched through it. Its headlines come from the index's UTF-8 copies instead.
+      if (!proxyUrl && source.feedEncoding && source.feedEncoding !== 'utf-8') {
+        statuses.push({ ...base, state: 'unavailable', message: `Its feed is ${source.feedEncoding.toUpperCase()} and the converter loses its accents. Headlines come from the open index; a proxy reads the feed itself.` });
+        return;
+      }
       if (disabled.includes(source.id)) {
         statuses.push({ ...base, state: 'disabled', message: 'Turned off by you' });
         return;
@@ -306,6 +312,11 @@ export function repairGarbled(articles) {
       continue;
     }
     if (isGarbled(a.title)) a.title = restoreAccents(a.title);
+    // A headline that is still damaged is not shown: the original characters are gone.
+    if (isGarbled(a.title)) {
+      articles.splice(i, 1);
+      continue;
+    }
     if (isGarbled(a.excerpt)) a.excerpt = restoreAccents(a.excerpt);
     if (isGarbled(a.excerpt)) a.excerpt = '';
   }
