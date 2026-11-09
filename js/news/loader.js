@@ -252,16 +252,57 @@ export async function loadNews({ proxyUrl, rss2jsonKey = '', disabled = [], fetc
 }
 
 /**
- * rss2json mangles feeds that are not UTF-8 (UOL's are ISO-8859-1): accents arrive as "?" inside words.
- * Prefer the index's UTF-8 copy of the same URL; otherwise keep the headline but drop a garbled excerpt.
+ * rss2json and the index mangle feeds that are not UTF-8 (UOL's are ISO-8859-1): accents arrive as "?" inside words,
+ * one or two "?" per accented letter ("Rússia" → "R?ssia", "subestações" → "subesta??es").
+ * Prefer the index's UTF-8 copy of the same URL; otherwise restore the accents from a vocabulary of common words.
  */
-export const isGarbled = (text) => /[A-Za-zÀ-ÿ]\?[A-Za-zÀ-ÿ]|(?:^|\s)\?[a-zà-ÿ]{2,}/.test(String(text || ''));
+export const isGarbled = (text) => /[A-Za-zÀ-ÿ]\?+[A-Za-zÀ-ÿ]|(?:^|\s)\?+[a-zà-ÿ]{2,}/.test(String(text || ''));
+
+// Common news vocabulary (Portuguese first). Only used to restore accents in words the converter damaged.
+const ACCENT_WORDS = [
+  'Rússia', 'Ucrânia', 'três', 'subestações', 'subestação', 'energia', 'navios', 'navio', 'também', 'políticas',
+  'política', 'países', 'país', 'governo', 'eleições', 'eleição', 'milhões', 'milhão', 'bilhões', 'bilhão', 'Índia',
+  'ação', 'ações', 'após', 'até', 'já', 'mês', 'meses', 'anos', 'ano', 'são', 'será', 'saúde', 'ministro', 'ministra',
+  'presidente', 'decisão', 'crise', 'guerra', 'segurança', 'econômica', 'econômico', 'economia', 'pré', 'médio',
+  'público', 'pública', 'história', 'músico', 'útil', 'notícia', 'notícias', 'aéreo', 'aérea', 'ataque', 'ataques',
+  'exército', 'forças', 'militar', 'militares', 'própria', 'região', 'regiões', 'cidade', 'cidades', 'polícia',
+  'justiça', 'relatório', 'vídeo', 'vítimas', 'vítima', 'dívida', 'inflação', 'juros', 'reforma', 'tarifas', 'tarifa',
+  'comércio', 'exportações', 'importações', 'produção', 'produtos', 'mercado', 'mercados', 'dólar', 'câmbio',
+  'petróleo', 'usina', 'usinas', 'geração', 'tensão', 'tensões', 'negociações', 'acordo', 'acordos', 'paz', 'último',
+  'última', 'últimos', 'próximo', 'próxima', 'primeiro', 'primeira', 'segundo', 'série', 'evento', 'eventos', 'técnico',
+  'chuva', 'chuvas', 'previsão', 'cúpula', 'ministério', 'secretário', 'secretária', 'saída', 'hospital', 'hospitais',
+  'vacina', 'vacinas', 'doença', 'doenças', 'educação', 'eleitoral', 'votação', 'mortos', 'morre', 'famoso', 'famosa',
+  'Lula', 'Irã', 'Síria', 'Coreia', 'Japão', 'França', 'Alemanha', 'Itália', 'Espanha', 'Portugal', 'Palestina',
+  'México', 'Colômbia', 'Bolívia', 'Moçambique', 'Canadá', 'Turquia', 'Brasília', 'São Paulo', 'Rio de Janeiro',
+  'Angola', 'Venezuela', 'Argentina', 'Uruguai', 'Paraguai', 'Gaza', 'Jerusalém', 'Mônaco', 'Indonésia',
+];
+const accentKey = (word) => word.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+/** Restore "?"-damaged words when exactly one known word fits. Unknown or ambiguous words are left as they are. */
+export function restoreAccents(text) {
+  return String(text ?? '').replace(/[\p{L}?]*\?[\p{L}?]*/gu, (token) => {
+    if (!/\p{L}/u.test(token)) return token;
+    const pattern = token
+      .split(/\?+/)
+      .map((part) => part.replace(/[.*+^${}()|[\]\\]/g, '\\$&'))
+      .join('.{1,2}');
+    const re = new RegExp(`^${pattern}$`, 'i');
+    const hits = new Set(ACCENT_WORDS.filter((word) => re.test(accentKey(word))));
+    return hits.size === 1 ? [...hits][0] : token;
+  });
+}
+
 export function repairGarbled(articles) {
   const clean = new Set(articles.filter((a) => a.viaIndex && !isGarbled(a.title)).map((a) => a.id));
   for (let i = articles.length - 1; i >= 0; i -= 1) {
     const a = articles[i];
-    if (!a.viaIndex && isGarbled(a.title) && clean.has(a.id)) articles.splice(i, 1);
-    else if (isGarbled(a.excerpt)) a.excerpt = '';
+    if (!a.viaIndex && isGarbled(a.title) && clean.has(a.id)) {
+      articles.splice(i, 1);
+      continue;
+    }
+    if (isGarbled(a.title)) a.title = restoreAccents(a.title);
+    if (isGarbled(a.excerpt)) a.excerpt = restoreAccents(a.excerpt);
+    if (isGarbled(a.excerpt)) a.excerpt = '';
   }
   return articles;
 }

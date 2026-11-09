@@ -179,7 +179,18 @@ test('garbled (non UTF-8) feed copies are replaced by the index copy, or lose th
     { id: 'c', title: 'Normal title? Yes', excerpt: 'ok' },
   ];
   repairGarbled(list);
-  assert.deepEqual(list.map((x) => x.title), ['Morre músico famoso', 'Sem alternativa ap?s tudo', 'Normal title? Yes']);
-  assert.equal(list[1].excerpt, '');
+  assert.deepEqual(list.map((x) => x.title), ['Morre músico famoso', 'Sem alternativa após tudo', 'Normal title? Yes']);
+  assert.equal(list[1].excerpt, 'resumo útil aqui');
   assert.equal(list[2].excerpt, 'ok');
+});
+
+test('damaged accents with no clean copy are restored from the vocabulary', () => {
+  const list = [
+    { id: 'r', title: 'R?ssia afirma ter atacado subesta??es de energia na Ucr?nia e tr?s navios no Mar Negro', excerpt: '' },
+    { id: 's', title: 'Zz?qq?? unknown word stays', excerpt: 'Ucr?nia ?? ok' },
+  ];
+  repairGarbled(list);
+  assert.equal(list[0].title, 'Rússia afirma ter atacado subestações de energia na Ucrânia e três navios no Mar Negro');
+  assert.equal(list[1].title, 'Zz?qq?? unknown word stays');
+  assert.equal(list[1].excerpt, 'Ucrânia ?? ok');
 });
