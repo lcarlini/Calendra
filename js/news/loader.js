@@ -144,7 +144,8 @@ export async function loadNews({ proxyUrl, rss2jsonKey = '', disabled = [], fetc
   const articles = [];
   const order = new Map(SOURCES.map((s, i) => [s.id, i]));
 
-  const emit = () => onUpdate?.({ articles: [...articles], statuses: [...statuses, ...extraStatuses].sort((a, b) => (order.get(a.id) ?? 99) - (order.get(b.id) ?? 99)), fetchedAt, partial: true });
+  // Partial updates reach the page before the end of the load, so they get the same repair as the final list.
+  const emit = () => onUpdate?.({ articles: repairGarbled([...articles]), statuses: [...statuses, ...extraStatuses].sort((a, b) => (order.get(a.id) ?? 99) - (order.get(b.id) ?? 99)), fetchedAt, partial: true });
   // The serverless transport is polite: at most 3 feeds in flight, a short pause between starts.
   const lanes = proxyUrl ? Infinity : fetchOpts.concurrency ?? 3;
   let active = 0;
@@ -271,7 +272,7 @@ const ACCENT_WORDS = [
   'petróleo', 'usina', 'usinas', 'geração', 'tensão', 'tensões', 'negociações', 'acordo', 'acordos', 'paz', 'último',
   'última', 'últimos', 'próximo', 'próxima', 'primeiro', 'primeira', 'segundo', 'série', 'evento', 'eventos', 'técnico',
   'chuva', 'chuvas', 'previsão', 'cúpula', 'ministério', 'secretário', 'secretária', 'saída', 'hospital', 'hospitais',
-  'vacina', 'vacinas', 'doença', 'doenças', 'educação', 'eleitoral', 'votação', 'mortos', 'morre', 'famoso', 'famosa',
+  'atingiram', 'atingir', 'transportavam', 'realizados', 'vacina', 'vacinas', 'doença', 'doenças', 'educação', 'eleitoral', 'votação', 'mortos', 'morre', 'famoso', 'famosa',
   'Lula', 'Irã', 'Síria', 'Coreia', 'Japão', 'França', 'Alemanha', 'Itália', 'Espanha', 'Portugal', 'Palestina',
   'México', 'Colômbia', 'Bolívia', 'Moçambique', 'Canadá', 'Turquia', 'Brasília', 'São Paulo', 'Rio de Janeiro',
   'Angola', 'Venezuela', 'Argentina', 'Uruguai', 'Paraguai', 'Gaza', 'Jerusalém', 'Mônaco', 'Indonésia',
@@ -282,10 +283,14 @@ const accentKey = (word) => word.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowe
 export function restoreAccents(text) {
   return String(text ?? '').replace(/[\p{L}?]*\?[\p{L}?]*/gu, (token) => {
     if (!/\p{L}/u.test(token)) return token;
-    const pattern = token
+    // A "?" at the start of a word can stand for a dropped character, so it may also match nothing.
+    const lead = token.startsWith('?') ? '.{0,2}' : '';
+    const body = token
+      .replace(/^\?+/, '')
       .split(/\?+/)
       .map((part) => part.replace(/[.*+^${}()|[\]\\]/g, '\\$&'))
       .join('.{1,2}');
+    const pattern = lead + body;
     const re = new RegExp(`^${pattern}$`, 'i');
     const hits = new Set(ACCENT_WORDS.filter((word) => re.test(accentKey(word))));
     return hits.size === 1 ? [...hits][0] : token;
