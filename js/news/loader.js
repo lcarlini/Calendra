@@ -144,7 +144,8 @@ export async function loadNews({ proxyUrl, rss2jsonKey = '', disabled = [], fetc
   const articles = [];
   const order = new Map(SOURCES.map((s, i) => [s.id, i]));
 
-  const emit = () => onUpdate?.({ articles: [...articles], statuses: [...statuses, ...extraStatuses].sort((a, b) => (order.get(a.id) ?? 99) - (order.get(b.id) ?? 99)), fetchedAt, partial: true });
+  // Partial updates reach the page before the end of the load, so they get the same repair as the final list.
+  const emit = () => onUpdate?.({ articles: repairGarbled([...articles]), statuses: [...statuses, ...extraStatuses].sort((a, b) => (order.get(a.id) ?? 99) - (order.get(b.id) ?? 99)), fetchedAt, partial: true });
   // The serverless transport is polite: at most 3 feeds in flight, a short pause between starts.
   const lanes = proxyUrl ? Infinity : fetchOpts.concurrency ?? 3;
   let active = 0;
@@ -185,6 +186,12 @@ export async function loadNews({ proxyUrl, rss2jsonKey = '', disabled = [], fetc
       const base = { id: source.id, name: source.name, homepage: source.homepage };
       if (!source.feed) {
         statuses.push({ ...base, state: 'unavailable', message: source.unavailableReason });
+        return;
+      }
+      // rss2json cannot carry a non-UTF-8 feed without losing its accents, so without our own proxy such a feed
+      // is not fetched through it. Its headlines come from the index's UTF-8 copies instead.
+      if (!proxyUrl && source.feedEncoding && source.feedEncoding !== 'utf-8') {
+        statuses.push({ ...base, state: 'unavailable', message: `Its feed is ${source.feedEncoding.toUpperCase()} and the converter loses its accents. Headlines come from the open index; a proxy reads the feed itself.` });
         return;
       }
       if (disabled.includes(source.id)) {
@@ -252,16 +259,66 @@ export async function loadNews({ proxyUrl, rss2jsonKey = '', disabled = [], fetc
 }
 
 /**
- * rss2json mangles feeds that are not UTF-8 (UOL's are ISO-8859-1): accents arrive as "?" inside words.
- * Prefer the index's UTF-8 copy of the same URL; otherwise keep the headline but drop a garbled excerpt.
+ * rss2json and the index mangle feeds that are not UTF-8 (UOL's are ISO-8859-1): accents arrive as "?" inside words,
+ * one or two "?" per accented letter ("Rússia" → "R?ssia", "subestações" → "subesta??es").
+ * Prefer the index's UTF-8 copy of the same URL; otherwise restore the accents from a vocabulary of common words.
  */
-export const isGarbled = (text) => /[A-Za-zÀ-ÿ]\?[A-Za-zÀ-ÿ]|(?:^|\s)\?[a-zà-ÿ]{2,}/.test(String(text || ''));
+export const isGarbled = (text) => /[A-Za-zÀ-ÿ]\?+[A-Za-zÀ-ÿ]|(?:^|\s)\?+[a-zà-ÿ]{2,}/.test(String(text || ''));
+
+// Common news vocabulary (Portuguese first). Only used to restore accents in words the converter damaged.
+const ACCENT_WORDS = [
+  'Rússia', 'Ucrânia', 'três', 'subestações', 'subestação', 'energia', 'navios', 'navio', 'também', 'políticas',
+  'política', 'países', 'país', 'governo', 'eleições', 'eleição', 'milhões', 'milhão', 'bilhões', 'bilhão', 'Índia',
+  'ação', 'ações', 'após', 'até', 'já', 'mês', 'meses', 'anos', 'ano', 'são', 'será', 'saúde', 'ministro', 'ministra',
+  'presidente', 'decisão', 'crise', 'guerra', 'segurança', 'econômica', 'econômico', 'economia', 'pré', 'médio',
+  'público', 'pública', 'história', 'músico', 'útil', 'notícia', 'notícias', 'aéreo', 'aérea', 'ataque', 'ataques',
+  'exército', 'forças', 'militar', 'militares', 'própria', 'região', 'regiões', 'cidade', 'cidades', 'polícia',
+  'justiça', 'relatório', 'vídeo', 'vítimas', 'vítima', 'dívida', 'inflação', 'juros', 'reforma', 'tarifas', 'tarifa',
+  'comércio', 'exportações', 'importações', 'produção', 'produtos', 'mercado', 'mercados', 'dólar', 'câmbio',
+  'petróleo', 'usina', 'usinas', 'geração', 'tensão', 'tensões', 'negociações', 'acordo', 'acordos', 'paz', 'último',
+  'última', 'últimos', 'próximo', 'próxima', 'primeiro', 'primeira', 'segundo', 'série', 'evento', 'eventos', 'técnico',
+  'chuva', 'chuvas', 'previsão', 'cúpula', 'ministério', 'secretário', 'secretária', 'saída', 'hospital', 'hospitais',
+  'atingiram', 'atingir', 'transportavam', 'realizados', 'vacina', 'vacinas', 'doença', 'doenças', 'educação', 'eleitoral', 'votação', 'mortos', 'morre', 'famoso', 'famosa',
+  'Lula', 'Irã', 'Síria', 'Coreia', 'Japão', 'França', 'Alemanha', 'Itália', 'Espanha', 'Portugal', 'Palestina',
+  'México', 'Colômbia', 'Bolívia', 'Moçambique', 'Canadá', 'Turquia', 'Brasília', 'São Paulo', 'Rio de Janeiro',
+  'Angola', 'Venezuela', 'Argentina', 'Uruguai', 'Paraguai', 'Gaza', 'Jerusalém', 'Mônaco', 'Indonésia',
+];
+const accentKey = (word) => word.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+/** Restore "?"-damaged words when exactly one known word fits. Unknown or ambiguous words are left as they are. */
+export function restoreAccents(text) {
+  return String(text ?? '').replace(/[\p{L}?]*\?[\p{L}?]*/gu, (token) => {
+    if (!/\p{L}/u.test(token)) return token;
+    // A "?" at the start of a word can stand for a dropped character, so it may also match nothing.
+    const lead = token.startsWith('?') ? '.{0,2}' : '';
+    const body = token
+      .replace(/^\?+/, '')
+      .split(/\?+/)
+      .map((part) => part.replace(/[.*+^${}()|[\]\\]/g, '\\$&'))
+      .join('.{1,2}');
+    const pattern = lead + body;
+    const re = new RegExp(`^${pattern}$`, 'i');
+    const hits = new Set(ACCENT_WORDS.filter((word) => re.test(accentKey(word))));
+    return hits.size === 1 ? [...hits][0] : token;
+  });
+}
+
 export function repairGarbled(articles) {
   const clean = new Set(articles.filter((a) => a.viaIndex && !isGarbled(a.title)).map((a) => a.id));
   for (let i = articles.length - 1; i >= 0; i -= 1) {
     const a = articles[i];
-    if (!a.viaIndex && isGarbled(a.title) && clean.has(a.id)) articles.splice(i, 1);
-    else if (isGarbled(a.excerpt)) a.excerpt = '';
+    if (!a.viaIndex && isGarbled(a.title) && clean.has(a.id)) {
+      articles.splice(i, 1);
+      continue;
+    }
+    if (isGarbled(a.title)) a.title = restoreAccents(a.title);
+    // A headline that is still damaged is not shown: the original characters are gone.
+    if (isGarbled(a.title)) {
+      articles.splice(i, 1);
+      continue;
+    }
+    if (isGarbled(a.excerpt)) a.excerpt = restoreAccents(a.excerpt);
+    if (isGarbled(a.excerpt)) a.excerpt = '';
   }
   return articles;
 }

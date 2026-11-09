@@ -179,7 +179,27 @@ test('garbled (non UTF-8) feed copies are replaced by the index copy, or lose th
     { id: 'c', title: 'Normal title? Yes', excerpt: 'ok' },
   ];
   repairGarbled(list);
-  assert.deepEqual(list.map((x) => x.title), ['Morre músico famoso', 'Sem alternativa ap?s tudo', 'Normal title? Yes']);
-  assert.equal(list[1].excerpt, '');
+  assert.deepEqual(list.map((x) => x.title), ['Morre músico famoso', 'Sem alternativa após tudo', 'Normal title? Yes']);
+  assert.equal(list[1].excerpt, 'resumo útil aqui');
   assert.equal(list[2].excerpt, 'ok');
+});
+
+test('damaged accents with no clean copy are restored from the vocabulary', () => {
+  const list = [
+    { id: 'r', title: 'R?ssia afirma ter atacado subesta??es de energia na Ucr?nia e tr?s navios no Mar Negro', excerpt: '' },
+    { id: 's', title: 'Zz?qq?? unknown word stays', excerpt: 'Ucr?nia ?? ok' },
+  ];
+  repairGarbled(list);
+  assert.equal(list.length, 1);
+  assert.equal(list[0].title, 'Rússia afirma ter atacado subestações de energia na Ucrânia e três navios no Mar Negro');
+});
+
+test('a headline that cannot be repaired is not shown, and no broken excerpt is either', () => {
+  const list = [
+    { id: 'p', title: 'Pipoca de p?o de queijo mostram criatividade', excerpt: 'Chefs em festival da Folha' },
+    { id: 'q', title: 'Normal headline', excerpt: 'Resumo com ?ataques' },
+  ];
+  repairGarbled(list);
+  assert.deepEqual(list.map((x) => x.id), ['q']);
+  assert.equal(list[0].excerpt, 'Resumo com ataques');
 });
