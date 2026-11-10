@@ -110,6 +110,33 @@ export function dedupeArticles(articles) {
   return unique;
 }
 
+/**
+ * Latest view: one card per identical headline, even when the outlets differ (a BBC copy on g1, a syndicated wire
+ * story). The first copy is kept; the other copies' photos stay in `variants` so the card can still step through them.
+ * Very short headlines are never merged (too generic to prove the same story).
+ */
+export function mergeSameHeadline(articles) {
+  const leads = new Map();
+  const out = [];
+  for (const article of articles) {
+    const key = normalizeTitle(article.title);
+    const mergeable = key.length >= 20;
+    const lead = mergeable ? leads.get(key) : undefined;
+    if (lead) {
+      lead.variants = [
+        ...(lead.variants || []),
+        { sourceId: article.sourceId, sourceName: article.sourceName, title: article.title, originalUrl: article.originalUrl, publishedAt: article.publishedAt, image: article.image, excerpt: article.excerpt },
+      ];
+      lead.alsoIn = [...new Set([...(lead.alsoIn || []), article.sourceId])].filter((s) => s !== lead.sourceId);
+      continue;
+    }
+    const copy = { ...article };
+    if (mergeable) leads.set(key, copy);
+    out.push(copy);
+  }
+  return out;
+}
+
 /** Step 2: greedy, order-stable clustering. An article joins a cluster only if it relates to at least half of it. */
 export function clusterArticles(articles, { windowHours = CLUSTER_WINDOW_HOURS } = {}) {
   const prepared = articles

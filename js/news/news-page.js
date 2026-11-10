@@ -7,7 +7,7 @@ import { initDisplay } from '../core/display.js';
 import { esc, timeAgo } from '../core/format.js';
 import { onStoreChange } from '../core/store.js';
 import { SOURCES, TABS, integratedSources } from './sources.js';
-import { buildStories, dedupeArticles, explainCluster } from './cluster.js';
+import { buildStories, dedupeArticles, explainCluster, mergeSameHeadline } from './cluster.js';
 import { dateCutoff, loadNews, loadNewsPrefs, normalizeProxyUrl, saveNewsPrefs, searchArticles, NEWS_KEY } from './loader.js';
 import { prepareInputs, sendsToCloud, summarize } from '../ai/providers.js';
 import { openNewsAi } from '../ai/news-modal.js';
@@ -102,19 +102,25 @@ let gallery = [];
 const initials = (name) => String(name || '?').split(/\s+/).map((w) => w[0]).join('').slice(0, 3).toUpperCase();
 const hue = (text) => [...String(text)].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) % 360, 7);
 
+/** The distinct photos of a story: each article's own photo and the photos of its merged copies, in order. */
+function photosOf(articles) {
+  const out = [];
+  const seen = new Set();
+  for (const a of articles.flatMap((x) => [x, ...(x.variants || [])])) {
+    if (!a.image || seen.has(a.image)) continue;
+    seen.add(a.image);
+    out.push(a);
+  }
+  return out;
+}
+
 /**
  * Image header of a card: the publisher's own feed images (credited; a click opens the viewer). When the story has
  * more than one photo, arrows step through them on the card itself. Without any picture: a styled placeholder.
  */
 function storyMedia(articles, title, extra = '') {
   const lead = articles[0];
-  const pics = [];
-  const seen = new Set();
-  for (const a of articles) {
-    if (!a.image || seen.has(a.image)) continue;
-    seen.add(a.image);
-    pics.push(a);
-  }
+  const pics = photosOf(articles);
   if (!pics.length) {
     return `<div class="story-media placeholder" style="--h:${hue(lead.sourceName)}" aria-hidden="true">
       <span class="story-media-mark">${esc(initials(lead.sourceName))}</span>
@@ -244,7 +250,7 @@ function render() {
   container.classList.add('news-grid');
   if (prefs.tab === 'latest') {
     // Same article from several feeds of one publisher group (e.g. g1 and g1 Economia) is shown once.
-    const sorted = dedupeArticles(list).sort((a, b) => (b.publishedAt || '').localeCompare(a.publishedAt || ''));
+    const sorted = mergeSameHeadline(dedupeArticles(list)).sort((a, b) => (b.publishedAt || '').localeCompare(a.publishedAt || ''));
     container.innerHTML = sorted.slice(0, 81).map(latestRow).join('');
     $('news-summary-line').textContent = `${sorted.length} articles · ${live} live source${live === 1 ? '' : 's'}${partial}${q ? ` · matching "${q}"` : ''} · ${scope}`;
     stories = [];
@@ -344,7 +350,11 @@ document.addEventListener('click', (event) => {
   }
   const media = event.target.closest('[data-gallery]');
   if (media) {
-    openImageViewer(gallery, Number(media.dataset.gallery));
+    // The viewer shows only this story's photos, starting at the one clicked.
+    const slides = (media.closest('.story-media')?.dataset.slides || media.dataset.gallery).split(',').map(Number);
+    const usable = slides.filter((i) => gallery[i]?.src);
+    const start = Math.max(0, usable.indexOf(Number(media.dataset.gallery)));
+    openImageViewer(usable.map((i) => gallery[i]), start);
     return;
   }
   const ai = event.target.closest('[data-ai-article]');
