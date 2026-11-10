@@ -5,7 +5,7 @@
 import { fetchText, fetchJson, createCircuitBreaker } from '../core/http.js';
 import { cacheGet, cacheSet } from '../core/cache.js';
 import { readJSON, writeJSON } from '../core/store.js';
-import { firstImage, parseFeed, parseFeedDate, safeImageUrl, stripHtml } from './rss.js';
+import { firstImage, imagesInHtml, parseFeed, parseFeedDate, safeImageUrl, stripHtml } from './rss.js';
 import { toArticle } from './normalize.js';
 import { GDELT_QUERIES, SOURCES, sourceForGdelt } from './sources.js';
 
@@ -118,6 +118,13 @@ export async function fetchViaRss2Json(feedAddress, { apiKey = '', count = 0, fe
     publishedAt: parseFeedDate(i.pubDate ? `${String(i.pubDate).replace(' ', 'T')}Z` : '', now),
     categories: Array.isArray(i.categories) ? i.categories.map(String) : [],
     excerptHtml: i.description || '',
+    // Every photo the item carries (thumbnail, image enclosure, all <img> in the description and content).
+    images: [
+      safeImageUrl(i.thumbnail),
+      /^image\//i.test(i.enclosure?.type || '') || /\.(jpe?g|png|webp)(\?|$)/i.test(i.enclosure?.link || '') ? safeImageUrl(i.enclosure?.link) : '',
+      ...imagesInHtml(i.description),
+      ...imagesInHtml(i.content),
+    ].filter((u, k, all) => u && all.indexOf(u) === k),
     image:
       safeImageUrl(i.thumbnail) ||
       (/^image\//i.test(i.enclosure?.type || '') || /\.(jpe?g|png|webp)(\?|$)/i.test(i.enclosure?.link || '') ? safeImageUrl(i.enclosure?.link) : '') ||

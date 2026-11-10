@@ -125,7 +125,7 @@ export function mergeSameHeadline(articles) {
     if (lead) {
       lead.variants = [
         ...(lead.variants || []),
-        { sourceId: article.sourceId, sourceName: article.sourceName, title: article.title, originalUrl: article.originalUrl, publishedAt: article.publishedAt, image: article.image, excerpt: article.excerpt },
+        { sourceId: article.sourceId, sourceName: article.sourceName, title: article.title, originalUrl: article.originalUrl, publishedAt: article.publishedAt, image: article.image, images: article.images, excerpt: article.excerpt },
       ];
       lead.alsoIn = [...new Set([...(lead.alsoIn || []), article.sourceId])].filter((s) => s !== lead.sourceId);
       continue;
