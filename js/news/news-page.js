@@ -102,33 +102,69 @@ let gallery = [];
 const initials = (name) => String(name || '?').split(/\s+/).map((w) => w[0]).join('').slice(0, 3).toUpperCase();
 const hue = (text) => [...String(text)].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) % 360, 7);
 
-/** Image header of a card: the publisher's own feed image (credited, opens the viewer) or a styled placeholder. */
-function storyMedia(article, title, extra = '') {
-  const img = article.image;
-  const when = article.publishedAt ? timeAgo(article.publishedAt) : '';
-  if (img) {
-    const i = gallery.push({ src: img, title, source: article.sourceName, url: article.originalUrl, when }) - 1;
-    return `<button type="button" class="story-media" data-gallery="${i}" aria-label="View image: ${esc(title)}">
-      <img src="${esc(img)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-      <span class="story-media-zoom" aria-hidden="true">⤢</span>
-      <span class="story-media-source">${esc(article.sourceName)}</span>${extra}
-    </button>`;
+/**
+ * Image header of a card: the publisher's own feed images (credited; a click opens the viewer). When the story has
+ * more than one photo, arrows step through them on the card itself. Without any picture: a styled placeholder.
+ */
+function storyMedia(articles, title, extra = '') {
+  const lead = articles[0];
+  const pics = [];
+  const seen = new Set();
+  for (const a of articles) {
+    if (!a.image || seen.has(a.image)) continue;
+    seen.add(a.image);
+    pics.push(a);
   }
-  return `<div class="story-media placeholder" style="--h:${hue(article.sourceName)}" aria-hidden="true">
-      <span class="story-media-mark">${esc(initials(article.sourceName))}</span>
-      <span class="story-media-source">${esc(article.sourceName)}</span>${extra}
+  if (!pics.length) {
+    return `<div class="story-media placeholder" style="--h:${hue(lead.sourceName)}" aria-hidden="true">
+      <span class="story-media-mark">${esc(initials(lead.sourceName))}</span>
+      <span class="story-media-source">${esc(lead.sourceName)}</span>${extra}
     </div>`;
+  }
+  const slides = pics.map((a) => gallery.push({ src: a.image, title, source: a.sourceName, url: a.originalUrl, when: a.publishedAt ? timeAgo(a.publishedAt) : '' }) - 1);
+  const first = pics[0];
+  const nav =
+    slides.length > 1
+      ? `<button type="button" class="story-nav story-prev" data-story-nav="-1" aria-label="Foto anterior">‹</button>
+      <button type="button" class="story-nav story-next" data-story-nav="1" aria-label="Próxima foto">›</button>
+      <span class="story-count" aria-hidden="true">1/${slides.length}</span>`
+      : '';
+  return `<div class="story-media" data-slides="${slides.join(',')}" data-slide="0">
+      <button type="button" class="story-media-open" data-gallery="${slides[0]}" aria-label="View image: ${esc(title)}">
+        <img src="${esc(first.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+      </button>
+      <span class="story-media-zoom" aria-hidden="true">⤢</span>
+      <span class="story-media-source">${esc(first.sourceName)}</span>${extra}
+      ${nav}
+    </div>`;
+}
+
+/** Moves a card's photo one step (wrapping), skipping photos that failed to load. */
+function showSlide(media, step) {
+  const slides = media.dataset.slides.split(',').map(Number);
+  let pos = Number(media.dataset.slide) || 0;
+  for (let k = 0; k < slides.length; k += 1) {
+    pos = (pos + step + slides.length) % slides.length;
+    if (gallery[slides[pos]]?.src) break;
+  }
+  const g = gallery[slides[pos]];
+  if (!g?.src) return;
+  media.dataset.slide = String(pos);
+  media.querySelector('.story-media-open').dataset.gallery = String(slides[pos]);
+  media.querySelector('.story-media-open img').src = g.src;
+  media.querySelector('.story-media-source').textContent = g.source;
+  const count = media.querySelector('.story-count');
+  if (count) count.textContent = `${pos + 1}/${slides.length}`;
 }
 
 function storyCard(c, index = 0) {
   const ex = explainCluster(c, { topics: prefs.topics, region: prefs.region });
   const lead = c.articles[0];
-  const withImage = c.articles.find((a) => a.image) || lead;
   const stale = c.articles.every((a) => a.stale);
   const featured = index === 0;
   const coverage = c.coverage > 1 ? `<span class="story-coverage">${c.coverage} outlets</span>` : '';
   return `<article class="story-card news-card${featured ? ' featured' : ''}" data-id="${esc(c.id)}">
-    ${storyMedia(withImage.image ? withImage : lead, c.title, coverage)}
+    ${storyMedia(c.articles, c.title, coverage)}
     <div class="news-card-body">
       <div class="story-top">
         <span class="badge ${c.coverage > 1 ? 'badge-ok' : 'badge-muted'}">${esc(ex.headline)}</span>
@@ -152,7 +188,7 @@ function storyCard(c, index = 0) {
 
 function latestRow(a) {
   return `<article class="story-card news-card">
-    ${storyMedia(a, a.title)}
+    ${storyMedia([a], a.title)}
     <div class="news-card-body">
       <div class="story-top"><span class="muted">${esc(a.publishedAt ? timeAgo(a.publishedAt) : 'time not provided')}</span>${a.stale ? '<span class="badge badge-warn">Saved copy</span>' : ''}</div>
       <h4><a href="${esc(a.originalUrl)}" target="_blank" rel="noopener noreferrer">${esc(a.title)}</a></h4>
@@ -301,6 +337,11 @@ document.addEventListener('click', (event) => {
     render();
     return;
   }
+  const nav = event.target.closest('[data-story-nav]');
+  if (nav) {
+    showSlide(nav.closest('.story-media'), Number(nav.dataset.storyNav));
+    return;
+  }
   const media = event.target.closest('[data-gallery]');
   if (media) {
     openImageViewer(gallery, Number(media.dataset.gallery));
@@ -370,9 +411,14 @@ $('news-list').addEventListener(
     const img = event.target;
     if (!(img instanceof HTMLImageElement)) return;
     const media = img.closest('.story-media');
-    if (!media) return;
-    const i = Number(media.dataset.gallery);
+    if (!media || media.classList.contains('placeholder')) return;
+    const i = Number(media.querySelector('.story-media-open')?.dataset.gallery);
     if (gallery[i]) gallery[i] = { ...gallery[i], src: '' };
+    // Another photo of the same story still loads: show it instead of a placeholder.
+    if (media.dataset.slides.split(',').some((s) => gallery[Number(s)]?.src)) {
+      showSlide(media, 1);
+      return;
+    }
     const source = media.querySelector('.story-media-source')?.textContent || '';
     const ph = document.createElement('div');
     ph.className = 'story-media placeholder';
