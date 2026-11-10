@@ -7,7 +7,7 @@ import { initDisplay } from '../core/display.js';
 import { esc, timeAgo } from '../core/format.js';
 import { onStoreChange } from '../core/store.js';
 import { SOURCES, TABS, integratedSources } from './sources.js';
-import { buildStories, explainCluster } from './cluster.js';
+import { buildStories, dedupeArticles, explainCluster } from './cluster.js';
 import { dateCutoff, loadNews, loadNewsPrefs, normalizeProxyUrl, saveNewsPrefs, searchArticles, NEWS_KEY } from './loader.js';
 import { prepareInputs, sendsToCloud, summarize } from '../ai/providers.js';
 import { openNewsAi } from '../ai/news-modal.js';
@@ -207,7 +207,8 @@ function render() {
   gallery = [];
   container.classList.add('news-grid');
   if (prefs.tab === 'latest') {
-    const sorted = [...list].sort((a, b) => (b.publishedAt || '').localeCompare(a.publishedAt || ''));
+    // Same article from several feeds of one publisher group (e.g. g1 and g1 Economia) is shown once.
+    const sorted = dedupeArticles(list).sort((a, b) => (b.publishedAt || '').localeCompare(a.publishedAt || ''));
     container.innerHTML = sorted.slice(0, 81).map(latestRow).join('');
     $('news-summary-line').textContent = `${sorted.length} articles · ${live} live source${live === 1 ? '' : 's'}${partial}${q ? ` · matching "${q}"` : ''} · ${scope}`;
     stories = [];
