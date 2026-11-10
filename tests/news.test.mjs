@@ -11,6 +11,7 @@ import {
   coverageUnits,
   dedupeArticles,
   explainCluster,
+  mergeSameHeadline,
   rankClusters,
   related,
   titleEntities,
@@ -173,6 +174,22 @@ test('dedupe keeps distinct outlets with the same headline (they are handled as 
   const a = art('cnn-brasil', 'Reuters: Brasil anuncia novo plano', { url: 'https://cnn.test/1' });
   const b = art('bbc-pt', 'Reuters: Brasil anuncia novo plano', { url: 'https://bbc.test/1' });
   assert.equal(dedupeArticles([a, b]).length, 2);
+});
+
+test('latest view: the same long headline from g1 and BBC is one card, and its photo is kept as a variant', () => {
+  const t = 'Por que infidelidade do chefe da Nvidia com suposta espiã da China preocupa EUA e o setor de IA';
+  const g1 = { ...art('g1-economia', t, { url: 'https://g1.test/1' }), image: 'https://img.test/g1.jpg' };
+  const bbc = { ...art('bbc-pt', t, { url: 'https://bbc.test/1' }), image: 'https://img.test/bbc.jpg' };
+  const out = mergeSameHeadline(dedupeArticles([g1, bbc]));
+  assert.equal(out.length, 1);
+  assert.deepEqual(out[0].alsoIn, ['bbc-pt']);
+  assert.deepEqual(out[0].variants.map((v) => v.image), ['https://img.test/bbc.jpg']);
+});
+
+test('latest view: very short headlines are not merged (too generic to prove the same story)', () => {
+  const a = art('g1', 'Vídeos', { url: 'https://g1.test/v1' });
+  const b = art('uol', 'Vídeos', { url: 'https://uol.test/v1' });
+  assert.equal(mergeSameHeadline([a, b]).length, 2);
 });
 
 // --- step 2: clusters --------------------------------------------------------------

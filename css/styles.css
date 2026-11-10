@@ -4682,15 +4682,22 @@ html[data-motion='off'] body::after { animation: none !important; }
 .news-card-more summary { cursor: pointer; color: var(--muted); font-weight: 600; }
 .news-card .story-actions { margin-top: auto; padding-top: 0.65rem; }
 
-.story-media { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0; border: 0; margin: 0; overflow: hidden; background: var(--surface-soft); cursor: zoom-in; }
+.story-media { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0; border: 0; margin: 0; overflow: hidden; background: var(--surface-soft); }
 .story-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease), filter 0.4s var(--ease); }
 .story-media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.55)); pointer-events: none; }
-.news-card:hover .story-media img, .story-media:focus-visible img { transform: scale(1.06); filter: saturate(1.15); }
-.story-media:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.story-media-open { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; margin: 0; background: none; cursor: zoom-in; }
+.news-card:hover .story-media img, .story-media-open:focus-visible img { transform: scale(1.06); filter: saturate(1.15); }
+.story-media-open:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.story-media-zoom, .story-media-source, .story-count { pointer-events: none; }
+.story-count { position: absolute; left: 0.6rem; top: 0.6rem; z-index: 1; padding: 0.15rem 0.5rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700; color: #fff; background: rgba(0, 0, 0, 0.45); }
+.story-nav { position: absolute; top: 50%; z-index: 2; width: 2.2rem; height: 2.2rem; transform: translateY(-50%); display: grid; place-items: center; padding: 0; border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 50%; color: #fff; font-size: 1.4rem; line-height: 1; background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); cursor: pointer; opacity: 0.85; transition: opacity 0.2s var(--ease), background 0.2s var(--ease); }
+.story-nav:hover, .story-nav:focus-visible { opacity: 1; background: rgba(0, 0, 0, 0.7); }
+.story-prev { left: 0.5rem; }
+.story-next { right: 0.5rem; }
 .story-media-source { position: absolute; left: 0.75rem; bottom: 0.6rem; z-index: 1; padding: 0.18rem 0.6rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em; color: #fff; background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.18); }
 .story-coverage { position: absolute; right: 0.75rem; bottom: 0.6rem; z-index: 1; padding: 0.18rem 0.6rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700; color: #05110f; background: linear-gradient(135deg, var(--accent-bright), var(--accent)); }
 .story-media-zoom { position: absolute; right: 0.6rem; top: 0.6rem; z-index: 1; width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: 50%; color: #fff; background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(6px); opacity: 0; transform: scale(0.8); transition: opacity 0.25s var(--ease), transform 0.25s var(--ease); }
-.story-media:hover .story-media-zoom, .story-media:focus-visible .story-media-zoom { opacity: 1; transform: none; }
+.story-media:hover .story-media-zoom, .story-media-open:focus-visible ~ .story-media-zoom { opacity: 1; transform: none; }
 .story-media.placeholder { cursor: default; display: grid; place-items: center; background: radial-gradient(120% 120% at 20% 10%, hsl(var(--h) 70% 55% / 0.55), transparent 60%), radial-gradient(120% 120% at 90% 90%, hsl(calc(var(--h) + 60) 70% 45% / 0.5), transparent 55%), var(--surface-soft); }
 .story-media-mark { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: rgba(255, 255, 255, 0.85); text-shadow: 0 6px 24px rgba(0, 0, 0, 0.35); letter-spacing: 0.04em; }
 
