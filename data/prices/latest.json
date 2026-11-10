@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-10T15:13:39.104Z",
+ "updatedAt": "2026-11-10T21:24:54.635Z",
  "sources": {
   "buscape": {
    "name": "Buscapé",
@@ -7,7 +7,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-10T15:13:39.104Z"
+   "lastOk": "2026-11-10T21:24:54.635Z"
   },
   "zoom": {
    "name": "Zoom",
@@ -15,7 +15,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-10T15:13:39.104Z"
+   "lastOk": "2026-11-10T21:24:54.635Z"
   },
   "pelando": {
    "name": "Pelando",
@@ -33,7 +33,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-10T15:13:39.104Z"
+   "lastOk": "2026-11-10T21:24:54.635Z"
   },
   "gatry": {
    "name": "Gatry",
@@ -41,7 +41,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-10T15:13:39.104Z"
+   "lastOk": "2026-11-10T21:24:54.635Z"
   },
   "hardmob": {
    "name": "Hardmob",
@@ -59,7 +59,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-10T15:13:39.104Z"
+   "lastOk": "2026-11-10T21:24:54.635Z"
   }
  },
  "products": [
@@ -312,13 +312,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "pelando": {
      "ok": false,
@@ -331,12 +331,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/promocoes/?q=playstation%205",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "hardmob": {
      "ok": false,
@@ -345,7 +345,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     }
    }
   },
@@ -538,13 +538,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "pelando": {
      "ok": false,
@@ -555,12 +555,12 @@
      "ok": true,
      "count": 10,
      "url": "https://gatry.com/promocoes/?q=ssd%201tb",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "hardmob": {
      "ok": false,
@@ -569,7 +569,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     }
    }
   },
@@ -641,13 +641,13 @@
      "ok": true,
      "count": 2,
      "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "zoom": {
      "ok": true,
      "count": 2,
      "url": "https://www.zoom.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "pelando": {
      "ok": false,
@@ -660,12 +660,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/promocoes/?q=rtx%205070",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "hardmob": {
      "ok": false,
@@ -674,7 +674,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     }
    }
   },
@@ -809,19 +809,19 @@
     },
     {
      "source": "buscape",
-     "store": "Fast Shop",
-     "title": "Smart TV Mini LED 55\" LG 4K 55QNED70BSA",
-     "price": 2549,
-     "url": "https://www.buscape.com.br/tv/smart-tv-mini-led-55-lg-4k-55qned70bsa",
-     "image": "https://i.zst.com.br/thumbs/51/indsp.gif"
+     "store": "Magazine Luiza",
+     "title": "Smart TV LED 55\" Samsung 4K LH55BEFH4GGXZD",
+     "price": 2667.08,
+     "url": "https://www.buscape.com.br/tv/smart-tv-led-55-samsung-4k-lh55befh4ggxzd",
+     "image": "https://image.zst.com.br/9D487A22605AEFB849CD7DC095CBB2AE_235_235.jpg"
     },
     {
      "source": "zoom",
-     "store": "Fast Shop",
-     "title": "Smart TV Mini LED 55\" LG 4K 55QNED70BSA",
-     "price": 2549,
-     "url": "https://www.zoom.com.br/tv/smart-tv-mini-led-55-lg-4k-55qned70bsa",
-     "image": "https://i.zst.com.br/thumbs/51/indsp.gif"
+     "store": "Magazine Luiza",
+     "title": "Smart TV LED 55\" Samsung 4K LH55BEFH4GGXZD",
+     "price": 2667.08,
+     "url": "https://www.zoom.com.br/tv/smart-tv-led-55-samsung-4k-lh55befh4ggxzd",
+     "image": "https://image.zst.com.br/9D487A22605AEFB849CD7DC095CBB2AE_235_235.jpg"
     }
    ],
    "community": [
@@ -931,22 +931,21 @@
      "seenAt": "2026-11-07T20:49:18.873Z"
     },
     {
-     "title": "Smart TV 55\" LG 4K Ultra HD QNED Mini LED WebOS 26 2026 - 55QNED70BSA",
-     "price": 2447,
-     "store": "Aliexpress",
-     "url": "https://www.promobit.com.br/oferta/smart-tv-55-lg-4k-ultra-hd-qned-mini-led-webos-26-2026-55qned70bsa-3187490/",
-     "image": "https://i.promobit.com.br/268/441579273417942239354675351644.png",
-     "date": "2026-11-09T11:59:17-0300",
-     "score": 4,
-     "coupon": "AEMEGA7",
-     "source": "promobit"
-    },
-    {
      "title": "Samsung Smart TV 55\" Crystal UHD 4K U8600F + Soundbar HW-B400F",
      "price": 2637,
      "store": "Shopee",
      "url": "https://gatry.com/promocoes/285774/samsung-smart-tv-55-crystal-uhd-4k-u8600f-soundbar-hw-b400f",
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/79e53b49fce9b355a7e1129793c4ebf0.jpg",
+     "date": "",
+     "score": 0,
+     "source": "gatry"
+    },
+    {
+     "title": "PHILIPS, Smart TV Ambilight 55\" 4K, 55PUG8100/78 + PHILIPS, Soundbar, TAB4000",
+     "price": 2821.25,
+     "store": "Amazon",
+     "url": "https://gatry.com/promocoes/280804/philips-smart-tv-ambilight-55-4k-55pug8100-78-philips-soundbar-tab4000",
+     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/49fdfbf3450f83f4c6c064c4dde1a309.jpg",
      "date": "",
      "score": 0,
      "source": "gatry"
@@ -957,13 +956,13 @@
      "ok": true,
      "count": 22,
      "url": "https://www.buscape.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "zoom": {
      "ok": true,
      "count": 22,
      "url": "https://www.zoom.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "pelando": {
      "ok": false,
@@ -976,12 +975,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/promocoes/?q=tv%2055",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "promobit": {
      "ok": true,
-     "count": 1,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "count": 0,
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "hardmob": {
      "ok": false,
@@ -990,7 +989,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     }
    }
   },
@@ -1114,13 +1113,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "pelando": {
      "ok": false,
@@ -1131,12 +1130,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/promocoes/?q=galaxy%20s26",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "hardmob": {
      "ok": false,
@@ -1145,7 +1144,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     }
    }
   },
@@ -1186,7 +1185,7 @@
      "source": "buscape",
      "store": "Amazon",
      "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 4299.9,
+     "price": 4399,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
      "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
     },
@@ -1194,7 +1193,7 @@
      "source": "buscape",
      "store": "Amazon",
      "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 4299.9,
+     "price": 4399,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
      "image": "https://image.zst.com.br/3410D78173BDA1BE743C551008FC10DC_235_235.jpg"
     },
@@ -1202,7 +1201,7 @@
      "source": "zoom",
      "store": "Amazon",
      "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 4299.9,
+     "price": 4399,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
      "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
     },
@@ -1210,7 +1209,7 @@
      "source": "zoom",
      "store": "Amazon",
      "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 4299.9,
+     "price": 4399,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
      "image": "https://image.zst.com.br/3410D78173BDA1BE743C551008FC10DC_235_235.jpg"
     },
@@ -1354,13 +1353,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "pelando": {
      "ok": false,
@@ -1373,12 +1372,12 @@
      "ok": true,
      "count": 5,
      "url": "https://gatry.com/promocoes/?q=switch%202",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "hardmob": {
      "ok": false,
@@ -1387,7 +1386,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     }
    }
   },
@@ -1528,17 +1527,6 @@
      "source": "gatry"
     },
     {
-     "title": "Apple Iphone 17e De 256 Gb — Preto",
-     "price": 4299.01,
-     "store": "Amazon",
-     "url": "https://www.promobit.com.br/oferta/apple-iphone-17e-de-256-gb-preto-3192894/",
-     "image": "https://i.promobit.com.br/268/836626903817943193378909296269.jpg",
-     "date": "2026-11-10T11:01:11-0300",
-     "score": 3,
-     "coupon": "",
-     "source": "promobit"
-    },
-    {
      "title": "Apple IPhone 17 De 256 GB — Lavanda",
      "price": 4865.76,
      "store": "Amazon",
@@ -1617,13 +1605,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "pelando": {
      "ok": false,
@@ -1636,12 +1624,12 @@
      "ok": true,
      "count": 5,
      "url": "https://gatry.com/promocoes/?q=iphone%2017",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "promobit": {
      "ok": true,
-     "count": 1,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "count": 0,
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "hardmob": {
      "ok": false,
@@ -1650,7 +1638,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     }
    }
   },
@@ -1663,11 +1651,11 @@
    "buscapeUrl": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
    "lowest": {
     "source": "buscape",
-    "store": "Amazon",
-    "title": "Console Xbox Series X",
+    "store": "Lowest listed on Buscapé",
+    "title": "Xbox Series X 1TB",
     "price": 7249,
     "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-    "image": "https://image.zst.com.br/F35B528AF151303977E35BCDE4D15198_235_235.jpg"
+    "fromHistory": true
    },
    "avg40": 7110.89,
    "offers": [
@@ -1675,7 +1663,7 @@
      "source": "buscape",
      "store": "Amazon",
      "title": "Console Xbox Series X",
-     "price": 7249,
+     "price": 7500,
      "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
      "image": "https://image.zst.com.br/F35B528AF151303977E35BCDE4D15198_235_235.jpg"
     },
@@ -1683,25 +1671,9 @@
      "source": "zoom",
      "store": "Amazon",
      "title": "Console Xbox Series X",
-     "price": 7249,
+     "price": 7500,
      "url": "https://www.zoom.com.br/console-de-video-game/console-xbox-series-x-microsoft",
      "image": "https://image.zst.com.br/F35B528AF151303977E35BCDE4D15198_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "Amazon",
-     "title": "Microsoft Xbox Series X 1TB + 1 Controle Sem Fio - Compatível com Milhares de Jogos, Desempenho Ajustado, Jogos Verdadeiros 4K, Até 120 FPS - Cabo HDMI",
-     "price": 7363,
-     "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "image": "https://image.zst.com.br/7BA02201FC87D81AC663AF5454A45ECC_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Amazon",
-     "title": "Microsoft Xbox Series X 1TB + 1 Controle Sem Fio - Compatível com Milhares de Jogos, Desempenho Ajustado, Jogos Verdadeiros 4K, Até 120 FPS - Cabo HDMI",
-     "price": 7363,
-     "url": "https://www.zoom.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "image": "https://image.zst.com.br/7BA02201FC87D81AC663AF5454A45ECC_235_235.jpg"
     }
    ],
    "community": [
@@ -1812,15 +1784,15 @@
    "sources": {
     "buscape": {
      "ok": true,
-     "count": 2,
+     "count": 1,
      "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "zoom": {
      "ok": true,
-     "count": 2,
+     "count": 1,
      "url": "https://www.zoom.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "pelando": {
      "ok": false,
@@ -1833,12 +1805,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/promocoes/?q=xbox%20series%20x",
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     },
     "hardmob": {
      "ok": false,
@@ -1847,7 +1819,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T15:13:39.104Z"
+     "seenAt": "2026-11-10T21:24:54.635Z"
     }
    }
   }
