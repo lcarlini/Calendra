@@ -96,22 +96,45 @@ export function firstImage(html) {
   return m ? safeImageUrl(m[1]) : '';
 }
 
-/** The image a feed item announces: media:content / media:thumbnail / image enclosure / first <img> in the description. */
-export function itemImage(block) {
-  const attr = (re) => {
-    const m = String(block).match(re);
-    return m ? safeImageUrl(m[1]) : '';
+/** Every <img src> in an HTML fragment, safe and de-duplicated, in order. */
+export function imagesInHtml(html) {
+  const out = [];
+  for (const m of String(html ?? '').matchAll(/<img[^>]+src=["']([^"']+)["']/gi)) {
+    const u = safeImageUrl(m[1]);
+    if (u && !out.includes(u)) out.push(u);
+  }
+  return out;
+}
+
+/**
+ * Every image a feed item announces, in order: media:content / media:thumbnail / image enclosures, then every
+ * <img> in the description and content:encoded (one item often carries several photos).
+ */
+export function itemImages(block) {
+  const text = String(block);
+  const out = [];
+  const add = (u) => {
+    const s = safeImageUrl(u);
+    if (s && !out.includes(s)) out.push(s);
   };
-  return (
-    attr(/<media:content[^>]*url=["']([^"']+)["'][^>]*(?:medium=["']image["']|type=["']image)/i) ||
-    attr(/<media:content[^>]*(?:medium=["']image["']|type=["']image)[^>]*url=["']([^"']+)["']/i) ||
-    attr(/<media:thumbnail[^>]*url=["']([^"']+)["']/i) ||
-    attr(/<enclosure[^>]*url=["']([^"']+)["'][^>]*type=["']image/i) ||
-    attr(/<enclosure[^>]*type=["']image[^"']*["'][^>]*url=["']([^"']+)["']/i) ||
-    attr(/<media:content[^>]*url=["']([^"']+\.(?:jpe?g|png|webp)(?:\?[^"']*)?)["']/i) ||
-    firstImage(getTag(block, 'description')) ||
-    firstImage(getTag(block, 'content:encoded'))
-  );
+  for (const m of text.matchAll(/<media:content[^>]*>/gi)) {
+    const tag = m[0];
+    const url = tag.match(/url=["']([^"']+)["']/i)?.[1];
+    if (url && /medium=["']image|type=["']image|\.(?:jpe?g|png|webp)(?:\?|["'])/i.test(tag)) add(url);
+  }
+  for (const m of text.matchAll(/<media:thumbnail[^>]*url=["']([^"']+)["']/gi)) add(m[1]);
+  for (const m of text.matchAll(/<enclosure[^>]*>/gi)) {
+    const tag = m[0];
+    const url = tag.match(/url=["']([^"']+)["']/i)?.[1];
+    if (url && /type=["']image/i.test(tag)) add(url);
+  }
+  for (const html of [getTag(block, 'description'), getTag(block, 'content:encoded')]) imagesInHtml(html).forEach(add);
+  return out;
+}
+
+/** The first image a feed item announces (see itemImages). */
+export function itemImage(block) {
+  return itemImages(block)[0] || '';
 }
 
 /**
@@ -130,5 +153,6 @@ export function parseFeed(xml, { now = Date.now() } = {}) {
     categories: getAllTags(block, 'category').map(stripHtml).filter(Boolean),
     excerptHtml: getTag(block, 'atom:subtitle') || getTag(block, 'description'),
     image: itemImage(block),
+    images: itemImages(block),
   }));
 }

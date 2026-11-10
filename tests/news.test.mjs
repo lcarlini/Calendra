@@ -335,3 +335,28 @@ test('pipeline is stable on empty input', () => {
   assert.deepEqual(buildStories([], { now: NOW }), []);
   assert.deepEqual(clusterArticles([]), []);
 });
+
+// --- photos: every image an item carries, not only the first ----------------------
+
+test('photos: an item keeps every image it announces (media, enclosure, and each <img> in description and content)', async () => {
+  const { itemImages, parseFeed } = await import('../js/news/rss.js');
+  const block = `<item><title>T</title><media:content url="https://a.test/1.jpg" medium="image"/>
+    <media:content url="https://a.test/video.mp4" medium="video"/>
+    <description><![CDATA[<img src="https://a.test/2.jpg"> texto <img src="https://a.test/1.jpg">]]></description>
+    <content:encoded><![CDATA[<img src="https://a.test/3.jpg"><img src="http://insecure.test/4.jpg">]]></content:encoded></item>`;
+  assert.deepEqual(itemImages(block), ['https://a.test/1.jpg', 'https://a.test/2.jpg', 'https://a.test/3.jpg']);
+  const [item] = parseFeed(`<rss><channel>${block}</channel></rss>`);
+  assert.equal(item.image, 'https://a.test/1.jpg');
+  assert.equal(item.images.length, 3);
+});
+
+test('photos: a story card keeps the photos of merged copies, and the viewer list only holds that story', () => {
+  const t = 'Governo anuncia pacote de investimentos em infraestrutura para o próximo ano';
+  const a = { ...art('cnn-brasil', t, { url: 'https://cnn.test/x' }), images: ['https://img.test/1.jpg', 'https://img.test/2.jpg'], image: 'https://img.test/1.jpg' };
+  const b = { ...art('bbc-pt', t, { url: 'https://bbc.test/x' }), images: ['https://img.test/3.jpg'], image: 'https://img.test/3.jpg' };
+  const [lead] = mergeSameHeadline([a, b]);
+  assert.deepEqual(
+    [lead.images[0], ...lead.variants[0].images],
+    ['https://img.test/1.jpg', 'https://img.test/3.jpg']
+  );
+});

@@ -91,7 +91,12 @@ export function toArticle(item, source, fetchedAt) {
     contentAvailability: excerpt ? 'excerpt-only' : 'headline-only',
     position: item.position ?? 0,
   };
-  if (item.image) article.image = largerImage(item.image); // the publisher's own feed image, hotlinked with credit
+  // The publisher's own feed images, hotlinked with credit (never stored). The first one is the card's picture.
+  const images = [...new Set([item.image, ...(item.images || [])].map((u) => (u ? largerImage(u) : '')).filter(Boolean))].slice(0, 8);
+  if (images.length) {
+    article.image = images[0];
+    article.images = images;
+  }
   return withTags(article, source);
 }
 

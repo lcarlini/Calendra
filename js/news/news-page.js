@@ -107,9 +107,11 @@ function photosOf(articles) {
   const out = [];
   const seen = new Set();
   for (const a of articles.flatMap((x) => [x, ...(x.variants || [])])) {
-    if (!a.image || seen.has(a.image)) continue;
-    seen.add(a.image);
-    out.push(a);
+    for (const image of a.images?.length ? a.images : [a.image]) {
+      if (!image || seen.has(image)) continue;
+      seen.add(image);
+      out.push({ ...a, image });
+    }
   }
   return out;
 }
@@ -129,12 +131,13 @@ function storyMedia(articles, title, extra = '') {
   }
   const slides = pics.map((a) => gallery.push({ src: a.image, title, source: a.sourceName, url: a.originalUrl, when: a.publishedAt ? timeAgo(a.publishedAt) : '' }) - 1);
   const first = pics[0];
-  const nav =
+  // The counter is always shown (1/1 for a single photo), so it is clear whether the story has more photos.
+  const nav = `${
     slides.length > 1
       ? `<button type="button" class="story-nav story-prev" data-story-nav="-1" aria-label="Foto anterior">‹</button>
-      <button type="button" class="story-nav story-next" data-story-nav="1" aria-label="Próxima foto">›</button>
-      <span class="story-count" aria-hidden="true">1/${slides.length}</span>`
-      : '';
+      <button type="button" class="story-nav story-next" data-story-nav="1" aria-label="Próxima foto">›</button>`
+      : ''
+  }<span class="story-count" title="${slides.length} foto${slides.length === 1 ? '' : 's'} nesta notícia">1/${slides.length}</span>`;
   return `<div class="story-media" data-slides="${slides.join(',')}" data-slide="0">
       <button type="button" class="story-media-open" data-gallery="${slides[0]}" aria-label="View image: ${esc(title)}">
         <img src="${esc(first.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
