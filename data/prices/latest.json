@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-10T21:24:54.635Z",
+ "updatedAt": "2026-11-11T01:28:14.056Z",
  "sources": {
   "buscape": {
    "name": "Buscapé",
@@ -7,7 +7,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-10T21:24:54.635Z"
+   "lastOk": "2026-11-11T01:28:14.056Z"
   },
   "zoom": {
    "name": "Zoom",
@@ -15,7 +15,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-10T21:24:54.635Z"
+   "lastOk": "2026-11-11T01:28:14.056Z"
   },
   "pelando": {
    "name": "Pelando",
@@ -33,7 +33,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-10T21:24:54.635Z"
+   "lastOk": "2026-11-11T01:28:14.056Z"
   },
   "gatry": {
    "name": "Gatry",
@@ -41,7 +41,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-10T21:24:54.635Z"
+   "lastOk": "2026-11-11T01:28:14.056Z"
   },
   "hardmob": {
    "name": "Hardmob",
@@ -59,7 +59,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-10T21:24:54.635Z"
+   "lastOk": "2026-11-11T01:28:14.056Z"
   }
  },
  "products": [
@@ -72,13 +72,13 @@
    "buscapeUrl": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
    "lowest": {
     "source": "buscape",
-    "store": "Lowest listed on Buscapé",
-    "title": "PlayStation 5 825GB",
-    "price": 4199,
+    "store": "Magazine Luiza",
+    "title": "Console PlayStation 5 Sony, SSD 1TB, Leitor de Discos, Controle DualSe",
+    "price": 4793.06,
     "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-    "fromHistory": true
+    "image": "https://image.zst.com.br/D4E22AE8DFF7BBBD470EB3FCDC89D242_235_235.jpg"
    },
-   "avg40": 4199,
+   "avg40": 4213.85,
    "offers": [
     {
      "source": "buscape",
@@ -312,13 +312,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "pelando": {
      "ok": false,
@@ -331,12 +331,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/promocoes/?q=playstation%205",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "hardmob": {
      "ok": false,
@@ -345,7 +345,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     }
    }
   },
@@ -364,7 +364,7 @@
     "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
     "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
    },
-   "avg40": 968.34,
+   "avg40": 968.25,
    "offers": [
     {
      "source": "buscape",
@@ -538,13 +538,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "pelando": {
      "ok": false,
@@ -555,12 +555,12 @@
      "ok": true,
      "count": 10,
      "url": "https://gatry.com/promocoes/?q=ssd%201tb",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "hardmob": {
      "ok": false,
@@ -569,7 +569,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     }
    }
   },
@@ -588,7 +588,7 @@
     "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
     "image": "https://image.zst.com.br/642E6AD12DF10BE1A443C5BD18293E88_235_235.jpg"
    },
-   "avg40": 9786.74,
+   "avg40": 9807.06,
    "offers": [
     {
      "source": "buscape",
@@ -641,13 +641,13 @@
      "ok": true,
      "count": 2,
      "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "zoom": {
      "ok": true,
      "count": 2,
      "url": "https://www.zoom.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "pelando": {
      "ok": false,
@@ -660,12 +660,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/promocoes/?q=rtx%205070",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "hardmob": {
      "ok": false,
@@ -674,7 +674,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     }
    }
   },
@@ -693,7 +693,7 @@
     "url": "https://www.buscape.com.br/tv/smart-tv-qled-55-hisense-4k-55q6qv",
     "image": "https://image.zst.com.br/DEB81DD49C540FA7E5177FB1D4B8F2B5_235_235.jpg"
    },
-   "avg40": 2093.49,
+   "avg40": 2110.79,
    "offers": [
     {
      "source": "buscape",
@@ -954,15 +954,15 @@
    "sources": {
     "buscape": {
      "ok": true,
-     "count": 22,
+     "count": 21,
      "url": "https://www.buscape.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "zoom": {
      "ok": true,
-     "count": 22,
+     "count": 21,
      "url": "https://www.zoom.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "pelando": {
      "ok": false,
@@ -975,12 +975,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/promocoes/?q=tv%2055",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "hardmob": {
      "ok": false,
@@ -989,7 +989,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     }
    }
   },
@@ -998,7 +998,7 @@
    "name": "Galaxy S26 256GB",
    "category": "phone",
    "listingName": "Celular Samsung Galaxy S26 5G 256GB 12 GB",
-   "image": "https://image.zst.com.br/5438AB33A2D4F1144E8536D6D794DF28_235_235.jpg",
+   "image": "https://image.zst.com.br/19F286539B9037877402782C181AACE9_235_235.jpg",
    "buscapeUrl": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
    "lowest": {
     "source": "buscape",
@@ -1006,7 +1006,7 @@
     "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
     "price": 4799,
     "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-    "image": "https://image.zst.com.br/5438AB33A2D4F1144E8536D6D794DF28_235_235.jpg"
+    "image": "https://image.zst.com.br/19F286539B9037877402782C181AACE9_235_235.jpg"
    },
    "avg40": 4799,
    "offers": [
@@ -1016,15 +1016,7 @@
      "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
      "price": 4799,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "image": "https://image.zst.com.br/5438AB33A2D4F1144E8536D6D794DF28_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "Magazine Luiza",
-     "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
-     "price": 4799,
-     "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "image": "https://image.zst.com.br/C00948CA15687160DF683D66B3953FE9_235_235.jpg"
+     "image": "https://image.zst.com.br/19F286539B9037877402782C181AACE9_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -1048,6 +1040,14 @@
      "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
      "price": 4799,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
+     "image": "https://image.zst.com.br/5438AB33A2D4F1144E8536D6D794DF28_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Magazine Luiza",
+     "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
+     "price": 4799,
+     "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
      "image": "https://i.zst.com.br/thumbs/51/indsp.gif"
     },
     {
@@ -1056,7 +1056,7 @@
      "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
      "price": 4799,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "image": "https://image.zst.com.br/19F286539B9037877402782C181AACE9_235_235.jpg"
+     "image": "https://image.zst.com.br/C00948CA15687160DF683D66B3953FE9_235_235.jpg"
     },
     {
      "source": "zoom",
@@ -1113,13 +1113,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "pelando": {
      "ok": false,
@@ -1130,12 +1130,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/promocoes/?q=galaxy%20s26",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "hardmob": {
      "ok": false,
@@ -1144,7 +1144,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     }
    }
   },
@@ -1163,7 +1163,7 @@
     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
     "image": "https://image.zst.com.br/A90A36026773B6836088EFF37FC8F44C_235_235.jpg"
    },
-   "avg40": 3953.98,
+   "avg40": 3960.5,
    "offers": [
     {
      "source": "buscape",
@@ -1185,7 +1185,7 @@
      "source": "buscape",
      "store": "Amazon",
      "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 4399,
+     "price": 4450,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
      "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
     },
@@ -1193,7 +1193,7 @@
      "source": "buscape",
      "store": "Amazon",
      "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 4399,
+     "price": 4450,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
      "image": "https://image.zst.com.br/3410D78173BDA1BE743C551008FC10DC_235_235.jpg"
     },
@@ -1201,7 +1201,7 @@
      "source": "zoom",
      "store": "Amazon",
      "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 4399,
+     "price": 4450,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
      "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
     },
@@ -1209,7 +1209,7 @@
      "source": "zoom",
      "store": "Amazon",
      "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 4399,
+     "price": 4450,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
      "image": "https://image.zst.com.br/3410D78173BDA1BE743C551008FC10DC_235_235.jpg"
     },
@@ -1353,13 +1353,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "pelando": {
      "ok": false,
@@ -1372,12 +1372,12 @@
      "ok": true,
      "count": 5,
      "url": "https://gatry.com/promocoes/?q=switch%202",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "hardmob": {
      "ok": false,
@@ -1386,7 +1386,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     }
    }
   },
@@ -1395,23 +1395,39 @@
    "name": "iPhone 17 256GB",
    "category": "phone",
    "listingName": "iPhone 17 256GB",
-   "image": "https://image.zst.com.br/133F3FAC962B9A52B87B46F66F94D9F8_235_235.jpg",
+   "image": "https://image.zst.com.br/D12BFB286BF1834466194748D58B03CF_235_235.jpg",
    "buscapeUrl": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
    "lowest": {
     "source": "buscape",
-    "store": "Lowest listed on Buscapé",
-    "title": "iPhone 17 256GB",
-    "price": 5699,
+    "store": "KaBuM!",
+    "title": "Iphone 17 256gb Preto",
+    "price": 5499,
     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-    "fromHistory": true
+    "image": "https://image.zst.com.br/D12BFB286BF1834466194748D58B03CF_235_235.jpg"
    },
-   "avg40": 5630.84,
+   "avg40": 5625.85,
    "offers": [
     {
      "source": "buscape",
+     "store": "KaBuM!",
+     "title": "Iphone 17 256gb Preto",
+     "price": 5499,
+     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/D12BFB286BF1834466194748D58B03CF_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "KaBuM!",
+     "title": "Iphone 17 256gb Preto",
+     "price": 5499,
+     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/D12BFB286BF1834466194748D58B03CF_235_235.jpg"
+    },
+    {
+     "source": "buscape",
      "store": "Magazine Luiza",
      "title": "Smartphone Apple iPhone 17 256GB Preto - 5G + Carregador Apple USB-C 2",
-     "price": 5787.9,
+     "price": 5849.99,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
      "image": "https://image.zst.com.br/133F3FAC962B9A52B87B46F66F94D9F8_235_235.jpg"
     },
@@ -1419,7 +1435,7 @@
      "source": "buscape",
      "store": "Magazine Luiza",
      "title": "Smartphone Apple iPhone 17 256GB Branco - 5G + Carregador Apple USB-C",
-     "price": 5787.9,
+     "price": 5849.99,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
      "image": "https://image.zst.com.br/7FE3D43D9D1FB7714B9D73BC85A3D32F_235_235.jpg"
     },
@@ -1427,7 +1443,7 @@
      "source": "zoom",
      "store": "Magazine Luiza",
      "title": "Smartphone Apple iPhone 17 256GB Preto - 5G + Carregador Apple USB-C 2",
-     "price": 5787.9,
+     "price": 5849.99,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
      "image": "https://image.zst.com.br/133F3FAC962B9A52B87B46F66F94D9F8_235_235.jpg"
     },
@@ -1435,7 +1451,7 @@
      "source": "zoom",
      "store": "Magazine Luiza",
      "title": "Smartphone Apple iPhone 17 256GB Branco - 5G + Carregador Apple USB-C",
-     "price": 5787.9,
+     "price": 5849.99,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
      "image": "https://image.zst.com.br/7FE3D43D9D1FB7714B9D73BC85A3D32F_235_235.jpg"
     },
@@ -1464,14 +1480,6 @@
      "image": "https://image.zst.com.br/5159AC380506D4A0A7371FCA80FCA3EE_235_235.jpg"
     },
     {
-     "source": "buscape",
-     "store": "Magazine Luiza",
-     "title": "Apple iPhone 17 256GB Branco 6,3\" 48MP iOS 5G, 256GB, Branco",
-     "price": 5888.96,
-     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/E50CA3F2E6A994D4239DBE3244D1169A_235_235.jpg"
-    },
-    {
      "source": "zoom",
      "store": "Magazine Luiza",
      "title": "Apple iPhone 17 256GB Lavanda 6,3\" 48MP iOS 5G, 256GB, Lavanda",
@@ -1494,14 +1502,6 @@
      "price": 5888.96,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
      "image": "https://image.zst.com.br/5159AC380506D4A0A7371FCA80FCA3EE_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Magazine Luiza",
-     "title": "Apple iPhone 17 256GB Branco 6,3\" 48MP iOS 5G, 256GB, Branco",
-     "price": 5888.96,
-     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/E50CA3F2E6A994D4239DBE3244D1169A_235_235.jpg"
     }
    ],
    "community": [
@@ -1567,6 +1567,17 @@
      "source": "gatry"
     },
     {
+     "title": "Apple iPhone 17 256GB Preto 6,3\" 48MP iOS 5G",
+     "price": 5499,
+     "store": "Aliexpress",
+     "url": "https://www.promobit.com.br/oferta/apple-iphone-17-256gb-preto-63-48mp-ios-5g-3189034/",
+     "image": "https://i.promobit.com.br/268/797037372417942419469758220645.png",
+     "date": "2026-11-09T13:31:33-0300",
+     "score": 5,
+     "coupon": "AFFNOV09",
+     "source": "promobit"
+    },
+    {
      "title": "Dilema 2026: Tela e liberdade do S26+ ou revenda e vídeo do iPhone 17? Qual escolher?",
      "price": null,
      "store": "",
@@ -1605,13 +1616,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "pelando": {
      "ok": false,
@@ -1624,12 +1635,12 @@
      "ok": true,
      "count": 5,
      "url": "https://gatry.com/promocoes/?q=iphone%2017",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "promobit": {
      "ok": true,
-     "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "count": 1,
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "hardmob": {
      "ok": false,
@@ -1638,7 +1649,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     }
    }
   },
@@ -1651,13 +1662,13 @@
    "buscapeUrl": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
    "lowest": {
     "source": "buscape",
-    "store": "Lowest listed on Buscapé",
-    "title": "Xbox Series X 1TB",
-    "price": 7249,
+    "store": "Amazon",
+    "title": "Console Xbox Series X",
+    "price": 7500,
     "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-    "fromHistory": true
+    "image": "https://image.zst.com.br/F35B528AF151303977E35BCDE4D15198_235_235.jpg"
    },
-   "avg40": 7110.89,
+   "avg40": 7125.91,
    "offers": [
     {
      "source": "buscape",
@@ -1786,13 +1797,13 @@
      "ok": true,
      "count": 1,
      "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "zoom": {
      "ok": true,
      "count": 1,
      "url": "https://www.zoom.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "pelando": {
      "ok": false,
@@ -1805,12 +1816,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/promocoes/?q=xbox%20series%20x",
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     },
     "hardmob": {
      "ok": false,
@@ -1819,7 +1830,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-10T21:24:54.635Z"
+     "seenAt": "2026-11-11T01:28:14.056Z"
     }
    }
   }
