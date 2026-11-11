@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-11T11:25:55.628Z",
+ "updatedAt": "2026-11-11T19:51:05.465Z",
  "sources": {
   "buscape": {
    "name": "Buscapé",
@@ -7,7 +7,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-11T11:25:55.628Z"
+   "lastOk": "2026-11-11T19:51:05.465Z"
   },
   "zoom": {
    "name": "Zoom",
@@ -15,7 +15,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-11T11:25:55.628Z"
+   "lastOk": "2026-11-11T19:51:05.465Z"
   },
   "pelando": {
    "name": "Pelando",
@@ -33,14 +33,16 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-11T11:25:55.628Z"
+   "lastOk": "2026-11-11T19:51:05.465Z"
   },
   "gatry": {
    "name": "Gatry",
    "kind": "community",
-   "ok": 8,
-   "failed": 0,
-   "errors": [],
+   "ok": 0,
+   "failed": 8,
+   "errors": [
+    "No deals on the page"
+   ],
    "lastOk": "2026-11-11T11:25:55.628Z"
   },
   "hardmob": {
@@ -59,7 +61,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-11T11:25:55.628Z"
+   "lastOk": "2026-11-11T19:51:05.465Z"
   }
  },
  "products": [
@@ -68,7 +70,7 @@
    "name": "PlayStation 5",
    "category": "console",
    "listingName": "PlayStation 5 825GB",
-   "image": "https://image.zst.com.br/D4E22AE8DFF7BBBD470EB3FCDC89D242_235_235.jpg",
+   "image": "https://image.zst.com.br/13841AD4CC6E6D0D8518F0629D2C3CDA_235_235.jpg",
    "buscapeUrl": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
    "lowest": {
     "source": "buscape",
@@ -82,22 +84,6 @@
    "offers": [
     {
      "source": "buscape",
-     "store": "Magazine Luiza",
-     "title": "Console PlayStation 5 Sony, SSD 1TB, Leitor de Discos, Controle DualSe",
-     "price": 4793.06,
-     "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "image": "https://image.zst.com.br/D4E22AE8DFF7BBBD470EB3FCDC89D242_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Magazine Luiza",
-     "title": "Console PlayStation 5 Sony, SSD 1TB, Leitor de Discos, Controle DualSe",
-     "price": 4793.06,
-     "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "image": "https://image.zst.com.br/D4E22AE8DFF7BBBD470EB3FCDC89D242_235_235.jpg"
-    },
-    {
-     "source": "buscape",
      "store": "Amazon",
      "title": "PlayStation 5 Console [videogame]",
      "price": 5999.9,
@@ -175,6 +161,22 @@
      "price": 6699,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
      "image": "https://image.zst.com.br/3686600834CA7405F893605AAB23C59B_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Amazon",
+     "title": "PlayStation®5 Pro",
+     "price": 7399,
+     "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
+     "image": "https://image.zst.com.br/4AB5A7D9C327B0B22108509D3F02CB4B_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Amazon",
+     "title": "PlayStation®5 Pro",
+     "price": 7399,
+     "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
+     "image": "https://image.zst.com.br/4AB5A7D9C327B0B22108509D3F02CB4B_235_235.jpg"
     }
    ],
    "community": [
@@ -219,7 +221,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/4ff7499c647df820ba0505c8997bcf90.png",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Starfield Premium Edition - PlayStation 5",
@@ -273,7 +276,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/98cf39a3985534fef4e669a0ef32eb67.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Resident Evil Requiem - PlayStation 5",
@@ -283,7 +287,19 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/0ff1c51ce357b66bb96f19f9159bb17f.png",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
+    },
+    {
+     "title": "Câmbio Logitech G Driving Force, G29 e G920 para PS5, PS4, Xbox Series X e Series S, Xbox One, PC - 941-000119",
+     "price": 287,
+     "store": "Shopee",
+     "url": "https://www.promobit.com.br/oferta/cambio-logitech-g-driving-force-g29-e-g920-para-ps5-ps4-xbox-series-x-e-series-s-xbox-one-pc-941-000119-3202358/",
+     "image": "https://i.promobit.com.br/268/208836017717944265041368186740.jpg",
+     "date": "2026-11-11T16:47:11-0300",
+     "score": 1,
+     "coupon": "",
+     "source": "promobit"
     },
     {
      "title": "Bundle Death Stranding 1+2 - PlayStation 5",
@@ -295,16 +311,6 @@
      "score": 721,
      "source": "pelando",
      "seenAt": "2026-11-07T20:49:18.873Z"
-    },
-    {
-     "title": "Grand Theft Auto VI - PlayStation 5",
-     "price": 347,
-     "store": "Amazon",
-     "url": "https://gatry.com/promocoes/285453/grand-theft-auto-vi-playstation-3",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/f0797860202590420cfd0bf8ea59bd2c.png",
-     "date": "",
-     "score": 0,
-     "source": "gatry"
     }
    ],
    "sources": {
@@ -312,13 +318,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "pelando": {
      "ok": false,
@@ -328,15 +334,16 @@
      "seenAt": "2026-11-07T20:49:18.873Z"
     },
     "gatry": {
-     "ok": true,
-     "count": 7,
+     "ok": false,
+     "error": "No deals on the page",
      "url": "https://gatry.com/promocoes/?q=playstation%205",
+     "carried": 4,
      "seenAt": "2026-11-11T11:25:55.628Z"
     },
     "promobit": {
      "ok": true,
-     "count": 0,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "count": 1,
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "hardmob": {
      "ok": false,
@@ -345,7 +352,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     }
    }
   },
@@ -440,7 +447,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/01a489d966c9f669797a7f6b87f967e9.png",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "SSD Adata Legend 710, 1TB, M.2 2280 NVMe Leitura 2.400MBs, Gravação 1.800MBs",
@@ -450,7 +458,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/a2d2cfec05031055c812ddd3ec34a76a.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "SSD Adata Legend 860, 1TB, M.2 2280, PCIe Gen 4x4, NVMe Leitura: 6000MB/s, Gravação: 5000MB/s, Compatível Com PS5, Preto - SLEG-860-1000GCS",
@@ -460,7 +469,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/b8d921efe59a8e1ce5f8330ef2b4283b.png",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "SSD Crucial P3 Plus, 1TB, M.2 2280, PCIe NVMe, Leitura 5000MBs Gravação 3600MBs, CT1000P3PSSD8",
@@ -470,7 +480,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/cbd7020ba7a7d1ad4fc9c900072a4dcc.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "SSD Crucial BX500, 1TB, SATA III, Leitura 560MB/S, Gravação 510MB/s, CT1000BX500SSD1429,",
@@ -480,7 +491,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/f7c12d50d921578716356bea621ed2fb.png",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "SSD Kingston NV3 1TB M.2 2280 PCIe 4.0 NVMe 6000 MB/sc",
@@ -490,7 +502,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/f55323773a5f50ecd68a1901e5dd09fb.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Console Sony PlayStation 5, Com Leitor De Discos, SSD 1TB, Controle Sem Fio DualSense + 2 Jogos",
@@ -500,7 +513,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/6475aa02916c143bb824245ce7166e1e.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "PlayStation 5 Com Leitor, SSD 1TB + 2 Jogos",
@@ -510,7 +524,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/0357363172320bc502bb195930e3aced.png",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Console Sony PlayStation 5 Slim Com Leitor De Discos, Edição Limitada Ouro, Ghost Of Yotei, SSD 1TB",
@@ -520,7 +535,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/6c9f6fbff13b6229a9655b5ed0a9f1cb.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Console Sony PlayStation 5 Slim, Edição Limitada Ouro, Ghost Of Yotei, SSD 1TB",
@@ -530,7 +546,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/2f6af7f7ff8abce15077cdd00b10ffa6.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     }
    ],
    "sources": {
@@ -538,13 +555,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "pelando": {
      "ok": false,
@@ -552,15 +569,16 @@
      "url": "https://www.pelando.com.br/busca/ssd-1tb"
     },
     "gatry": {
-     "ok": true,
-     "count": 10,
+     "ok": false,
+     "error": "No deals on the page",
      "url": "https://gatry.com/promocoes/?q=ssd%201tb",
+     "carried": 10,
      "seenAt": "2026-11-11T11:25:55.628Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "hardmob": {
      "ok": false,
@@ -569,7 +587,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     }
    }
   },
@@ -641,13 +659,13 @@
      "ok": true,
      "count": 2,
      "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "zoom": {
      "ok": true,
      "count": 2,
      "url": "https://www.zoom.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "pelando": {
      "ok": false,
@@ -657,15 +675,14 @@
      "seenAt": "2026-11-07T20:49:18.873Z"
     },
     "gatry": {
-     "ok": true,
-     "count": 0,
-     "url": "https://gatry.com/promocoes/?q=rtx%205070",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "ok": false,
+     "error": "No deals on the page",
+     "url": "https://gatry.com/promocoes/?q=rtx%205070"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "hardmob": {
      "ok": false,
@@ -674,7 +691,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     }
    }
   },
@@ -687,30 +704,14 @@
    "buscapeUrl": "https://www.buscape.com.br/tv/tamanho-55-polegadas",
    "lowest": {
     "source": "buscape",
-    "store": "Amazon",
-    "title": "Smart TV QLED 55\" Hisense 4K 55Q6QV",
-    "price": 1961.99,
-    "url": "https://www.buscape.com.br/tv/smart-tv-qled-55-hisense-4k-55q6qv",
-    "image": "https://image.zst.com.br/DEB81DD49C540FA7E5177FB1D4B8F2B5_235_235.jpg"
+    "store": "Magazine Luiza",
+    "title": "Smart TV LED 55\" Philips 4K 55PUG7019/78",
+    "price": 2317.28,
+    "url": "https://www.buscape.com.br/tv/smart-tv-led-55-philips-4k-55pug7019-78",
+    "image": "https://i.zst.com.br/thumbs/45/5/39/-1359553828.jpg"
    },
    "avg40": 2067.19,
    "offers": [
-    {
-     "source": "buscape",
-     "store": "Amazon",
-     "title": "Smart TV QLED 55\" Hisense 4K 55Q6QV",
-     "price": 1961.99,
-     "url": "https://www.buscape.com.br/tv/smart-tv-qled-55-hisense-4k-55q6qv",
-     "image": "https://image.zst.com.br/DEB81DD49C540FA7E5177FB1D4B8F2B5_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Amazon",
-     "title": "Smart TV QLED 55\" Hisense 4K 55Q6QV",
-     "price": 1961.99,
-     "url": "https://www.zoom.com.br/tv/smart-tv-qled-55-hisense-4k-55q6qv",
-     "image": "https://image.zst.com.br/DEB81DD49C540FA7E5177FB1D4B8F2B5_235_235.jpg"
-    },
     {
      "source": "buscape",
      "store": "Magazine Luiza",
@@ -726,6 +727,22 @@
      "price": 2317.28,
      "url": "https://www.zoom.com.br/tv/smart-tv-led-55-philips-4k-55pug7019-78",
      "image": "https://i.zst.com.br/thumbs/45/5/39/-1359553828.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Amazon",
+     "title": "Smart TV QLED 55\" Hisense 4K 55Q6QV",
+     "price": 2327.9,
+     "url": "https://www.buscape.com.br/tv/smart-tv-qled-55-hisense-4k-55q6qv",
+     "image": "https://image.zst.com.br/DEB81DD49C540FA7E5177FB1D4B8F2B5_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Amazon",
+     "title": "Smart TV QLED 55\" Hisense 4K 55Q6QV",
+     "price": 2327.9,
+     "url": "https://www.zoom.com.br/tv/smart-tv-qled-55-hisense-4k-55q6qv",
+     "image": "https://image.zst.com.br/DEB81DD49C540FA7E5177FB1D4B8F2B5_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -747,7 +764,7 @@
      "source": "buscape",
      "store": "Magazine Luiza",
      "title": "Smart TV LED 55\" Samsung Crystal 4K HDR U8600F",
-     "price": 2348.19,
+     "price": 2348.1,
      "url": "https://www.buscape.com.br/tv/smart-tv-led-55-samsung-crystal-4k-hdr-u8600f",
      "image": "https://image.zst.com.br/AADE35AD323DC4B83FDC8212B8E437B1_235_235.jpg"
     },
@@ -755,25 +772,9 @@
      "source": "zoom",
      "store": "Magazine Luiza",
      "title": "Smart TV LED 55\" Samsung Crystal 4K HDR U8600F",
-     "price": 2348.19,
+     "price": 2348.1,
      "url": "https://www.zoom.com.br/tv/smart-tv-led-55-samsung-crystal-4k-hdr-u8600f",
      "image": "https://image.zst.com.br/AADE35AD323DC4B83FDC8212B8E437B1_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "Amazon",
-     "title": "Smart TV 55\" Semp 4K HDR S62",
-     "price": 2423,
-     "url": "https://www.buscape.com.br/tv/smart-tv-55-semp-4k-hdr-55s62",
-     "image": "https://image.zst.com.br/592446DBB1D4EAD37F5091E10EF5CB38_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Amazon",
-     "title": "Smart TV 55\" Semp 4K HDR S62",
-     "price": 2423,
-     "url": "https://www.zoom.com.br/tv/smart-tv-55-semp-4k-hdr-55s62",
-     "image": "https://image.zst.com.br/592446DBB1D4EAD37F5091E10EF5CB38_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -809,19 +810,35 @@
     },
     {
      "source": "buscape",
-     "store": "Amazon",
-     "title": "Smart TV QLED 55\" TCL 4K P7K",
-     "price": 2499,
-     "url": "https://www.buscape.com.br/tv/smart-tv-qled-55-tcl-4k-55p7k",
-     "image": "https://image.zst.com.br/CBF7187B48630C4F456D14B761083B61_235_235.jpg"
+     "store": "Magazine Luiza",
+     "title": "Smart TV LED 55\" Samsung 4K LH55BEFH4GGXZD",
+     "price": 2575.08,
+     "url": "https://www.buscape.com.br/tv/smart-tv-led-55-samsung-4k-lh55befh4ggxzd",
+     "image": "https://image.zst.com.br/9D487A22605AEFB849CD7DC095CBB2AE_235_235.jpg"
     },
     {
      "source": "zoom",
-     "store": "Amazon",
-     "title": "Smart TV QLED 55\" TCL 4K P7K",
-     "price": 2499,
-     "url": "https://www.zoom.com.br/tv/smart-tv-qled-55-tcl-4k-55p7k",
-     "image": "https://image.zst.com.br/CBF7187B48630C4F456D14B761083B61_235_235.jpg"
+     "store": "Magazine Luiza",
+     "title": "Smart TV LED 55\" Samsung 4K LH55BEFH4GGXZD",
+     "price": 2575.08,
+     "url": "https://www.zoom.com.br/tv/smart-tv-led-55-samsung-4k-lh55befh4ggxzd",
+     "image": "https://image.zst.com.br/9D487A22605AEFB849CD7DC095CBB2AE_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Magazine Luiza",
+     "title": "Smart TV Mini LED 55\" LG 4K 55QNED70BSA",
+     "price": 2609.1,
+     "url": "https://www.buscape.com.br/tv/smart-tv-mini-led-55-lg-4k-55qned70bsa",
+     "image": "https://i.zst.com.br/thumbs/51/indsp.gif"
+    },
+    {
+     "source": "buscape",
+     "store": "Loja Online LG",
+     "title": "Smart TV QNED 55\" LG 4K HDR 55QNED80TSA",
+     "price": 2609.1,
+     "url": "https://www.buscape.com.br/tv/smart-tv-qned-55-lg-4k-hdr-55qned80tsa",
+     "image": "https://image.zst.com.br/31F53971BF08F033BCCC0EF24F278D77_235_235.jpg"
     }
    ],
    "community": [
@@ -833,7 +850,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/207dca37a70efa89f417857555718a1a.png",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "PHILIPS Smart TV, 55\" 4K, 55PUG7300, Comando De Voz, Bluetooth, HDR",
@@ -843,7 +861,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/3b0f7afc6fa6b2ca93d070ae072dfe65.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Smart TV Hisense 4K 55 Polegadas 55A6NV Com Dolby Vision, HDR10",
@@ -853,7 +872,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/5c4bceff297441fafbd209201563b932.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Smart TV Hisense HI-QLED 4K 55\" Polegadas Com Dolby Atmos, Dolby Gaming E Alexa - 55Q6QV",
@@ -863,7 +883,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/089dc26b8b52bc914937ba770630a982.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Smart TV 4K Haier QLED 55 Google TV Wi-Fi H55S80GUX",
@@ -917,7 +938,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/e13c515792780b4d7345f50eb43e77ae.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Smart TV 4K 55\" Hisense Hi-QLED Google TV 55QD68SG",
@@ -938,7 +960,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/79e53b49fce9b355a7e1129793c4ebf0.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "PHILIPS, Smart TV Ambilight 55\" 4K, 55PUG8100/78 + PHILIPS, Soundbar, TAB4000",
@@ -948,21 +971,22 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/49fdfbf3450f83f4c6c064c4dde1a309.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     }
    ],
    "sources": {
     "buscape": {
      "ok": true,
-     "count": 23,
+     "count": 22,
      "url": "https://www.buscape.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "zoom": {
      "ok": true,
-     "count": 23,
+     "count": 22,
      "url": "https://www.zoom.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "pelando": {
      "ok": false,
@@ -972,15 +996,16 @@
      "seenAt": "2026-11-07T20:49:18.873Z"
     },
     "gatry": {
-     "ok": true,
-     "count": 7,
+     "ok": false,
+     "error": "No deals on the page",
      "url": "https://gatry.com/promocoes/?q=tv%2055",
+     "carried": 7,
      "seenAt": "2026-11-11T11:25:55.628Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "hardmob": {
      "ok": false,
@@ -989,7 +1014,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     }
    }
   },
@@ -1113,13 +1138,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "pelando": {
      "ok": false,
@@ -1127,15 +1152,14 @@
      "url": "https://www.pelando.com.br/busca/galaxy-s26"
     },
     "gatry": {
-     "ok": true,
-     "count": 0,
-     "url": "https://gatry.com/promocoes/?q=galaxy%20s26",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "ok": false,
+     "error": "No deals on the page",
+     "url": "https://gatry.com/promocoes/?q=galaxy%20s26"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "hardmob": {
      "ok": false,
@@ -1144,7 +1168,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     }
    }
   },
@@ -1250,7 +1274,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/a2c5f781fa48c1ab05f73f6f3a391d66.png",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "The Legend Of Zelda: Ocarina Of Time - Switch 2",
@@ -1260,7 +1285,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/c84a895a64754afc098b30cd3f2c4175.png",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "(Prime) Elden Ring: Tarnished Edition - Nintendo Switch 2",
@@ -1281,7 +1307,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/e2e078fbb1c2ca78c4f0ade1f96e4e7d.png",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Resident Evil Generation Pack - Nintendo Switch 2",
@@ -1302,7 +1329,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/969e9c5b809f5a8712681ee2641a9ea9.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "[Shopee] Console Nintendo Switch 2 + Mario Kart World - R$3587",
@@ -1322,7 +1350,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/9b9c4df475f5fda9e72af215a4cd03fa.png",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Nintendo Switch 2: qual o menor preço que já viram e qual o teto que vale a pena pagar?",
@@ -1363,13 +1392,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "pelando": {
      "ok": false,
@@ -1379,15 +1408,16 @@
      "seenAt": "2026-11-07T20:49:18.873Z"
     },
     "gatry": {
-     "ok": true,
-     "count": 5,
+     "ok": false,
+     "error": "No deals on the page",
      "url": "https://gatry.com/promocoes/?q=switch%202",
+     "carried": 5,
      "seenAt": "2026-11-11T11:25:55.628Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "hardmob": {
      "ok": false,
@@ -1396,7 +1426,7 @@
     "adrenaline": {
      "ok": true,
      "count": 1,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     }
    }
   },
@@ -1405,25 +1435,65 @@
    "name": "iPhone 17 256GB",
    "category": "phone",
    "listingName": "iPhone 17 256GB",
-   "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg",
+   "image": "https://image.zst.com.br/133F3FAC962B9A52B87B46F66F94D9F8_235_235.jpg",
    "buscapeUrl": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
    "lowest": {
     "source": "buscape",
-    "store": "Lowest listed on Buscapé",
-    "title": "iPhone 17 256GB",
+    "store": "KaBuM!",
+    "title": "Iphone 17 256gb Preto",
     "price": 5499,
     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-    "fromHistory": true
+    "image": "https://image.zst.com.br/D12BFB286BF1834466194748D58B03CF_235_235.jpg"
    },
    "avg40": 5625.85,
    "offers": [
     {
      "source": "buscape",
-     "store": "Magazine Luiza",
-     "title": "Apple iPhone 17 256GB Lavanda 6,3\" 48MP iOS 5G, 256GB, Lavanda",
-     "price": 5682.3,
+     "store": "KaBuM!",
+     "title": "Iphone 17 256gb Preto",
+     "price": 5499,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg"
+     "image": "https://image.zst.com.br/D12BFB286BF1834466194748D58B03CF_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "KaBuM!",
+     "title": "Iphone 17 256gb Preto",
+     "price": 5499,
+     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/D12BFB286BF1834466194748D58B03CF_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Magazine Luiza",
+     "title": "Smartphone Apple iPhone 17 256GB Preto - 5G + Carregador Apple USB-C 2",
+     "price": 5642.99,
+     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/133F3FAC962B9A52B87B46F66F94D9F8_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Magazine Luiza",
+     "title": "Smartphone Apple iPhone 17 256GB Branco - 5G + Carregador Apple USB-C",
+     "price": 5642.99,
+     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/7FE3D43D9D1FB7714B9D73BC85A3D32F_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Magazine Luiza",
+     "title": "Smartphone Apple iPhone 17 256GB Preto - 5G + Carregador Apple USB-C 2",
+     "price": 5642.99,
+     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/133F3FAC962B9A52B87B46F66F94D9F8_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Magazine Luiza",
+     "title": "Smartphone Apple iPhone 17 256GB Branco - 5G + Carregador Apple USB-C",
+     "price": 5642.99,
+     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/7FE3D43D9D1FB7714B9D73BC85A3D32F_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -1444,26 +1514,10 @@
     {
      "source": "buscape",
      "store": "Magazine Luiza",
-     "title": "Apple iPhone 17 256GB Branco 6,3\" 48MP iOS 5G, 256GB, Branco",
-     "price": 5682.3,
-     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/E50CA3F2E6A994D4239DBE3244D1169A_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "Magazine Luiza",
      "title": "Apple iPhone 17 256GB Sálvia 6,3\" 48MP iOS 5G, 256GB, Sálvia",
      "price": 5682.3,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
      "image": "https://image.zst.com.br/10B2F25486AA1B1AA2E85746DFCAB006_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Magazine Luiza",
-     "title": "Apple iPhone 17 256GB Lavanda 6,3\" 48MP iOS 5G, 256GB, Lavanda",
-     "price": 5682.3,
-     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg"
     },
     {
      "source": "zoom",
@@ -1484,34 +1538,10 @@
     {
      "source": "zoom",
      "store": "Magazine Luiza",
-     "title": "Apple iPhone 17 256GB Branco 6,3\" 48MP iOS 5G, 256GB, Branco",
-     "price": 5682.3,
-     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/E50CA3F2E6A994D4239DBE3244D1169A_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Magazine Luiza",
      "title": "Apple iPhone 17 256GB Sálvia 6,3\" 48MP iOS 5G, 256GB, Sálvia",
      "price": 5682.3,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
      "image": "https://image.zst.com.br/10B2F25486AA1B1AA2E85746DFCAB006_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "Magazine Luiza",
-     "title": "Smartphone Apple iPhone 17 256GB Preto - 5G + Carregador Apple USB-C 2",
-     "price": 5849.99,
-     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/133F3FAC962B9A52B87B46F66F94D9F8_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Magazine Luiza",
-     "title": "Smartphone Apple iPhone 17 256GB Preto - 5G + Carregador Apple USB-C 2",
-     "price": 5849.99,
-     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/133F3FAC962B9A52B87B46F66F94D9F8_235_235.jpg"
     }
    ],
    "community": [
@@ -1534,7 +1564,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/f16a2438f150fd5e325cf53b86802bba.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Apple IPhone 17 De 256 GB — Lavanda",
@@ -1544,7 +1575,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/a3be2d4c951aadc3e2b93c1b0179b1a9.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Apple IPhone 17 256GB 8GB Ram Tela 6.3'' Câmera 48Mp Outlet",
@@ -1554,7 +1586,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/eba803e9245dff239d2bcf4f43ad5c1d.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Apple IPhone 17 De 256 GB — Preto",
@@ -1564,7 +1597,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/97d5d66883290d2441f832985986b438.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Apple IPhone 17 De 256 GB — Preto",
@@ -1574,7 +1608,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/200e17c4ab814fd371f60560d679778c.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Apple IPhone 17 De 256 GB — Sálvia",
@@ -1584,7 +1619,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/15207fe074ea752e5d2093493911230b.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Dilema 2026: Tela e liberdade do S26+ ou revenda e vídeo do iPhone 17? Qual escolher?",
@@ -1625,13 +1661,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "pelando": {
      "ok": false,
@@ -1641,15 +1677,16 @@
      "seenAt": "2026-11-07T20:49:18.873Z"
     },
     "gatry": {
-     "ok": true,
-     "count": 6,
+     "ok": false,
+     "error": "No deals on the page",
      "url": "https://gatry.com/promocoes/?q=iphone%2017",
+     "carried": 6,
      "seenAt": "2026-11-11T11:25:55.628Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "hardmob": {
      "ok": false,
@@ -1658,7 +1695,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     }
    }
   },
@@ -1673,17 +1710,17 @@
     "source": "buscape",
     "store": "Amazon",
     "title": "Console Xbox Series X",
-    "price": 7500,
+    "price": 7469,
     "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
     "image": "https://image.zst.com.br/F35B528AF151303977E35BCDE4D15198_235_235.jpg"
    },
-   "avg40": 7125.91,
+   "avg40": 7125.14,
    "offers": [
     {
      "source": "buscape",
      "store": "Amazon",
      "title": "Console Xbox Series X",
-     "price": 7500,
+     "price": 7469,
      "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
      "image": "https://image.zst.com.br/F35B528AF151303977E35BCDE4D15198_235_235.jpg"
     },
@@ -1691,7 +1728,7 @@
      "source": "zoom",
      "store": "Amazon",
      "title": "Console Xbox Series X",
-     "price": 7500,
+     "price": 7469,
      "url": "https://www.zoom.com.br/console-de-video-game/console-xbox-series-x-microsoft",
      "image": "https://image.zst.com.br/F35B528AF151303977E35BCDE4D15198_235_235.jpg"
     }
@@ -1705,7 +1742,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/14eaa9e7fd0cdac7a6db63182f4929ee.png",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Forza Horizon 5 Para Xbox One E Xbox Series X - N/A",
@@ -1715,7 +1753,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/79a80c402d9dc7505145f136f27af2d1.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Controlador Com Fio GameSir G7 SE Para Xbox Series X|S, Xbox One E Windows 10/11",
@@ -1725,7 +1764,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/a871efd275156d677f5b517c5132469b.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Controlador Com Fio GameSir G7 SE Para Xbox Series X|S, Xbox One E Windows 10/11",
@@ -1735,7 +1775,19 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/f2f4850b3d6eaea2b1d9338c5dcddd5a.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
+    },
+    {
+     "title": "Câmbio Logitech G Driving Force, G29 e G920 para PS5, PS4, Xbox Series X e Series S, Xbox One, PC - 941-000119",
+     "price": 287,
+     "store": "Shopee",
+     "url": "https://www.promobit.com.br/oferta/cambio-logitech-g-driving-force-g29-e-g920-para-ps5-ps4-xbox-series-x-e-series-s-xbox-one-pc-941-000119-3202358/",
+     "image": "https://i.promobit.com.br/268/208836017717944265041368186740.jpg",
+     "date": "2026-11-11T16:47:11-0300",
+     "score": 1,
+     "coupon": "",
+     "source": "promobit"
     },
     {
      "title": "Blood of Dawnwalker Steelbook Xbox Series X Mídia Física",
@@ -1767,7 +1819,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/12f111bd532d2bc9f243a6b36d51a7a8.png",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Volante Logitech G920 Driving Force E Pedais Com Force Feedback Para Xbox Series X|S, Xbox One, PC, Mac",
@@ -1777,7 +1830,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/cc5414f90bd87983b5419ccf9bf853fd.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "Volante Logitech G920 Driving Force E Pedais Com Force Feedback Para Xbox Series X|S, Xbox One, PC, Mac",
@@ -1787,7 +1841,8 @@
      "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/01a50b7c3d8bf837488b1ac9d4841081.jpg",
      "date": "",
      "score": 0,
-     "source": "gatry"
+     "source": "gatry",
+     "seenAt": "2026-11-11T11:25:55.628Z"
     },
     {
      "title": "PS5 Slim vs Xbox Series X: Qual a melhor escolha focando em GTA 6 e Warzone?",
@@ -1806,13 +1861,13 @@
      "ok": true,
      "count": 1,
      "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "zoom": {
      "ok": true,
      "count": 1,
      "url": "https://www.zoom.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "pelando": {
      "ok": false,
@@ -1822,15 +1877,16 @@
      "seenAt": "2026-11-07T20:49:18.873Z"
     },
     "gatry": {
-     "ok": true,
-     "count": 7,
+     "ok": false,
+     "error": "No deals on the page",
      "url": "https://gatry.com/promocoes/?q=xbox%20series%20x",
+     "carried": 7,
      "seenAt": "2026-11-11T11:25:55.628Z"
     },
     "promobit": {
      "ok": true,
-     "count": 0,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "count": 1,
+     "seenAt": "2026-11-11T19:51:05.465Z"
     },
     "hardmob": {
      "ok": false,
@@ -1839,7 +1895,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "seenAt": "2026-11-11T19:51:05.465Z"
     }
    }
   }
