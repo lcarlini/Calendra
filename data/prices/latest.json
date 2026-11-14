@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-14T01:44:14.308Z",
+ "updatedAt": "2026-11-14T10:54:10.233Z",
  "sources": {
   "buscape": {
    "name": "Buscapé",
@@ -9,7 +9,7 @@
    "errors": [
     "The page listed no offers"
    ],
-   "lastOk": "2026-11-14T01:44:14.308Z"
+   "lastOk": "2026-11-14T10:54:10.233Z"
   },
   "zoom": {
    "name": "Zoom",
@@ -19,7 +19,7 @@
    "errors": [
     "The page listed no offers"
    ],
-   "lastOk": "2026-11-14T01:44:14.308Z"
+   "lastOk": "2026-11-14T10:54:10.233Z"
   },
   "pelando": {
    "name": "Pelando",
@@ -37,7 +37,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-14T01:44:14.308Z"
+   "lastOk": "2026-11-14T10:54:10.233Z"
   },
   "gatry": {
    "name": "Gatry",
@@ -65,7 +65,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-14T01:44:14.308Z"
+   "lastOk": "2026-11-14T10:54:10.233Z"
   }
  },
  "products": [
@@ -78,13 +78,13 @@
    "buscapeUrl": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
    "lowest": {
     "source": "buscape",
-    "store": "Amazon",
-    "title": "PlayStation 5 Console [videogame]",
-    "price": 5999.9,
+    "store": "Lowest listed on Buscapé",
+    "title": "PlayStation 5 825GB",
+    "price": 4199,
     "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-    "image": "https://image.zst.com.br/13841AD4CC6E6D0D8518F0629D2C3CDA_235_235.jpg"
+    "fromHistory": true
    },
-   "avg40": 4244.02,
+   "avg40": 4199,
    "offers": [
     {
      "source": "buscape",
@@ -311,13 +311,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "pelando": {
      "ok": false,
@@ -336,7 +336,7 @@
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "hardmob": {
      "ok": false,
@@ -345,7 +345,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     }
    }
   },
@@ -418,7 +418,7 @@
      "source": "buscape",
      "store": "Magazine Luiza",
      "title": "Ssd 1Tb Kingston NV3 SNV3S/1000G M.2, 1TB",
-     "price": 1443.19,
+     "price": 1639.99,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
      "image": "https://image.zst.com.br/092D138033BD4E64897B8DA24F537FD7_235_235.jpg"
     },
@@ -426,7 +426,7 @@
      "source": "zoom",
      "store": "Magazine Luiza",
      "title": "Ssd 1Tb Kingston NV3 SNV3S/1000G M.2, 1TB",
-     "price": 1443.19,
+     "price": 1639.99,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
      "image": "https://image.zst.com.br/092D138033BD4E64897B8DA24F537FD7_235_235.jpg"
     }
@@ -548,13 +548,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "pelando": {
      "ok": false,
@@ -571,7 +571,7 @@
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "hardmob": {
      "ok": false,
@@ -580,7 +580,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     }
    }
   },
@@ -652,13 +652,13 @@
      "ok": true,
      "count": 2,
      "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "zoom": {
      "ok": true,
      "count": 2,
      "url": "https://www.zoom.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "pelando": {
      "ok": false,
@@ -675,7 +675,7 @@
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "hardmob": {
      "ok": false,
@@ -684,7 +684,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     }
    }
   },
@@ -791,7 +791,7 @@
      "title": "Smart TV LED 55\" Aiwa 4K HDR AWS-TV-55-BL-01-A",
      "price": 2429.91,
      "url": "https://www.buscape.com.br/tv/smart-tv-led-55-aiwa-4k-hdr-aws-tv-55-bl-01-a-4-hdmi",
-     "image": "https://i.zst.com.br/thumbs/45/a/2b/-874391105.jpg"
+     "image": "https://image.zst.com.br/155293324B60D12800C378B6D45BBAAC_235_235.jpg"
     },
     {
      "source": "zoom",
@@ -799,7 +799,7 @@
      "title": "Smart TV LED 55\" Aiwa 4K HDR AWS-TV-55-BL-01-A",
      "price": 2429.91,
      "url": "https://www.zoom.com.br/tv/smart-tv-led-55-aiwa-4k-hdr-aws-tv-55-bl-01-a-4-hdmi",
-     "image": "https://i.zst.com.br/thumbs/45/a/2b/-874391105.jpg"
+     "image": "https://image.zst.com.br/155293324B60D12800C378B6D45BBAAC_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -960,15 +960,15 @@
    "sources": {
     "buscape": {
      "ok": true,
-     "count": 22,
+     "count": 24,
      "url": "https://www.buscape.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "zoom": {
      "ok": true,
-     "count": 22,
+     "count": 24,
      "url": "https://www.zoom.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "pelando": {
      "ok": false,
@@ -987,7 +987,7 @@
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "hardmob": {
      "ok": false,
@@ -996,7 +996,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     }
    }
   },
@@ -1120,13 +1120,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "pelando": {
      "ok": false,
@@ -1141,7 +1141,7 @@
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "hardmob": {
      "ok": false,
@@ -1150,7 +1150,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     }
    }
   },
@@ -1163,16 +1163,48 @@
    "buscapeUrl": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
    "lowest": {
     "source": "buscape",
-    "store": "Magazine Luiza",
-    "title": "Console Nintendo Switch 2 Nacional Portátil e Doméstico, Preto",
-    "price": 4139.9,
+    "store": "Amazon",
+    "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
+    "price": 4099,
     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-    "image": "https://image.zst.com.br/A90A36026773B6836088EFF37FC8F44C_235_235.jpg"
+    "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
    },
-   "avg40": 3980.07,
+   "avg40": 3979.05,
    "offers": [
     {
      "source": "buscape",
+     "store": "Amazon",
+     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
+     "price": 4099,
+     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
+     "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Amazon",
+     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
+     "price": 4099,
+     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
+     "image": "https://image.zst.com.br/3410D78173BDA1BE743C551008FC10DC_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Amazon",
+     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
+     "price": 4099,
+     "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
+     "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Amazon",
+     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
+     "price": 4099,
+     "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
+     "image": "https://image.zst.com.br/3410D78173BDA1BE743C551008FC10DC_235_235.jpg"
+    },
+    {
+     "source": "buscape",
      "store": "Magazine Luiza",
      "title": "Console Nintendo Switch 2 Nacional Portátil e Doméstico, Preto",
      "price": 4139.9,
@@ -1186,38 +1218,6 @@
      "price": 4139.9,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
      "image": "https://image.zst.com.br/A90A36026773B6836088EFF37FC8F44C_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "Amazon",
-     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 4199,
-     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "Amazon",
-     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 4199,
-     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "image": "https://image.zst.com.br/3410D78173BDA1BE743C551008FC10DC_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Amazon",
-     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 4199,
-     "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Amazon",
-     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 4199,
-     "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "image": "https://image.zst.com.br/3410D78173BDA1BE743C551008FC10DC_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -1390,13 +1390,13 @@
      "ok": true,
      "count": 5,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "zoom": {
      "ok": true,
      "count": 5,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "pelando": {
      "ok": false,
@@ -1415,7 +1415,7 @@
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "hardmob": {
      "ok": false,
@@ -1424,7 +1424,7 @@
     "adrenaline": {
      "ok": true,
      "count": 1,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     }
    }
   },
@@ -1433,21 +1433,29 @@
    "name": "iPhone 17 256GB",
    "category": "phone",
    "listingName": "iPhone 17 256GB",
-   "image": "https://image.zst.com.br/13A52ADCFEEA7484D1EBCB09041B5B71_235_235.jpg",
+   "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg",
    "buscapeUrl": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
    "lowest": {
     "source": "buscape",
     "store": "Magazine Luiza",
-    "title": "Apple iPhone 17 256GB Preto 6,3\" 48MP iOS 5G, 256GB, Preto",
+    "title": "Apple iPhone 17 256GB Lavanda 6,3\" 48MP iOS 5G, 256GB, Lavanda",
     "price": 5699,
     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-    "image": "https://image.zst.com.br/13A52ADCFEEA7484D1EBCB09041B5B71_235_235.jpg"
+    "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg"
    },
    "avg40": 5625.86,
    "offers": [
     {
      "source": "buscape",
      "store": "Magazine Luiza",
+     "title": "Apple iPhone 17 256GB Lavanda 6,3\" 48MP iOS 5G, 256GB, Lavanda",
+     "price": 5699,
+     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Magazine Luiza",
      "title": "Apple iPhone 17 256GB Preto 6,3\" 48MP iOS 5G, 256GB, Preto",
      "price": 5699,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
@@ -1462,12 +1470,12 @@
      "image": "https://image.zst.com.br/5159AC380506D4A0A7371FCA80FCA3EE_235_235.jpg"
     },
     {
-     "source": "buscape",
-     "store": "KaBuM!",
-     "title": "Iphone 17 256gb Preto",
+     "source": "zoom",
+     "store": "Magazine Luiza",
+     "title": "Apple iPhone 17 256GB Lavanda 6,3\" 48MP iOS 5G, 256GB, Lavanda",
      "price": 5699,
-     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/D12BFB286BF1834466194748D58B03CF_235_235.jpg"
+     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg"
     },
     {
      "source": "zoom",
@@ -1486,12 +1494,12 @@
      "image": "https://image.zst.com.br/5159AC380506D4A0A7371FCA80FCA3EE_235_235.jpg"
     },
     {
-     "source": "zoom",
-     "store": "KaBuM!",
-     "title": "Iphone 17 256gb Preto",
-     "price": 5699,
-     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/D12BFB286BF1834466194748D58B03CF_235_235.jpg"
+     "source": "buscape",
+     "store": "Magazine Luiza",
+     "title": "Smartphone Apple iPhone 17 256GB Preto - 5G + Carregador Apple USB-C 2",
+     "price": 5849.99,
+     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/133F3FAC962B9A52B87B46F66F94D9F8_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -1500,6 +1508,14 @@
      "price": 5849.99,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
      "image": "https://image.zst.com.br/7FE3D43D9D1FB7714B9D73BC85A3D32F_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Magazine Luiza",
+     "title": "Smartphone Apple iPhone 17 256GB Preto - 5G + Carregador Apple USB-C 2",
+     "price": 5849.99,
+     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/133F3FAC962B9A52B87B46F66F94D9F8_235_235.jpg"
     },
     {
      "source": "zoom",
@@ -1518,28 +1534,12 @@
      "image": "https://image.zst.com.br/CD70661E28FFC6966FB7227B77489BEB_235_235.jpg"
     },
     {
-     "source": "buscape",
-     "store": "Fast Shop",
-     "title": "Apple iPhone 17 256GB Sálvia",
-     "price": 6299.1,
-     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/C7BD32602B99D2A87DAEB4A503C242CB_235_235.jpg"
-    },
-    {
      "source": "zoom",
      "store": "Fast Shop",
      "title": "iPhone 17 256GB Preto",
      "price": 6299.1,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
      "image": "https://image.zst.com.br/CD70661E28FFC6966FB7227B77489BEB_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Fast Shop",
-     "title": "Apple iPhone 17 256GB Sálvia",
-     "price": 6299.1,
-     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/C7BD32602B99D2A87DAEB4A503C242CB_235_235.jpg"
     }
    ],
    "community": [
@@ -1659,13 +1659,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "pelando": {
      "ok": false,
@@ -1684,7 +1684,7 @@
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "hardmob": {
      "ok": false,
@@ -1693,7 +1693,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     }
    }
   },
@@ -1878,7 +1878,7 @@
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     },
     "hardmob": {
      "ok": false,
@@ -1887,7 +1887,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T01:44:14.308Z"
+     "seenAt": "2026-11-14T10:54:10.233Z"
     }
    }
   }
