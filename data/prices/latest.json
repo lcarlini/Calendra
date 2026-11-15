@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-14T22:43:44.006Z",
+ "updatedAt": "2026-11-15T07:09:30.058Z",
  "sources": {
   "buscape": {
    "name": "Buscapé",
@@ -9,7 +9,7 @@
    "errors": [
     "The page listed no offers"
    ],
-   "lastOk": "2026-11-14T22:43:44.006Z"
+   "lastOk": "2026-11-15T07:09:30.058Z"
   },
   "zoom": {
    "name": "Zoom",
@@ -19,7 +19,7 @@
    "errors": [
     "The page listed no offers"
    ],
-   "lastOk": "2026-11-14T22:43:44.006Z"
+   "lastOk": "2026-11-15T07:09:30.058Z"
   },
   "pelando": {
    "name": "Pelando",
@@ -37,7 +37,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-14T22:43:44.006Z"
+   "lastOk": "2026-11-15T07:09:30.058Z"
   },
   "gatry": {
    "name": "Gatry",
@@ -65,7 +65,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-14T22:43:44.006Z"
+   "lastOk": "2026-11-15T07:09:30.058Z"
   }
  },
  "products": [
@@ -185,17 +185,6 @@
    ],
    "community": [
     {
-     "title": "Little Nightmares 3 - PS5",
-     "price": 134.97,
-     "store": "Mercado Livre",
-     "url": "https://www.promobit.com.br/oferta/little-nightmares-3-ps5-3214388/",
-     "image": "https://i.promobit.com.br/268/377429962817946957179190959034.png",
-     "date": "2026-11-14T19:35:05-0300",
-     "score": 1,
-     "coupon": "DESCONTAOMELI",
-     "source": "promobit"
-    },
-    {
      "title": "Death Stranding 2: On The Beach - PlayStation 5",
      "price": 199.9,
      "store": "Amazon",
@@ -227,6 +216,17 @@
      "score": 0,
      "source": "gatry",
      "seenAt": "2026-11-11T11:25:55.628Z"
+    },
+    {
+     "title": "Console PlayStation 5 Slim Edição Digital 825Gb Ps5",
+     "price": 3578,
+     "store": "Shopee",
+     "url": "https://www.promobit.com.br/oferta/console-playstation-5-slim-edicao-digital-825gb-ps5-3214718/",
+     "image": "https://i.promobit.com.br/268/360052708817947117318799487146.jpg",
+     "date": "2026-11-15T00:02:06-0300",
+     "score": 1,
+     "coupon": "",
+     "source": "promobit"
     }
    ],
    "sources": {
@@ -234,13 +234,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "pelando": {
      "ok": false,
@@ -257,7 +257,7 @@
     "promobit": {
      "ok": true,
      "count": 1,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "hardmob": {
      "ok": false,
@@ -266,7 +266,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     }
    }
   },
@@ -279,13 +279,13 @@
    "buscapeUrl": "https://www.buscape.com.brundefined",
    "lowest": {
     "source": "buscape",
-    "store": "Lowest listed on Buscapé",
-    "title": "SSD Kingston NV3 1TB M.2 2280 NVMe SNV3S/1000G",
-    "price": 963,
+    "store": "Amazon",
+    "title": "SSD Kingston NV3 1TB M.2 2280 NVMe Gen4, Desempenho e Eficiência para Upgrade de PC – SNV3S/1000G",
+    "price": 999,
     "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-    "fromHistory": true
+    "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
    },
-   "avg40": 966.83,
+   "avg40": 966.56,
    "offers": [
     {
      "source": "buscape",
@@ -469,13 +469,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "pelando": {
      "ok": false,
@@ -492,7 +492,7 @@
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "hardmob": {
      "ok": false,
@@ -501,7 +501,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     }
    }
   },
@@ -520,7 +520,7 @@
     "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
     "image": "https://image.zst.com.br/642E6AD12DF10BE1A443C5BD18293E88_235_235.jpg"
    },
-   "avg40": 9868,
+   "avg40": 9888.32,
    "offers": [
     {
      "source": "buscape",
@@ -561,13 +561,13 @@
      "ok": true,
      "count": 2,
      "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "zoom": {
      "ok": true,
      "count": 2,
      "url": "https://www.zoom.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "pelando": {
      "ok": false,
@@ -582,7 +582,7 @@
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "hardmob": {
      "ok": false,
@@ -591,7 +591,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     }
    }
   },
@@ -610,7 +610,7 @@
     "url": "https://www.buscape.com.br/tv/smart-tv-led-55-philips-4k-55pug7019-78",
     "image": "https://i.zst.com.br/thumbs/45/5/39/-1359553828.jpg"
    },
-   "avg40": 2121.74,
+   "avg40": 2132.55,
    "offers": [
     {
      "source": "buscape",
@@ -712,7 +712,7 @@
      "source": "buscape",
      "store": "Amazon",
      "title": "Smart TV 55\" Semp 4K HDR S62",
-     "price": 2499,
+     "price": 2599,
      "url": "https://www.buscape.com.br/tv/smart-tv-55-semp-4k-hdr-55s62",
      "image": "https://image.zst.com.br/592446DBB1D4EAD37F5091E10EF5CB38_235_235.jpg"
     },
@@ -720,7 +720,7 @@
      "source": "zoom",
      "store": "Amazon",
      "title": "Smart TV 55\" Semp 4K HDR S62",
-     "price": 2499,
+     "price": 2599,
      "url": "https://www.zoom.com.br/tv/smart-tv-55-semp-4k-hdr-55s62",
      "image": "https://image.zst.com.br/592446DBB1D4EAD37F5091E10EF5CB38_235_235.jpg"
     },
@@ -814,13 +814,13 @@
      "ok": true,
      "count": 23,
      "url": "https://www.buscape.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "zoom": {
      "ok": true,
      "count": 23,
      "url": "https://www.zoom.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "pelando": {
      "ok": false,
@@ -837,7 +837,7 @@
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "hardmob": {
      "ok": false,
@@ -846,7 +846,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     }
    }
   },
@@ -865,7 +865,7 @@
     "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
     "image": "https://image.zst.com.br/5438AB33A2D4F1144E8536D6D794DF28_235_235.jpg"
    },
-   "avg40": 4808.01,
+   "avg40": 4812.01,
    "offers": [
     {
      "source": "buscape",
@@ -970,13 +970,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "pelando": {
      "ok": false,
@@ -991,7 +991,7 @@
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "hardmob": {
      "ok": false,
@@ -1000,7 +1000,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     }
    }
   },
@@ -1019,7 +1019,7 @@
     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
     "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
    },
-   "avg40": 3979.05,
+   "avg40": 3984.55,
    "offers": [
     {
      "source": "buscape",
@@ -1174,13 +1174,13 @@
      "ok": true,
      "count": 5,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "zoom": {
      "ok": true,
      "count": 5,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "pelando": {
      "ok": false,
@@ -1197,7 +1197,7 @@
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "hardmob": {
      "ok": false,
@@ -1206,7 +1206,7 @@
     "adrenaline": {
      "ok": true,
      "count": 1,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     }
    }
   },
@@ -1225,7 +1225,7 @@
     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
     "image": "https://image.zst.com.br/13A52ADCFEEA7484D1EBCB09041B5B71_235_235.jpg"
    },
-   "avg40": 5625.86,
+   "avg40": 5634.13,
    "offers": [
     {
      "source": "buscape",
@@ -1236,14 +1236,6 @@
      "image": "https://image.zst.com.br/13A52ADCFEEA7484D1EBCB09041B5B71_235_235.jpg"
     },
     {
-     "source": "buscape",
-     "store": "Magazine Luiza",
-     "title": "Apple iPhone 17 256GB Azul-névoa 6,3\" 48MP iOS 5G, 256GB, Azul-névoa",
-     "price": 5699,
-     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/5159AC380506D4A0A7371FCA80FCA3EE_235_235.jpg"
-    },
-    {
      "source": "zoom",
      "store": "Magazine Luiza",
      "title": "Apple iPhone 17 256GB Preto 6,3\" 48MP iOS 5G, 256GB, Preto",
@@ -1252,14 +1244,6 @@
      "image": "https://image.zst.com.br/13A52ADCFEEA7484D1EBCB09041B5B71_235_235.jpg"
     },
     {
-     "source": "zoom",
-     "store": "Magazine Luiza",
-     "title": "Apple iPhone 17 256GB Azul-névoa 6,3\" 48MP iOS 5G, 256GB, Azul-névoa",
-     "price": 5699,
-     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/5159AC380506D4A0A7371FCA80FCA3EE_235_235.jpg"
-    },
-    {
      "source": "buscape",
      "store": "Magazine Luiza",
      "title": "Smartphone Apple iPhone 17 256GB Branco - 5G + Carregador Apple USB-C",
@@ -1277,51 +1261,67 @@
     },
     {
      "source": "buscape",
-     "store": "Fast Shop",
-     "title": "iPhone 17 256GB Preto",
-     "price": 6299.1,
+     "store": "Americanas",
+     "title": "Smartphone Apple iPhone 17 256GB 8GB RAM Sálvia",
+     "price": 6599,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/CD70661E28FFC6966FB7227B77489BEB_235_235.jpg"
+     "image": "https://image.zst.com.br/C9CCA5F775EE8BD813A294D5F054226B_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Americanas",
+     "title": "Smartphone Apple iPhone 17 256GB 8GB RAM Sálvia",
+     "price": 6599,
+     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/C9CCA5F775EE8BD813A294D5F054226B_235_235.jpg"
     },
     {
      "source": "buscape",
-     "store": "Fast Shop",
-     "title": "Apple iPhone 17 256GB Sálvia",
-     "price": 6299.1,
+     "store": "Americanas",
+     "title": "Smartphone Apple iPhone 17 256GB 8GB RAM Lavanda",
+     "price": 6649,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/C7BD32602B99D2A87DAEB4A503C242CB_235_235.jpg"
+     "image": "https://image.zst.com.br/5703971C7268C3FD8CCC44D4E872CAF3_235_235.jpg"
     },
     {
      "source": "buscape",
-     "store": "Fast Shop",
-     "title": "iPhone 17 256GB Branco",
-     "price": 6299.1,
+     "store": "Americanas",
+     "title": "Smartphone Apple iPhone 17 256GB 8GB RAM Branco",
+     "price": 6649,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/F99B4FC22E482452951AC3F56D901116_235_235.jpg"
+     "image": "https://image.zst.com.br/9EE6AA25AF2A226B36CBD0C95A1E0149_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Americanas",
+     "title": "Smartphone Apple iPhone 17 256GB 8GB RAM Preto",
+     "price": 6649,
+     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/F37BDDDAD0D389E4CF89C02516555D01_235_235.jpg"
     },
     {
      "source": "zoom",
-     "store": "Fast Shop",
-     "title": "iPhone 17 256GB Preto",
-     "price": 6299.1,
+     "store": "Americanas",
+     "title": "Smartphone Apple iPhone 17 256GB 8GB RAM Lavanda",
+     "price": 6649,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/CD70661E28FFC6966FB7227B77489BEB_235_235.jpg"
+     "image": "https://image.zst.com.br/5703971C7268C3FD8CCC44D4E872CAF3_235_235.jpg"
     },
     {
      "source": "zoom",
-     "store": "Fast Shop",
-     "title": "Apple iPhone 17 256GB Sálvia",
-     "price": 6299.1,
+     "store": "Americanas",
+     "title": "Smartphone Apple iPhone 17 256GB 8GB RAM Branco",
+     "price": 6649,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/C7BD32602B99D2A87DAEB4A503C242CB_235_235.jpg"
+     "image": "https://image.zst.com.br/9EE6AA25AF2A226B36CBD0C95A1E0149_235_235.jpg"
     },
     {
      "source": "zoom",
-     "store": "Fast Shop",
-     "title": "iPhone 17 256GB Branco",
-     "price": 6299.1,
+     "store": "Americanas",
+     "title": "Smartphone Apple iPhone 17 256GB 8GB RAM Preto",
+     "price": 6649,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/F99B4FC22E482452951AC3F56D901116_235_235.jpg"
+     "image": "https://image.zst.com.br/F37BDDDAD0D389E4CF89C02516555D01_235_235.jpg"
     }
    ],
    "community": [
@@ -1397,13 +1397,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "pelando": {
      "ok": false,
@@ -1420,7 +1420,7 @@
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "hardmob": {
      "ok": false,
@@ -1429,7 +1429,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     }
    }
   },
@@ -1449,7 +1449,7 @@
     "image": "https://image.zst.com.br/F35B528AF151303977E35BCDE4D15198_235_235.jpg",
     "seenAt": "2026-11-13T20:00:09.095Z"
    },
-   "avg40": 7142.08,
+   "avg40": 7154.83,
    "offers": [
     {
      "source": "buscape",
@@ -1579,7 +1579,7 @@
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     },
     "hardmob": {
      "ok": false,
@@ -1588,7 +1588,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-14T22:43:44.006Z"
+     "seenAt": "2026-11-15T07:09:30.058Z"
     }
    }
   }
