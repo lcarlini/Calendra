@@ -14,7 +14,7 @@ travel planning, a news reader, markets, and a price-and-deals tracker. No build
 | Calendário | [calendario.html](https://lcarlini.github.io/Calendra/calendario.html) | Opens on the year view modelled on `UI/Calendar.html` (12 full months, D/B/G badges, combo colours, tooltips), plus month/week/day, US + Brazil + GCM/Brasil/Davi calendars, **Travel & Holiday Intelligence** (2026–2030, `.ics` export) |
 | News | [news.html](https://lcarlini.github.io/Calendra/news.html) | Stories grouped across outlets, explainable ranking, optional AI summaries. Loads with no server |
 | Markets | [markets.html](https://lcarlini.github.io/Calendra/markets.html) | Policy rates, currencies, B3 watchlist. US assets are shown as unavailable |
-| Deals | [deals.html](https://lcarlini.github.io/Calendra/deals.html) | Price watch (Buscapé, Zoom, Pelando, Promobit, Gatry, Hardmob, Adrenaline), real price history, 2026–2028 price calendar with simulation, community feed, coupon finder |
+| Deals | [deals.html](https://lcarlini.github.io/Calendra/deals.html) | Price watch (Buscapé, Zoom, Pelando, Promobit, Gatry, Hardmob, Adrenaline), real price history, 2026–2028 price calendar with simulation, a week of community deals (Gatry, Promobit, Oferta Esperta, Pelando, Adrenaline) searchable by product, coupon finder |
 | Settings | [settings.html](https://lcarlini.github.io/Calendra/settings.html) | Theme, TV mode, AI provider, export/import/reset |
 
 Legacy: `calendar.html` redirects to `calendario.html` and keeps the query string (for example `?date=2026-09-07`).
@@ -24,10 +24,14 @@ Screenshots (small phone, Full HD, TV/4K) are in [docs/screenshots](docs/screens
 
 ## Everything runs from static files (no server)
 
-Open the site and every page works from HTML, CSS and JavaScript alone. **News** and the **Deals** community feed read the publishers' own public RSS
-feeds through [rss2json.com](https://rss2json.com), a public feed converter that browsers may call (the publishers' feeds send no CORS headers, so a page
-cannot read them directly). Its free tier returns the newest 10 items per feed, so News loads several feeds per outlet (g1 has Economia, Política and Mundo too).
-It is rate limited: if a feed is throttled, that source shows its status and the others still load; saved copies are shown as stale.
+Open the site and every page works from HTML, CSS and JavaScript alone. **News** reads each publisher's own public RSS feed **live** through the public reader
+[r.jina.ai](https://jina.ai/reader) (CORS enabled; it returns the feed's XML as the publisher serves it, every item, no cached copy). If the reader fails, a feed falls back
+to [rss2json.com](https://rss2json.com), which keeps its own copy (measured on 2026-11-16: up to 13 hours behind the real feed) and returns only 10 items. The Sources list
+says which route each outlet used and how old its newest item is. **Force refresh** clears the screen and skips every cache (browser, reader, converter).
+
+The **Deals** community list is a pool of about a week of deals from Gatry (its public API), Promobit, Oferta Esperta and Pelando, collected by the
+`Snapshot deal feed` GitHub Action into `data/deals/community.json` (`node scripts/snapshot-deals.mjs`), plus the Adrenaline Ofertas RSS feed. GitHub runs the
+30-minute schedule only every few hours on a free repository; the page shows the collection's age and links to "Run workflow" when it is old.
 
 Optional ways to get more headlines (News page, "Optional: get more headlines"):
 * a free rss2json API key (up to 50 items per feed), kept in this browser only;

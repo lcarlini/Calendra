@@ -4,7 +4,7 @@
 //   data/prices/history.json  one lowest price per product per day (Buscapé/Zoom's own 40-day history + each run)
 import fs from 'node:fs';
 import path from 'node:path';
-import { matchesItem, mergeHistory, parseGatry, parseHardmob, parseMosaico, parsePelando, parsePromobit, brl, decodeEntities } from '../js/deals/price-parsers.js';
+import { gatryApiUrl, matchesItem, mergeHistory, parseGatryApi, parseHardmob, parseMosaico, parsePelando, parsePromobit, brl, decodeEntities } from '../js/deals/price-parsers.js';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/(\w:)/, '$1')), '..');
 const DIR = path.join(ROOT, 'data', 'prices');
@@ -134,7 +134,8 @@ async function main() {
     const slug = item.term.trim().toLowerCase().replace(/\s+/g, '-');
     for (const [id, url, parse] of [
       ['pelando', `https://www.pelando.com.br/busca/${encodeURIComponent(slug)}`, parsePelando],
-      ['gatry', `https://gatry.com/promocoes/?q=${encodeURIComponent(item.term)}`, parseGatry],
+      // Gatry's old search page now redirects to an app shell; its public API (robots.txt "Allow: /v1/") searches instead.
+      ['gatry', gatryApiUrl({ q: item.term }), parseGatryApi],
     ]) {
       try {
         const found = parse(await get(url)).filter((d) => matchesItem(d.title, item));

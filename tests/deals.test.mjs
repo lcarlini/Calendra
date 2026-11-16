@@ -406,3 +406,86 @@ test('a Black theme exists and is dark', () => {
   const black = THEMES.find((x) => x.id === 'black');
   assert.ok(black && black.mode === 'dark');
 });
+
+// --- community deal pool (Gatry API, Oferta Esperta RSS, snapshot merge, page mapping) --------------------------
+
+test('Gatry API answers become deals with deal-page link, photo, coupon and old price; inactive ones are dropped', async () => {
+  const { parseGatryApi, gatryApiUrl } = await import('../js/deals/price-parsers.js');
+  assert.equal(gatryApiUrl({ q: 'ssd 1tb', offset: 20 }), 'https://gatry.com/v1/promotions?limit=10&offset=20&sort=recency&q=ssd+1tb');
+  const list = parseGatryApi({
+    promotions: [
+      { id: 'a1', slug: 'ssd-kingston-1tb', title: 'SSD Kingston 1TB', store_name: 'KaBuM!', price_cents: 39990, old_price_cents: 49990, code: 'SSD10', image_keys: ['previews/x.jpg'], created_at: '2026-11-16T10:00:00Z', status: 'active' },
+      { id: 'b2', slug: 'old', title: 'Expired deal', price_cents: 100, status: 'expired' },
+    ],
+  });
+  assert.equal(list.length, 1);
+  assert.deepEqual(
+    { url: list[0].url, price: list[0].price, oldPrice: list[0].oldPrice, coupon: list[0].coupon, image: list[0].image, store: list[0].store },
+    { url: 'https://gatry.com/promocoes/a1/ssd-kingston-1tb', price: 399.9, oldPrice: 499.9, coupon: 'SSD10', image: 'https://d3h0muvr7057ky.cloudfront.net/previews/x.jpg', store: 'KaBuM!' }
+  );
+  assert.throws(() => parseGatryApi({ code: 'bad_request' }), /No promotions/);
+});
+
+test('Oferta Esperta RSS: price and photo come from the description', async () => {
+  const { parseOfertaEsperta } = await import('../js/deals/price-parsers.js');
+  const xml = `<rss><channel><item><title>Batedeira Planetária KitchenAid</title><link>https://www.ofertaesperta.com/promocao/x/batedeira</link>
+    <pubDate>Mon, 16 Nov 2026 20:10:27 GMT</pubDate><category>Eletrodomésticos</category>
+    <description><![CDATA[<p><img src="https://cdn.example/img.jpg" alt="" /></p><p>R$ 1.899,90</p>]]></description></item></channel></rss>`;
+  const [d] = parseOfertaEsperta(xml);
+  assert.equal(d.title, 'Batedeira Planetária KitchenAid');
+  assert.equal(d.price, 1899.9);
+  assert.equal(d.image, 'https://cdn.example/img.jpg');
+  assert.equal(d.date, '2026-11-16T20:10:27.000Z');
+  assert.equal(d.category, 'Eletrodomésticos');
+});
+
+test('the pool keeps a week: re-seen deals are updated in place (first sighting kept), old ones leave', async () => {
+  const { mergePool, poolDeal } = await import('../scripts/snapshot-deals.mjs');
+  const now = Date.parse('2026-11-16T12:00:00Z');
+  const old = poolDeal({ title: 'Old', url: 'https://x/old', date: '2026-11-01T00:00:00Z' }, 'gatry', '2026-11-01T00:00:00Z');
+  const kept = poolDeal({ title: 'SSD', url: 'https://x/ssd', price: 500, date: '2026-11-15T00:00:00Z' }, 'gatry', '2026-11-15T00:00:00Z');
+  const again = poolDeal({ title: 'SSD', url: 'https://x/ssd', price: 450, date: '2026-11-15T00:00:00Z' }, 'gatry', '2026-11-16T12:00:00Z');
+  const fresh = poolDeal({ title: 'New', url: 'https://x/new', date: '2026-11-16T11:00:00Z' }, 'promobit', '2026-11-16T12:00:00Z');
+  const pool = mergePool([old, kept], [again, fresh], { now });
+  assert.deepEqual(pool.map((d) => d.title), ['New', 'SSD']);
+  assert.equal(pool[1].price, 450);
+  assert.equal(pool[1].seenAt, '2026-11-15T00:00:00Z');
+});
+
+test('pool deals are searchable like threads: words, price range, source filter, and their coupon counts as a code', async () => {
+  const { poolToThreads, mergeDealLists, couponThreads } = await import('../js/deals/forum.js');
+  const pool = {
+    deals: [
+      { source: 'gatry', title: 'SSD NVMe Kingston NV3 1TB', url: 'https://gatry.com/promocoes/1/ssd', price: 399.9, oldPrice: 499.9, store: 'KaBuM!', date: '2026-11-07T12:00:00Z', coupon: 'NV3OFF' },
+      { source: 'promobit', title: 'Smart TV 55" 4K', url: 'https://www.promobit.com.br/oferta/tv-1/', price: 2299, store: 'Amazon', date: '2026-11-07T10:00:00Z' },
+      { source: 'gatry', title: 'no link', url: 'javascript:alert(1)' },
+    ],
+  };
+  const threads = mergeDealLists(poolToThreads(pool, { now: NOW }), [{ id: 'adr', sourceId: 'adrenaline-ofertas', title: 'SSD Kingston NV3 1TB por R$ 399', url: 'https://forum/x', createdAt: '2026-11-07T14:00:00Z', price: 399 }]);
+  assert.equal(threads.length, 3, 'unsafe link dropped');
+  assert.equal(threads[0].sourceId, 'adrenaline-ofertas', 'newest first');
+  assert.equal(filterThreads(threads, { q: 'ssd 1tb', now: NOW }).length, 2);
+  assert.equal(filterThreads(threads, { q: 'ssd', source: 'gatry', now: NOW }).length, 1);
+  assert.equal(filterThreads(threads, { minPrice: 1000, now: NOW })[0].title, 'Smart TV 55" 4K');
+  const gatry = threads.find((t) => t.sourceId === 'gatry');
+  assert.equal(gatry.oldPrice, 499.9);
+  assert.equal(gatry.priceSource, 'listing');
+  assert.deepEqual(couponThreads(threads, 'kingston').map((c) => c.codes), [['NV3OFF']]);
+});
+
+test('the deal pool is read from the site itself; force skips the browser cache', async () => {
+  const { loadDealPool } = await import('../js/deals/forum.js');
+  const calls = [];
+  const fetchImpl = async (url, init) => {
+    calls.push({ url, init });
+    return { ok: true, status: 200, json: async () => ({ updatedAt: '2026-11-07T14:30:00Z', sources: { gatry: { ok: 1 } }, deals: [{ source: 'gatry', title: 'X', url: 'https://gatry.com/promocoes/1/x', date: '2026-11-07T14:00:00Z' }] }) };
+  };
+  const breaker = createCircuitBreaker({ threshold: 99 });
+  const r = await loadDealPool({ snapshotBase: 'https://site.test/data/', fetchOpts: { fetchImpl, breaker }, now: NOW });
+  assert.equal(r.threads.length, 1);
+  assert.equal(calls[0].url, 'https://site.test/data/deals/community.json');
+  assert.equal(calls[0].init.cache, 'no-cache');
+  await loadDealPool({ snapshotBase: 'https://site.test/data/', fetchOpts: { fetchImpl, breaker }, force: true, now: NOW });
+  assert.equal(calls[1].init.cache, 'no-store');
+  assert.match(calls[1].url, /community\.json\?t=\d+$/);
+});

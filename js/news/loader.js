@@ -1,6 +1,8 @@
 /**
- * Loads feeds through the companion proxy and keeps a last-known-good cache.
- * Without a proxy URL nothing is fetched and the UI reports the feeds as unavailable.
+ * Loads every outlet's feed and keeps a last-known-good cache.
+ * Without a proxy of your own, each feed is read LIVE through the public reader r.jina.ai (CORS enabled, returns the
+ * publisher's own XML with every item, no server-side copy kept). rss2json.com is only the fallback: it serves its own
+ * cached copy (checked 2026-11-16: up to 13 hours behind the real feed) and only the 10 newest items.
  */
 import { fetchText, fetchJson, createCircuitBreaker } from '../core/http.js';
 import { cacheGet, cacheSet } from '../core/cache.js';
@@ -70,7 +72,7 @@ export async function fetchGdelt({ fetchOpts = {}, now = Date.now(), timespan = 
     if (q) await new Promise((r) => setTimeout(r, fetchOpts.gdeltGapMs ?? 5500));
     try {
       const params = new URLSearchParams({ query: GDELT_QUERIES[q], mode: 'artlist', maxrecords: '250', format: 'json', timespan, sort: 'datedesc' });
-      const data = await fetchJson(`${GDELT}?${params}`, { retries: 1, backoffMs: 5500, timeoutMs: 30_000, breaker: gdeltBreaker, ...fetchOpts });
+      const data = await fetchJson(`${GDELT}?${params}`, { retries: 0, timeoutMs: 15_000, breaker: gdeltBreaker, ...fetchOpts });
       if (!Array.isArray(data?.articles)) throw new Error('The news index returned no articles');
       data.articles.forEach((a, position) => {
         const sourceId = sourceForGdelt(a.domain, a.url);
@@ -91,9 +93,37 @@ export async function fetchGdelt({ fetchOpts = {}, now = Date.now(), timespan = 
 }
 
 export const RSS2JSON = 'https://api.rss2json.com/v1/api.json';
+export const FEED_READER = 'https://r.jina.ai/';
 // One host serves every feed here, so a few throttled answers must not pause the rest.
 const gdeltBreaker = createCircuitBreaker({ threshold: 3, cooldownMs: 60_000 });
 const rss2jsonBreaker = createCircuitBreaker({ threshold: 25, cooldownMs: 30_000 });
+const readerBreaker = createCircuitBreaker({ threshold: 25, cooldownMs: 30_000 });
+
+/** A forced reload tries every host again, even one that was paused after failures. */
+export function resetNewsBreakers() {
+  for (const b of [gdeltBreaker, rss2jsonBreaker, readerBreaker]) b.reset();
+}
+
+/**
+ * Serverless transport #1 (live): the public reader r.jina.ai fetches the publisher's feed at request time and hands
+ * back its XML unchanged ("X-Return-Format: html"), already decoded to UTF-8 (so UOL's ISO-8859-1 accents survive).
+ * "X-No-Cache" makes it skip its own cache, so every refresh is the feed as the publisher serves it now.
+ */
+export async function fetchViaReader(feedAddress, { fetchOpts = {}, now = Date.now(), force = false } = {}) {
+  const xml = await fetchText(FEED_READER + feedAddress, {
+    retries: 1,
+    backoffMs: 2000,
+    timeoutMs: 25_000,
+    breaker: readerBreaker,
+    headers: { 'X-Return-Format': 'html', 'X-No-Cache': 'true' },
+    ...(force ? { cache: 'no-store' } : {}),
+    ...fetchOpts,
+  });
+  if (/<title>Just a moment/i.test(String(xml).slice(0, 3000))) throw new Error('The publisher answered the reader with a bot challenge');
+  const items = parseFeed(xml, { now });
+  if (!items.length) throw new Error('The reader returned no feed items');
+  return items;
+}
 
 /**
  * Serverless transport: rss2json.com is a public feed-to-JSON converter that answers browsers
@@ -137,7 +167,8 @@ export async function fetchViaRss2Json(feedAddress, { apiKey = '', count = 0, fe
  * Fetch every enabled integrated source. Returns articles plus a status per source, so one
  * failing outlet never hides the others (partial failure) and cached articles are marked stale.
  */
-export async function loadNews({ proxyUrl, rss2jsonKey = '', disabled = [], fetchOpts = {}, now = new Date(), storage, onUpdate } = {}) {
+export async function loadNews({ proxyUrl, rss2jsonKey = '', disabled = [], fetchOpts = {}, now = new Date(), storage, onUpdate, force = false } = {}) {
+  if (force) resetNewsBreakers();
   const fetchedAt = now.toISOString();
   const cached = cacheGet(NEWS_CACHE_KEY, { maxAgeMs: NEWS_MAX_AGE_MS, now: now.getTime(), storage });
   const cachedBySource = new Map();
@@ -153,8 +184,8 @@ export async function loadNews({ proxyUrl, rss2jsonKey = '', disabled = [], fetc
 
   // Partial updates reach the page before the end of the load, so they get the same repair as the final list.
   const emit = () => onUpdate?.({ articles: repairGarbled([...articles]), statuses: [...statuses, ...extraStatuses].sort((a, b) => (order.get(a.id) ?? 99) - (order.get(b.id) ?? 99)), fetchedAt, partial: true });
-  // The serverless transport is polite: at most 3 feeds in flight, a short pause between starts.
-  const lanes = proxyUrl ? Infinity : fetchOpts.concurrency ?? 3;
+  // The serverless transport is polite: at most 4 feeds in flight, a short pause between starts.
+  const lanes = proxyUrl ? Infinity : fetchOpts.concurrency ?? 4;
   let active = 0;
   const waiting = [];
   const lane = async () => {
@@ -195,26 +226,31 @@ export async function loadNews({ proxyUrl, rss2jsonKey = '', disabled = [], fetc
         statuses.push({ ...base, state: 'unavailable', message: source.unavailableReason });
         return;
       }
-      // rss2json cannot carry a non-UTF-8 feed without losing its accents, so without our own proxy such a feed
-      // is not fetched through it. Its headlines come from the index's UTF-8 copies instead.
-      if (!proxyUrl && source.feedEncoding && source.feedEncoding !== 'utf-8') {
-        statuses.push({ ...base, state: 'unavailable', message: `Its feed is ${source.feedEncoding.toUpperCase()} and the converter loses its accents. Headlines come from the open index; a proxy reads the feed itself.` });
-        return;
-      }
       if (disabled.includes(source.id)) {
         statuses.push({ ...base, state: 'disabled', message: 'Turned off by you' });
         return;
       }
       try {
         let items;
+        let via;
         if (proxyUrl) {
-          const xml = await fetchText(feedUrl(proxyUrl, source.id), { retries: 1, timeoutMs: 15_000, ...fetchOpts });
+          const xml = await fetchText(feedUrl(proxyUrl, source.id), { retries: 1, timeoutMs: 15_000, ...(force ? { cache: 'no-store' } : {}), ...fetchOpts });
           items = parseFeed(xml, { now: now.getTime() });
+          via = 'your proxy';
         } else {
           await lane();
           try {
             await new Promise((r) => setTimeout(r, fetchOpts.staggerMs ?? 250));
-            items = await fetchViaRss2Json(source.feed, { apiKey: rss2jsonKey, count: rss2jsonKey ? 50 : 0, fetchOpts, now: now.getTime() });
+            try {
+              items = await fetchViaReader(source.feed, { fetchOpts, now: now.getTime(), force });
+              via = 'live feed';
+            } catch (readerError) {
+              // rss2json cannot carry a non-UTF-8 feed without losing its accents: such a feed has no fallback here
+              // (its headlines still come from the open index's UTF-8 copies).
+              if (source.feedEncoding && source.feedEncoding !== 'utf-8') throw readerError;
+              items = await fetchViaRss2Json(source.feed, { apiKey: rss2jsonKey, count: rss2jsonKey ? 50 : 0, fetchOpts: { ...(force ? { cache: 'reload' } : {}), ...fetchOpts }, now: now.getTime() });
+              via = 'rss2json copy (may lag the site)';
+            }
           } finally {
             release();
           }
@@ -222,7 +258,8 @@ export async function loadNews({ proxyUrl, rss2jsonKey = '', disabled = [], fetc
         const list = items.map((i) => toArticle(i, source, fetchedAt)).filter(Boolean);
         if (!list.length) throw new Error('The feed had no readable items');
         articles.push(...list);
-        statuses.push({ ...base, state: 'ok', count: list.length, fetchedAt });
+        const newestAt = list.reduce((m, a) => (a.publishedAt > m ? a.publishedAt : m), '');
+        statuses.push({ ...base, state: 'ok', count: list.length, fetchedAt, via, newestAt });
         emit();
       } catch (error) {
         const old = cachedBySource.get(source.id);

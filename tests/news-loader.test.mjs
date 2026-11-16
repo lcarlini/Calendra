@@ -92,17 +92,50 @@ test('a failed refresh falls back to saved articles and marks them stale', async
   assert.ok(res.articles.length > 0 && res.articles.every((a) => a.stale === true));
 });
 
-test('without a proxy the serverless transport (rss2json) is used and mapped to articles', async () => {
+test('without a proxy every feed is read live through the reader, all items kept, no cache on the way', async () => {
+  const calls = [];
+  const handler = async (url, init) => {
+    calls.push({ url, init });
+    const feedAddress = url.slice('https://r.jina.ai/'.length);
+    return okXml(feed(new URL(feedAddress).hostname.replace(/\W/g, ''), 30));
+  };
+  const res = await loadNews({ proxyUrl: '', now: NOW, storage: memoryStorage(), fetchOpts: { ...opts(handler).fetchOpts, staggerMs: 0, gdelt: false } });
+  assert.ok(calls.length >= 10);
+  assert.ok(calls.every((c) => c.url.startsWith('https://r.jina.ai/https://')));
+  assert.ok(calls.every((c) => c.init.headers['X-No-Cache'] === 'true' && c.init.headers['X-Return-Format'] === 'html'));
+  const ok = res.statuses.filter((s) => s.state === 'ok');
+  assert.equal(ok.length, 10, 'UOL (ISO-8859-1) is read too: the reader decodes it');
+  assert.ok(ok.every((s) => s.via === 'live feed' && s.count === 30 && s.newestAt));
+});
+
+test('when the reader fails, a UTF-8 feed falls back to rss2json; a non-UTF-8 feed does not', async () => {
   const urls = [];
   const fakeJson = async (url) => {
     urls.push(url);
+    if (url.startsWith('https://r.jina.ai/')) return fail;
     return { ok: true, status: 200, headers: new Headers(), json: async () => ({ status: 'ok', items: [{ title: 'Headline ' + urls.length, link: 'https://x.test/a' + urls.length, pubDate: '2026-11-07 12:00:00', description: 'Excerpt text here that is long enough', categories: ['Mundo'] }] }), text: async () => '' };
   };
   const res = await loadNews({ proxyUrl: '', now: NOW, storage: memoryStorage(), fetchOpts: { ...opts(fakeJson).fetchOpts, staggerMs: 0, gdelt: false } });
-  assert.ok(urls.every((u) => u.startsWith('https://api.rss2json.com/v1/api.json?rss_url=')));
-  assert.ok(res.articles.length >= 8);
-  assert.ok(res.statuses.filter((s) => s.state === 'ok').length >= 8);
-  assert.equal(res.statuses.filter((s) => s.state === 'needs-proxy').length, 0);
+  const byId = Object.fromEntries(res.statuses.map((s) => [s.id, s]));
+  assert.equal(byId.g1.state, 'ok');
+  assert.match(byId.g1.via, /rss2json/);
+  assert.equal(byId.uol.state, 'error', 'no accent-losing fallback for UOL');
+  assert.ok(!urls.some((u) => u.includes('rss2json') && u.includes('uol')));
+  assert.equal(res.statuses.filter((s) => s.state === 'ok').length, 8);
+});
+
+test('force: every request skips the browser cache, and paused hosts are tried again', async () => {
+  const inits = [];
+  const handler = async (url, init) => {
+    inits.push(init);
+    return okXml(feed('f', 2));
+  };
+  await loadNews({ proxyUrl: '', now: NOW, storage: memoryStorage(), force: true, fetchOpts: { fetchImpl: handler, retries: 0, sleep: async () => {}, staggerMs: 0, gdelt: false } });
+  assert.ok(inits.length >= 10);
+  assert.ok(inits.every((i) => i.cache === 'no-store'));
+  const plain = [];
+  await loadNews({ proxyUrl: '', now: NOW, storage: memoryStorage(), fetchOpts: { fetchImpl: async (u, i) => (plain.push(i), okXml(feed('f', 2))), retries: 0, sleep: async () => {}, staggerMs: 0, gdelt: false } });
+  assert.ok(plain.every((i) => !('cache' in i)));
 });
 
 test('an empty or unreadable feed is an error, not an empty success', async () => {

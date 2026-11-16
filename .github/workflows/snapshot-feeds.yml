@@ -1,5 +1,7 @@
-# Saves a copy of the deal community feed into the site, so the Deals page can read it from the same origin
-# (no CORS relay, no rss2json rate limit). Only the public RSS feed that robots.txt allows is fetched.
+# Saves the deal community feeds into the site, so the Deals page can read them from the same origin
+# (no CORS relay, no rss2json rate limit):
+#   data/deals-adrenaline-ofertas.xml   Adrenaline Ofertas RSS (robots.txt allows it)
+#   data/deals/community.json           a week of recent deals from Gatry (public API), Promobit, Oferta Esperta and Pelando
 name: Snapshot deal feed
 
 on:
@@ -8,7 +10,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['.github/workflows/snapshot-feeds.yml', 'scripts/snapshot_deals.py']
+    paths: ['.github/workflows/snapshot-feeds.yml', 'scripts/snapshot_deals.py', 'scripts/snapshot-deals.mjs', 'js/deals/price-parsers.js']
 
 permissions:
   contents: write
@@ -20,22 +22,20 @@ concurrency:
 jobs:
   snapshot:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - name: Fetch the Adrenaline Ofertas feed (direct, else rss2json)
         run: python3 scripts/snapshot_deals.py
-      - name: Commit the snapshot if it changed (or the time stamp is over 2 hours old)
+      - name: Build the community deal pool
+        run: node scripts/snapshot-deals.mjs
+      - name: Commit the snapshot if it changed
         run: |
           git config user.name 'calendra-bot'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          if git diff --quiet -- data/deals-adrenaline-ofertas.xml; then
-            prev=$(git show HEAD:data/deals-adrenaline-ofertas.updated 2>/dev/null | tr -d '\r\n' || true)
-            if [ -n "$prev" ] && [ $(( $(date -u +%s) - $(date -u -d "$prev" +%s) )) -lt 7200 ]; then
-              echo "Feed unchanged and the time stamp is recent; nothing to commit."
-              exit 0
-            fi
-          fi
           git add data/
           git diff --cached --quiet && exit 0
           git commit -m "Deal feed snapshot $(date -u +%Y-%m-%dT%H:%MZ)"

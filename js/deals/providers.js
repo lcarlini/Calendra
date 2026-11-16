@@ -5,6 +5,8 @@
  *   'feed'        official RSS feed (Adrenaline), read live by the page through a same-origin snapshot
  *   'snapshot'    read every 3 hours by the "Snapshot prices" GitHub Action, only on robots.txt-allowed pages
  *                 (product/category pages on Buscapé and Zoom, Pelando search, Promobit recent offers, Gatry, Hardmob)
+ *   'pool'        recent deals collected every 30 minutes by the "Snapshot deal feed" GitHub Action into
+ *                 data/deals/community.json (a week of deals), searched by the page. Providers with `poolId` are in it.
  *   'via'         a store that refuses automated requests; its prices appear through the offers Buscapé and Zoom list
  *   'unavailable' no permitted, reliable automated access: only a search link is offered
  *
@@ -12,7 +14,7 @@
  * search pages that robots.txt disallows are never read, and requests carry an honest user agent.
  */
 
-export const CHECKED_ON = '2026-11-07';
+export const CHECKED_ON = '2026-11-16';
 
 export const PROVIDERS = [
   {
@@ -52,6 +54,7 @@ export const PROVIDERS = [
     role: 'Community deal discovery',
     integration: 'snapshot',
     snapshotId: 'pelando',
+    poolId: 'pelando',
     homepage: 'https://www.pelando.com.br/',
     detail: 'Its search page for each watched product (allowed by robots.txt). It refuses cloud servers (HTTP 403), so the results of the last run that got through are kept with their date.',
     siteQuery: 'site:pelando.com.br',
@@ -62,8 +65,9 @@ export const PROVIDERS = [
     role: 'Community deal discovery',
     integration: 'snapshot',
     snapshotId: 'promobit',
+    poolId: 'promobit',
     homepage: 'https://www.promobit.com.br/',
-    detail: 'Its recent-offers page (search is disallowed by robots.txt), filtered for the watched products.',
+    detail: 'Its recent-offers, trending, lowest-price and category pages (search is disallowed by robots.txt).',
     siteQuery: 'site:promobit.com.br',
   },
   {
@@ -72,9 +76,20 @@ export const PROVIDERS = [
     role: 'Community deal discovery',
     integration: 'snapshot',
     snapshotId: 'gatry',
-    homepage: 'https://www.gatry.com/',
-    detail: 'Its promotion search for each watched product (no robots.txt restriction).',
+    poolId: 'gatry',
+    homepage: 'https://gatry.com/',
+    detail: 'Its public JSON API (robots.txt: "Allow: /v1/"): the newest deals, and a search for each watched product.',
     siteQuery: 'site:gatry.com',
+  },
+  {
+    id: 'ofertaesperta',
+    name: 'Oferta Esperta',
+    role: 'Community deal discovery',
+    integration: 'pool',
+    poolId: 'ofertaesperta',
+    homepage: 'https://www.ofertaesperta.com/',
+    detail: 'Its public RSS feed (robots.txt allows it): the 50 newest deals with price and photo, collected every 30 minutes.',
+    siteQuery: 'site:ofertaesperta.com',
   },
   {
     id: 'hardmob-promocoes',

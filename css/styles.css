@@ -3985,6 +3985,11 @@ html[data-tv='on'] .module-page {
   gap: 0.75rem;
   margin: 1rem 0 0.5rem;
 }
+.news-toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
 .news-filters {
   display: flex;
   flex-wrap: wrap;
@@ -4234,6 +4239,34 @@ html[data-tv='on'] .module-page {
 .price-line {
   margin: 0.2rem 0;
   font-weight: 700;
+}
+.price-line s {
+  font-weight: 400;
+}
+.thread.has-thumb {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+}
+.thread-thumb {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #fff;
+}
+.thread-body {
+  min-width: 0;
+}
+@media (max-width: 420px) {
+  .thread.has-thumb {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+  .thread-thumb {
+    width: 64px;
+    height: 64px;
+  }
 }
 .provider-grid {
   display: grid;

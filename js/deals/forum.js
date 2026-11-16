@@ -83,10 +83,11 @@ function norm(text) {
  * Filters that the feed data can actually back: keywords, excluded words, price range, age,
  * hidden and saved threads. (No discount %, shipping or seller filters: the feed has no such data.)
  */
-export function filterThreads(threads, { q = '', exclude = [], minPrice = null, maxPrice = null, sinceHours = 0, hiddenIds = [], savedIds = [], savedOnly = false, showHidden = false, now = Date.now() } = {}) {
+export function filterThreads(threads, { q = '', exclude = [], minPrice = null, maxPrice = null, sinceHours = 0, hiddenIds = [], savedIds = [], savedOnly = false, showHidden = false, source = '', now = Date.now() } = {}) {
   const words = norm(q).split(' ').filter((w) => w.length >= 2);
   const blocked = exclude.map(norm).filter(Boolean);
   return threads.filter((t) => {
+    if (source && t.sourceId !== source) return false;
     if (!showHidden && hiddenIds.includes(t.id)) return false;
     if (savedOnly && !savedIds.includes(t.id)) return false;
     const hay = norm(`${t.title} ${t.excerpt || ''}`);
@@ -174,6 +175,51 @@ export async function loadForumThreadsDetailed({ proxyUrl, sourceId = 'adrenalin
   }
 }
 
+// ---------------------------------------------------------------------------
+// Community deal pool (data/deals/community.json, written by scripts/snapshot-deals.mjs every 30 minutes)
+// ---------------------------------------------------------------------------
+
+/** Pool deals in the same shape as forum threads, so search, filters, coupons and cards treat them alike. */
+export function poolToThreads(pool, { now = Date.now() } = {}) {
+  return (pool?.deals || [])
+    .filter((d) => d && d.title && /^https:\/\//.test(d.url || ''))
+    .map((d, position) => {
+      const price = Number.isFinite(d.price) && d.price > 0 ? d.price : undefined;
+      const createdAt = d.date && Date.parse(d.date) <= now + 6 * 3600000 ? d.date : d.seenAt || undefined;
+      return {
+        id: hashId(d.url),
+        sourceId: d.source,
+        title: d.title,
+        url: d.url,
+        createdAt,
+        excerpt: [d.store && `Loja: ${d.store}`, d.category].filter(Boolean).join(' · ') || undefined,
+        store: d.store || undefined,
+        image: /^https:\/\//.test(d.image || '') ? d.image : undefined,
+        price,
+        oldPrice: price && d.oldPrice > price ? d.oldPrice : undefined,
+        priceSource: price == null ? undefined : 'listing',
+        currency: price == null ? undefined : 'BRL',
+        coupon: d.coupon || undefined,
+        possiblyExpired: EXPIRED.test(d.title),
+        position,
+      };
+    });
+}
+
+/** Read the pool from the site itself (same origin). `force` asks the browser to revalidate instead of using its copy. */
+export async function loadDealPool({ snapshotBase, fetchOpts = {}, force = false, now = Date.now() } = {}) {
+  const url = `${snapshotBase}deals/community.json${force ? `?t=${now}` : ''}`;
+  const pool = await fetchJson(url, { retries: 1, timeoutMs: 15000, cache: force ? 'no-store' : 'no-cache', ...fetchOpts });
+  const threads = poolToThreads(pool, { now });
+  if (!threads.length) throw new Error('The deal pool is empty');
+  return { threads, updatedAt: pool.updatedAt || '', sources: pool.sources || {} };
+}
+
+/** Newest first; the same deal posted on two communities (same title) is shown once. */
+export function mergeDealLists(...lists) {
+  return dedupeThreads(lists.flat()).sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+}
+
 /** A snapshot younger than this is used as is; an older one is used only when the live route fails. */
 export const SNAPSHOT_FRESH_MS = 3 * 60 * 60 * 1000;
 
@@ -206,7 +252,7 @@ export function couponThreads(threads, query = '', { hiddenIds = [] } = {}) {
   const words = norm(query).split(' ').filter((w) => w.length >= 2);
   return threads
     .filter((t) => !hiddenIds.includes(t.id))
-    .map((thread) => ({ thread, codes: extractCouponCodes(`${thread.title} ${thread.excerpt || ''}`) }))
+    .map((thread) => ({ thread, codes: [...new Set([thread.coupon, ...extractCouponCodes(`${thread.title} ${thread.excerpt || ''}`)].filter(Boolean))] }))
     .filter(({ thread, codes }) => {
       if (!codes.length && !COUPON_TOPIC.test(thread.title)) return false;
       const hay = norm(`${thread.title} ${thread.excerpt || ''}`);

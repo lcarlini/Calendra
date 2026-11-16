@@ -34,6 +34,10 @@ export function createCircuitBreaker({ threshold = 3, cooldownMs = 60_000, now =
     success(key) {
       state.delete(key);
     },
+    /** Forget every failure (a user-requested reload tries every host again). */
+    reset() {
+      state.clear();
+    },
     failure(key) {
       const s = state.get(key) || { failures: 0, openUntil: 0 };
       s.failures += 1;
@@ -61,6 +65,7 @@ async function request(url, read, opts = {}) {
     method = 'GET',
     body,
     signal,
+    cache,
   } = opts;
 
   const host = (() => {
@@ -82,7 +87,7 @@ async function request(url, read, opts = {}) {
     const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
       if (signal?.aborted) throw new HttpError('Cancelled', { url });
-      const res = await fetchImpl(url, { method, headers, body, signal: controller.signal });
+      const res = await fetchImpl(url, { method, headers, body, signal: controller.signal, ...(cache ? { cache } : {}) });
       if (res.ok) {
         const value = await read(res);
         breaker.success(host);
