@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-16T19:50:19.225Z",
+ "updatedAt": "2026-11-16T22:01:12.439Z",
  "sources": {
   "buscape": {
    "name": "Buscapé",
@@ -9,7 +9,7 @@
    "errors": [
     "The page listed no offers"
    ],
-   "lastOk": "2026-11-16T19:50:19.225Z"
+   "lastOk": "2026-11-16T22:01:12.439Z"
   },
   "zoom": {
    "name": "Zoom",
@@ -19,7 +19,7 @@
    "errors": [
     "The page listed no offers"
    ],
-   "lastOk": "2026-11-16T19:50:19.225Z"
+   "lastOk": "2026-11-16T22:01:12.439Z"
   },
   "pelando": {
    "name": "Pelando",
@@ -37,17 +37,15 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-16T19:50:19.225Z"
+   "lastOk": "2026-11-16T22:01:12.439Z"
   },
   "gatry": {
    "name": "Gatry",
    "kind": "community",
-   "ok": 0,
-   "failed": 8,
-   "errors": [
-    "No deals on the page"
-   ],
-   "lastOk": "2026-11-11T11:25:55.628Z"
+   "ok": 8,
+   "failed": 0,
+   "errors": [],
+   "lastOk": "2026-11-16T22:01:12.439Z"
   },
   "hardmob": {
    "name": "Hardmob",
@@ -65,7 +63,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-16T19:50:19.225Z"
+   "lastOk": "2026-11-16T22:01:12.439Z"
   }
  },
  "products": [
@@ -187,46 +185,104 @@
     {
      "title": "Death Stranding 2: On The Beach - PlayStation 5",
      "price": 199.9,
+     "oldPrice": null,
      "store": "Amazon",
-     "url": "https://gatry.com/promocoes/283431/death-stranding-2-on-the-beach-playstation-1",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/4ff7499c647df820ba0505c8997bcf90.png",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/fe5baffa-1038-e551-7aed-910d3cd87df5/death-stranding-2-on-the-beach-playstation-5-283431",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/fe5baffa-1038-e551-7aed-910d3cd87df5/91c82fd2cfbc7ce0b54db48745191c5d.png",
+     "date": "2026-09-14T18:00:02Z",
+     "score": 2,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Bundle Marvel's Spider-Man 2 + Miles Morales - PlayStation 5",
      "price": 241.7,
+     "oldPrice": null,
      "store": "Amazon",
-     "url": "https://gatry.com/promocoes/285200/bundle-marvel-s-spider-man-2-miles-morales-playstation-5",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/98cf39a3985534fef4e669a0ef32eb67.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/2cf43471-b319-f880-a849-3967ea1b55b4/bundle-marvel-s-spider-man-2-miles-morales-playstation-5-285200",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/2cf43471-b319-f880-a849-3967ea1b55b4/bb954ac7882f294a3e47fe81dbcf1efc.jpg",
+     "date": "2026-10-13T21:05:25Z",
+     "score": 2,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Resident Evil Requiem - PlayStation 5",
      "price": 251,
+     "oldPrice": null,
      "store": "Amazon",
-     "url": "https://gatry.com/promocoes/284518/resident-evil-requiem-playstation-5",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/0ff1c51ce357b66bb96f19f9159bb17f.png",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/9558fc73-af9b-6629-4b39-0e7996c553e7/resident-evil-requiem-playstation-5-284518",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/9558fc73-af9b-6629-4b39-0e7996c553e7/f8c9dcd343a4b7343c612be12535d42d.png",
+     "date": "2026-10-01T21:59:01Z",
+     "score": 1,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
-     "title": "Stranger Than Heaven PS5 Midia Fisica",
-     "price": 265.98,
-     "store": "Shopee",
-     "url": "https://www.promobit.com.br/oferta/stranger-than-heaven-ps5-midia-fisica-3219886/",
-     "image": "https://i.promobit.com.br/268/220877560017948584546052362045.jpg",
-     "date": "2026-11-16T16:46:50-0300",
-     "score": 0,
+     "title": "Grand Theft Auto VI - PlayStation 5",
+     "price": 347,
+     "oldPrice": null,
+     "store": "Amazon",
+     "url": "https://gatry.com/promocoes/371cc964-e99a-e59a-3851-e9d1ae0f0e43/grand-theft-auto-vi-playstation-5-285453",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/371cc964-e99a-e59a-3851-e9d1ae0f0e43/15dd5de75eacc086c13990192a29af70.png",
+     "date": "2026-10-19T16:43:43Z",
+     "score": 27,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
+    },
+    {
+     "title": "PlayStation®5 Slim Digital 825GB – Pacote ASTRO BOT E Gran Turismo 7",
+     "price": 3719.9,
+     "oldPrice": null,
+     "store": "Amazon",
+     "url": "https://gatry.com/promocoes/13959039-e3dd-4bbf-5a1a-d82d603518e0/playstation-5-slim-digital-825gb-pacote-astro-bot-e-gran-turismo-7-286883",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/13959039-e3dd-4bbf-5a1a-d82d603518e0/9ece8cc3ba0217cede29f7b288f3bb30.jpg",
+     "date": "2026-11-11T03:23:42Z",
+     "score": 8,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
+    },
+    {
+     "title": "PlayStation5 Slim Digital 825GB – Pacote ASTRO BOT e Gran Turismo 7",
+     "price": 3884,
+     "store": "Amazon",
+     "url": "https://www.promobit.com.br/oferta/playstation5-slim-digital-825gb-pacote-astro-bot-e-gran-turismo-7-3218860/",
+     "image": "https://i.promobit.com.br/268/913730194317948457781346409915.jpg",
+     "date": "2026-11-16T13:16:05-0300",
+     "score": 12,
      "coupon": "",
      "source": "promobit"
+    },
+    {
+     "title": "Console Playstation 5 Slim Edição Digital 825 Gb",
+     "price": 3894.05,
+     "oldPrice": null,
+     "store": "Mercadolivre",
+     "url": "https://gatry.com/promocoes/374442f7-a3bf-12fd-3831-88f19f5ed3dd/console-playstation-5-slim-edicao-digital-825-gb-286126",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/374442f7-a3bf-12fd-3831-88f19f5ed3dd/cc46e309ee01804fec6e95c96693dc2c.jpg",
+     "date": "2026-10-30T01:10:14Z",
+     "score": 6,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
+    },
+    {
+     "title": "Console Playstation®5 Slim Digital - Pacote Astro Bot E Gran Turismo 7 - Branco",
+     "price": 4047.91,
+     "oldPrice": null,
+     "store": "Mercadolivre",
+     "url": "https://gatry.com/promocoes/c22a44e3-acca-9b9b-762a-db385db15c93/console-playstation-5-slim-digital-pacote-astro-bot-e-gran-turismo-7-branco-282686",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/c22a44e3-acca-9b9b-762a-db385db15c93/512f43f3fcd6b92eb9e2d11dc959f831.jpg",
+     "date": "2026-09-01T23:02:47Z",
+     "score": 13,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     }
    ],
    "sources": {
@@ -234,13 +290,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "pelando": {
      "ok": false,
@@ -248,16 +304,15 @@
      "url": "https://www.pelando.com.br/busca/playstation-5"
     },
     "gatry": {
-     "ok": false,
-     "error": "No deals on the page",
-     "url": "https://gatry.com/promocoes/?q=playstation%205",
-     "carried": 3,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "ok": true,
+     "count": 7,
+     "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=playstation+5",
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "promobit": {
      "ok": true,
      "count": 1,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "hardmob": {
      "ok": false,
@@ -266,7 +321,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     }
    }
   },
@@ -307,7 +362,7 @@
      "source": "buscape",
      "store": "Amazon",
      "title": "SSD Kingston NV3 1TB M.2 2280 NVMe Gen4, Desempenho e Eficiência para Upgrade de PC – SNV3S/1000G",
-     "price": 1069.99,
+     "price": 999.99,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
      "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
     },
@@ -315,7 +370,7 @@
      "source": "zoom",
      "store": "Amazon",
      "title": "SSD Kingston NV3 1TB M.2 2280 NVMe Gen4, Desempenho e Eficiência para Upgrade de PC – SNV3S/1000G",
-     "price": 1069.99,
+     "price": 999.99,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
      "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
     },
@@ -354,114 +409,108 @@
    ],
    "community": [
     {
-     "title": "Ssd M.2 Nvme 4.0 1tb Kingston Nv3 2280 6000mb/s E 4000 Mb/s",
-     "price": 351,
-     "store": "Mercadolivre",
-     "url": "https://gatry.com/promocoes/252947/ssd-m-2-nvme-4-0-1tb-kingston-nv3-2280-6000mb-s-e-4000-mb-s",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/01a489d966c9f669797a7f6b87f967e9.png",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
-    },
-    {
-     "title": "SSD Adata Legend 710, 1TB, M.2 2280 NVMe Leitura 2.400MBs, Gravação 1.800MBs",
-     "price": 379.9,
-     "store": "Terabyteshop",
-     "url": "https://gatry.com/promocoes/254969/ssd-adata-legend-710-1tb-m-2-2280-nvme-leitura-2-400mbs-gravacao-1-800mbs",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/a2d2cfec05031055c812ddd3ec34a76a.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
-    },
-    {
-     "title": "SSD Adata Legend 860, 1TB, M.2 2280, PCIe Gen 4x4, NVMe Leitura: 6000MB/s, Gravação: 5000MB/s, Compatível Com PS5, Preto - SLEG-860-1000GCS",
-     "price": 386.99,
-     "store": "Kabum",
-     "url": "https://gatry.com/promocoes/249110/ssd-adata-legend-860-1tb-m-2-2280-pcie-gen-4x4-nvme-leitura-6000mb-s-gravacao-5000mb-s-compativel-com-ps5-preto-sleg-860-1000gcs",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/b8d921efe59a8e1ce5f8330ef2b4283b.png",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
-    },
-    {
-     "title": "SSD Crucial P3 Plus, 1TB, M.2 2280, PCIe NVMe, Leitura 5000MBs Gravação 3600MBs, CT1000P3PSSD8",
-     "price": 399,
-     "store": "Terabyteshop",
-     "url": "https://gatry.com/promocoes/246501/ssd-crucial-p3-plus-1tb-m-2-2280-pcie-nvme-leitura-5000mbs-gravacao-3600mbs-ct1000p3pssd8",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/cbd7020ba7a7d1ad4fc9c900072a4dcc.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
-    },
-    {
      "title": "SSD Crucial BX500, 1TB, SATA III, Leitura 560MB/S, Gravação 510MB/s, CT1000BX500SSD1429,",
      "price": 429.9,
+     "oldPrice": null,
      "store": "Terabyteshop",
-     "url": "https://gatry.com/promocoes/256794/ssd-crucial-bx500-1tb-sata-iii-leitura-560mb-s-gravacao-510mb-s-ct1000bx500ssd1429",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/f7c12d50d921578716356bea621ed2fb.png",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/d509fce7-d302-e02c-8fb4-0b2de24f5c8d/ssd-crucial-bx500-1tb-sata-iii-leitura-560mb-s-gravacao-510mb-s-ct1000bx500ssd1429-256794",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/d509fce7-d302-e02c-8fb4-0b2de24f5c8d/a867daa0560673af205ef5f6de699f01.png",
+     "date": "2025-07-23T14:33:05Z",
+     "score": 7,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "SSD Kingston NV3 1TB M.2 2280 PCIe 4.0 NVMe 6000 MB/sc",
      "price": 866,
+     "oldPrice": null,
      "store": "Mercadolivre",
-     "url": "https://gatry.com/promocoes/285482/ssd-kingston-nv3-1tb-m-2-2280-pcie-4-0-nvme-6000-mb-sc",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/f55323773a5f50ecd68a1901e5dd09fb.jpg",
-     "date": "",
+     "url": "https://gatry.com/promocoes/b04dc5eb-5ef7-b1e3-6043-d2cd2e855760/ssd-kingston-nv3-1tb-m-2-2280-pcie-4-0-nvme-6000-mb-sc-285482",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/b04dc5eb-5ef7-b1e3-6043-d2cd2e855760/b007ad76c9788bead81efce6e214c9a6.jpg",
+     "date": "2026-10-20T00:09:18Z",
+     "score": 7,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
+    },
+    {
+     "title": "CORSAIR MP700 ELITE 1TB PCIe 5.0 X4 NVMe M.2 SSD – Included Aluminum Heatsink – Up To 10,000MB/sec",
+     "price": 1607.9,
+     "oldPrice": null,
+     "store": "Amazon",
+     "url": "https://gatry.com/promocoes/81ec955e-0136-0f65-1779-fec9959f32c1/corsair-mp700-elite-1tb-pcie-5-0-x4-nvme-m-2-ssd-included-aluminum-heatsink-up-to-10-000mb-sec-278461",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/81ec955e-0136-0f65-1779-fec9959f32c1/fceb59234cf0eb7a1212cccdf2148b5d.png",
+     "date": "2026-07-01T12:17:05Z",
      "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Console Sony PlayStation 5, Com Leitor De Discos, SSD 1TB, Controle Sem Fio DualSense + 2 Jogos",
      "price": 2969.1,
+     "oldPrice": null,
      "store": "Kabum",
-     "url": "https://gatry.com/promocoes/265293/console-sony-playstation-5-com-leitor-de-discos-ssd-1tb-controle-sem-fio-dualsense-2-jogos",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/6475aa02916c143bb824245ce7166e1e.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/34d200f1-a9b7-125e-4423-b8131664b48d/console-sony-playstation-5-com-leitor-de-discos-ssd-1tb-controle-sem-fio-dualsense-2-jogos-265293",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/34d200f1-a9b7-125e-4423-b8131664b48d/6d3354c690143cc1f0f980c481ad33f8.jpg",
+     "date": "2025-11-28T09:45:49Z",
+     "score": 2,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "PlayStation 5 Com Leitor, SSD 1TB + 2 Jogos",
      "price": 3059,
+     "oldPrice": null,
      "store": "Kabum",
-     "url": "https://gatry.com/promocoes/264696/playstation-5-com-leitor-ssd-1tb-2-jogos",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/0357363172320bc502bb195930e3aced.png",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/dca7a8e7-23af-23f8-c1ee-a450dab14c8c/playstation-5-com-leitor-ssd-1tb-2-jogos-264696",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/dca7a8e7-23af-23f8-c1ee-a450dab14c8c/08d7f83eabbd0918cae3f5a0ba91fdde.png",
+     "date": "2025-11-25T02:40:18Z",
+     "score": 7,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Console Sony PlayStation 5 Slim Com Leitor De Discos, Edição Limitada Ouro, Ghost Of Yotei, SSD 1TB",
      "price": 3599,
+     "oldPrice": null,
      "store": "Magazineluiza",
-     "url": "https://gatry.com/promocoes/263362/console-sony-playstation-5-slim-com-leitor-de-discos-edicao-limitada-ouro-ghost-of-yotei-ssd-1tb",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/6c9f6fbff13b6229a9655b5ed0a9f1cb.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/7df6e659-6a07-98fa-09d3-87b5cdda58a1/console-sony-playstation-5-slim-com-leitor-de-discos-edicao-limitada-ouro-ghost-of-yotei-ssd-1tb-263362",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/7df6e659-6a07-98fa-09d3-87b5cdda58a1/5af509d8b5fabdc2fc4349856836d086.jpg",
+     "date": "2025-11-06T22:40:43Z",
+     "score": 5,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Console Sony PlayStation 5 Slim, Edição Limitada Ouro, Ghost Of Yotei, SSD 1TB",
      "price": 3856,
+     "oldPrice": null,
      "store": "Amazon",
-     "url": "https://gatry.com/promocoes/262697/console-sony-playstation-5-slim-edicao-limitada-ouro-ghost-of-yotei-ssd-1tb",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/2f6af7f7ff8abce15077cdd00b10ffa6.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/6b5ec8a0-7134-6ce5-2603-de2d7064dafa/console-sony-playstation-5-slim-edicao-limitada-ouro-ghost-of-yotei-ssd-1tb-262697",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/6b5ec8a0-7134-6ce5-2603-de2d7064dafa/e70070b9c6a687af9d4605bc0f90c316.jpg",
+     "date": "2025-10-29T00:44:16Z",
+     "score": 1,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
+    },
+    {
+     "title": "Samsung Book 6 32gb RAM 1Tb SSD Ultra 7 355 FHD 14\" 1,4kg",
+     "price": 6920,
+     "oldPrice": null,
+     "store": "Samsung",
+     "url": "https://gatry.com/promocoes/d28d55cd-4ca9-7dd9-423a-d9089d8a9820/samsung-book-6-32gb-ram-1tb-ssd-ultra-7-355-fhd-14-1-4kg-283019",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/d28d55cd-4ca9-7dd9-423a-d9089d8a9820/045b7ca75f2f6740cf06b3c26fc7017b.png",
+     "date": "2026-09-07T17:24:49Z",
+     "score": 7,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     }
    ],
    "sources": {
@@ -469,13 +518,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "pelando": {
      "ok": false,
@@ -483,16 +532,15 @@
      "url": "https://www.pelando.com.br/busca/ssd-1tb"
     },
     "gatry": {
-     "ok": false,
-     "error": "No deals on the page",
-     "url": "https://gatry.com/promocoes/?q=ssd%201tb",
-     "carried": 10,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "ok": true,
+     "count": 8,
+     "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=ssd+1tb",
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "hardmob": {
      "ok": false,
@@ -501,7 +549,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     }
    }
   },
@@ -545,13 +593,13 @@
      "ok": true,
      "count": 1,
      "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "zoom": {
      "ok": true,
      "count": 1,
      "url": "https://www.zoom.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "pelando": {
      "ok": false,
@@ -559,14 +607,15 @@
      "url": "https://www.pelando.com.br/busca/rtx-5070"
     },
     "gatry": {
-     "ok": false,
-     "error": "No deals on the page",
-     "url": "https://gatry.com/promocoes/?q=rtx%205070"
+     "ok": true,
+     "count": 0,
+     "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=rtx+5070",
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "hardmob": {
      "ok": false,
@@ -575,7 +624,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     }
    }
   },
@@ -694,17 +743,17 @@
     },
     {
      "source": "buscape",
-     "store": "Amazon",
+     "store": "Magazine Luiza",
      "title": "Smart TV 55\" Semp 4K HDR S62",
-     "price": 2499,
+     "price": 2469.05,
      "url": "https://www.buscape.com.br/tv/smart-tv-55-semp-4k-hdr-55s62",
      "image": "https://image.zst.com.br/592446DBB1D4EAD37F5091E10EF5CB38_235_235.jpg"
     },
     {
      "source": "zoom",
-     "store": "Amazon",
+     "store": "Magazine Luiza",
      "title": "Smart TV 55\" Semp 4K HDR S62",
-     "price": 2499,
+     "price": 2469.05,
      "url": "https://www.zoom.com.br/tv/smart-tv-55-semp-4k-hdr-55s62",
      "image": "https://image.zst.com.br/592446DBB1D4EAD37F5091E10EF5CB38_235_235.jpg"
     },
@@ -729,68 +778,130 @@
     {
      "title": "LG Smart TV 55\" 55AU801C0SA UHD 4K ThinQ AI HDR10 AI Sound Compatível Com Alexa Preto",
      "price": 1709.1,
+     "oldPrice": null,
      "store": "Vivo",
-     "url": "https://gatry.com/promocoes/284531/lg-smart-tv-55-55au801c0sa-uhd-4k-thinq-ai-hdr10-ai-sound-compativel-com-alexa-preto",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/207dca37a70efa89f417857555718a1a.png",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/5df360c8-2114-4b85-2c10-9d7d416d7544/lg-smart-tv-55-55au801c0sa-uhd-4k-thinq-ai-hdr10-ai-sound-compativel-com-alexa-preto-284531",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/5df360c8-2114-4b85-2c10-9d7d416d7544/a6c5d9f41ff890479c563e5efcac5bd9.png",
+     "date": "2026-10-02T01:37:47Z",
+     "score": 2,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "PHILIPS Smart TV, 55\" 4K, 55PUG7300, Comando De Voz, Bluetooth, HDR",
      "price": 1899.05,
+     "oldPrice": null,
      "store": "Amazon",
-     "url": "https://gatry.com/promocoes/279419/philips-smart-tv-55-4k-55pug7300-comando-de-voz-bluetooth-hdr",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/3b0f7afc6fa6b2ca93d070ae072dfe65.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/114006ca-fa2c-aa44-9fef-d334053c6dfb/philips-smart-tv-55-4k-55pug7300-comando-de-voz-bluetooth-hdr-279419",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/114006ca-fa2c-aa44-9fef-d334053c6dfb/5aca1b56b5e325761e04d801160f58ab.jpg",
+     "date": "2026-07-10T16:16:00Z",
+     "score": 1,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
+    },
+    {
+     "title": "SEMP, Smart TV 4K UHD, 55“, Google TV, Google Assistente, Comando Por Voz",
+     "price": 1919.2,
+     "oldPrice": null,
+     "store": "Amazon",
+     "url": "https://gatry.com/promocoes/59a52f96-cc4f-f1e1-e37f-55e9f8cf5f7a/semp-smart-tv-4k-uhd-55-google-tv-google-assistente-comando-por-voz-276872",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/59a52f96-cc4f-f1e1-e37f-55e9f8cf5f7a/1ef861fd33078e3544921100a149f36b.jpg",
+     "date": "2026-06-08T21:47:54Z",
+     "score": 2,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Smart TV Hisense 4K 55 Polegadas 55A6NV Com Dolby Vision, HDR10",
      "price": 1931,
+     "oldPrice": null,
      "store": "Mercadolivre",
-     "url": "https://gatry.com/promocoes/282773/smart-tv-hisense-4k-55-polegadas-55a6nv-com-dolby-vision-hdr10",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/5c4bceff297441fafbd209201563b932.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/9e082459-c076-296f-0c57-1cb23376f0ce/smart-tv-hisense-4k-55-polegadas-55a6nv-com-dolby-vision-hdr10-282773",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/9e082459-c076-296f-0c57-1cb23376f0ce/93088b04d50bb566454bfd8455e31fea.jpg",
+     "date": "2026-09-02T23:32:10Z",
+     "score": 2,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Smart TV Hisense HI-QLED 4K 55\" Polegadas Com Dolby Atmos, Dolby Gaming E Alexa - 55Q6QV",
      "price": 1998,
+     "oldPrice": null,
      "store": "Mercadolivre",
-     "url": "https://gatry.com/promocoes/286570/smart-tv-hisense-hi-qled-4k-55-polegadas-com-dolby-atmos-dolby-gaming-e-alexa-55q6qv",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/089dc26b8b52bc914937ba770630a982.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/1c5bc262-0329-ff81-d6f9-87a4d4a9f42d/smart-tv-hisense-hi-qled-4k-55-polegadas-com-dolby-atmos-dolby-gaming-e-alexa-55q6qv-286570",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/1c5bc262-0329-ff81-d6f9-87a4d4a9f42d/9eb1860d63e147fa256d3fd5e79abdb2.jpg",
+     "date": "2026-11-06T16:22:23Z",
+     "score": 5,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Smart TV TCL 55 Polegadas QLED 4K P8K WiFi Bluetooth Google TV 144Hz HDR10+ Dolby Atmos",
      "price": 2236.25,
+     "oldPrice": null,
      "store": "Mercadolivre",
-     "url": "https://gatry.com/promocoes/286131/smart-tv-tcl-55-polegadas-qled-4k-p8k-wifi-bluetooth-google-tv-144hz-hdr10-dolby-atmos",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/e13c515792780b4d7345f50eb43e77ae.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/83d35c60-f199-5ea8-514b-095010fe52ca/smart-tv-tcl-55-polegadas-qled-4k-p8k-wifi-bluetooth-google-tv-144hz-hdr10-dolby-atmos-286131",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/83d35c60-f199-5ea8-514b-095010fe52ca/f117e0b7a7d1a429b486527e3f2b028f.jpg",
+     "date": "2026-10-30T01:19:36Z",
+     "score": 7,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
+    },
+    {
+     "title": "Smart TV TCL 55 Polegadas QLED 4K P7K WiFi Bluetooth Google TV HDR10+",
+     "price": 2260.9,
+     "oldPrice": null,
+     "store": "Amazon",
+     "url": "https://gatry.com/promocoes/4f1e55e5-f197-4283-8fa0-113282e07067/smart-tv-tcl-55-polegadas-qled-4k-p7k-wifi-bluetooth-google-tv-hdr10",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/previews/1d0e5c08-8c7d-8ac1-f610-962bc0c1cc8e/76909085-8616-5c36-4a02-f6aed5687011.jpg",
+     "date": "2026-11-13T15:34:30.472299Z",
+     "score": 1,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
+    },
+    {
+     "title": "PHILIPS, Smart TV Ambilight 55\" 4K, Titan OS, 55PUG810078, Comando de Voz, HDR10+Dolby Atmos, VRRALLM, Bluetooth",
+     "price": 2273.89,
+     "store": "Amazon",
+     "url": "https://www.promobit.com.br/oferta/philips-smart-tv-ambilight-55-4k-titan-os-55pug810078-comando-de-voz-hdr10-dolby-atmos-vrrallm-bluetooth-3218414/",
+     "image": "https://i.promobit.com.br/268/736514775017948403244340064891.jpg",
+     "date": "2026-11-16T11:45:13-0300",
+     "score": 2,
+     "coupon": "TELAS15",
+     "source": "promobit"
     },
     {
      "title": "Samsung Smart TV 55\" Crystal UHD 4K U8600F + Soundbar HW-B400F",
      "price": 2637,
+     "oldPrice": null,
      "store": "Shopee",
-     "url": "https://gatry.com/promocoes/285774/samsung-smart-tv-55-crystal-uhd-4k-u8600f-soundbar-hw-b400f",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/79e53b49fce9b355a7e1129793c4ebf0.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/89a1a1ac-7741-bb94-c38b-77ae49f7ffcf/samsung-smart-tv-55-crystal-uhd-4k-u8600f-soundbar-hw-b400f-285774",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/89a1a1ac-7741-bb94-c38b-77ae49f7ffcf/bbdcf6b9b281261ccb5ac469f7a753c5.jpg",
+     "date": "2026-10-23T21:48:44Z",
+     "score": 3,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
+    },
+    {
+     "title": "PHILIPS, Smart TV Ambilight 55\" 4K, 55PUG8100/78 + PHILIPS, Soundbar, TAB4000",
+     "price": 2821.25,
+     "oldPrice": null,
+     "store": "Amazon",
+     "url": "https://gatry.com/promocoes/4881817d-7bfd-919a-66ec-a51d5b753a6d/philips-smart-tv-ambilight-55-4k-55pug8100-78-philips-soundbar-tab4000-280804",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/4881817d-7bfd-919a-66ec-a51d5b753a6d/c3c70ac146c3e264ba13037fe12507fc.jpg",
+     "date": "2026-08-01T01:00:32Z",
+     "score": 6,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     }
    ],
    "sources": {
@@ -798,13 +909,13 @@
      "ok": true,
      "count": 23,
      "url": "https://www.buscape.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "zoom": {
      "ok": true,
      "count": 23,
      "url": "https://www.zoom.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "pelando": {
      "ok": false,
@@ -812,16 +923,15 @@
      "url": "https://www.pelando.com.br/busca/tv-55"
     },
     "gatry": {
-     "ok": false,
-     "error": "No deals on the page",
-     "url": "https://gatry.com/promocoes/?q=tv%2055",
-     "carried": 6,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "ok": true,
+     "count": 9,
+     "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=tv+55",
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "promobit": {
      "ok": true,
-     "count": 0,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "count": 1,
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "hardmob": {
      "ok": false,
@@ -830,7 +940,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     }
    }
   },
@@ -954,13 +1064,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "pelando": {
      "ok": false,
@@ -968,14 +1078,15 @@
      "url": "https://www.pelando.com.br/busca/galaxy-s26"
     },
     "gatry": {
-     "ok": false,
-     "error": "No deals on the page",
-     "url": "https://gatry.com/promocoes/?q=galaxy%20s26"
+     "ok": true,
+     "count": 0,
+     "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=galaxy+s26",
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "hardmob": {
      "ok": false,
@@ -984,7 +1095,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     }
    }
   },
@@ -1090,46 +1201,28 @@
     {
      "title": "Assassin’s Creed Shadows - Nintendo Switch 2",
      "price": 269.9,
+     "oldPrice": null,
      "store": "Amazon",
-     "url": "https://gatry.com/promocoes/284532/assassin-s-creed-shadows-nintendo-switch-2",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/a2c5f781fa48c1ab05f73f6f3a391d66.png",
-     "date": "",
+     "url": "https://gatry.com/promocoes/4090bf2a-5c21-ed9d-d1df-efd3d787d75a/assassin-s-creed-shadows-nintendo-switch-2-284532",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/4090bf2a-5c21-ed9d-d1df-efd3d787d75a/e646939f27e8107fba9d5f89c77b7a83.png",
+     "date": "2026-10-02T01:51:52Z",
      "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "The Legend Of Zelda: Ocarina Of Time - Switch 2",
      "price": 329.9,
+     "oldPrice": null,
      "store": "Nintendo",
-     "url": "https://gatry.com/promocoes/283078/the-legend-of-zelda-ocarina-of-time-switch-2",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/c84a895a64754afc098b30cd3f2c4175.png",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
-    },
-    {
-     "title": "Switch 24 Portas Gigabit 10/100/1000 Mbps Tp-link Tl-sg1024d",
-     "price": 434,
-     "store": "Mercadolivre",
-     "url": "https://gatry.com/promocoes/281681/switch-24-portas-gigabit-10-100-1000-mbps-tp-link-tl-sg1024d",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/e2e078fbb1c2ca78c4f0ade1f96e4e7d.png",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
-    },
-    {
-     "title": "Nintendo Switch 2 256GB Novo Lacrado Lançamento",
-     "price": 3568.68,
-     "store": "Shopee",
-     "url": "https://gatry.com/promocoes/282152/nintendo-switch-2-256gb-novo-lacrado-lancamento",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/969e9c5b809f5a8712681ee2641a9ea9.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/4401e9b3-7484-c02a-039f-7165e8b6f31e/the-legend-of-zelda-ocarina-of-time-switch-2-283078",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/4401e9b3-7484-c02a-039f-7165e8b6f31e/db898a5bdd536626b2bb577a9e051666.png",
+     "date": "2026-09-08T17:16:48Z",
+     "score": 19,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "[Shopee] Console Nintendo Switch 2 + Mario Kart World - R$3587",
@@ -1144,13 +1237,28 @@
     {
      "title": "Console Nintendo Switch 2 + Mario Kart World + Assinatura Nintendo Switch Online",
      "price": 3599.1,
+     "oldPrice": null,
      "store": "Vivo",
-     "url": "https://gatry.com/promocoes/286502/console-nintendo-switch-2-mario-kart-world-assinatura-nintendo-switch-online",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/9b9c4df475f5fda9e72af215a4cd03fa.png",
-     "date": "",
+     "url": "https://gatry.com/promocoes/5dea0c7f-c50e-4904-923c-f0b1757becff/console-nintendo-switch-2-mario-kart-world-assinatura-nintendo-switch-online",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/5dea0c7f-c50e-4904-923c-f0b1757becff/1a5c425643f556c7e4d17aa9364a2288.jpg",
+     "date": "2026-11-13T11:33:03.886773Z",
+     "score": 8,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
+    },
+    {
+     "title": "Console Nintendo Switch 2 + Mario Kart World + Assinatura Nintendo Switch Online",
+     "price": 3599.1,
+     "oldPrice": null,
+     "store": "Vivo",
+     "url": "https://gatry.com/promocoes/4760390e-454f-2e6f-a905-28e8bfb562df/console-nintendo-switch-2-mario-kart-world-assinatura-nintendo-switch-online-286502",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/4760390e-454f-2e6f-a905-28e8bfb562df/0d98c5f0af528f56c0eef9873498516b.png",
+     "date": "2026-11-05T19:44:29Z",
      "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     }
    ],
    "sources": {
@@ -1158,13 +1266,13 @@
      "ok": true,
      "count": 5,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "zoom": {
      "ok": true,
      "count": 5,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "pelando": {
      "ok": false,
@@ -1172,16 +1280,15 @@
      "url": "https://www.pelando.com.br/busca/switch-2"
     },
     "gatry": {
-     "ok": false,
-     "error": "No deals on the page",
-     "url": "https://gatry.com/promocoes/?q=switch%202",
-     "carried": 5,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "ok": true,
+     "count": 4,
+     "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=switch+2",
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "hardmob": {
      "ok": false,
@@ -1190,7 +1297,7 @@
     "adrenaline": {
      "ok": true,
      "count": 1,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     }
    }
   },
@@ -1199,21 +1306,29 @@
    "name": "iPhone 17 256GB",
    "category": "phone",
    "listingName": "iPhone 17 256GB",
-   "image": "https://image.zst.com.br/13A52ADCFEEA7484D1EBCB09041B5B71_235_235.jpg",
+   "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg",
    "buscapeUrl": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
    "lowest": {
     "source": "buscape",
     "store": "Magazine Luiza",
-    "title": "Apple iPhone 17 256GB Preto 6,3\" 48MP iOS 5G, 256GB, Preto",
+    "title": "Apple iPhone 17 256GB Lavanda 6,3\" 48MP iOS 5G, 256GB, Lavanda",
     "price": 5699,
     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-    "image": "https://image.zst.com.br/13A52ADCFEEA7484D1EBCB09041B5B71_235_235.jpg"
+    "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg"
    },
    "avg40": 5636.63,
    "offers": [
     {
      "source": "buscape",
      "store": "Magazine Luiza",
+     "title": "Apple iPhone 17 256GB Lavanda 6,3\" 48MP iOS 5G, 256GB, Lavanda",
+     "price": 5699,
+     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Magazine Luiza",
      "title": "Apple iPhone 17 256GB Preto 6,3\" 48MP iOS 5G, 256GB, Preto",
      "price": 5699,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
@@ -1234,6 +1349,14 @@
      "price": 5699,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
      "image": "https://image.zst.com.br/E50CA3F2E6A994D4239DBE3244D1169A_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Magazine Luiza",
+     "title": "Apple iPhone 17 256GB Lavanda 6,3\" 48MP iOS 5G, 256GB, Lavanda",
+     "price": 5699,
+     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg"
     },
     {
      "source": "zoom",
@@ -1290,90 +1413,86 @@
      "price": 5849.99,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
      "image": "https://image.zst.com.br/7FE3D43D9D1FB7714B9D73BC85A3D32F_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "Fast Shop",
-     "title": "Apple iPhone 17 256GB Sálvia",
-     "price": 6299.1,
-     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/C7BD32602B99D2A87DAEB4A503C242CB_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Fast Shop",
-     "title": "Apple iPhone 17 256GB Sálvia",
-     "price": 6299.1,
-     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/C7BD32602B99D2A87DAEB4A503C242CB_235_235.jpg"
     }
    ],
    "community": [
     {
-     "title": "Apple IPhone 17e De 256 GB — Rosa-pálido",
-     "price": 4049.1,
-     "store": "Amazon",
-     "url": "https://gatry.com/promocoes/284381/apple-iphone-17e-de-256-gb-rosa-palido",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/f16a2438f150fd5e325cf53b86802bba.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
-    },
-    {
      "title": "Apple IPhone 17 De 256 GB — Lavanda",
      "price": 4865.76,
+     "oldPrice": null,
      "store": "Amazon",
-     "url": "https://gatry.com/promocoes/284390/apple-iphone-17-de-256-gb-lavanda-4",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/a3be2d4c951aadc3e2b93c1b0179b1a9.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/410fe0ff-b726-8ed6-ef07-77de145ba769/apple-iphone-17-de-256-gb-lavanda-284390",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/410fe0ff-b726-8ed6-ef07-77de145ba769/72b23dcf8da7d9d6f71ff9ed43b48812.jpg",
+     "date": "2026-09-30T00:55:12Z",
+     "score": 4,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Apple IPhone 17 256GB 8GB Ram Tela 6.3'' Câmera 48Mp Outlet",
      "price": 4968,
+     "oldPrice": null,
      "store": "Shopee",
-     "url": "https://gatry.com/promocoes/286574/apple-iphone-17-256gb-8gb-ram-tela-6-3-camera-48mp-outlet",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/eba803e9245dff239d2bcf4f43ad5c1d.jpg",
-     "date": "",
+     "url": "https://gatry.com/promocoes/0d9bb7cd-8bfb-93de-9a96-b1a179de473f/apple-iphone-17-256gb-8gb-ram-tela-6-3-camera-48mp-outlet-286574",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/0d9bb7cd-8bfb-93de-9a96-b1a179de473f/c743ffb760430c3dbc026d16746734cc.jpg",
+     "date": "2026-11-06T16:32:10Z",
      "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Apple IPhone 17 De 256 GB — Preto",
      "price": 4980.15,
+     "oldPrice": null,
      "store": "Amazon",
-     "url": "https://gatry.com/promocoes/286884/apple-iphone-17-de-256-gb-preto-4",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/97d5d66883290d2441f832985986b438.jpg",
-     "date": "",
+     "url": "https://gatry.com/promocoes/fea36cd5-8229-ed71-d373-0f0fd8431b83/apple-iphone-17-de-256-gb-preto-286884",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/fea36cd5-8229-ed71-d373-0f0fd8431b83/6b7e7032a20672541ff294c5c18236c3.jpg",
+     "date": "2026-11-11T03:27:52Z",
      "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Apple IPhone 17 De 256 GB — Preto",
      "price": 5081.1,
+     "oldPrice": null,
      "store": "Amazon",
-     "url": "https://gatry.com/promocoes/286115/apple-iphone-17-de-256-gb-preto-3",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/200e17c4ab814fd371f60560d679778c.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/66bebda2-6b82-fe9a-830a-8f809fe38b52/apple-iphone-17-de-256-gb-preto-286115",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/66bebda2-6b82-fe9a-830a-8f809fe38b52/40f6154fe8f52e6d4037cac64485b704.jpg",
+     "date": "2026-10-29T21:37:24Z",
+     "score": 2,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Apple IPhone 17 De 256 GB — Sálvia",
      "price": 5381.1,
+     "oldPrice": null,
      "store": "Amazon",
-     "url": "https://gatry.com/promocoes/286408/apple-iphone-17-de-256-gb-salvia-1",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/15207fe074ea752e5d2093493911230b.jpg",
-     "date": "",
+     "url": "https://gatry.com/promocoes/ba3203b6-80dc-b6ce-80c6-29ecc35c6a66/apple-iphone-17-de-256-gb-salvia-286408",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/ba3203b6-80dc-b6ce-80c6-29ecc35c6a66/61a08069fa298e619dce207e898aff31.jpg",
+     "date": "2026-11-04T17:56:05Z",
      "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
+    },
+    {
+     "title": "Apple IPhone 17 De 512 GB — Sálvia",
+     "price": 6282.46,
+     "oldPrice": null,
+     "store": "Amazon",
+     "url": "https://gatry.com/promocoes/6d5694cf-1934-62e4-f311-2f22cb7b50a8/apple-iphone-17-de-512-gb-salvia-286977",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/6d5694cf-1934-62e4-f311-2f22cb7b50a8/7ca1ff8976cf90e41f25f2d26277f6a4.jpg",
+     "date": "2026-11-11T18:14:13Z",
+     "score": 0,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     }
    ],
    "sources": {
@@ -1381,13 +1500,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "pelando": {
      "ok": false,
@@ -1395,16 +1514,15 @@
      "url": "https://www.pelando.com.br/busca/iphone-17"
     },
     "gatry": {
-     "ok": false,
-     "error": "No deals on the page",
-     "url": "https://gatry.com/promocoes/?q=iphone%2017",
-     "carried": 6,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "ok": true,
+     "count": 6,
+     "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=iphone+17",
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "hardmob": {
      "ok": false,
@@ -1413,7 +1531,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     }
    }
   },
@@ -1458,79 +1576,93 @@
     {
      "title": "NBA 2K21 - Xbox Series X - Marketplace",
      "price": 25.89,
+     "oldPrice": null,
      "store": "Casasbahia",
-     "url": "https://gatry.com/promocoes/257543/nba-2k21-xbox-series-x-marketplace",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/14eaa9e7fd0cdac7a6db63182f4929ee.png",
-     "date": "",
+     "url": "https://gatry.com/promocoes/7c130901-fa91-bb8a-37e0-704d77542771/nba-2k21-xbox-series-x-marketplace-257543",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/7c130901-fa91-bb8a-37e0-704d77542771/24e26ce4cc320099979e1f596a8a4007.png",
+     "date": "2025-08-05T03:46:14Z",
      "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Forza Horizon 5 Para Xbox One E Xbox Series X - N/A",
      "price": 132.9,
+     "oldPrice": null,
      "store": "Netshoes",
-     "url": "https://gatry.com/promocoes/259529/forza-horizon-5-para-xbox-one-e-xbox-series-x-n-a",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/79a80c402d9dc7505145f136f27af2d1.jpg",
-     "date": "",
+     "url": "https://gatry.com/promocoes/a42fb25e-2b6c-1cd6-e7c6-0b52f59ef987/forza-horizon-5-para-xbox-one-e-xbox-series-x-n-a-259529",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/a42fb25e-2b6c-1cd6-e7c6-0b52f59ef987/5aabcac285665199a842ef9b8129f314.jpg",
+     "date": "2025-09-05T21:17:24Z",
      "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
+    },
+    {
+     "title": "HyperX Clutch Gladiate – Wired Controller for Xbox One, Xbox Series X|S, PC, Officially Licensed by Xbox",
+     "price": 242.1,
+     "oldPrice": null,
+     "store": "Amazon",
+     "url": "https://gatry.com/promocoes/ddf42548-8bf6-45ac-9467-01f904ecf81e/hyperx-clutch-gladiate-wired-controller-for-xbox-one-xbox-series-x-s-pc-officially-licensed-by-xbox",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/ddf42548-8bf6-45ac-9467-01f904ecf81e/9c75c76db023cfb505b0a5a8421f0e75.jpg",
+     "date": "2026-11-15T21:39:52.652058Z",
+     "score": 0,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Controlador Com Fio GameSir G7 SE Para Xbox Series X|S, Xbox One E Windows 10/11",
      "price": 251.79,
+     "oldPrice": null,
      "store": "Amazon",
-     "url": "https://gatry.com/promocoes/285368/controlador-com-fio-gamesir-g7-se-para-xbox-series-x-s-xbox-one-e-windows-10-1",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/a871efd275156d677f5b517c5132469b.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/000588dc-dfae-7346-079d-3e918db315c9/controlador-com-fio-gamesir-g7-se-para-xbox-series-x-s-xbox-one-e-windows-10-11-285368",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/000588dc-dfae-7346-079d-3e918db315c9/66a03f4a8b0286cf321bd4198facf727.jpg",
+     "date": "2026-10-17T00:38:38Z",
+     "score": 1,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Controlador Com Fio GameSir G7 SE Para Xbox Series X|S, Xbox One E Windows 10/11",
      "price": 265.05,
+     "oldPrice": null,
      "store": "Amazon",
-     "url": "https://gatry.com/promocoes/283912/controlador-com-fio-gamesir-g7-se-para-xbox-series-x-s-xbox-one-e-windows-10-11",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/f2f4850b3d6eaea2b1d9338c5dcddd5a.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/890edcb2-e87a-d0fb-b8e5-f82785ca485a/controlador-com-fio-gamesir-g7-se-para-xbox-series-x-s-xbox-one-e-windows-10-11-283912",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/890edcb2-e87a-d0fb-b8e5-f82785ca485a/23d1fd550d7982650665a2877dd25dfe.jpg",
+     "date": "2026-09-22T02:04:57Z",
+     "score": 1,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Volante Logitech G920 Driving Force E Pedais Com Force Feedback Para Xbox Series X|S",
      "price": 1399,
+     "oldPrice": null,
      "store": "Amazon",
-     "url": "https://gatry.com/promocoes/278581/volante-logitech-g920-driving-force-e-pedais-com-force-feedback-para-xbox-series-x-s",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/12f111bd532d2bc9f243a6b36d51a7a8.png",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/4d6a476e-4731-716e-5e81-4c2f52deff66/volante-logitech-g920-driving-force-e-pedais-com-force-feedback-para-xbox-series-x-s-278581",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/4d6a476e-4731-716e-5e81-4c2f52deff66/0acb9fd2f9d911f958f3cc4aa5fa0aca.png",
+     "date": "2026-07-02T12:34:59Z",
+     "score": 2,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     },
     {
      "title": "Volante Logitech G920 Driving Force E Pedais Com Force Feedback Para Xbox Series X|S, Xbox One, PC, Mac",
      "price": 1427.55,
+     "oldPrice": null,
      "store": "Amazon",
-     "url": "https://gatry.com/promocoes/262750/volante-logitech-g920-driving-force-e-pedais-com-force-feedback-para-xbox-series-x-s-xbox-one-pc-mac-2",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/cc5414f90bd87983b5419ccf9bf853fd.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
-    },
-    {
-     "title": "Volante Logitech G920 Driving Force E Pedais Com Force Feedback Para Xbox Series X|S, Xbox One, PC, Mac",
-     "price": 1566.55,
-     "store": "Amazon",
-     "url": "https://gatry.com/promocoes/248017/volante-logitech-g920-driving-force-e-pedais-com-force-feedback-para-xbox-series-x-s-xbox-one-pc-mac-1",
-     "image": "https://cdn.gatry.com/gatry-static/promocao/imagem/01a50b7c3d8bf837488b1ac9d4841081.jpg",
-     "date": "",
-     "score": 0,
-     "source": "gatry",
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "url": "https://gatry.com/promocoes/2a47bb1f-b539-0161-6e66-8372a4b01b22/volante-logitech-g920-driving-force-e-pedais-com-force-feedback-para-xbox-series-x-s-xbox-one-pc-mac-262750",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/2a47bb1f-b539-0161-6e66-8372a4b01b22/9f52977a16cc2567a993ee27c7b2b3c9.jpg",
+     "date": "2025-10-29T18:48:27Z",
+     "score": 1,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
     }
    ],
    "sources": {
@@ -1554,16 +1686,15 @@
      "url": "https://www.pelando.com.br/busca/xbox-series-x"
     },
     "gatry": {
-     "ok": false,
-     "error": "No deals on the page",
-     "url": "https://gatry.com/promocoes/?q=xbox%20series%20x",
-     "carried": 7,
-     "seenAt": "2026-11-11T11:25:55.628Z"
+     "ok": true,
+     "count": 7,
+     "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=xbox+series+x",
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     },
     "hardmob": {
      "ok": false,
@@ -1572,7 +1703,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T19:50:19.225Z"
+     "seenAt": "2026-11-16T22:01:12.439Z"
     }
    }
   }
