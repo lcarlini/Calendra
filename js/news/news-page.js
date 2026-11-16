@@ -32,8 +32,9 @@ function setupHtml() {
   return `
     <h3 id="setup-h">Where the headlines come from</h3>
     <p class="status-line">
-      Calendra runs entirely in your browser, so it reads each outlet's own public RSS feed through <strong>rss2json.com</strong>, a public feed converter that
-      browsers are allowed to call. The free tier returns the newest 10 items per feed, which is why several feeds per outlet are loaded. No server of yours is needed.
+      Calendra runs entirely in your browser. It reads each outlet's own public RSS feed <strong>live</strong> through the public reader <strong>r.jina.ai</strong>
+      (every item the publisher lists, nothing cached on the way). If the reader fails, it falls back to <strong>rss2json.com</strong>, which keeps its own copy
+      (up to hours behind) and returns only 10 items; the Sources list says which route each outlet used. <strong>Force refresh</strong> skips every cache. No server of yours is needed.
     </p>
     <details class="how-details">
       <summary>Optional: get more headlines</summary>
@@ -215,7 +216,10 @@ function renderStatus() {
     .map((s) => {
       const label = { ok: 'Live', stale: 'Saved copy', error: 'Error', unavailable: 'Unavailable', disabled: 'Off', 'needs-proxy': 'Needs proxy', loading: 'Loading' }[s.state];
       const cls = s.state === 'ok' ? 'badge-ok' : s.state === 'error' || s.state === 'stale' ? 'badge-warn' : 'badge-muted';
-      const detail = s.state === 'ok' ? `${s.count} items · fetched ${timeAgo(s.fetchedAt)}` : s.message || '';
+      const detail =
+        s.state === 'ok'
+          ? [`${s.count} items`, s.newestAt ? `newest ${timeAgo(s.newestAt)}` : '', `fetched ${timeAgo(s.fetchedAt)}`, s.via ? `via ${s.via}` : '', s.message || ''].filter(Boolean).join(' · ')
+          : s.message || '';
       return `<li><span class="badge ${cls}">${esc(label)}</span> <strong>${esc(s.name)}</strong> <span class="muted">${esc(detail)}</span> <a href="${esc(s.homepage)}" target="_blank" rel="noopener noreferrer">Open publisher</a></li>`;
     })
     .join('');
@@ -224,6 +228,7 @@ function renderStatus() {
 function render() {
   renderTabs();
   renderStatus();
+  renderUpdated();
   const list = visibleArticles();
   const container = $('news-list');
   const q = $('news-q').value.trim();
@@ -236,7 +241,7 @@ function render() {
     return;
   }
   if (!data.articles.length) {
-    container.innerHTML = '<div class="status-card" role="status"><p><strong>No headlines could be loaded.</strong> The feed converter (rss2json.com) or your connection may be unavailable, or it is rate-limiting. Press Refresh in a minute; the source list below shows what failed. No sample headlines are used.</p></div>';
+    container.innerHTML = '<div class="status-card" role="status"><p><strong>No headlines could be loaded.</strong> The feed reader (r.jina.ai), the fallback converter (rss2json.com) or your connection may be unavailable or rate-limiting. Press Force refresh in a minute; the source list below shows what failed. No sample headlines are used.</p></div>';
     $('news-summary-line').textContent = '';
     return;
   }
@@ -268,22 +273,51 @@ function render() {
   }
 }
 
+function renderUpdated() {
+  const el = $('news-updated');
+  const done = new Set(data.statuses.map((s) => s.id));
+  const pendingFeeds = SOURCES.filter((s) => s.feed && !done.has(s.id)).length;
+  if (loading && (pendingFeeds || !data.fetchedAt)) {
+    el.textContent = data.articles.length ? `Updating… ${pendingFeeds} outlet${pendingFeeds === 1 ? '' : 's'} still loading` : 'Reading every outlet’s feed…';
+    return;
+  }
+  if (!data.fetchedAt) {
+    el.textContent = '';
+    return;
+  }
+  const at = new Date(data.fetchedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const live = data.statuses.filter((s) => s.via === 'live feed').length;
+  el.textContent = `Last update ${at}${live ? ` · ${live} feed${live === 1 ? '' : 's'} read live from the publisher` : ''}${loading ? ' · adding headlines from the open news index…' : ' · refreshes every 10 minutes while this tab is open'}`;
+}
+
 let loadId = 0;
-/** A newer request (e.g. after changing the proxy or key) supersedes one still running; a plain refresh does not stack. */
-async function refresh({ force = false } = {}) {
-  if (loading && !force) return;
+/**
+ * A newer request (e.g. after changing the proxy or key) supersedes one still running; a plain refresh does not stack.
+ * `hard` (the Force refresh button) clears what is on screen and skips every cache on the way (browser, reader, converter).
+ */
+async function refresh({ force = false, hard = false } = {}) {
+  if (loading && !force && !hard) return;
   const id = ++loadId;
   loading = true;
   $('news-refresh').disabled = true;
+  $('news-force').disabled = true;
+  if (hard) data = { articles: [], statuses: [], fetchedAt: '' };
   render();
   try {
     const result = await loadNews({
       proxyUrl: prefs.proxyUrl,
       rss2jsonKey: prefs.rss2jsonKey,
       disabled: prefs.disabledSources,
+      force: hard,
       onUpdate: (partial) => {
         if (id !== loadId) return;
         data = partial;
+        // Every outlet has answered: the buttons work again even while the slower open index is still loading.
+        const done = new Set(data.statuses.map((s) => s.id));
+        if (!SOURCES.some((s) => s.feed && !done.has(s.id))) {
+          $('news-refresh').disabled = false;
+          $('news-force').disabled = false;
+        }
         render();
       },
     });
@@ -292,6 +326,7 @@ async function refresh({ force = false } = {}) {
     if (id === loadId) {
       loading = false;
       $('news-refresh').disabled = false;
+      $('news-force').disabled = false;
       render();
     }
   }
@@ -444,7 +479,9 @@ $('news-list').addEventListener(
 );
 
 $('news-q').addEventListener('input', () => render());
-$('news-refresh').addEventListener('click', refresh);
+// A click always starts a new load (it supersedes one still waiting on the open index); the 10-minute timer does not stack.
+$('news-refresh').addEventListener('click', () => refresh({ force: true }));
+$('news-force').addEventListener('click', () => refresh({ hard: true }));
 
 onStoreChange([NEWS_KEY, AI_KEY], () => {
   prefs = loadNewsPrefs();

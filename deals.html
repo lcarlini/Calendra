@@ -76,8 +76,8 @@
 
         <section class="market-section" aria-labelledby="feed-h">
           <div class="rates-head">
-            <h3 id="feed-h">Community feed: Adrenaline Ofertas</h3>
-            <button type="button" class="btn-icon" id="feed-refresh" title="Refresh" aria-label="Refresh the community feed">↻</button>
+            <h3 id="feed-h">Community deals</h3>
+            <button type="button" class="btn-icon" id="feed-refresh" title="Reload every source now" aria-label="Reload the community deals">↻</button>
           </div>
           <p class="status-line" id="feed-status" role="status"></p>
           <details class="how-details" id="feed-key-details">
@@ -94,6 +94,9 @@
           </details>
           <form id="feed-filters" class="deal-form filter-grid" autocomplete="off">
             <label>Words<input id="f-q" type="text" placeholder="all words must match" /></label>
+            <label>Source
+              <select id="f-source"><option value="">All communities</option></select>
+            </label>
             <label>Leave out<input id="f-exclude" type="text" placeholder="comma-separated words" /></label>
             <label>Min price (R$)<input id="f-min" type="text" inputmode="decimal" /></label>
             <label>Max price (R$)<input id="f-max" type="text" inputmode="decimal" /></label>
@@ -106,9 +109,9 @@
           <p class="status-line" id="feed-count" role="status"></p>
           <div id="thread-list" class="thread-list"></div>
           <p class="status-line">
-            Prices shown on a thread are only what the title or first lines say, and are not checked. Community activity does not
-            mean an offer is genuine or still valid. Only the headline, a short excerpt and a link are shown; open the thread to read
-            it. The feed lists the newest threads only (older pages are not available).
+            Deals from Gatry, Promobit, Oferta Esperta and Pelando are collected every 30 minutes by the site's own scheduled job
+            (the last 7 days are kept, so a search covers about a week, not only the newest page); Adrenaline Ofertas is its RSS feed.
+            Prices are what the community posted and are not checked. Community activity does not mean an offer is genuine or still valid.
           </p>
         </section>
 

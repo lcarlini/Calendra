@@ -36,6 +36,11 @@ const count = (sel) => b.ev(`document.querySelectorAll(${JSON.stringify(sel)}).l
 const click = (sel) => b.ev(`document.querySelector(${JSON.stringify(sel)}).click()`);
 const setVal = (sel, v) => b.ev(`{ const e = document.querySelector(${JSON.stringify(sel)}); e.value = ${JSON.stringify(v)}; e.dispatchEvent(new Event('input', { bubbles: true })); e.dispatchEvent(new Event('change', { bubbles: true })); }`);
 const submit = (sel) => b.ev(`document.querySelector(${JSON.stringify(sel)}).requestSubmit()`);
+// The list also holds the community deal pool (data/deals/community.json); the fixture checks look at the Adrenaline threads only.
+const onlyAdrenaline = async () => {
+  await setVal('#f-source', 'adrenaline-ofertas');
+  await sleep(200);
+};
 const IGNORE = ['ERR_CONNECTION_REFUSED', 'api.rss2json.com', 'allorigins', 'codetabs', 'ERR_FAILED', 'ERR_UNSAFE_PORT', 'status of 4', 'status of 5'];
 
 // 1. Honest source list; nothing to register.
@@ -45,11 +50,12 @@ await b.visit(`${base}/deals.html`, { width: 1366, height: 900, wait: 2000 });
 await sleep(1500);
 const status = await text('#provider-status');
 const badges = JSON.parse(await b.ev(`JSON.stringify([...document.querySelectorAll('#provider-status li .badge')].map(x => x.textContent))`));
-c(badges.length === 17 && badges.filter((x) => x === 'Feed').length === 1, `source list: 17 sources, 1 live feed (${badges.length})`);
-c(badges.filter((x) => x === 'Working' || x === 'Refused').length === 6, 'the 6 price-snapshot sources show whether they answered (Working / Refused)');
+c(badges.length === 18 && badges.filter((x) => x === 'Feed').length === 1, `source list: 18 sources, 1 live feed (${badges.length})`);
+c(badges.filter((x) => x === 'Working' || x === 'Refused').length === 3, 'Buscapé, Zoom and Hardmob show whether they answered (Working / Refused)');
+c(badges.filter((x) => x === 'Community deals').length === 4, 'Gatry, Promobit, Pelando and Oferta Esperta show their part of the community deal pool');
 c(badges.filter((x) => x === 'Via Buscapé/Zoom').length === 6 && badges.filter((x) => x === 'Link only').length === 4, 'stores come through Buscapé/Zoom (6) and 4 sources are links only');
 c(/Associates account/.test(status) && /HTTP 403/.test(status) && /not bypassed/.test(status), 'each source states its real access rule (no workaround suggested)');
-c((await count('#provider-status a[href^="https://"]')) === 17, 'every source keeps a direct link');
+c((await count('#provider-status a[href^="https://"]')) === 18, 'every source keeps a direct link');
 
 // 1b. Price watch, product dialog and the price calendar (from data/prices/*.json in the site).
 c((await count('#price-watch .pw-card')) >= 5, `price watch cards are shown (${await count('#price-watch .pw-card')})`);
@@ -83,20 +89,25 @@ const results = await text('#deal-results');
 c(/not live results/.test(results) && /robots\.txt/.test(results), 'search says store links are searches you open, not live results, and why');
 c(/From the price watch/.test(results) && (await count('#deal-results .pw-card')) === 1, 'the search shows the matching price-watch product first');
 const links = JSON.parse(await b.ev(`JSON.stringify([...document.querySelectorAll('#deal-results .provider-card a[href*="google.com/search"]')].map(a => a.href))`));
-c(links.length === 16, `16 sources have a Google search link (${links.length})`);
+c(links.length === 17, `17 sources have a Google search link (${links.length})`);
 c(links.some((l) => l.includes('site%3Amercadolivre.com.br%20ssd%201tb')) && links.some((l) => l.includes('site%3Ahardmob.com.br')), 'queries are prefilled per site (site: operator, encoded)');
 c(await b.ev(`[...document.querySelectorAll('#deal-results a[href*="google.com/search"]')].every(a => a.rel.includes('noopener') && a.target === '_blank')`), 'external links open in a new tab with noopener');
-c((await count('#deal-results [data-copy]')) >= 16, '"Copy search query" is offered for every source');
+c((await count('#deal-results [data-copy]')) >= 17, '"Copy search query" is offered for every source');
 c(/Price history/.test(results) && /Coupon/.test(results), 'helper searches for price history and coupons are offered');
-c(/Community feed matches/.test(results) && /SSD 1TB NVMe/.test(results), 'the search also finds the matching community thread');
+c(/Community deals/.test(results) && /SSD 1TB NVMe/.test(results), 'the search also finds the matching community thread');
+c(/match(es)? among \d+ recent deals from \d+ communities/.test(results), 'the search says how many deals and communities it covered');
 await click('#save-search');
 await b.visit(`${base}/deals.html`, { width: 1366, height: 900, wait: 1500 });
 c(/★ ssd 1tb/.test(await text('#recent-searches')), 'saved search persists across reload');
 
-// 3. Community feed (served by the local fixture feed).
+// 3. Community deals: the pool from the site plus the Adrenaline feed (served by the local fixture feed).
+c((await b.ev(`document.querySelectorAll('#f-source option').length`)) >= 3, 'the source filter lists the communities in the list');
+c(/deals from Gatry, Promobit, Oferta Esperta and Pelando, collected .* ago/.test(await text('#feed-status')), 'the status says how old the community deal collection is');
+c(await b.ev(`[...document.querySelectorAll('#thread-list .thread h4 a')].every(a => a.href.startsWith('https://') && a.rel.includes('noopener'))`), 'every deal links to its https page with noopener');
+await onlyAdrenaline();
 const threadCount = await count('#thread-list .thread');
 c(threadCount === 6, `the feed lists the fixture threads (${threadCount})`);
-c(/Updated .* source: Adrenaline Ofertas RSS feed/.test(await text('#feed-status')) && /via your news proxy/.test(await text('#feed-status')), 'feed status names its source, freshness and route');
+c(/6 Adrenaline Ofertas threads, updated .* via your news proxy/.test(await text('#feed-status')), 'feed status names its source, freshness and route');
 c(await b.ev(`[...document.querySelectorAll('#thread-list .thread')].every(t => /Community-reported/.test(t.innerText))`), 'every thread is labelled community-reported');
 c(await b.ev(`[...document.querySelectorAll('#thread-list .thread h4 a')].every(a => a.href.startsWith('https://forum.adrenaline.com.br/') && a.rel.includes('noopener'))`), 'every thread links to the original forum thread');
 c((await count('#thread-list img')) === 0, 'no images from the forum are shown');
@@ -137,14 +148,21 @@ await b.visit(`${base}/deals.html`, { width: 1366, height: 900, wait: 1500 });
 const chips = await count('#coupon-chips [data-coupon-store]');
 c(chips === 8, `popular store chips are offered (${chips})`);
 let coupons = await text('#coupon-results');
-c(/KABUM15/.test(coupons) && /AMZ50/.test(coupons) && /SSD20/.test(coupons), 'codes posted in the community threads are found');
-c((await count('#coupon-results .coupon-pill [data-copy]')) === 3 && /unverified/i.test(coupons), 'every found code can be copied and is marked unverified');
+const fixtureCodes = [];
+for (const [q, code] of [['placas de video', 'KABUM15'], ['livros', 'AMZ50'], ['ssd 1tb nvme', 'SSD20']]) {
+  await setVal('#coupon-q', q);
+  if (new RegExp(code).test(await text('#coupon-results'))) fixtureCodes.push(code);
+}
+await setVal('#coupon-q', '');
+coupons = await text('#coupon-results');
+c(fixtureCodes.length === 3, `codes posted in the community threads are found (${fixtureCodes.join(', ')})`);
+c((await count('#coupon-results .coupon-pill [data-copy]')) >= 3 && /unverified/i.test(coupons), 'every found code can be copied and is marked unverified');
 await click('#coupon-chips [data-coupon-store="Kabum"]');
 await sleep(200);
 coupons = await text('#coupon-results');
 c(/KABUM15/.test(coupons) && !/AMZ50/.test(coupons), 'choosing a store narrows the found coupons');
 await setVal('#coupon-q', 'loja inexistente');
-c(/No coupon thread/.test(await text('#coupon-results')), 'no match gives an honest empty message');
+c(/No coupon among/.test(await text('#coupon-results')), 'no match gives an honest empty message');
 await setVal('#coupon-q', 'amazon');
 const csearch = JSON.parse(await b.ev(`JSON.stringify([...document.querySelectorAll('#coupon-results a[href*="google.com/search"]')].map(a => decodeURIComponent(a.href)))`));
 c(csearch.length === 6 && csearch.some((l) => l.includes('site:cuponomia.com.br cupom de desconto amazon')) && csearch.some((l) => l.includes('site:promobit.com.br')), `coupon sites are offered as encoded searches (${csearch.length})`);
@@ -168,6 +186,7 @@ await b.ev(`localStorage.removeItem('calendra.theme.v1')`);
 
 // 6. Persistence and layout.
 await b.visit(`${base}/deals.html`, { width: 1366, height: 900, wait: 1500 });
+await onlyAdrenaline();
 c((await count('#thread-list .thread')) === 5, 'the feed reloads (one thread is still hidden by choice)');
 if (shotDir) await b.shot(path.join(shotDir, 'deals-1366.png'));
 for (const [w, h] of [[360, 740], [768, 1024], [1920, 1080]]) {
@@ -181,6 +200,7 @@ await b.ev(`localStorage.setItem('calendra.news.v1', JSON.stringify({ proxyUrl: 
 await b.visit(`${base}/deals.html`, { width: 1366, height: 900, wait: 6000 });
 const throttled = await text('#feed-status');
 c(/throttled or unreachable/.test(throttled) && /saved copy/i.test(throttled), `when every route fails, the saved copy stays visible and the message is explained: "${throttled.slice(0, 90)}"`);
+await onlyAdrenaline();
 c((await count('#thread-list .thread')) === 5, 'the saved copy of the feed is still listed');
 
 const errs = b.problems({ ignore: IGNORE });

@@ -148,7 +148,68 @@ export function parsePromobit(html) {
     }));
 }
 
-/** Gatry list or search page. */
+export const GATRY_API = 'https://gatry.com/v1/promotions';
+const GATRY_ASSETS = 'https://d3h0muvr7057ky.cloudfront.net/';
+
+/**
+ * Gatry's public JSON API (robots.txt: "Allow: /v1/"; checked 2026-11-16). The old HTML search page now redirects to
+ * an app shell with no deals in it, so the API is the only readable route. 10 deals per request; `q` searches.
+ */
+export function gatryApiUrl({ q = '', offset = 0 } = {}) {
+  const params = new URLSearchParams({ limit: '10', offset: String(offset), sort: 'recency' });
+  if (q) params.set('q', q);
+  return `${GATRY_API}?${params}`;
+}
+
+export function parseGatryApi(json) {
+  const data = typeof json === 'string' ? JSON.parse(json) : json;
+  if (!Array.isArray(data?.promotions)) throw new Error('No promotions in the answer');
+  return data.promotions
+    .filter((p) => p && p.title && (!p.status || p.status === 'active'))
+    .map((p) => {
+      const price = num((p.price_cents ?? 0) / 100);
+      const was = num((p.old_price_cents ?? 0) / 100);
+      return {
+        title: clean(p.title),
+        price,
+        oldPrice: was && price && was > price ? was : null,
+        store: clean(p.store_name),
+        url: `https://gatry.com/promocoes/${p.id}/${p.slug || ''}`.replace(/\/$/, ''),
+        image: p.image_keys?.[0] ? GATRY_ASSETS + p.image_keys[0] : '',
+        date: p.approved_at || p.created_at || '',
+        score: Number(p.comment_count) || 0,
+        coupon: p.code ? clean(p.code) : '',
+        freeShipping: Boolean(p.free_shipping),
+      };
+    });
+}
+
+/** Oferta Esperta's public RSS feed (robots.txt allows /feed): title, link, date, category, price and image in the description. */
+export function parseOfertaEsperta(xml) {
+  const out = [];
+  for (const [, it] of String(xml).matchAll(/<item>([\s\S]*?)<\/item>/g)) {
+    const tag = (t) => decodeEntities((it.match(new RegExp(`<${t}[^>]*>([\\s\\S]*?)</${t}>`)) || [])[1] || '').replace(/^\s*<!\[CDATA\[|\]\]>\s*$/g, '').trim();
+    const description = (it.match(/<description>\s*<!\[CDATA\[([\s\S]*?)\]\]>\s*<\/description>/) || [])[1] || tag('description');
+    const title = clean(tag('title'));
+    const url = tag('link');
+    if (!title || !/^https:\/\//.test(url)) continue;
+    const date = Date.parse(tag('pubDate'));
+    out.push({
+      title,
+      price: brl(clean(description)),
+      store: '',
+      url,
+      image: (description.match(/<img[^>]+src="(https:\/\/[^"]+)"/) || [])[1] || '',
+      date: Number.isFinite(date) ? new Date(date).toISOString() : '',
+      score: 0,
+      category: clean(tag('category')),
+    });
+  }
+  if (!out.length) throw new Error('No items in the feed');
+  return out;
+}
+
+/** Gatry list or search page (old site; kept for reference, the page no longer carries deals). */
 export function parseGatry(html) {
   const out = [];
   const blocks = String(html).split(/<article\b/).slice(1);

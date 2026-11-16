@@ -52,8 +52,12 @@
 
         <div class="news-toolbar">
           <div class="chip-row" role="tablist" aria-label="News sections" id="news-tabs"></div>
-          <button type="button" class="btn btn-ghost btn-sm" id="news-refresh">Refresh</button>
+          <div class="news-toolbar-actions">
+            <button type="button" class="btn btn-ghost btn-sm" id="news-refresh">Refresh</button>
+            <button type="button" class="btn btn-primary btn-sm" id="news-force" title="Discard what is on screen, skip every cache and read every outlet's feed again now">⟳ Force refresh</button>
+          </div>
         </div>
+        <p class="status-line" id="news-updated" role="status" aria-live="polite"></p>
 
         <div class="news-filters">
           <form id="news-search-form" class="inline-form" role="search">
