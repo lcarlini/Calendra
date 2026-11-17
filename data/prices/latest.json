@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-16T22:01:12.439Z",
+ "updatedAt": "2026-11-17T04:10:28.229Z",
  "sources": {
   "buscape": {
    "name": "Buscapé",
@@ -9,7 +9,7 @@
    "errors": [
     "The page listed no offers"
    ],
-   "lastOk": "2026-11-16T22:01:12.439Z"
+   "lastOk": "2026-11-17T04:10:28.229Z"
   },
   "zoom": {
    "name": "Zoom",
@@ -19,7 +19,7 @@
    "errors": [
     "The page listed no offers"
    ],
-   "lastOk": "2026-11-16T22:01:12.439Z"
+   "lastOk": "2026-11-17T04:10:28.229Z"
   },
   "pelando": {
    "name": "Pelando",
@@ -37,7 +37,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-16T22:01:12.439Z"
+   "lastOk": "2026-11-17T04:10:28.229Z"
   },
   "gatry": {
    "name": "Gatry",
@@ -45,7 +45,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-16T22:01:12.439Z"
+   "lastOk": "2026-11-17T04:10:28.229Z"
   },
   "hardmob": {
    "name": "Hardmob",
@@ -63,7 +63,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-16T22:01:12.439Z"
+   "lastOk": "2026-11-17T04:10:28.229Z"
   }
  },
  "products": [
@@ -248,17 +248,6 @@
      "source": "gatry"
     },
     {
-     "title": "PlayStation5 Slim Digital 825GB – Pacote ASTRO BOT e Gran Turismo 7",
-     "price": 3884,
-     "store": "Amazon",
-     "url": "https://www.promobit.com.br/oferta/playstation5-slim-digital-825gb-pacote-astro-bot-e-gran-turismo-7-3218860/",
-     "image": "https://i.promobit.com.br/268/913730194317948457781346409915.jpg",
-     "date": "2026-11-16T13:16:05-0300",
-     "score": 12,
-     "coupon": "",
-     "source": "promobit"
-    },
-    {
      "title": "Console Playstation 5 Slim Edição Digital 825 Gb",
      "price": 3894.05,
      "oldPrice": null,
@@ -290,13 +279,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "pelando": {
      "ok": false,
@@ -307,12 +296,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=playstation+5",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "promobit": {
      "ok": true,
-     "count": 1,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "count": 0,
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "hardmob": {
      "ok": false,
@@ -321,7 +310,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     }
    }
   },
@@ -334,13 +323,13 @@
    "buscapeUrl": "https://www.buscape.com.brundefined",
    "lowest": {
     "source": "buscape",
-    "store": "Lowest listed on Buscapé",
-    "title": "SSD Kingston NV3 1TB M.2 2280 NVMe SNV3S/1000G",
-    "price": 993,
+    "store": "KaBuM!",
+    "title": "SSD Kingston 1TB Nv3 M.2 Nvme PCIe 4, Leitura 6000MB/s, Gravação 4000MB/s, Ultra Rápido - Snv3s/1000g",
+    "price": 994.9,
     "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-    "fromHistory": true
+    "image": "https://image.zst.com.br/491F61186F374D7991437F182A980266_235_235.jpg"
    },
-   "avg40": 966.26,
+   "avg40": 966.65,
    "offers": [
     {
      "source": "buscape",
@@ -518,13 +507,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "pelando": {
      "ok": false,
@@ -535,12 +524,12 @@
      "ok": true,
      "count": 8,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=ssd+1tb",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "hardmob": {
      "ok": false,
@@ -549,7 +538,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     }
    }
   },
@@ -568,7 +557,7 @@
     "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
     "image": "https://image.zst.com.br/642E6AD12DF10BE1A443C5BD18293E88_235_235.jpg"
    },
-   "avg40": 9908.63,
+   "avg40": 9928.95,
    "offers": [
     {
      "source": "buscape",
@@ -593,13 +582,13 @@
      "ok": true,
      "count": 1,
      "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "zoom": {
      "ok": true,
      "count": 1,
      "url": "https://www.zoom.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "pelando": {
      "ok": false,
@@ -610,12 +599,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=rtx+5070",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "hardmob": {
      "ok": false,
@@ -624,7 +613,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     }
    }
   },
@@ -643,7 +632,7 @@
     "url": "https://www.buscape.com.br/tv/smart-tv-led-55-philips-4k-55pug7019-78",
     "image": "https://i.zst.com.br/thumbs/45/5/39/-1359553828.jpg"
    },
-   "avg40": 2141.19,
+   "avg40": 2148.27,
    "offers": [
     {
      "source": "buscape",
@@ -711,22 +700,6 @@
     },
     {
      "source": "buscape",
-     "store": "Amazon",
-     "title": "Smart TV LED 55\" Philips 4K 55PUG8100",
-     "price": 2423.89,
-     "url": "https://www.buscape.com.br/tv/smart-tv-led-55-philips-4k-55pug8100",
-     "image": "https://image.zst.com.br/89FF26B33FCF43B7E0EB620300024649_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Amazon",
-     "title": "Smart TV LED 55\" Philips 4K 55PUG8100",
-     "price": 2423.89,
-     "url": "https://www.zoom.com.br/tv/smart-tv-led-55-philips-4k-55pug8100",
-     "image": "https://image.zst.com.br/89FF26B33FCF43B7E0EB620300024649_235_235.jpg"
-    },
-    {
-     "source": "buscape",
      "store": "Webcontinental",
      "title": "Smart TV LED 55\" Aiwa 4K HDR AWS-TV-55-BL-01-A",
      "price": 2429.91,
@@ -772,6 +745,22 @@
      "price": 2609.1,
      "url": "https://www.zoom.com.br/tv/smart-tv-qned-55-lg-4k-hdr-55qned80tsa",
      "image": "https://image.zst.com.br/31F53971BF08F033BCCC0EF24F278D77_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Magazine Luiza",
+     "title": "Smart TV QNED 55\" LG 4K 55QNED73ASA",
+     "price": 2656.76,
+     "url": "https://www.buscape.com.br/tv/smart-tv-qned-55-lg-4k-55qned73asa",
+     "image": "https://i.zst.com.br/thumbs/45/2c/37/-1701398043.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Magazine Luiza",
+     "title": "Smart TV QNED 55\" LG 4K 55QNED73ASA",
+     "price": 2656.76,
+     "url": "https://www.zoom.com.br/tv/smart-tv-qned-55-lg-4k-55qned73asa",
+     "image": "https://i.zst.com.br/thumbs/45/2c/37/-1701398043.jpg"
     }
    ],
    "community": [
@@ -841,6 +830,19 @@
      "source": "gatry"
     },
     {
+     "title": "Hisense Smart TV 4K Hi-QLED 55\" Polegadas 55QD68SG Hi-QLED com Tela Antirreflexo",
+     "price": 2099,
+     "oldPrice": null,
+     "store": "Amazon",
+     "url": "https://gatry.com/promocoes/21585130-a5b2-4220-9c7f-cc06537a5f39/hisense-smart-tv-4k-hi-qled-55-polegadas-55qd68sg-hi-qled-com-tela-antirreflexo",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/previews/1d0e5c08-8c7d-8ac1-f610-962bc0c1cc8e/3ba38139-cce1-594f-e5e8-138392cae2b8.jpg",
+     "date": "2026-11-16T23:22:19.20486Z",
+     "score": 1,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
+    },
+    {
      "title": "Smart TV TCL 55 Polegadas QLED 4K P8K WiFi Bluetooth Google TV 144Hz HDR10+ Dolby Atmos",
      "price": 2236.25,
      "oldPrice": null,
@@ -865,17 +867,6 @@
      "coupon": "",
      "freeShipping": false,
      "source": "gatry"
-    },
-    {
-     "title": "PHILIPS, Smart TV Ambilight 55\" 4K, Titan OS, 55PUG810078, Comando de Voz, HDR10+Dolby Atmos, VRRALLM, Bluetooth",
-     "price": 2273.89,
-     "store": "Amazon",
-     "url": "https://www.promobit.com.br/oferta/philips-smart-tv-ambilight-55-4k-titan-os-55pug810078-comando-de-voz-hdr10-dolby-atmos-vrrallm-bluetooth-3218414/",
-     "image": "https://i.promobit.com.br/268/736514775017948403244340064891.jpg",
-     "date": "2026-11-16T11:45:13-0300",
-     "score": 2,
-     "coupon": "TELAS15",
-     "source": "promobit"
     },
     {
      "title": "Samsung Smart TV 55\" Crystal UHD 4K U8600F + Soundbar HW-B400F",
@@ -909,13 +900,13 @@
      "ok": true,
      "count": 23,
      "url": "https://www.buscape.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "zoom": {
      "ok": true,
      "count": 23,
      "url": "https://www.zoom.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "pelando": {
      "ok": false,
@@ -924,14 +915,14 @@
     },
     "gatry": {
      "ok": true,
-     "count": 9,
+     "count": 10,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=tv+55",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "promobit": {
      "ok": true,
-     "count": 1,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "count": 0,
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "hardmob": {
      "ok": false,
@@ -940,7 +931,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     }
    }
   },
@@ -959,7 +950,7 @@
     "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
     "image": "https://image.zst.com.br/5438AB33A2D4F1144E8536D6D794DF28_235_235.jpg"
    },
-   "avg40": 4816.01,
+   "avg40": 4820,
    "offers": [
     {
      "source": "buscape",
@@ -1064,13 +1055,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "pelando": {
      "ok": false,
@@ -1081,12 +1072,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=galaxy+s26",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "hardmob": {
      "ok": false,
@@ -1095,7 +1086,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     }
    }
   },
@@ -1114,7 +1105,7 @@
     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
     "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
    },
-   "avg40": 3987.55,
+   "avg40": 3990.55,
    "offers": [
     {
      "source": "buscape",
@@ -1225,6 +1216,19 @@
      "source": "gatry"
     },
     {
+     "title": "Nintendo Switch 2 256GB Novo Lacrado Lançamento",
+     "price": 3568.68,
+     "oldPrice": null,
+     "store": "Shopee",
+     "url": "https://gatry.com/promocoes/6676d232-1a24-a747-72ff-798366cfa76b/nintendo-switch-2-256gb-novo-lacrado-lancamento-282152",
+     "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/6676d232-1a24-a747-72ff-798366cfa76b/c72c43beaf14118e8ca4888621fdec6a.jpg",
+     "date": "2026-08-24T15:14:58Z",
+     "score": 1,
+     "coupon": "",
+     "freeShipping": false,
+     "source": "gatry"
+    },
+    {
      "title": "[Shopee] Console Nintendo Switch 2 + Mario Kart World - R$3587",
      "price": 3587,
      "store": "",
@@ -1266,13 +1270,13 @@
      "ok": true,
      "count": 5,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "zoom": {
      "ok": true,
      "count": 5,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "pelando": {
      "ok": false,
@@ -1281,14 +1285,14 @@
     },
     "gatry": {
      "ok": true,
-     "count": 4,
+     "count": 5,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=switch+2",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "hardmob": {
      "ok": false,
@@ -1297,7 +1301,7 @@
     "adrenaline": {
      "ok": true,
      "count": 1,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     }
    }
   },
@@ -1306,29 +1310,21 @@
    "name": "iPhone 17 256GB",
    "category": "phone",
    "listingName": "iPhone 17 256GB",
-   "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg",
+   "image": "https://image.zst.com.br/13A52ADCFEEA7484D1EBCB09041B5B71_235_235.jpg",
    "buscapeUrl": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
    "lowest": {
     "source": "buscape",
     "store": "Magazine Luiza",
-    "title": "Apple iPhone 17 256GB Lavanda 6,3\" 48MP iOS 5G, 256GB, Lavanda",
+    "title": "Apple iPhone 17 256GB Preto 6,3\" 48MP iOS 5G, 256GB, Preto",
     "price": 5699,
     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-    "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg"
+    "image": "https://image.zst.com.br/13A52ADCFEEA7484D1EBCB09041B5B71_235_235.jpg"
    },
-   "avg40": 5636.63,
+   "avg40": 5639.13,
    "offers": [
     {
      "source": "buscape",
      "store": "Magazine Luiza",
-     "title": "Apple iPhone 17 256GB Lavanda 6,3\" 48MP iOS 5G, 256GB, Lavanda",
-     "price": 5699,
-     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "Magazine Luiza",
      "title": "Apple iPhone 17 256GB Preto 6,3\" 48MP iOS 5G, 256GB, Preto",
      "price": 5699,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
@@ -1349,14 +1345,6 @@
      "price": 5699,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
      "image": "https://image.zst.com.br/E50CA3F2E6A994D4239DBE3244D1169A_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Magazine Luiza",
-     "title": "Apple iPhone 17 256GB Lavanda 6,3\" 48MP iOS 5G, 256GB, Lavanda",
-     "price": 5699,
-     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg"
     },
     {
      "source": "zoom",
@@ -1413,6 +1401,22 @@
      "price": 5849.99,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
      "image": "https://image.zst.com.br/7FE3D43D9D1FB7714B9D73BC85A3D32F_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Fast Shop",
+     "title": "iPhone 17 256GB Preto",
+     "price": 6299.1,
+     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/CD70661E28FFC6966FB7227B77489BEB_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Fast Shop",
+     "title": "iPhone 17 256GB Preto",
+     "price": 6299.1,
+     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/CD70661E28FFC6966FB7227B77489BEB_235_235.jpg"
     }
    ],
    "community": [
@@ -1500,13 +1504,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "pelando": {
      "ok": false,
@@ -1517,12 +1521,12 @@
      "ok": true,
      "count": 6,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=iphone+17",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "hardmob": {
      "ok": false,
@@ -1531,7 +1535,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     }
    }
   },
@@ -1551,7 +1555,7 @@
     "image": "https://image.zst.com.br/F35B528AF151303977E35BCDE4D15198_235_235.jpg",
     "seenAt": "2026-11-13T20:00:09.095Z"
    },
-   "avg40": 7167.58,
+   "avg40": 7167.86,
    "offers": [
     {
      "source": "buscape",
@@ -1689,12 +1693,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=xbox+series+x",
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     },
     "hardmob": {
      "ok": false,
@@ -1703,7 +1707,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-16T22:01:12.439Z"
+     "seenAt": "2026-11-17T04:10:28.229Z"
     }
    }
   }
