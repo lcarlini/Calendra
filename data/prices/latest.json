@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-19T12:06:56.508Z",
+ "updatedAt": "2026-11-19T20:57:46.436Z",
  "sources": {
   "buscape": {
    "name": "Buscapé",
@@ -9,7 +9,7 @@
    "errors": [
     "The page listed no offers"
    ],
-   "lastOk": "2026-11-19T12:06:56.508Z"
+   "lastOk": "2026-11-19T20:57:46.436Z"
   },
   "zoom": {
    "name": "Zoom",
@@ -19,7 +19,7 @@
    "errors": [
     "The page listed no offers"
    ],
-   "lastOk": "2026-11-19T12:06:56.508Z"
+   "lastOk": "2026-11-19T20:57:46.436Z"
   },
   "pelando": {
    "name": "Pelando",
@@ -37,7 +37,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-19T12:06:56.508Z"
+   "lastOk": "2026-11-19T20:57:46.436Z"
   },
   "gatry": {
    "name": "Gatry",
@@ -45,7 +45,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-19T12:06:56.508Z"
+   "lastOk": "2026-11-19T20:57:46.436Z"
   },
   "hardmob": {
    "name": "Hardmob",
@@ -63,7 +63,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-19T12:06:56.508Z"
+   "lastOk": "2026-11-19T20:57:46.436Z"
   }
  },
  "products": [
@@ -255,7 +255,7 @@
      "url": "https://gatry.com/promocoes/13959039-e3dd-4bbf-5a1a-d82d603518e0/playstation-5-slim-digital-825gb-pacote-astro-bot-e-gran-turismo-7-286883",
      "image": "https://d3h0muvr7057ky.cloudfront.net/promotions/13959039-e3dd-4bbf-5a1a-d82d603518e0/9ece8cc3ba0217cede29f7b288f3bb30.jpg",
      "date": "2026-11-11T03:23:42Z",
-     "score": 8,
+     "score": 13,
      "coupon": "",
      "freeShipping": false,
      "source": "gatry"
@@ -279,13 +279,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "pelando": {
      "ok": false,
@@ -296,12 +296,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=playstation+5",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "hardmob": {
      "ok": false,
@@ -310,7 +310,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     }
    }
   },
@@ -319,49 +319,49 @@
    "name": "SSD 1TB NVMe",
    "category": "storage",
    "listingName": "SSD Kingston NV3 1TB M.2 2280 NVMe SNV3S/1000G",
-   "image": "https://image.zst.com.br/3600D8D7ADA318E6210E47DA257D2146_235_235.jpg",
+   "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg",
    "buscapeUrl": "https://www.buscape.com.brundefined",
    "lowest": {
     "source": "buscape",
-    "store": "KaBuM!",
-    "title": "SSD Kingston 1TB Nv3 M.2 Nvme PCIe 4, Leitura 6000MB/s, Gravação 4000MB/s, Ultra Rápido - Snv3s/1000g",
-    "price": 993,
+    "store": "Lowest listed on Buscapé",
+    "title": "SSD Kingston NV3 1TB M.2 2280 NVMe SNV3S/1000G",
+    "price": 899.99,
     "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-    "image": "https://image.zst.com.br/3600D8D7ADA318E6210E47DA257D2146_235_235.jpg"
+    "fromHistory": true
    },
-   "avg40": 967.31,
+   "avg40": 964.98,
    "offers": [
     {
      "source": "buscape",
-     "store": "KaBuM!",
-     "title": "SSD Kingston 1TB Nv3 M.2 Nvme PCIe 4, Leitura 6000MB/s, Gravação 4000MB/s, Ultra Rápido - Snv3s/1000g",
-     "price": 993,
+     "store": "Amazon",
+     "title": "SSD Kingston NV3 1TB M.2 2280 NVMe Gen4, Desempenho e Eficiência para Upgrade de PC – SNV3S/1000G",
+     "price": 1099.99,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "image": "https://image.zst.com.br/3600D8D7ADA318E6210E47DA257D2146_235_235.jpg"
+     "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
     },
     {
      "source": "zoom",
-     "store": "KaBuM!",
-     "title": "SSD Kingston 1TB Nv3 M.2 Nvme PCIe 4, Leitura 6000MB/s, Gravação 4000MB/s, Ultra Rápido - Snv3s/1000g",
-     "price": 993,
+     "store": "Amazon",
+     "title": "SSD Kingston NV3 1TB M.2 2280 NVMe Gen4, Desempenho e Eficiência para Upgrade de PC – SNV3S/1000G",
+     "price": 1099.99,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "image": "https://image.zst.com.br/3600D8D7ADA318E6210E47DA257D2146_235_235.jpg"
+     "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
     },
     {
      "source": "buscape",
-     "store": "Amazon",
-     "title": "SSD Kingston NV3 1TB M.2 2280 NVMe Gen4, Desempenho e Eficiência para Upgrade de PC – SNV3S/1000G",
-     "price": 1049.89,
+     "store": "KaBuM!",
+     "title": "SSD Kingston 1TB Nv3 M.2 Nvme PCIe 4, Leitura 6000MB/s, Gravação 4000MB/s, Ultra Rápido - Snv3s/1000g",
+     "price": 1130.5,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
+     "image": "https://image.zst.com.br/A88B11F4DB3AE717F637E270E4294C25_235_235.jpg"
     },
     {
      "source": "zoom",
-     "store": "Amazon",
-     "title": "SSD Kingston NV3 1TB M.2 2280 NVMe Gen4, Desempenho e Eficiência para Upgrade de PC – SNV3S/1000G",
-     "price": 1049.89,
+     "store": "KaBuM!",
+     "title": "SSD Kingston 1TB Nv3 M.2 Nvme PCIe 4, Leitura 6000MB/s, Gravação 4000MB/s, Ultra Rápido - Snv3s/1000g",
+     "price": 1130.5,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
+     "image": "https://image.zst.com.br/A88B11F4DB3AE717F637E270E4294C25_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -507,13 +507,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "pelando": {
      "ok": false,
@@ -524,12 +524,12 @@
      "ok": true,
      "count": 8,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=ssd+1tb",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "hardmob": {
      "ok": false,
@@ -538,7 +538,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     }
    }
   },
@@ -582,13 +582,13 @@
      "ok": true,
      "count": 1,
      "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "zoom": {
      "ok": true,
      "count": 1,
      "url": "https://www.zoom.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "pelando": {
      "ok": false,
@@ -599,12 +599,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=rtx+5070",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "hardmob": {
      "ok": false,
@@ -613,7 +613,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     }
    }
   },
@@ -700,35 +700,27 @@
     },
     {
      "source": "buscape",
-     "store": "Magazine Luiza",
+     "store": "Fast Shop",
      "title": "Smart TV QLED 55\" TCL 4K 55P7L",
-     "price": 2374.05,
+     "price": 2369,
      "url": "https://www.buscape.com.br/tv/smart-tv-qled-55-tcl-4k-55p7l",
      "image": "https://image.zst.com.br/37C5238955F6AEA3B62DF7822AE0A951_235_235.jpg"
     },
     {
      "source": "zoom",
-     "store": "Magazine Luiza",
+     "store": "Fast Shop",
      "title": "Smart TV QLED 55\" TCL 4K 55P7L",
-     "price": 2374.05,
+     "price": 2369,
      "url": "https://www.zoom.com.br/tv/smart-tv-qled-55-tcl-4k-55p7l",
      "image": "https://image.zst.com.br/37C5238955F6AEA3B62DF7822AE0A951_235_235.jpg"
     },
     {
-     "source": "buscape",
-     "store": "Webcontinental",
-     "title": "Smart TV LED 55\" Aiwa 4K HDR AWS-TV-55-BL-01-A",
-     "price": 2429.91,
-     "url": "https://www.buscape.com.br/tv/smart-tv-led-55-aiwa-4k-hdr-aws-tv-55-bl-01-a-4-hdmi",
-     "image": "https://image.zst.com.br/155293324B60D12800C378B6D45BBAAC_235_235.jpg"
-    },
-    {
      "source": "zoom",
-     "store": "Webcontinental",
-     "title": "Smart TV LED 55\" Aiwa 4K HDR AWS-TV-55-BL-01-A",
-     "price": 2429.91,
-     "url": "https://www.zoom.com.br/tv/smart-tv-led-55-aiwa-4k-hdr-aws-tv-55-bl-01-a-4-hdmi",
-     "image": "https://image.zst.com.br/155293324B60D12800C378B6D45BBAAC_235_235.jpg"
+     "store": "Fast Shop",
+     "title": "Smart TV 55\" Semp 4K HDR S62",
+     "price": 2491.82,
+     "url": "https://www.zoom.com.br/tv/smart-tv-55-semp-4k-hdr-55s62",
+     "image": "https://image.zst.com.br/592446DBB1D4EAD37F5091E10EF5CB38_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -739,12 +731,20 @@
      "image": "https://image.zst.com.br/592446DBB1D4EAD37F5091E10EF5CB38_235_235.jpg"
     },
     {
+     "source": "buscape",
+     "store": "Amazon",
+     "title": "Smart TV QLED 55\" TCL 4K P7K",
+     "price": 2500,
+     "url": "https://www.buscape.com.br/tv/smart-tv-qled-55-tcl-4k-55p7k",
+     "image": "https://image.zst.com.br/CBF7187B48630C4F456D14B761083B61_235_235.jpg"
+    },
+    {
      "source": "zoom",
      "store": "Amazon",
-     "title": "Smart TV 55\" Semp 4K HDR S62",
-     "price": 2499,
-     "url": "https://www.zoom.com.br/tv/smart-tv-55-semp-4k-hdr-55s62",
-     "image": "https://image.zst.com.br/592446DBB1D4EAD37F5091E10EF5CB38_235_235.jpg"
+     "title": "Smart TV QLED 55\" TCL 4K P7K",
+     "price": 2500,
+     "url": "https://www.zoom.com.br/tv/smart-tv-qled-55-tcl-4k-55p7k",
+     "image": "https://image.zst.com.br/CBF7187B48630C4F456D14B761083B61_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -900,13 +900,13 @@
      "ok": true,
      "count": 23,
      "url": "https://www.buscape.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "zoom": {
      "ok": true,
      "count": 23,
      "url": "https://www.zoom.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "pelando": {
      "ok": false,
@@ -917,12 +917,12 @@
      "ok": true,
      "count": 10,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=tv+55",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "hardmob": {
      "ok": false,
@@ -931,7 +931,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     }
    }
   },
@@ -944,13 +944,13 @@
    "buscapeUrl": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
    "lowest": {
     "source": "buscape",
-    "store": "Magazine Luiza",
-    "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
-    "price": 4958.96,
+    "store": "Lowest listed on Buscapé",
+    "title": "Celular Samsung Galaxy S26 5G 256GB 12 GB",
+    "price": 4946.67,
     "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-    "image": "https://image.zst.com.br/5438AB33A2D4F1144E8536D6D794DF28_235_235.jpg"
+    "fromHistory": true
    },
-   "avg40": 4828,
+   "avg40": 4827.7,
    "offers": [
     {
      "source": "buscape",
@@ -1055,13 +1055,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "pelando": {
      "ok": false,
@@ -1072,12 +1072,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=galaxy+s26",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "hardmob": {
      "ok": false,
@@ -1086,7 +1086,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     }
    }
   },
@@ -1095,52 +1095,20 @@
    "name": "Nintendo Switch 2",
    "category": "console",
    "listingName": "Nintendo Switch 2 256GB",
-   "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg",
+   "image": "https://image.zst.com.br/A90A36026773B6836088EFF37FC8F44C_235_235.jpg",
    "buscapeUrl": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
    "lowest": {
     "source": "buscape",
-    "store": "Amazon",
-    "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
+    "store": "Lowest listed on Buscapé",
+    "title": "Nintendo Switch 2 256GB",
     "price": 3999,
     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-    "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
+    "fromHistory": true
    },
    "avg40": 3996.55,
    "offers": [
     {
      "source": "buscape",
-     "store": "Amazon",
-     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 3999,
-     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "Amazon",
-     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 3999,
-     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "image": "https://image.zst.com.br/3410D78173BDA1BE743C551008FC10DC_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Amazon",
-     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 3999,
-     "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Amazon",
-     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
-     "price": 3999,
-     "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "image": "https://image.zst.com.br/3410D78173BDA1BE743C551008FC10DC_235_235.jpg"
-    },
-    {
-     "source": "buscape",
      "store": "Magazine Luiza",
      "title": "Console Nintendo Switch 2 Nacional Portátil e Doméstico, Preto",
      "price": 4139.9,
@@ -1154,6 +1122,38 @@
      "price": 4139.9,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
      "image": "https://image.zst.com.br/A90A36026773B6836088EFF37FC8F44C_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Amazon",
+     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
+     "price": 4277.91,
+     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
+     "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Amazon",
+     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
+     "price": 4277.91,
+     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
+     "image": "https://image.zst.com.br/3410D78173BDA1BE743C551008FC10DC_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Amazon",
+     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
+     "price": 4277.91,
+     "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
+     "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Amazon",
+     "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
+     "price": 4277.91,
+     "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
+     "image": "https://image.zst.com.br/3410D78173BDA1BE743C551008FC10DC_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -1257,13 +1257,13 @@
      "ok": true,
      "count": 5,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "zoom": {
      "ok": true,
      "count": 5,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "pelando": {
      "ok": false,
@@ -1274,12 +1274,12 @@
      "ok": true,
      "count": 4,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=switch+2",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "hardmob": {
      "ok": false,
@@ -1288,7 +1288,7 @@
     "adrenaline": {
      "ok": true,
      "count": 1,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     }
    }
   },
@@ -1491,13 +1491,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "pelando": {
      "ok": false,
@@ -1508,12 +1508,12 @@
      "ok": true,
      "count": 6,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=iphone+17",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "hardmob": {
      "ok": false,
@@ -1522,7 +1522,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     }
    }
   },
@@ -1680,12 +1680,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=xbox+series+x",
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     },
     "hardmob": {
      "ok": false,
@@ -1694,7 +1694,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-19T12:06:56.508Z"
+     "seenAt": "2026-11-19T20:57:46.436Z"
     }
    }
   }
