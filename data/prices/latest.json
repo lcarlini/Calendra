@@ -1,21 +1,25 @@
 {
- "updatedAt": "2026-11-20T12:09:09.601Z",
+ "updatedAt": "2026-11-20T20:42:45.124Z",
  "sources": {
   "buscape": {
    "name": "Buscapé",
    "kind": "comparison",
-   "ok": 8,
-   "failed": 0,
-   "errors": [],
-   "lastOk": "2026-11-20T12:09:09.601Z"
+   "ok": 7,
+   "failed": 1,
+   "errors": [
+    "The page listed no offers"
+   ],
+   "lastOk": "2026-11-20T20:42:45.124Z"
   },
   "zoom": {
    "name": "Zoom",
    "kind": "comparison",
-   "ok": 8,
-   "failed": 0,
-   "errors": [],
-   "lastOk": "2026-11-20T12:09:09.601Z"
+   "ok": 7,
+   "failed": 1,
+   "errors": [
+    "The page listed no offers"
+   ],
+   "lastOk": "2026-11-20T20:42:45.124Z"
   },
   "pelando": {
    "name": "Pelando",
@@ -33,7 +37,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-20T12:09:09.601Z"
+   "lastOk": "2026-11-20T20:42:45.124Z"
   },
   "gatry": {
    "name": "Gatry",
@@ -41,7 +45,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-20T12:09:09.601Z"
+   "lastOk": "2026-11-20T20:42:45.124Z"
   },
   "hardmob": {
    "name": "Hardmob",
@@ -59,7 +63,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-20T12:09:09.601Z"
+   "lastOk": "2026-11-20T20:42:45.124Z"
   }
  },
  "products": [
@@ -275,13 +279,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "pelando": {
      "ok": false,
@@ -292,12 +296,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=playstation+5",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "hardmob": {
      "ok": false,
@@ -306,7 +310,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     }
    }
   },
@@ -503,13 +507,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "pelando": {
      "ok": false,
@@ -520,12 +524,12 @@
      "ok": true,
      "count": 8,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=ssd+1tb",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "hardmob": {
      "ok": false,
@@ -534,7 +538,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     }
    }
   },
@@ -578,13 +582,13 @@
      "ok": true,
      "count": 1,
      "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "zoom": {
      "ok": true,
      "count": 1,
      "url": "https://www.zoom.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "pelando": {
      "ok": false,
@@ -595,12 +599,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=rtx+5070",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "hardmob": {
      "ok": false,
@@ -609,7 +613,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     }
    }
   },
@@ -896,13 +900,13 @@
      "ok": true,
      "count": 23,
      "url": "https://www.buscape.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "zoom": {
      "ok": true,
      "count": 23,
      "url": "https://www.zoom.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "pelando": {
      "ok": false,
@@ -913,12 +917,12 @@
      "ok": true,
      "count": 10,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=tv+55",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "hardmob": {
      "ok": false,
@@ -927,7 +931,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     }
    }
   },
@@ -1051,13 +1055,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "pelando": {
      "ok": false,
@@ -1068,12 +1072,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=galaxy+s26",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "hardmob": {
      "ok": false,
@@ -1082,7 +1086,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     }
    }
   },
@@ -1250,13 +1254,13 @@
      "ok": true,
      "count": 5,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "zoom": {
      "ok": true,
      "count": 5,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "pelando": {
      "ok": false,
@@ -1267,12 +1271,12 @@
      "ok": true,
      "count": 3,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=switch+2",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "hardmob": {
      "ok": false,
@@ -1281,7 +1285,7 @@
     "adrenaline": {
      "ok": true,
      "count": 2,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     }
    }
   },
@@ -1484,13 +1488,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "pelando": {
      "ok": false,
@@ -1501,12 +1505,12 @@
      "ok": true,
      "count": 6,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=iphone+17",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "hardmob": {
      "ok": false,
@@ -1515,7 +1519,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     }
    }
   },
@@ -1523,8 +1527,8 @@
    "id": "xbox-series-x",
    "name": "Xbox Series X",
    "category": "console",
-   "listingName": "Xbox Series X 1TB",
-   "image": "https://image.zst.com.br/C33004F4CFE596814D661508B88442D2_235_235.jpg",
+   "listingName": "",
+   "image": "",
    "buscapeUrl": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
    "lowest": {
     "source": "buscape",
@@ -1532,7 +1536,8 @@
     "title": "Microsoft Consola Xbox Series X 1TB (RRT-00010) (RRT00010)",
     "price": 8500,
     "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-    "image": "https://image.zst.com.br/C33004F4CFE596814D661508B88442D2_235_235.jpg"
+    "image": "https://image.zst.com.br/C33004F4CFE596814D661508B88442D2_235_235.jpg",
+    "seenAt": "2026-11-20T12:09:09.601Z"
    },
    "avg40": 7196.31,
    "offers": [
@@ -1542,7 +1547,8 @@
      "title": "Microsoft Consola Xbox Series X 1TB (RRT-00010) (RRT00010)",
      "price": 8500,
      "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "image": "https://image.zst.com.br/C33004F4CFE596814D661508B88442D2_235_235.jpg"
+     "image": "https://image.zst.com.br/C33004F4CFE596814D661508B88442D2_235_235.jpg",
+     "seenAt": "2026-11-20T12:09:09.601Z"
     },
     {
      "source": "zoom",
@@ -1550,7 +1556,8 @@
      "title": "Microsoft Consola Xbox Series X 1TB (RRT-00010) (RRT00010)",
      "price": 8500,
      "url": "https://www.zoom.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "image": "https://image.zst.com.br/C33004F4CFE596814D661508B88442D2_235_235.jpg"
+     "image": "https://image.zst.com.br/C33004F4CFE596814D661508B88442D2_235_235.jpg",
+     "seenAt": "2026-11-20T12:09:09.601Z"
     }
    ],
    "community": [
@@ -1648,15 +1655,17 @@
    ],
    "sources": {
     "buscape": {
-     "ok": true,
-     "count": 1,
+     "ok": false,
+     "error": "The page listed no offers",
      "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
+     "carried": 1,
      "seenAt": "2026-11-20T12:09:09.601Z"
     },
     "zoom": {
-     "ok": true,
-     "count": 1,
+     "ok": false,
+     "error": "The page listed no offers",
      "url": "https://www.zoom.com.br/console-de-video-game/console-xbox-series-x-microsoft",
+     "carried": 1,
      "seenAt": "2026-11-20T12:09:09.601Z"
     },
     "pelando": {
@@ -1668,12 +1677,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=xbox+series+x",
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     },
     "hardmob": {
      "ok": false,
@@ -1682,7 +1691,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-20T12:09:09.601Z"
+     "seenAt": "2026-11-20T20:42:45.124Z"
     }
    }
   }
