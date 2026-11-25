@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-25T00:06:11.447Z",
+ "updatedAt": "2026-11-25T09:06:45.726Z",
  "sources": {
   "buscape": {
    "name": "Buscapé",
@@ -7,7 +7,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-25T00:06:11.447Z"
+   "lastOk": "2026-11-25T09:06:45.726Z"
   },
   "zoom": {
    "name": "Zoom",
@@ -15,7 +15,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-25T00:06:11.447Z"
+   "lastOk": "2026-11-25T09:06:45.726Z"
   },
   "pelando": {
    "name": "Pelando",
@@ -33,7 +33,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-25T00:06:11.447Z"
+   "lastOk": "2026-11-25T09:06:45.726Z"
   },
   "gatry": {
    "name": "Gatry",
@@ -41,7 +41,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-25T00:06:11.447Z"
+   "lastOk": "2026-11-25T09:06:45.726Z"
   },
   "hardmob": {
    "name": "Hardmob",
@@ -59,7 +59,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-25T00:06:11.447Z"
+   "lastOk": "2026-11-25T09:06:45.726Z"
   }
  },
  "products": [
@@ -72,13 +72,13 @@
    "buscapeUrl": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
    "lowest": {
     "source": "buscape",
-    "store": "Magazine Luiza",
-    "title": "Console PlayStation 5 Sony, SSD 1TB, Leitor de Discos, Controle DualSe",
-    "price": 5863.85,
+    "store": "Lowest listed on Buscapé",
+    "title": "PlayStation 5 825GB",
+    "price": 4199,
     "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-    "image": "https://image.zst.com.br/D4E22AE8DFF7BBBD470EB3FCDC89D242_235_235.jpg"
+    "fromHistory": true
    },
-   "avg40": 4240.62,
+   "avg40": 4199,
    "offers": [
     {
      "source": "buscape",
@@ -262,13 +262,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "pelando": {
      "ok": false,
@@ -279,12 +279,12 @@
      "ok": true,
      "count": 6,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=playstation+5",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "hardmob": {
      "ok": false,
@@ -293,7 +293,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     }
    }
   },
@@ -308,17 +308,17 @@
     "source": "buscape",
     "store": "Amazon",
     "title": "SSD Kingston NV3 1TB M.2 2280 NVMe Gen4, Desempenho e Eficiência para Upgrade de PC – SNV3S/1000G",
-    "price": 1079,
+    "price": 1059,
     "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
     "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
    },
-   "avg40": 977.04,
+   "avg40": 976.54,
    "offers": [
     {
      "source": "buscape",
      "store": "Amazon",
      "title": "SSD Kingston NV3 1TB M.2 2280 NVMe Gen4, Desempenho e Eficiência para Upgrade de PC – SNV3S/1000G",
-     "price": 1079,
+     "price": 1059,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
      "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
     },
@@ -326,7 +326,7 @@
      "source": "zoom",
      "store": "Amazon",
      "title": "SSD Kingston NV3 1TB M.2 2280 NVMe Gen4, Desempenho e Eficiência para Upgrade de PC – SNV3S/1000G",
-     "price": 1079,
+     "price": 1059,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
      "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
     },
@@ -490,13 +490,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "pelando": {
      "ok": false,
@@ -507,12 +507,12 @@
      "ok": true,
      "count": 8,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=ssd+1tb",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "hardmob": {
      "ok": false,
@@ -521,7 +521,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     }
    }
   },
@@ -565,13 +565,13 @@
      "ok": true,
      "count": 1,
      "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "zoom": {
      "ok": true,
      "count": 1,
      "url": "https://www.zoom.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "pelando": {
      "ok": false,
@@ -582,12 +582,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=rtx+5070",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "hardmob": {
      "ok": false,
@@ -596,7 +596,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     }
    }
   },
@@ -883,13 +883,13 @@
      "ok": true,
      "count": 23,
      "url": "https://www.buscape.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "zoom": {
      "ok": true,
      "count": 23,
      "url": "https://www.zoom.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "pelando": {
      "ok": false,
@@ -900,12 +900,12 @@
      "ok": true,
      "count": 10,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=tv+55",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "hardmob": {
      "ok": false,
@@ -914,7 +914,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     }
    }
   },
@@ -929,17 +929,17 @@
     "source": "buscape",
     "store": "Magazine Luiza",
     "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
-    "price": 4131.99,
+    "price": 3998.7,
     "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
     "image": "https://image.zst.com.br/5438AB33A2D4F1144E8536D6D794DF28_235_235.jpg"
    },
-   "avg40": 4805.78,
+   "avg40": 4802.45,
    "offers": [
     {
      "source": "buscape",
      "store": "Magazine Luiza",
      "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
-     "price": 4131.99,
+     "price": 3998.7,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
      "image": "https://image.zst.com.br/5438AB33A2D4F1144E8536D6D794DF28_235_235.jpg"
     },
@@ -947,7 +947,7 @@
      "source": "buscape",
      "store": "Magazine Luiza",
      "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
-     "price": 4131.99,
+     "price": 3998.7,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
      "image": "https://image.zst.com.br/C00948CA15687160DF683D66B3953FE9_235_235.jpg"
     },
@@ -955,7 +955,7 @@
      "source": "buscape",
      "store": "Magazine Luiza",
      "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
-     "price": 4131.99,
+     "price": 3998.7,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
      "image": "https://image.zst.com.br/09827B75F4AD23A78D9E2DD0DD3082CF_235_235.jpg"
     },
@@ -963,7 +963,7 @@
      "source": "buscape",
      "store": "Magazine Luiza",
      "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
-     "price": 4131.99,
+     "price": 3998.7,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
      "image": "https://i.zst.com.br/thumbs/51/indsp.gif"
     },
@@ -971,8 +971,48 @@
      "source": "buscape",
      "store": "Magazine Luiza",
      "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
-     "price": 4131.99,
+     "price": 3998.7,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
+     "image": "https://i.zst.com.br/thumbs/51/indsp.gif"
+    },
+    {
+     "source": "zoom",
+     "store": "Magazine Luiza",
+     "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
+     "price": 3998.7,
+     "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
+     "image": "https://image.zst.com.br/5438AB33A2D4F1144E8536D6D794DF28_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Magazine Luiza",
+     "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
+     "price": 3998.7,
+     "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
+     "image": "https://image.zst.com.br/C00948CA15687160DF683D66B3953FE9_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Magazine Luiza",
+     "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
+     "price": 3998.7,
+     "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
+     "image": "https://image.zst.com.br/09827B75F4AD23A78D9E2DD0DD3082CF_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Magazine Luiza",
+     "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
+     "price": 3998.7,
+     "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
+     "image": "https://i.zst.com.br/thumbs/51/indsp.gif"
+    },
+    {
+     "source": "zoom",
+     "store": "Magazine Luiza",
+     "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
+     "price": 3998.7,
+     "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
      "image": "https://i.zst.com.br/thumbs/51/indsp.gif"
     },
     {
@@ -982,46 +1022,6 @@
      "price": 4131.99,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
      "image": "https://image.zst.com.br/19F286539B9037877402782C181AACE9_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Magazine Luiza",
-     "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
-     "price": 4131.99,
-     "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "image": "https://image.zst.com.br/5438AB33A2D4F1144E8536D6D794DF28_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Magazine Luiza",
-     "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
-     "price": 4131.99,
-     "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "image": "https://image.zst.com.br/C00948CA15687160DF683D66B3953FE9_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Magazine Luiza",
-     "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
-     "price": 4131.99,
-     "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "image": "https://image.zst.com.br/09827B75F4AD23A78D9E2DD0DD3082CF_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Magazine Luiza",
-     "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
-     "price": 4131.99,
-     "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "image": "https://i.zst.com.br/thumbs/51/indsp.gif"
-    },
-    {
-     "source": "zoom",
-     "store": "Magazine Luiza",
-     "title": "Celular Samsung Galaxy S26 5G, 256GB, 12GB RAM, Galaxy AI, Câmera Trip",
-     "price": 4131.99,
-     "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "image": "https://i.zst.com.br/thumbs/51/indsp.gif"
     },
     {
      "source": "zoom",
@@ -1038,13 +1038,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "pelando": {
      "ok": false,
@@ -1055,12 +1055,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=galaxy+s26",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "hardmob": {
      "ok": false,
@@ -1069,7 +1069,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     }
    }
   },
@@ -1237,13 +1237,13 @@
      "ok": true,
      "count": 5,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "zoom": {
      "ok": true,
      "count": 5,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "pelando": {
      "ok": false,
@@ -1254,12 +1254,12 @@
      "ok": true,
      "count": 3,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=switch+2",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "hardmob": {
      "ok": false,
@@ -1268,7 +1268,7 @@
     "adrenaline": {
      "ok": true,
      "count": 2,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     }
    }
   },
@@ -1298,22 +1298,6 @@
      "image": "https://image.zst.com.br/8C64F276B42F713EA90ED08C57602440_235_235.jpg"
     },
     {
-     "source": "buscape",
-     "store": "KaBuM!",
-     "title": "Iphone 17 256gb Preto",
-     "price": 5699,
-     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/D12BFB286BF1834466194748D58B03CF_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "KaBuM!",
-     "title": "Apple Iphone 17 256gb Lavanda",
-     "price": 5699,
-     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/9EBEB45A5BB1AED123FEF6D3F52032ED_235_235.jpg"
-    },
-    {
      "source": "zoom",
      "store": "Magazine Luiza",
      "title": "Apple iPhone 17 256GB Lavanda 6,3\" 48MP iOS 5G, 256GB, Lavanda",
@@ -1322,20 +1306,12 @@
      "image": "https://image.zst.com.br/8C64F276B42F713EA90ED08C57602440_235_235.jpg"
     },
     {
-     "source": "zoom",
-     "store": "KaBuM!",
-     "title": "Iphone 17 256gb Preto",
-     "price": 5699,
-     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/D12BFB286BF1834466194748D58B03CF_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "KaBuM!",
-     "title": "Apple Iphone 17 256gb Lavanda",
-     "price": 5699,
-     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/9EBEB45A5BB1AED123FEF6D3F52032ED_235_235.jpg"
+     "source": "buscape",
+     "store": "Magazine Luiza",
+     "title": "Smartphone Apple iPhone 17 256GB Branco - 5G + Carregador Apple USB-C",
+     "price": 5758.2,
+     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/7FE3D43D9D1FB7714B9D73BC85A3D32F_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -1344,14 +1320,6 @@
      "price": 5758.2,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
      "image": "https://image.zst.com.br/133F3FAC962B9A52B87B46F66F94D9F8_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "Magazine Luiza",
-     "title": "Smartphone Apple iPhone 17 256GB Branco - 5G + Carregador Apple USB-C",
-     "price": 5758.2,
-     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/7FE3D43D9D1FB7714B9D73BC85A3D32F_235_235.jpg"
     },
     {
      "source": "zoom",
@@ -1372,10 +1340,26 @@
     {
      "source": "buscape",
      "store": "Magazine Luiza",
-     "title": "Apple iPhone 17 256GB Lavanda 6,3\" 48MP iOS 5G, 256GB, Lavanda",
+     "title": "Apple iPhone 17 256GB Branco 6,3\" 48MP iOS 5G, 256GB, Branco",
      "price": 5888.96,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg"
+     "image": "https://image.zst.com.br/E50CA3F2E6A994D4239DBE3244D1169A_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Magazine Luiza",
+     "title": "Apple iPhone 17 256GB Azul-névoa 6,3\" 48MP iOS 5G, 256GB, Azul-névoa",
+     "price": 5888.96,
+     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/5159AC380506D4A0A7371FCA80FCA3EE_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Magazine Luiza",
+     "title": "Apple iPhone 17 256GB Sálvia 6,3\" 48MP iOS 5G, 256GB, Sálvia",
+     "price": 5888.96,
+     "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/10B2F25486AA1B1AA2E85746DFCAB006_235_235.jpg"
     },
     {
      "source": "zoom",
@@ -1384,6 +1368,22 @@
      "price": 5888.96,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
      "image": "https://image.zst.com.br/470B904C58AC2E921AD37964AD57B2BD_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Magazine Luiza",
+     "title": "Apple iPhone 17 256GB Preto 6,3\" 48MP iOS 5G, 256GB, Preto",
+     "price": 5888.96,
+     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/13A52ADCFEEA7484D1EBCB09041B5B71_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Magazine Luiza",
+     "title": "Apple iPhone 17 256GB Azul-névoa 6,3\" 48MP iOS 5G, 256GB, Azul-névoa",
+     "price": 5888.96,
+     "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
+     "image": "https://image.zst.com.br/5159AC380506D4A0A7371FCA80FCA3EE_235_235.jpg"
     }
    ],
    "community": [
@@ -1484,13 +1484,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "pelando": {
      "ok": false,
@@ -1501,12 +1501,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=iphone+17",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "hardmob": {
      "ok": false,
@@ -1515,7 +1515,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     }
    }
   },
@@ -1683,13 +1683,13 @@
      "ok": true,
      "count": 3,
      "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "zoom": {
      "ok": true,
      "count": 3,
      "url": "https://www.zoom.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "pelando": {
      "ok": false,
@@ -1700,12 +1700,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=xbox+series+x",
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     },
     "hardmob": {
      "ok": false,
@@ -1714,7 +1714,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-25T00:06:11.447Z"
+     "seenAt": "2026-11-25T09:06:45.726Z"
     }
    }
   }
