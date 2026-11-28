@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-28T08:25:19.614Z",
+ "updatedAt": "2026-11-28T17:47:37.423Z",
  "sources": {
   "buscape": {
    "name": "Buscapé",
@@ -7,7 +7,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-28T08:25:19.614Z"
+   "lastOk": "2026-11-28T17:47:37.423Z"
   },
   "zoom": {
    "name": "Zoom",
@@ -15,7 +15,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-28T08:25:19.614Z"
+   "lastOk": "2026-11-28T17:47:37.423Z"
   },
   "pelando": {
    "name": "Pelando",
@@ -33,7 +33,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-28T08:25:19.614Z"
+   "lastOk": "2026-11-28T17:47:37.423Z"
   },
   "gatry": {
    "name": "Gatry",
@@ -41,7 +41,7 @@
    "ok": 8,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-28T08:25:19.614Z"
+   "lastOk": "2026-11-28T17:47:37.423Z"
   },
   "hardmob": {
    "name": "Hardmob",
@@ -59,7 +59,7 @@
    "ok": 1,
    "failed": 0,
    "errors": [],
-   "lastOk": "2026-11-28T08:25:19.614Z"
+   "lastOk": "2026-11-28T17:47:37.423Z"
   }
  },
  "products": [
@@ -68,7 +68,7 @@
    "name": "PlayStation 5",
    "category": "console",
    "listingName": "PlayStation 5 825GB",
-   "image": "https://image.zst.com.br/611D386F3878864C33844BDBC88B80CB_235_235.jpg",
+   "image": "https://image.zst.com.br/13841AD4CC6E6D0D8518F0629D2C3CDA_235_235.jpg",
    "buscapeUrl": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
    "lowest": {
     "source": "buscape",
@@ -83,42 +83,42 @@
     {
      "source": "buscape",
      "store": "Amazon",
-     "title": "Console PlayStation 5",
-     "price": 5699.9,
-     "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "image": "https://image.zst.com.br/611D386F3878864C33844BDBC88B80CB_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Amazon",
-     "title": "Console PlayStation 5",
-     "price": 5699.9,
-     "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "image": "https://image.zst.com.br/611D386F3878864C33844BDBC88B80CB_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "Magazine Luiza",
-     "title": "Console PlayStation 5 Sony, SSD 1TB, Leitor de Discos, Controle DualSe",
-     "price": 5863.85,
-     "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "image": "https://image.zst.com.br/D4E22AE8DFF7BBBD470EB3FCDC89D242_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Magazine Luiza",
-     "title": "Console PlayStation 5 Sony, SSD 1TB, Leitor de Discos, Controle DualSe",
-     "price": 5863.85,
-     "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "image": "https://image.zst.com.br/D4E22AE8DFF7BBBD470EB3FCDC89D242_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "Amazon",
      "title": "PlayStation 5 Console [videogame]",
-     "price": 5999.9,
+     "price": 5699.9,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
      "image": "https://image.zst.com.br/13841AD4CC6E6D0D8518F0629D2C3CDA_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Amazon",
+     "title": "PlayStation 5 Console [videogame]",
+     "price": 5699.9,
+     "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
+     "image": "https://image.zst.com.br/13841AD4CC6E6D0D8518F0629D2C3CDA_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Magazine Luiza",
+     "title": "Console PlayStation 5 Sony, SSD 1TB, Leitor de Discos, Controle DualSe",
+     "price": 5863.85,
+     "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
+     "image": "https://image.zst.com.br/D4E22AE8DFF7BBBD470EB3FCDC89D242_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Magazine Luiza",
+     "title": "Console PlayStation 5 Sony, SSD 1TB, Leitor de Discos, Controle DualSe",
+     "price": 5863.85,
+     "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
+     "image": "https://image.zst.com.br/D4E22AE8DFF7BBBD470EB3FCDC89D242_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Amazon",
+     "title": "Console PlayStation 5",
+     "price": 5999.9,
+     "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
+     "image": "https://image.zst.com.br/611D386F3878864C33844BDBC88B80CB_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -131,10 +131,10 @@
     {
      "source": "zoom",
      "store": "Amazon",
-     "title": "PlayStation 5 Console [videogame]",
+     "title": "Console PlayStation 5",
      "price": 5999.9,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "image": "https://image.zst.com.br/13841AD4CC6E6D0D8518F0629D2C3CDA_235_235.jpg"
+     "image": "https://image.zst.com.br/611D386F3878864C33844BDBC88B80CB_235_235.jpg"
     },
     {
      "source": "zoom",
@@ -148,7 +148,7 @@
      "source": "buscape",
      "store": "Amazon",
      "title": "Pack do console PlayStation®5 – Edição Limitada Ouro - Ghost of Yōtei",
-     "price": 6699,
+     "price": 6364.05,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
      "image": "https://image.zst.com.br/15F80ABDB5A31DE7AAA7A84710086D99_235_235.jpg"
     },
@@ -156,7 +156,7 @@
      "source": "buscape",
      "store": "Amazon",
      "title": "Pack do console PlayStation®5 – Edição Limitada Ouro - Ghost of Yōtei",
-     "price": 6699,
+     "price": 6364.05,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
      "image": "https://image.zst.com.br/3686600834CA7405F893605AAB23C59B_235_235.jpg"
     },
@@ -164,7 +164,7 @@
      "source": "zoom",
      "store": "Amazon",
      "title": "Pack do console PlayStation®5 – Edição Limitada Ouro - Ghost of Yōtei",
-     "price": 6699,
+     "price": 6364.05,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
      "image": "https://image.zst.com.br/15F80ABDB5A31DE7AAA7A84710086D99_235_235.jpg"
     },
@@ -172,7 +172,7 @@
      "source": "zoom",
      "store": "Amazon",
      "title": "Pack do console PlayStation®5 – Edição Limitada Ouro - Ghost of Yōtei",
-     "price": 6699,
+     "price": 6364.05,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
      "image": "https://image.zst.com.br/3686600834CA7405F893605AAB23C59B_235_235.jpg"
     }
@@ -210,13 +210,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/console-de-video-game/console-playstation-5-sony",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "pelando": {
      "ok": false,
@@ -227,12 +227,12 @@
      "ok": true,
      "count": 2,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=playstation+5",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "hardmob": {
      "ok": false,
@@ -241,7 +241,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     }
    }
   },
@@ -250,49 +250,49 @@
    "name": "SSD 1TB NVMe",
    "category": "storage",
    "listingName": "SSD Kingston NV3 1TB M.2 2280 NVMe SNV3S/1000G",
-   "image": "https://image.zst.com.br/659A9BDCDFDC2E090DBCC53704EA9169_235_235.jpg",
+   "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg",
    "buscapeUrl": "https://www.buscape.com.brundefined",
    "lowest": {
     "source": "buscape",
-    "store": "KaBuM!",
-    "title": "SSD Kingston NV3, 1TB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 6000 MB/s, Gravação: 4000 MB/s, Azul - SNV3S/1000G",
-    "price": 999.99,
+    "store": "Amazon",
+    "title": "SSD Kingston NV3 1TB M.2 2280 NVMe Gen4, Desempenho e Eficiência para Upgrade de PC – SNV3S/1000G",
+    "price": 892.42,
     "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-    "image": "https://image.zst.com.br/659A9BDCDFDC2E090DBCC53704EA9169_235_235.jpg"
+    "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
    },
-   "avg40": 976.76,
+   "avg40": 974.08,
    "offers": [
     {
      "source": "buscape",
-     "store": "KaBuM!",
-     "title": "SSD Kingston NV3, 1TB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 6000 MB/s, Gravação: 4000 MB/s, Azul - SNV3S/1000G",
-     "price": 999.99,
+     "store": "Amazon",
+     "title": "SSD Kingston NV3 1TB M.2 2280 NVMe Gen4, Desempenho e Eficiência para Upgrade de PC – SNV3S/1000G",
+     "price": 892.42,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "image": "https://image.zst.com.br/659A9BDCDFDC2E090DBCC53704EA9169_235_235.jpg"
+     "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
     },
     {
      "source": "zoom",
-     "store": "KaBuM!",
-     "title": "SSD Kingston NV3, 1TB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 6000 MB/s, Gravação: 4000 MB/s, Azul - SNV3S/1000G",
-     "price": 999.99,
+     "store": "Amazon",
+     "title": "SSD Kingston NV3 1TB M.2 2280 NVMe Gen4, Desempenho e Eficiência para Upgrade de PC – SNV3S/1000G",
+     "price": 892.42,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "image": "https://image.zst.com.br/659A9BDCDFDC2E090DBCC53704EA9169_235_235.jpg"
+     "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
     },
     {
      "source": "buscape",
-     "store": "Amazon",
-     "title": "SSD Kingston NV3 1TB M.2 2280 NVMe Gen4, Desempenho e Eficiência para Upgrade de PC – SNV3S/1000G",
-     "price": 1109,
+     "store": "KaBuM!",
+     "title": "SSD Kingston NV3, 1TB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 6000 MB/s, Gravação: 4000 MB/s, Azul - SNV3S/1000G",
+     "price": 999.99,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
+     "image": "https://image.zst.com.br/659A9BDCDFDC2E090DBCC53704EA9169_235_235.jpg"
     },
     {
      "source": "zoom",
-     "store": "Amazon",
-     "title": "SSD Kingston NV3 1TB M.2 2280 NVMe Gen4, Desempenho e Eficiência para Upgrade de PC – SNV3S/1000G",
-     "price": 1109,
+     "store": "KaBuM!",
+     "title": "SSD Kingston NV3, 1TB, M.2 2280, PCIe 4.0 x4, NVMe, Leitura: 6000 MB/s, Gravação: 4000 MB/s, Azul - SNV3S/1000G",
+     "price": 999.99,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "image": "https://image.zst.com.br/2BEE50D9A1C40C71145BAAB441BF6B9F_235_235.jpg"
+     "image": "https://image.zst.com.br/659A9BDCDFDC2E090DBCC53704EA9169_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -314,7 +314,7 @@
      "source": "buscape",
      "store": "Magazine Luiza",
      "title": "Ssd 1Tb Kingston NV3 SNV3S/1000G M.2, 1TB",
-     "price": 1393.99,
+     "price": 1639.99,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
      "image": "https://image.zst.com.br/092D138033BD4E64897B8DA24F537FD7_235_235.jpg"
     },
@@ -322,7 +322,7 @@
      "source": "zoom",
      "store": "Magazine Luiza",
      "title": "Ssd 1Tb Kingston NV3 SNV3S/1000G M.2, 1TB",
-     "price": 1393.99,
+     "price": 1639.99,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
      "image": "https://image.zst.com.br/092D138033BD4E64897B8DA24F537FD7_235_235.jpg"
     }
@@ -438,13 +438,13 @@
      "ok": true,
      "count": 4,
      "url": "https://www.buscape.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "zoom": {
      "ok": true,
      "count": 4,
      "url": "https://www.zoom.com.br/hd/ssd-kingston-nv3-1tb-m-2-2280-nvme-snv3s-1000g",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "pelando": {
      "ok": false,
@@ -455,12 +455,12 @@
      "ok": true,
      "count": 8,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=ssd+1tb",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "hardmob": {
      "ok": false,
@@ -469,7 +469,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     }
    }
   },
@@ -482,13 +482,13 @@
    "buscapeUrl": "https://www.buscape.com.brundefined",
    "lowest": {
     "source": "buscape",
-    "store": "KaBuM!",
-    "title": "Placa De Vídeo Gigabyte Geforce RTX 5070 Windforce Oc Sff 12gb Gddr7 192 Bits - Gv-n5070wf3oc-12gd",
-    "price": 11773.98,
+    "store": "Lowest listed on Buscapé",
+    "title": "Placa de Video NVIDIA GeForce RTX 5070 12 GB GDDR7 192 Bits Gigabyte WINDFORCE OC SFF",
+    "price": 7069.99,
     "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-    "image": "https://image.zst.com.br/ED884B5A8E5C4FEC27359FCB74C94024_235_235.jpg"
+    "fromHistory": true
    },
-   "avg40": 9982.94,
+   "avg40": 9865.34,
    "offers": [
     {
      "source": "buscape",
@@ -529,13 +529,13 @@
      "ok": true,
      "count": 2,
      "url": "https://www.buscape.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "zoom": {
      "ok": true,
      "count": 2,
      "url": "https://www.zoom.com.br/placa-de-video/placa-de-video-nvidia-geforce-rtx-5070-12-gb-gddr7-192-bits-gigabyte-windforce-oc-sff",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "pelando": {
      "ok": false,
@@ -546,12 +546,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=rtx+5070",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "hardmob": {
      "ok": false,
@@ -560,7 +560,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     }
    }
   },
@@ -573,30 +573,14 @@
    "buscapeUrl": "https://www.buscape.com.br/tv/tamanho-55-polegadas",
    "lowest": {
     "source": "buscape",
-    "store": "Amazon",
-    "title": "Smart TV QLED 55\" Hisense 4K 55Q6QV",
-    "price": 1934.1,
-    "url": "https://www.buscape.com.br/tv/smart-tv-qled-55-hisense-4k-55q6qv",
-    "image": "https://image.zst.com.br/DEB81DD49C540FA7E5177FB1D4B8F2B5_235_235.jpg"
+    "store": "Magazine Luiza",
+    "title": "Smart TV LED 55\" Philips 4K 55PUG7019/78",
+    "price": 2219,
+    "url": "https://www.buscape.com.br/tv/smart-tv-led-55-philips-4k-55pug7019-78",
+    "image": "https://image.zst.com.br/BC4112E95CC6BEB6E72D7963202DFCA2_235_235.jpg"
    },
    "avg40": 2109.58,
    "offers": [
-    {
-     "source": "buscape",
-     "store": "Amazon",
-     "title": "Smart TV QLED 55\" Hisense 4K 55Q6QV",
-     "price": 1934.1,
-     "url": "https://www.buscape.com.br/tv/smart-tv-qled-55-hisense-4k-55q6qv",
-     "image": "https://image.zst.com.br/DEB81DD49C540FA7E5177FB1D4B8F2B5_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Amazon",
-     "title": "Smart TV QLED 55\" Hisense 4K 55Q6QV",
-     "price": 1934.1,
-     "url": "https://www.zoom.com.br/tv/smart-tv-qled-55-hisense-4k-55q6qv",
-     "image": "https://image.zst.com.br/DEB81DD49C540FA7E5177FB1D4B8F2B5_235_235.jpg"
-    },
     {
      "source": "buscape",
      "store": "Magazine Luiza",
@@ -615,19 +599,19 @@
     },
     {
      "source": "buscape",
-     "store": "Magazine Luiza",
-     "title": "Smart TV LED 55\" Samsung Vision AI 4K U8000H",
-     "price": 2327.03,
-     "url": "https://www.buscape.com.br/tv/smart-tv-led-55-samsung-4k-hdr-u8000h",
-     "image": "https://image.zst.com.br/7663456510A98364BF050046EFAA5949_235_235.jpg"
+     "store": "Amazon",
+     "title": "Smart TV QLED 55\" Hisense 4K 55Q6QV",
+     "price": 2327.9,
+     "url": "https://www.buscape.com.br/tv/smart-tv-qled-55-hisense-4k-55q6qv",
+     "image": "https://image.zst.com.br/DEB81DD49C540FA7E5177FB1D4B8F2B5_235_235.jpg"
     },
     {
      "source": "zoom",
-     "store": "Magazine Luiza",
-     "title": "Smart TV LED 55\" Samsung Vision AI 4K U8000H",
-     "price": 2327.03,
-     "url": "https://www.zoom.com.br/tv/smart-tv-led-55-samsung-4k-hdr-u8000h",
-     "image": "https://image.zst.com.br/7663456510A98364BF050046EFAA5949_235_235.jpg"
+     "store": "Amazon",
+     "title": "Smart TV QLED 55\" Hisense 4K 55Q6QV",
+     "price": 2327.9,
+     "url": "https://www.zoom.com.br/tv/smart-tv-qled-55-hisense-4k-55q6qv",
+     "image": "https://image.zst.com.br/DEB81DD49C540FA7E5177FB1D4B8F2B5_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -644,6 +628,22 @@
      "price": 2374.05,
      "url": "https://www.zoom.com.br/tv/smart-tv-led-55-philips-4k-55pug7300-78",
      "image": "https://image.zst.com.br/BBADD26C345DA7E434EA9D05003E7D3A_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Amazon",
+     "title": "Smart TV LED 55\" Samsung Vision AI 4K U8000H",
+     "price": 2399,
+     "url": "https://www.buscape.com.br/tv/smart-tv-led-55-samsung-4k-hdr-u8000h",
+     "image": "https://image.zst.com.br/7663456510A98364BF050046EFAA5949_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Amazon",
+     "title": "Smart TV LED 55\" Samsung Vision AI 4K U8000H",
+     "price": 2399,
+     "url": "https://www.zoom.com.br/tv/smart-tv-led-55-samsung-4k-hdr-u8000h",
+     "image": "https://image.zst.com.br/7663456510A98364BF050046EFAA5949_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -679,6 +679,22 @@
     },
     {
      "source": "buscape",
+     "store": "Amazon",
+     "title": "Smart TV QLED 55\" TCL 4K P7K",
+     "price": 2499.9,
+     "url": "https://www.buscape.com.br/tv/smart-tv-qled-55-tcl-4k-55p7k",
+     "image": "https://image.zst.com.br/CBF7187B48630C4F456D14B761083B61_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Amazon",
+     "title": "Smart TV QLED 55\" TCL 4K P7K",
+     "price": 2499.9,
+     "url": "https://www.zoom.com.br/tv/smart-tv-qled-55-tcl-4k-55p7k",
+     "image": "https://image.zst.com.br/CBF7187B48630C4F456D14B761083B61_235_235.jpg"
+    },
+    {
+     "source": "buscape",
      "store": "Magazine Luiza",
      "title": "Smart TV QNED 55\" LG 4K 55QNED73ASA",
      "price": 2564.05,
@@ -692,22 +708,6 @@
      "price": 2564.05,
      "url": "https://www.zoom.com.br/tv/smart-tv-qned-55-lg-4k-55qned73asa",
      "image": "https://image.zst.com.br/1671FDB5993648560349A1DA3480A8A5_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "Fast Shop",
-     "title": "Smart TV Mini LED 55\" LG 4K 55QNED70BSA",
-     "price": 2599,
-     "url": "https://www.buscape.com.br/tv/smart-tv-mini-led-55-lg-4k-55qned70bsa",
-     "image": "https://i.zst.com.br/thumbs/51/indsp.gif"
-    },
-    {
-     "source": "zoom",
-     "store": "Fast Shop",
-     "title": "Smart TV Mini LED 55\" LG 4K 55QNED70BSA",
-     "price": 2599,
-     "url": "https://www.zoom.com.br/tv/smart-tv-mini-led-55-lg-4k-55qned70bsa",
-     "image": "https://i.zst.com.br/thumbs/51/indsp.gif"
     }
    ],
    "community": [
@@ -847,13 +847,13 @@
      "ok": true,
      "count": 21,
      "url": "https://www.buscape.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "zoom": {
      "ok": true,
      "count": 21,
      "url": "https://www.zoom.com.br/tv/tamanho-55-polegadas",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "pelando": {
      "ok": false,
@@ -864,12 +864,12 @@
      "ok": true,
      "count": 10,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=tv+55",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "hardmob": {
      "ok": false,
@@ -878,7 +878,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     }
    }
   },
@@ -1002,13 +1002,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-samsung-galaxy-s26-5g-256gb",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "pelando": {
      "ok": false,
@@ -1019,12 +1019,12 @@
      "ok": true,
      "count": 0,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=galaxy+s26",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "hardmob": {
      "ok": false,
@@ -1033,7 +1033,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     }
    }
   },
@@ -1042,37 +1042,21 @@
    "name": "Nintendo Switch 2",
    "category": "console",
    "listingName": "Nintendo Switch 2 256GB",
-   "image": "https://image.zst.com.br/C7490F12C375FD6F9DF70AA554D08662_235_235.jpg",
+   "image": "https://image.zst.com.br/56EFFFAC5BCC66283EA82A741B0F3F9F_235_235.jpg",
    "buscapeUrl": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
    "lowest": {
     "source": "buscape",
-    "store": "Amazon",
-    "title": "Bundle Nintendo Switch 2 + EA Sports FC 27",
+    "store": "Lowest listed on Buscapé",
+    "title": "Nintendo Switch 2 256GB",
     "price": 3598.17,
     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-    "image": "https://image.zst.com.br/C7490F12C375FD6F9DF70AA554D08662_235_235.jpg"
+    "fromHistory": true
    },
    "avg40": 4007.32,
    "offers": [
     {
      "source": "buscape",
      "store": "Amazon",
-     "title": "Bundle Nintendo Switch 2 + EA Sports FC 27",
-     "price": 3598.17,
-     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "image": "https://image.zst.com.br/C7490F12C375FD6F9DF70AA554D08662_235_235.jpg"
-    },
-    {
-     "source": "zoom",
-     "store": "Amazon",
-     "title": "Bundle Nintendo Switch 2 + EA Sports FC 27",
-     "price": 3598.17,
-     "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "image": "https://image.zst.com.br/C7490F12C375FD6F9DF70AA554D08662_235_235.jpg"
-    },
-    {
-     "source": "buscape",
-     "store": "Amazon",
      "title": "Console Nintendo Switch 2 - Modelo Nacional de Tomada | Bateria de até 9 Horas, Inclui Joy-Con com Suporte e Alças, 1 ano de Garantia, Modelo Nacional de Tomada",
      "price": 3799,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
@@ -1101,6 +1085,22 @@
      "price": 3799,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
      "image": "https://image.zst.com.br/3410D78173BDA1BE743C551008FC10DC_235_235.jpg"
+    },
+    {
+     "source": "buscape",
+     "store": "Amazon",
+     "title": "Bundle Nintendo Switch 2 + EA Sports FC 27",
+     "price": 3989.05,
+     "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
+     "image": "https://image.zst.com.br/C7490F12C375FD6F9DF70AA554D08662_235_235.jpg"
+    },
+    {
+     "source": "zoom",
+     "store": "Amazon",
+     "title": "Bundle Nintendo Switch 2 + EA Sports FC 27",
+     "price": 3989.05,
+     "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
+     "image": "https://image.zst.com.br/C7490F12C375FD6F9DF70AA554D08662_235_235.jpg"
     },
     {
      "source": "buscape",
@@ -1227,13 +1227,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/console-de-video-game/console-switch-2-com-joy-con-nintendo",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "pelando": {
      "ok": false,
@@ -1244,12 +1244,12 @@
      "ok": true,
      "count": 3,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=switch+2",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "hardmob": {
      "ok": false,
@@ -1258,7 +1258,7 @@
     "adrenaline": {
      "ok": true,
      "count": 3,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     }
    }
   },
@@ -1474,13 +1474,13 @@
      "ok": true,
      "count": 6,
      "url": "https://www.buscape.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "zoom": {
      "ok": true,
      "count": 6,
      "url": "https://www.zoom.com.br/celular/celular-apple-iphone-17-256gb",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "pelando": {
      "ok": false,
@@ -1491,12 +1491,12 @@
      "ok": true,
      "count": 7,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=iphone+17",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "hardmob": {
      "ok": false,
@@ -1505,7 +1505,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     }
    }
   },
@@ -1518,11 +1518,11 @@
    "buscapeUrl": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
    "lowest": {
     "source": "buscape",
-    "store": "Lowest listed on Buscapé",
-    "title": "Xbox Series X 1TB",
+    "store": "Amazon",
+    "title": "Microsoft Xbox Series X 1TB + 1 Controle Sem Fio - Compatível com Milhares de Jogos, Desempenho Ajustado, Jogos Verdadeiros 4K, Até 120 FPS - Cabo HDMI",
     "price": 8530.05,
     "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-    "fromHistory": true
+    "image": "https://image.zst.com.br/7BA02201FC87D81AC663AF5454A45ECC_235_235.jpg"
    },
    "avg40": 7384.61,
    "offers": [
@@ -1530,7 +1530,7 @@
      "source": "buscape",
      "store": "Amazon",
      "title": "Microsoft Xbox Series X 1TB + 1 Controle Sem Fio - Compatível com Milhares de Jogos, Desempenho Ajustado, Jogos Verdadeiros 4K, Até 120 FPS - Cabo HDMI",
-     "price": 8979,
+     "price": 8530.05,
      "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
      "image": "https://image.zst.com.br/7BA02201FC87D81AC663AF5454A45ECC_235_235.jpg"
     },
@@ -1538,7 +1538,7 @@
      "source": "zoom",
      "store": "Amazon",
      "title": "Microsoft Xbox Series X 1TB + 1 Controle Sem Fio - Compatível com Milhares de Jogos, Desempenho Ajustado, Jogos Verdadeiros 4K, Até 120 FPS - Cabo HDMI",
-     "price": 8979,
+     "price": 8530.05,
      "url": "https://www.zoom.com.br/console-de-video-game/console-xbox-series-x-microsoft",
      "image": "https://image.zst.com.br/7BA02201FC87D81AC663AF5454A45ECC_235_235.jpg"
     }
@@ -1628,13 +1628,13 @@
      "ok": true,
      "count": 1,
      "url": "https://www.buscape.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "zoom": {
      "ok": true,
      "count": 1,
      "url": "https://www.zoom.com.br/console-de-video-game/console-xbox-series-x-microsoft",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "pelando": {
      "ok": false,
@@ -1645,12 +1645,12 @@
      "ok": true,
      "count": 6,
      "url": "https://gatry.com/v1/promotions?limit=10&offset=0&sort=recency&q=xbox+series+x",
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "promobit": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     },
     "hardmob": {
      "ok": false,
@@ -1659,7 +1659,7 @@
     "adrenaline": {
      "ok": true,
      "count": 0,
-     "seenAt": "2026-11-28T08:25:19.614Z"
+     "seenAt": "2026-11-28T17:47:37.423Z"
     }
    }
   }
